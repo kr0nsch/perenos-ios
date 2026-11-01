@@ -11,7 +11,7 @@ All notable changes to AppBridge are listed here. The format follows
 - Saving an app with a long name no longer hangs when its filename collides with a different saved app; both packages are preserved with distinct names.
 
 ### Changed
-- The main README is now in English, with a Russian README, a shorter quick start and clearer requirements and transfer limits.
+- The Russian main README and the separate English README have a shorter quick start and clearer requirements and transfer limits.
 - Added forms for compatibility reports and feature requests, plus contributor development priorities.
 
 ## [1.1.0] - 2026-10-27

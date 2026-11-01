@@ -24,8 +24,8 @@ the regression scenarios each change should cover.
 - Keep the flow simple: four steps, one primary button per screen.
 - Every user-visible string goes into `src/AppBridge/Strings/en-US/Resources.resw` **and**
   `ru-RU/Resources.resw`. A unit test checks that both files have the same keys and placeholders.
-- Keep `README.md` (English, the main page) and `README.ru.md` (Russian) in sync.
-  `README.en.md` is a compatibility link for existing bookmarks.
+- Keep `README.md` (Russian, the main page) and `README.en.md` (English) in sync.
+  `README.ru.md` is a compatibility link for existing bookmarks.
 - Never log or persist passwords, verification codes or passphrases.
 - Device and App Store code lives in `AppBridge.Core` behind `IDeviceService`,
   `IDeviceWatcher` and `IAppStoreClient`, so it can be tested with fakes.

@@ -137,6 +137,25 @@ public sealed class TransferRunnerTests : IDisposable
     }
 
     [Fact]
+    public async Task SavingAfterChangingFoldersWritesToTheNewFolder()
+    {
+        var runner = new TransferRunner(_store, _devices);
+        var options = new TransferOptions(_downloads, true, VersionPolicy.Latest, AcquireFreeLicenses: true);
+        await runner.SaveAsync([App("a")], options, (app, update) => _final[app.BundleId] = update, CancellationToken.None);
+        var original = Assert.Single(Directory.GetFiles(_downloads, "*.ipa"));
+        var newFolder = Path.Combine(_downloads, "new-library");
+        Directory.CreateDirectory(newFolder);
+
+        await runner.SaveAsync([App("a")], options with { DownloadDirectory = newFolder },
+            (app, update) => _final[app.BundleId] = update, CancellationToken.None);
+
+        Assert.Equal(TransferStage.Completed, _final["a"].Stage);
+        var saved = Assert.Single(Directory.GetFiles(newFolder, "*.ipa"));
+        Assert.Equal("a", IpaPackage.Read(saved).BundleId);
+        Assert.True(File.Exists(original), "changing the folder must preserve the original library");
+    }
+
+    [Fact]
     public async Task SavedAppsInstallWithoutDownloading()
     {
         var saved = new[] { "a", "b", "c" }.Select(id => SavedAppLibrary.Read(TestIpa.Create(_downloads, id))).ToList();
@@ -167,6 +186,48 @@ public sealed class TransferRunnerTests : IDisposable
         Assert.Equal(
             [($"a_{100 + 'a'}.ipa", "a", "0.9"), ("App a (2) 1.2.3.ipa", "a", "1.2.3"), ("App a 1.2.3.ipa", "other.app", "1.2.3")],
             versions);
+    }
+
+    [Fact]
+    public async Task SavingLongNamesResolvesCollisionsWithoutHanging()
+    {
+        var app = App("a") with { Name = new string('A', 80) };
+        var clash = Path.Combine(_downloads, TransferRunner.SavedFileName(app.Name, "1.2.3", app.BundleId));
+        File.Move(TestIpa.Create(_downloads, "other.app"), clash);
+        var run = new TransferRunner(_store, _devices).SaveAsync([app],
+            new TransferOptions(_downloads, true, VersionPolicy.Latest, AcquireFreeLicenses: true),
+            (item, update) => _final[item.BundleId] = update, CancellationToken.None);
+
+        try
+        {
+            await run.WaitAsync(TimeSpan.FromSeconds(5));
+        }
+        finally
+        {
+            // Release a broken collision loop before reporting the timeout, so the test never
+            // leaves a worker spinning or prevents the remaining suite from finishing.
+            if (!run.IsCompleted)
+            {
+                for (var attempt = 0; attempt < 200 && File.Exists(clash); attempt++)
+                {
+                    try
+                    {
+                        File.Delete(clash);
+                    }
+                    catch (IOException)
+                    {
+                        await Task.Delay(10);
+                    }
+                }
+                await run.WaitAsync(TimeSpan.FromSeconds(5));
+            }
+        }
+
+        Assert.Equal(TransferStage.Completed, _final[app.BundleId].Stage);
+        Assert.Equal("other.app", IpaPackage.Read(clash).BundleId);
+        var saved = Assert.Single(Directory.GetFiles(_downloads, "*.ipa"), path => path != clash);
+        Assert.Equal("a", IpaPackage.Read(saved).BundleId);
+        Assert.EndsWith(" (2) 1.2.3.ipa", saved);
     }
 
     [Fact]

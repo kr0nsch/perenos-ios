@@ -1,0 +1,54 @@
+name: Successful transfer / Успешный перенос
+description: Help others find out which devices and iOS versions work / Поделитесь результатом
+title: "[Compatibility]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for testing AppBridge! Reports help us document real device compatibility.
+        Спасибо за проверку! Укажите только модели устройств и версии ПО.
+        Never attach IPA files, Apple Account details, passwords, codes or device identifiers.
+        Не прикладывайте IPA-файлы, данные аккаунта, пароли, коды и идентификаторы устройств.
+  - type: input
+    id: version
+    attributes:
+      label: AppBridge version / Версия AppBridge
+      placeholder: "1.1.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: flow
+    attributes:
+      label: Transfer mode / Режим переноса
+      options:
+        - Transfer Now / Перенести сейчас
+        - Save Apps / Сохранить приложения
+        - Install Saved Apps / Установить сохранённые приложения
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Windows version and PC architecture / Версия Windows и архитектура ПК
+      placeholder: "Windows 11 24H2, x64"
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source iPhone and iOS / Исходный iPhone и версия iOS
+      description: Leave empty when installing saved apps / Можно пропустить для установки сохранённых приложений
+      placeholder: "iPhone 16 Pro, iOS 26.1"
+  - type: input
+    id: target
+    attributes:
+      label: Target iPhone and iOS / Новый iPhone и версия iOS
+      description: Leave empty when only saving apps / Можно пропустить при сохранении приложений
+      placeholder: "iPhone 14, iOS 26.1"
+  - type: textarea
+    id: result
+    attributes:
+      label: Apps and result / Приложения и результат
+      description: List app names and versions if known; mention any extra steps / Названия, версии и дополнительные действия
+    validations:
+      required: true

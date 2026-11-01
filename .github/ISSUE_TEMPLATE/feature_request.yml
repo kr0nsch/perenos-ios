@@ -1,0 +1,23 @@
+name: Feature request / Предложение
+description: Describe a task AppBridge could make easier / Как сделать AppBridge удобнее
+title: "[Feature]: "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do? / Какую задачу вы решаете?
+      description: Describe your situation and what gets in the way / Опишите ситуацию и что мешает
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested improvement / Что вы предлагаете?
+      description: Explain how it would help, including any alternatives / Как это поможет? Есть ли другие варианты?
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        Please do not include Apple Account details or attach IPA files.
+        Не указывайте данные Apple Account и не прикладывайте IPA-файлы.

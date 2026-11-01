@@ -1,312 +1,169 @@
+# AppBridge
+
+**Your App Store apps, on your next iPhone. A free Windows app to transfer now or save for later.**
+
+<p>
+  <a href="https://github.com/kr0nsch/AppBridge/releases/latest"><img src="https://img.shields.io/github/v/release/kr0nsch/AppBridge?label=Download%20for%20Windows&color=007aff&style=for-the-badge" alt="Download AppBridge for Windows"></a>
+  <a href="README.ru.md"><img src="https://img.shields.io/badge/README-%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9-lightgrey?style=for-the-badge" alt="README на русском"></a>
+</p>
+
+[![CI](https://github.com/kr0nsch/AppBridge/actions/workflows/ci.yml/badge.svg)](https://github.com/kr0nsch/AppBridge/actions/workflows/ci.yml)
+![Windows 10 and 11](https://img.shields.io/badge/Windows-10%20%7C%2011-0078d4)
+[![MIT license](https://img.shields.io/github/license/kr0nsch/AppBridge?color=34c759)](LICENSE)
+
+Pick apps from your old iPhone and install them on another over USB. AppBridge downloads the original packages from Apple using your Apple Account. If the new phone has not arrived yet, save the apps on your PC and install them later. No jailbreak, subscription, ads or telemetry.
+
+> **AppBridge installs apps, not their data.** Chats, documents and settings need iCloud, a backup or the app's own sync. Downloads depend on what Apple still offers to your account; AppBridge cannot guarantee recovery of a removed app or bypass Apple's licensing.
+
+## Download and quick start
+
+You need **Windows 10 version 2004 or later, or Windows 11**, a data-capable USB cable, and the **[Apple Devices app](https://apps.microsoft.com/detail/9NP83LWLPZ9K)** or iTunes for the Apple USB driver. The release is x64; Windows 11 on Arm can run it through emulation. .NET and Windows App SDK runtimes are included.
+
+1. **[Download the latest release](https://github.com/kr0nsch/AppBridge/releases/latest)** and run `AppBridge-<version>-setup-x64.exe`, or extract the portable ZIP and run `AppBridge.exe`.
+2. Choose **Transfer Now**, connect and unlock the old iPhone, and tap **Trust** on its screen.
+3. Select the apps you want, then connect the other iPhone. You can swap one cable between phones.
+4. Sign in to your Apple Account in AppBridge and press **Install**. Use the account entitled to those apps, and sign in to the App Store with that account on the target iPhone when required.
+
+**New iPhone coming later?** Choose **Transfer Later → Save Apps**, connect the old phone, select apps and sign in to download them. When it arrives, choose **Transfer Later → Install on New iPhone** to use the saved `.ipa` files without an Apple Account sign-in on the PC.
+
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/media/banner-ru-dark.png">
-    <img src="docs/media/banner-ru-light.png" width="880" alt="AppBridge — перенос приложений из App Store на другой iPhone">
-  </picture>
-</p>
-
-<p align="center">
-  <a href="https://github.com/kr0nsch/AppBridge/releases/latest"><img src="https://img.shields.io/github/v/release/kr0nsch/AppBridge?label=%D1%81%D0%BA%D0%B0%D1%87%D0%B0%D1%82%D1%8C&color=007aff&style=for-the-badge" alt="Скачать последнюю версию"></a>
-</p>
-
-<p align="center">
-  <a href="https://github.com/kr0nsch/AppBridge/actions/workflows/ci.yml"><img src="https://github.com/kr0nsch/AppBridge/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <img src="https://img.shields.io/badge/Windows-10%20%7C%2011-0078d4" alt="Windows 10 и 11">
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/kr0nsch/AppBridge?color=34c759" alt="Лицензия MIT"></a>
-  <a href="https://github.com/kr0nsch/AppBridge/releases"><img src="https://img.shields.io/github/downloads/kr0nsch/AppBridge/total?color=5856d6" alt="Загрузки"></a>
-  <a href="README.en.md"><img src="https://img.shields.io/badge/README-English-lightgrey" alt="English README"></a>
-</p>
-
-**AppBridge** переносит ваши приложения из App Store с одного iPhone на другой прямо с компьютера на Windows. Подключите оба телефона, отметьте нужные приложения и нажмите «Установить» — AppBridge скачает оригинальные приложения у Apple с вашим Apple Account и установит их по USB. Нового iPhone ещё нет? Сохраните приложения на компьютер сейчас и установите их потом. Бесплатно, без джейлбрейка и без рекламы.
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/media/demo-ru-dark.gif">
-    <img src="docs/media/demo-ru-light.gif" width="760" alt="Как работает AppBridge: выбор iPhone, выбор приложений, вход в App Store и установка">
+    <source media="(prefers-color-scheme: dark)" srcset="docs/media/demo-en-dark.gif">
+    <img src="docs/media/demo-en-light.gif" width="760" alt="AppBridge demo: choose iPhones, select apps, sign in and install">
   </picture>
   <br>
-  <sub>Запись демонстрационного режима: телефоны и приложения смоделированы.</sub>
+  <sub>Recorded in demo mode with simulated iPhones and apps.</sub>
 </p>
 
-## Как это работает
+<details>
+<summary><b>Installer, portable version and download verification</b></summary>
 
-На первом экране выберите **«Перенести сейчас»**, если оба iPhone под рукой, или **«Перенести потом»**, если новый телефон появится позже.
+| Release file | Choose it for |
+|---|---|
+| `AppBridge-<version>-setup-x64.exe` | A regular installation for your Windows user, with a Start menu shortcut. No administrator rights needed. |
+| `AppBridge-<version>-portable-x64.zip` | Running from an extracted folder. Settings and saved apps stay in `Data` next to `AppBridge.exe`. |
+| `SHA256SUMS.txt` | Checking the downloaded files against their published SHA-256 hashes. |
 
-### Перенести сейчас
+The release workflow builds from the tagged source and produces Sigstore build provenance attestations. Verify a release file with the GitHub CLI:
 
-1. **Подключите iPhone с приложениями.** AppBridge покажет все приложения, установленные из App Store.
-2. **Отметьте нужные.** Есть поиск и «Выбрать все».
-3. **Подключите второй iPhone.** Оба телефона можно держать подключёнными или подключать по очереди.
-4. **Войдите в App Store и нажмите «Установить».** Пока одно приложение устанавливается, следующее уже скачивается.
+```powershell
+gh attestation verify <downloaded-file> -R kr0nsch/AppBridge
+```
 
-<p align="center">
-  <img src="docs/media/how-it-works-ru.svg" width="880" alt="Схема: iPhone с приложениями → AppBridge на ПК ← App Store; AppBridge → другой iPhone">
-</p>
+Build provenance and Windows publisher signing are separate. If SmartScreen shows an unknown publisher, verify that the download came from this repository's Releases page before proceeding. See [SECURITY.md](SECURITY.md).
 
-### Перенести потом
+</details>
 
-Два шага, между которыми может пройти хоть месяц:
+## What you can do
 
-1. **Сохранить приложения.** Подключите старый iPhone, отметьте приложения и войдите в App Store — AppBridge скачает их в папку `Загрузки\AppBridge`. Так можно сохранить и приложения, которые могут пропасть из App Store.
-2. **Установить на новый iPhone.** Подключите новый телефон, и AppBridge покажет сохранённые приложения: что уже установлено, что обновится и что не подойдёт (например, если нужна более новая iOS). Входить в Apple Account на компьютере для этого не нужно.
+| | How AppBridge helps |
+|---|---|
+| **Move selected apps** | Search the old iPhone's App Store apps and choose exactly what to install on the other phone. |
+| **Save now, install later** | Keep licensed `.ipa` packages on your PC while you still have the old phone. The saved library checks iOS requirements and selects a compatible saved version when available. |
+| **Choose the app version** | Download the latest version or request the version on the old iPhone, while Apple still serves it. |
+| **Follow progress and retry** | Downloads and installations overlap, with progress and an outcome for each app. Retry failed apps from the results screen. |
+| **Get free apps** | Optionally add free apps to your Apple Account when they are not already in its purchases. Paid apps must already be owned. |
+| **Use your preferred setup** | English and Russian, light and dark themes, installer and portable builds. |
+
+AppBridge downloads apps from Apple; it does not extract installed app packages from the source iPhone. Removed apps only remain downloadable while Apple still supplies them to your account. TestFlight and developer builds are outside this workflow, and saved packages retain Apple's account and device compatibility requirements.
+
+<details>
+<summary><b>See Transfer Later and screenshots</b></summary>
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/media/later-ru-dark.gif">
-    <img src="docs/media/later-ru-light.gif" width="760" alt="Перенести потом: установка сохранённых приложений на новый iPhone">
+    <source media="(prefers-color-scheme: dark)" srcset="docs/media/later-en-dark.gif">
+    <img src="docs/media/later-en-light.gif" width="760" alt="Transfer Later: choose saved apps and install them on a new iPhone">
   </picture>
+  <br>
+  <sub>Recorded in demo mode with simulated iPhones and apps.</sub>
 </p>
 
-## Скриншоты
+| Choose apps | Track installation | Browse saved apps |
+|:---:|:---:|:---:|
+| ![Choose apps](docs/screenshots/en-light/2-choose-apps.png) | ![Installation progress](docs/screenshots/en-light/6-installing.png) | ![Saved app library](docs/screenshots/en-light/later-4-saved.png) |
 
-<table>
-  <tr>
-    <td width="33%" align="center">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/1-connect.png">
-        <img src="docs/screenshots/ru-light/1-connect.png" alt="Подключение iPhone">
-      </picture>
-      <br><sub><b>Подключение</b></sub>
-    </td>
-    <td width="33%" align="center">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/2-choose-apps.png">
-        <img src="docs/screenshots/ru-light/2-choose-apps.png" alt="Выбор приложений">
-      </picture>
-      <br><sub><b>Выбор приложений</b></sub>
-    </td>
-    <td width="33%" align="center">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/3-target.png">
-        <img src="docs/screenshots/ru-light/3-target.png" alt="Выбор второго iPhone">
-      </picture>
-      <br><sub><b>Второй iPhone</b></sub>
-    </td>
-  </tr>
-  <tr>
-    <td width="33%" align="center">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/5-ready.png">
-        <img src="docs/screenshots/ru-light/5-ready.png" alt="Всё готово к установке">
-      </picture>
-      <br><sub><b>Параметры</b></sub>
-    </td>
-    <td width="33%" align="center">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/6-installing.png">
-        <img src="docs/screenshots/ru-light/6-installing.png" alt="Установка приложений">
-      </picture>
-      <br><sub><b>Установка</b></sub>
-    </td>
-    <td width="33%" align="center">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/7-done.png">
-        <img src="docs/screenshots/ru-light/7-done.png" alt="Готово">
-      </picture>
-      <br><sub><b>Готово</b></sub>
-    </td>
-  </tr>
-</table>
+More screenshots: [light theme](docs/screenshots/en-light) · [dark theme](docs/screenshots/en-dark).
 
-**Перенести потом**
-
-<table>
-  <tr>
-    <td width="33%" align="center">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/later-1-start.png">
-        <img src="docs/screenshots/ru-light/later-1-start.png" alt="Стартовый экран: перенести сейчас или потом">
-      </picture>
-      <br><sub><b>Начало</b></sub>
-    </td>
-    <td width="33%" align="center">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/later-2-hub.png">
-        <img src="docs/screenshots/ru-light/later-2-hub.png" alt="Сохранить приложения или установить на новый iPhone">
-      </picture>
-      <br><sub><b>Перенести потом</b></sub>
-    </td>
-    <td width="33%" align="center">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/save-3-done.png">
-        <img src="docs/screenshots/ru-light/save-3-done.png" alt="Приложения сохранены на компьютере">
-      </picture>
-      <br><sub><b>Приложения сохранены</b></sub>
-    </td>
-  </tr>
-  <tr>
-    <td width="33%" align="center">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/later-3-new-iphone.png">
-        <img src="docs/screenshots/ru-light/later-3-new-iphone.png" alt="Подключение нового iPhone">
-      </picture>
-      <br><sub><b>Новый iPhone</b></sub>
-    </td>
-    <td width="33%" align="center">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/later-4-saved.png">
-        <img src="docs/screenshots/ru-light/later-4-saved.png" alt="Сохранённые приложения, проверенные для нового iPhone">
-      </picture>
-      <br><sub><b>Сохранённые приложения</b></sub>
-    </td>
-    <td width="33%" align="center">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/later-6-done.png">
-        <img src="docs/screenshots/ru-light/later-6-done.png" alt="Сохранённые приложения установлены">
-      </picture>
-      <br><sub><b>Установлено</b></sub>
-    </td>
-  </tr>
-</table>
-
-## Возможности
-
-- **Четыре простых шага** и одна кнопка на каждом экране.
-- **Перенести сейчас или потом.** Сохраните приложения на компьютер, пока под рукой старый iPhone, и установите их на новый, когда он появится, — без входа в Apple Account на компьютере. AppBridge сам выберет версию, которая подойдёт к iOS нового телефона.
-- **Оригинальные приложения от Apple.** Каждое приложение скачивается с серверов Apple с вашим Apple Account — ничего не берётся со сторонних сайтов.
-- **Всё по USB.** Не нужны iTunes, Python и командная строка: AppBridge сам находит iPhone, показывает запрос «Доверять этому компьютеру?», читает список приложений с иконками и устанавливает их.
-- **Быстро.** Скачивание и установка идут параллельно, по каждому приложению видно прогресс, а если что-то не установилось — понятная причина и кнопка «Повторить».
-- **Версия на выбор:** последняя из App Store или та же, что на первом iPhone (если Apple её ещё выдаёт).
-- **Бесплатные приложения** можно автоматически добавить в ваш Apple Account, если их ещё нет в покупках.
-- **Светлая и тёмная тема, русский и английский язык.**
-- **Установщик и портативная версия.** Ничего дополнительно ставить не нужно: .NET и Windows App SDK уже внутри.
-
-## Проверено на реальных устройствах
-
-| Откуда | Куда | Приложения | Результат |
-|---|---|---|---|
-| iPhone 16 Pro | iPhone 14 | Сбер, VK, Почта Mail.ru | ✅ Перенесены |
-
-Проверили на своих устройствах? Расскажите в [issues](https://github.com/kr0nsch/AppBridge/issues) — добавим в таблицу.
-
-## Скачать
-
-Последняя версия — на странице **[Releases](https://github.com/kr0nsch/AppBridge/releases/latest)**:
-
-| Файл | Что это |
-|---|---|
-| `AppBridge-<версия>-setup-x64.exe` | **Установщик (рекомендуется).** Ставится для текущего пользователя, права администратора не нужны. Ярлык в меню «Пуск» и удаление через «Параметры». |
-| `AppBridge-<версия>-portable-x64.zip` | **Портативная версия.** Распакуйте куда угодно, например на флешку, и запустите `AppBridge.exe`. Настройки и загрузки хранятся в папке `Data` рядом с программой. |
-| `SHA256SUMS.txt` | Контрольные суммы для проверки файлов. |
-
-**Системные требования:** Windows 10 версии 2004 или новее, Windows 11. ПК с процессором x64; на ПК с Arm — Windows 11 (через встроенную эмуляцию).
-
-> [!NOTE]
-> Все файлы релиза собираются в GitHub Actions прямо из этого репозитория и подписаны подписью происхождения (Sigstore). Проверить подлинность: `gh attestation verify <файл> -R kr0nsch/AppBridge`.
-> Сертификата Authenticode пока нет, поэтому SmartScreen может предупредить о неизвестном издателе — нажмите **Подробнее → Выполнить в любом случае**.
-
-## Что понадобится
-
-- **Приложение «Устройства Apple»** из [Microsoft Store](https://apps.microsoft.com/detail/9NP83LWLPZ9K) (или iTunes) — в нём драйвер, через который Windows работает с iPhone. Если его нет, AppBridge подскажет.
-- **USB-кабель** с передачей данных и разблокированные iPhone. На вопрос «Доверять этому компьютеру?» нажмите «Доверять».
-- **Apple Account**, которым приложения были получены (или который может получить их бесплатно).
-- Подключение к интернету.
-
-## Вопросы и ответы
-
-<details>
-<summary><b>Переносятся ли данные приложений?</b></summary>
-
-Нет, AppBridge устанавливает сами приложения. Документы, переписка и настройки восстанавливаются как обычно — из iCloud, резервной копии или после входа в аккаунт внутри приложения.
 </details>
 
-<details>
-<summary><b>Какие приложения можно перенести?</b></summary>
+## Privacy and your Apple Account
 
-Те, что доступны вашему Apple Account в App Store. Бесплатные приложения AppBridge может сам добавить в ваш аккаунт — как кнопка «Загрузить» в App Store (это можно отключить). Платные должны быть уже куплены этим аккаунтом. Приложения, удалённые из App Store, получится установить, только пока Apple выдаёт их владельцам. Приложения не из App Store (TestFlight, сборки разработчиков) не показываются: их нельзя скачать заново.
-</details>
+- Sign-in uses the bundled, open-source [ipatool](https://github.com/majd/ipatool) to authenticate with Apple. AppBridge does not save your password.
+- The saved App Store session is encrypted; its random key is protected by Windows DPAPI for your Windows user. A portable copy moved to another PC or Windows account needs a new sign-in.
+- AppBridge has no service backend, ads or telemetry. Downloaded apps come from Apple and remain tied to the purchasing Apple Account. FairPlay protection is not bypassed.
+- Downloaded `.ipa` files may contain the purchasing account's email address. Keep them private.
 
-<details>
-<summary><b>Нового iPhone ещё нет. Как перенести приложения потом?</b></summary>
-
-Выберите «Перенести потом» → «Сохранить приложения», подключите старый iPhone и сохраните нужные приложения. Когда появится новый телефон, откройте AppBridge, выберите «Перенести потом» → «Установить на новый iPhone» и подключите его. Чтобы приложения открывались, войдите на новом iPhone в App Store с тем же Apple Account, с которым они сохранены. Файлы `.ipa`, оставшиеся после переноса в версии 1.0 или скопированные в эту папку, тоже появятся в списке.
-</details>
+Read [SECURITY.md](SECURITY.md) for how secrets are handled, including password visibility to processes running under the same Windows user during sign-in, and how to report vulnerabilities privately.
 
 <details>
-<summary><b>Безопасно ли вводить пароль Apple Account?</b></summary>
+<summary><b>Where files are stored</b></summary>
 
-Пароль передаётся напрямую во встроенный открытый [ipatool](https://github.com/majd/ipatool), который входит в Apple. AppBridge нигде его не сохраняет, не пишет в журналы и никуда больше не отправляет. Сеанс App Store хранится в зашифрованном виде, а ключ защищён Windows (DPAPI) для вашей учётной записи; кнопка «Выйти» удаляет его. У AppBridge нет своих серверов, рекламы и телеметрии. Подробнее — в [SECURITY.md](SECURITY.md).
-</details>
-
-<details>
-<summary><b>Нужен ли джейлбрейк? Обходится ли защита Apple?</b></summary>
-
-Нет и нет. Приложения устанавливаются так же, как из App Store, и остаются привязаны к вашему Apple Account (защита FairPlay не обходится).
-</details>
-
-<details>
-<summary><b>iPhone не появляется в списке</b></summary>
-
-Используйте кабель с передачей данных и подключите его напрямую к компьютеру, разблокируйте iPhone и проверьте, что установлено приложение «Устройства Apple». Попробуйте другой USB-порт.
-</details>
-
-<details>
-<summary><b>Не исчезает «Нажмите „Доверять“ на iPhone»</b></summary>
-
-Разблокируйте iPhone — запрос показывается только на разблокированном экране. Если вы нажали «Не доверять», нажмите «Повторить» или переподключите кабель.
-</details>
-
-<details>
-<summary><b>«Нет в покупках этого Apple Account»</b></summary>
-
-Приложение получено другим Apple Account. Войдите под ним или включите «Получать бесплатные приложения» (для бесплатных).
-</details>
-
-<details>
-<summary><b>Где AppBridge хранит данные?</b></summary>
-
-| | Установщик | Портативная версия |
+| Data | Installer | Portable |
 |---|---|---|
-| Настройки, журналы, сеанс App Store | `%LOCALAPPDATA%\AppBridge` | `Data\` рядом с `AppBridge.exe` |
-| Скачанные и сохранённые приложения (`.ipa`) | `Загрузки\AppBridge` (меняется в настройках) | `Data\Downloads` |
-| Иконки сохранённых приложений | `%LOCALAPPDATA%\AppBridge\Icons` | `Data\Icons` |
+| Settings, logs, saved session | `%LOCALAPPDATA%\AppBridge` | `Data\` next to `AppBridge.exe` |
+| Saved apps (`.ipa`) | `Downloads\AppBridge` | `Data\Downloads` |
+| Cached app icons | `%LOCALAPPDATA%\AppBridge\Icons` | `Data\Icons` |
 
-В файлах `.ipa` есть email вашего Apple Account (так Apple оформляет покупки) — не передавайте их другим.
+Change the saved-app folder in Settings. A saved app can be installed without an App Store sign-in on the PC; the target iPhone still needs the account entitled to run it.
+
 </details>
 
-<details>
-<summary><b>Что-то пошло не так</b></summary>
+## Troubleshooting and tested devices
 
-Откройте **Настройки → Журналы диагностики → Показать** и приложите последний журнал к [issue](https://github.com/kr0nsch/AppBridge/issues/new/choose). Паролей и кодов в журналах нет.
-</details>
+| Problem | Try this |
+|---|---|
+| iPhone not listed | Install Apple Devices or iTunes, unlock the phone, use a data-capable cable and another USB port. |
+| Waiting for Trust | Keep the iPhone unlocked and accept its Trust prompt. If you denied it, press Try Again or reconnect. |
+| App not in your purchases | Use the Apple Account that owns it, or enable acquisition of free apps. |
+| App unavailable or incompatible | Check account availability and the target iOS version. Saving a package does not remove Apple's restrictions. |
+| Another error | Open **Settings → Diagnostic logs → Show** and [report a bug](https://github.com/kr0nsch/AppBridge/issues/new/choose) with the version, iPhone models, iOS versions and steps to reproduce. Review attachments for personal information. |
 
-## Сборка из исходников
+The repository currently records this device test; compatibility with every iPhone, iOS version and app has not been established:
 
-Нужны Windows 10/11, [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) и [Inno Setup 6](https://jrsoftware.org/isinfo.php) для установщика.
+| From | To | Apps | Result |
+|---|---|---|---|
+| iPhone 16 Pro | iPhone 14 | Sber, VK, Mail.ru Mail | Transferred |
+
+Tried another combination? [Share a compatibility report](https://github.com/kr0nsch/AppBridge/issues/new?template=compatibility_report.yml) with both iOS versions and the AppBridge version to help expand the compatibility record.
+
+## Build and contribute
+
+Use Windows and the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) specified in [global.json](global.json).
 
 ```powershell
-# ipatool (закреплённая версия, проверка SHA-256)
+git clone https://github.com/kr0nsch/AppBridge.git
+cd AppBridge
+
+# Download the pinned, checksum-verified ipatool binary.
 ./build/Get-Ipatool.ps1
 
-# Тесты
 dotnet test tests/AppBridge.Core.Tests
-
-# Запуск
 dotnet run --project src/AppBridge -p:Platform=x64
 
-# Портативный ZIP и установщик в artifacts/release
-./build/build.ps1 -Version 1.1.0
+# Explore the UI without iPhones or an Apple Account.
+dotnet run --project src/AppBridge -p:Platform=x64 -- --demo
 ```
 
-Запуск с ключом `--demo` (или с переменной `APPBRIDGE_DEMO=1`) включает демонстрационный режим со смоделированными iPhone и App Store — удобно для работы над интерфейсом без устройств и Apple Account. Ключ `--demo-saved` добавляет несколько сохранённых приложений для «Перенести потом».
+Use `--demo-saved` for a simulated saved-app library. To build release files, install [Inno Setup 6](https://jrsoftware.org/isinfo.php) and run `./build/build.ps1 -Version 1.1.0`. The script writes the installer, portable ZIP and checksums to `artifacts/release`.
 
-Тег вида `v1.2.3` запускает [GitHub Actions](.github/workflows/release.yml): сборка, тесты и публикация релиза с установщиком, портативной версией и контрольными суммами.
+Useful contributions include reproducible bug reports, [iPhone/iOS compatibility results](https://github.com/kr0nsch/AppBridge/issues/new?template=compatibility_report.yml), improvements to error messages, accessibility and translations. Start with [CONTRIBUTING.md](CONTRIBUTING.md), browse [open issues](https://github.com/kr0nsch/AppBridge/issues), [suggest an improvement](https://github.com/kr0nsch/AppBridge/issues/new?template=feature_request.yml), or read the [changelog](CHANGELOG.md).
 
 <details>
-<summary><b>Структура проекта</b></summary>
+<summary><b>Project layout and dependencies</b></summary>
 
-| Путь | Что внутри |
+| Path | Contents |
 |---|---|
-| `src/AppBridge` | Приложение WinUI 3: экраны, модели представления, стили, переводы (`Strings/`) |
-| `src/AppBridge.Core` | Работа с iPhone по USB (доверие, список приложений, установка), интеграция с ipatool, конвейер переноса |
-| `tests/AppBridge.Core.Tests` | Модульные тесты, в том числе проверка с настоящим ipatool |
-| `installer` | Скрипт Inno Setup и оформление установщика |
-| `build` | Сборка релиза, загрузка ipatool с проверкой контрольной суммы, генерация иконки |
-| `legacy/python` | Первый кроссплатформенный прототип на Python (не поддерживается) |
+| `src/AppBridge` | WinUI screens, view models, themes and translations |
+| `src/AppBridge.Core` | USB device access, App Store integration, saved-app library and transfer pipeline |
+| `tests/AppBridge.Core.Tests` | Core tests and ipatool integration checks |
+| `build`, `installer` | Packaging, dependency pinning and Inno Setup installer |
+| `legacy/python` | Unmaintained original Python prototype |
 
-AppBridge построен на [WinUI 3](https://github.com/microsoft/microsoft-ui-xaml) / Windows App SDK, [Netimobiledevice](https://github.com/artehe/Netimobiledevice) (работа с iPhone по USB) и [ipatool](https://github.com/majd/ipatool) (загрузки из App Store). Лицензии — в [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt).
+Built with [WinUI 3](https://github.com/microsoft/microsoft-ui-xaml), [Netimobiledevice](https://github.com/artehe/Netimobiledevice) and [ipatool](https://github.com/majd/ipatool). See [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt) for their licenses.
+
 </details>
 
-## Лицензия
+**If AppBridge helped you move your apps, a [star on GitHub](https://github.com/kr0nsch/AppBridge) helps others discover it.** Sharing a reproducible bug or a device test is just as welcome.
 
-[MIT](LICENSE). AppBridge не связан с Apple Inc. и не одобрен ею. iPhone и App Store — товарные знаки Apple Inc. Используйте программу только с приложениями, на которые у вас есть права.
+[MIT license](LICENSE). AppBridge is an independent project and is not affiliated with or endorsed by Apple Inc. iPhone and App Store are trademarks of Apple Inc. Use it only with apps you are entitled to.

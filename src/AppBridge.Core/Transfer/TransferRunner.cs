@@ -23,7 +23,7 @@ public sealed class TransferRunner(IAppStoreClient ipatool, IDeviceService devic
     public const string StagingFolderName = ".appbridge-downloads";
 
     // Survives between runs so "Retry" does not download the same package twice.
-    // Key: bundle id and requested version; value: where that package is now.
+    // Key: download folder, bundle id and requested version; value: where that package is now.
     private readonly ConcurrentDictionary<string, string> _downloaded = new();
 
     public Task RunAsync(
@@ -203,7 +203,8 @@ public sealed class TransferRunner(IAppStoreClient ipatool, IDeviceService devic
     private async Task<string> DownloadAsync(InstalledApp app, TransferOptions options, Action<TransferUpdate> report, CancellationToken token)
     {
         var externalVersion = options.VersionPolicy == VersionPolicy.SameAsSource ? app.ExternalVersionId : null;
-        var cacheKey = $"{app.BundleId}|{externalVersion}";
+        var downloadFolder = Path.TrimEndingDirectorySeparator(Path.GetFullPath(options.DownloadDirectory));
+        var cacheKey = $"{downloadFolder}|{app.BundleId}|{externalVersion}";
         if (_downloaded.TryGetValue(cacheKey, out var known) && IsValidPackage(known, app.BundleId))
         {
             AppLog.Info($"{app.BundleId}: using the package already downloaded.");
@@ -261,14 +262,17 @@ public sealed class TransferRunner(IAppStoreClient ipatool, IDeviceService devic
     }
 
     /// <summary>File name for an app saved to install later, readable in Explorer: "Name 1.2.3.ipa".</summary>
-    internal static string SavedFileName(string name, string version, string bundleId)
+    internal static string SavedFileName(string name, string version, string bundleId, int copy = 1)
     {
         var invalid = Path.GetInvalidFileNameChars();
         var clean = string.Concat(name.Select(c => invalid.Contains(c) || char.IsControl(c) ? '_' : c)).Trim(' ', '.');
         if (clean.Length == 0)
             clean = bundleId;
-        if (clean.Length > 80)
-            clean = clean[..80].TrimEnd();
+        var suffix = copy > 1 ? $" ({copy})" : "";
+        var maxNameLength = 80 - suffix.Length;
+        if (clean.Length > maxNameLength)
+            clean = clean[..maxNameLength].TrimEnd();
+        clean += suffix;
         return string.IsNullOrWhiteSpace(version) ? $"{clean}.ipa" : $"{clean} {version}.ipa";
     }
 
@@ -285,7 +289,7 @@ public sealed class TransferRunner(IAppStoreClient ipatool, IDeviceService devic
         var version = IpaPackage.Read(path).Version;
         var target = Path.Combine(folder, SavedFileName(app.Name, version, app.BundleId));
         for (var n = 2; File.Exists(target) && !IsSamePackage(target, app.BundleId, version); n++)
-            target = Path.Combine(folder, SavedFileName($"{app.Name} ({n})", version, app.BundleId));
+            target = Path.Combine(folder, SavedFileName(app.Name, version, app.BundleId, copy: n));
 
         File.Move(path, target, overwrite: true);
         foreach (var (key, value) in _downloaded)

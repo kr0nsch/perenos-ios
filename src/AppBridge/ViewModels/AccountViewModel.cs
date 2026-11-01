@@ -21,7 +21,8 @@ public enum AccountState
 public sealed partial class AccountViewModel(IAppStoreClient ipatool) : ObservableObject
 {
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IsSignedIn), nameof(IsSignedOut), nameof(IsChecking), nameof(TitleBarText), nameof(IsUnavailable))]
+    [NotifyPropertyChangedFor(nameof(IsSignedIn), nameof(IsSignedOut), nameof(IsChecking), nameof(TitleBarText), nameof(IsUnavailable), nameof(HasSignOutError))]
+    [NotifyCanExecuteChangedFor(nameof(SignInCommand), nameof(SignOutCommand))]
     public partial AccountState State { get; set; } = AccountState.Checking;
 
     [ObservableProperty]
@@ -46,14 +47,16 @@ public sealed partial class AccountViewModel(IAppStoreClient ipatool) : Observab
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SignInButtonText))]
+    [NotifyCanExecuteChangedFor(nameof(SignInCommand))]
     public partial bool IsCodeRequired { get; set; }
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsIdle))]
+    [NotifyCanExecuteChangedFor(nameof(SignInCommand), nameof(SignOutCommand))]
     public partial bool IsBusy { get; set; }
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(HasError))]
+    [NotifyPropertyChangedFor(nameof(HasError), nameof(HasSignOutError))]
     public partial string? Error { get; set; }
 
     public bool IsSignedIn => State == AccountState.SignedIn;
@@ -67,6 +70,8 @@ public sealed partial class AccountViewModel(IAppStoreClient ipatool) : Observab
     public bool IsIdle => !IsBusy;
 
     public bool HasError => !string.IsNullOrEmpty(Error);
+
+    public bool HasSignOutError => IsSignedIn && HasError;
 
     public string TitleBarText => State == AccountState.SignedIn ? Email : Loc.Get("Account_SignIn");
 
@@ -104,14 +109,16 @@ public sealed partial class AccountViewModel(IAppStoreClient ipatool) : Observab
     }
 
     private bool CanSignIn() =>
-        !IsBusy && InputEmail.Trim().Length > 0 && InputPassword.Length > 0 && (!IsCodeRequired || InputCode.Trim().Length >= 6);
+        IsSignedOut && !IsBusy && InputEmail.Trim().Length > 0 && InputPassword.Length > 0 && (!IsCodeRequired || InputCode.Trim().Length >= 6);
 
     [RelayCommand(CanExecute = nameof(CanSignIn))]
     private async Task SignInAsync()
     {
+        if (!CanSignIn())
+            return;
+
         IsBusy = true;
         Error = null;
-        SignInCommand.NotifyCanExecuteChanged();
         try
         {
             var result = await ipatool.LoginAsync(InputEmail.Trim(), InputPassword, IsCodeRequired ? InputCode : null);
@@ -142,7 +149,6 @@ public sealed partial class AccountViewModel(IAppStoreClient ipatool) : Observab
         finally
         {
             IsBusy = false;
-            SignInCommand.NotifyCanExecuteChanged();
         }
     }
 
@@ -156,26 +162,34 @@ public sealed partial class AccountViewModel(IAppStoreClient ipatool) : Observab
         State = AccountState.SignedOut;
     }
 
-    [RelayCommand]
+    private bool CanSignOut() => IsSignedIn && !IsBusy;
+
+    [RelayCommand(CanExecute = nameof(CanSignOut))]
     private async Task SignOutAsync()
     {
+        if (!CanSignOut())
+            return;
+
         IsBusy = true;
+        Error = null;
         try
         {
             await ipatool.SignOutAsync();
+            Email = "";
+            Name = "";
+            InputEmail = "";
+            ResetForm();
+            State = AccountState.SignedOut;
         }
         catch (Exception ex)
         {
             AppLog.Warn("Sign-out failed.", ex);
+            Error = Loc.Get("Account_Error_SignOut");
         }
         finally
         {
             IsBusy = false;
         }
-
-        Email = "";
-        Name = "";
-        State = AccountState.SignedOut;
     }
 
     [RelayCommand]

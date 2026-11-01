@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Using Include="Xunit" />
+    <Compile Include="..\..\src\AppBridge\Services\ActivationForwarder.cs" Link="ActivationForwarder.cs" />
   </ItemGroup>
 
 </Project>

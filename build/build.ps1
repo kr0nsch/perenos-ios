@@ -10,7 +10,7 @@
 #>
 [CmdletBinding()]
 param(
-    [string] $Version = '1.0.0',
+    [string] $Version = '1.1.1',
     [ValidateSet('win-x64', 'win-arm64')]
     [string[]] $RuntimeIdentifier = @('win-x64'),
     [switch] $SkipTests,
@@ -71,6 +71,7 @@ if (-not $SkipTests) {
     & (Join-Path $PSScriptRoot 'Get-Ipatool.ps1') -RuntimeIdentifier win-x64
     Write-Host "Running tests..." -ForegroundColor Cyan
     Invoke-Checked { dotnet test (Join-Path $root 'tests\AppBridge.Core.Tests\AppBridge.Core.Tests.csproj') -c Release }
+    Invoke-Checked { dotnet test (Join-Path $root 'tests\AppBridge.ViewModel.Tests\AppBridge.ViewModel.Tests.csproj') -c Release }
 }
 
 foreach ($rid in $RuntimeIdentifier) {

@@ -4,15 +4,27 @@ All notable changes to AppBridge are listed here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.1.1] - 2026-11-01
+
+### Что исправлено
+- Кнопка «Остановить» работает уже во время подготовки приложений; незавершённые приложения можно повторить.
+- При ошибке выхода из Apple Account программа показывает сообщение и позволяет повторить выход, сохраняя текущий статус аккаунта.
+- Повторный запуск больше не зависает, если первая копия приложения закрылась или не отвечает.
+- После смены папки загрузок приложения сохраняются в выбранную папку; конфликт длинных имён файлов больше не вызывает зависание.
 
 ### Fixed
+- Stop now cancels preparation as well as the transfer, keeping unfinished apps available for retry.
+- Failed App Store sign-out now keeps the account visible and shows a localized error instead of reporting success.
+- Forwarding a second launch now has a bounded wait and safely releases its event handle, including when the running app exits or stops responding.
 - Saving apps after changing the downloads folder now writes to the selected folder instead of reusing a cached file from the previous library.
 - Saving an app with a long name no longer hangs when its filename collides with a different saved app; both packages are preserved with distinct names.
 
 ### Changed
+- Added automated view-model regression tests to CI and release builds.
 - The Russian main README and the separate English README have a shorter quick start and clearer requirements and transfer limits.
 - Added forms for compatibility reports and feature requests, plus contributor development priorities.
+
+[1.1.1]: https://github.com/kr0nsch/AppBridge/releases/tag/v1.1.1
 
 ## [1.1.0] - 2026-10-27
 

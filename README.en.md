@@ -139,13 +139,14 @@ cd AppBridge
 ./build/Get-Ipatool.ps1
 
 dotnet test tests/AppBridge.Core.Tests
+dotnet test tests/AppBridge.ViewModel.Tests
 dotnet run --project src/AppBridge -p:Platform=x64
 
 # Explore the UI without iPhones or an Apple Account.
 dotnet run --project src/AppBridge -p:Platform=x64 -- --demo
 ```
 
-Use `--demo-saved` for a simulated saved-app library. To build release files, install [Inno Setup 6](https://jrsoftware.org/isinfo.php) and run `./build/build.ps1 -Version 1.1.0`. The script writes the installer, portable ZIP and checksums to `artifacts/release`.
+Use `--demo-saved` for a simulated saved-app library. To build release files, install [Inno Setup 6](https://jrsoftware.org/isinfo.php) and run `./build/build.ps1 -Version 1.1.1`. The script writes the installer, portable ZIP and checksums to `artifacts/release`.
 
 Useful contributions include reproducible bug reports, [iPhone/iOS compatibility results](https://github.com/kr0nsch/AppBridge/issues/new?template=compatibility_report.yml), improvements to error messages, accessibility and translations. Start with [CONTRIBUTING.md](CONTRIBUTING.md), browse [open issues](https://github.com/kr0nsch/AppBridge/issues), [suggest an improvement](https://github.com/kr0nsch/AppBridge/issues/new?template=feature_request.yml), or read the [changelog](CHANGELOG.md).
 

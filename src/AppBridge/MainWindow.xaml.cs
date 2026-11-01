@@ -209,20 +209,19 @@ public sealed partial class MainWindow : Window
     private async void OnAccountClick(object sender, RoutedEventArgs e)
     {
         var account = ViewModel.Account;
+        if (account.IsBusy || account.IsChecking)
+            return;
+
         if (account.IsSignedIn)
         {
             var flyout = new MenuFlyout();
             flyout.Items.Add(new MenuFlyoutItem { Text = account.SignedInText, IsEnabled = false, Icon = new FontIcon { Glyph = "" } });
             flyout.Items.Add(new MenuFlyoutSeparator());
-            var signOut = new MenuFlyoutItem { Text = Loc.Get("Account_SignOut"), Icon = new FontIcon { Glyph = "" } };
-            signOut.Click += (_, _) => account.SignOutCommand.Execute(null);
+            var signOut = new MenuFlyoutItem { Text = Loc.Get("Account_SignOut"), Icon = new FontIcon { Glyph = "" }, Command = account.SignOutCommand };
             flyout.Items.Add(signOut);
             flyout.ShowAt(AccountButton);
             return;
         }
-
-        if (account.IsChecking)
-            return;
 
         var dialog = CreateDialog();
         dialog.Title = Loc.Get("SignIn_DialogTitle");

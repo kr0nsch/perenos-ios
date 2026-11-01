@@ -143,12 +143,9 @@ public sealed partial class InstallViewModel : ObservableObject
         Items.Clear();
         _lastUpdate.Clear();
         for (var i = 0; i < apps.Count; i++)
-        {
-            var icon = await _icons.GetAsync(apps[i].BundleId);
-            Items.Add(new TransferItemViewModel(apps[i], icon, flow) { ShowSeparator = i > 0 });
-        }
+            Items.Add(new TransferItemViewModel(apps[i], null, flow) { ShowSeparator = i > 0 });
 
-        await RunAsync(apps);
+        await RunAsync(apps, loadIcons: true);
     }
 
     public void Cancel() => _run?.Cancel();
@@ -172,9 +169,10 @@ public sealed partial class InstallViewModel : ObservableObject
         WasCanceled = false;
     }
 
-    private async Task RunAsync(IReadOnlyList<InstalledApp> apps)
+    private async Task RunAsync(IReadOnlyList<InstalledApp> apps, bool loadIcons = false)
     {
-        _run = new CancellationTokenSource();
+        using var run = new CancellationTokenSource();
+        _run = run;
         State = InstallState.Running;
         WasCanceled = false;
         Recount();
@@ -189,23 +187,36 @@ public sealed partial class InstallViewModel : ObservableObject
         KeepAwake.Enable();
         try
         {
+            if (loadIcons)
+            {
+                for (var i = 0; i < apps.Count; i++)
+                {
+                    run.Token.ThrowIfCancellationRequested();
+                    var icon = await _icons.GetAsync(apps[i].BundleId).WaitAsync(run.Token);
+                    run.Token.ThrowIfCancellationRequested();
+                    Items[i] = new TransferItemViewModel(apps[i], icon, Flow) { ShowSeparator = i > 0 };
+                }
+            }
+
             switch (Flow)
             {
                 case Flow.Save:
                     Directory.CreateDirectory(options.DownloadDirectory);
-                    await _services.Transfers.SaveAsync(apps, options with { KeepDownloads = true }, Report, _run.Token);
+                    await _services.Transfers.SaveAsync(apps, options with { KeepDownloads = true }, Report, run.Token);
                     break;
                 case Flow.InstallSaved:
-                    await _services.Transfers.InstallSavedAsync(apps.Select(a => _saved[a.BundleId]).ToList(), _targetUdid!, Report, _run.Token);
+                    await _services.Transfers.InstallSavedAsync(apps.Select(a => _saved[a.BundleId]).ToList(), _targetUdid!, Report, run.Token);
                     break;
                 default:
-                    await _services.Transfers.RunAsync(apps, _targetUdid!, options, Report, _run.Token);
+                    await _services.Transfers.RunAsync(apps, _targetUdid!, options, Report, run.Token);
                     break;
             }
         }
         catch (OperationCanceledException)
         {
             WasCanceled = true;
+            foreach (var item in Items.Where(i => !i.IsCompleted && !i.IsFailed))
+                item.Apply(new TransferUpdate(TransferStage.Canceled));
             AppLog.Info("Installation stopped by the user.");
         }
         catch (Exception ex)
@@ -217,6 +228,7 @@ public sealed partial class InstallViewModel : ObservableObject
         finally
         {
             KeepAwake.Disable();
+            _run = null;
         }
 
         // Let the last queued progress updates land before summarising.

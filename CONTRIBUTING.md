@@ -8,7 +8,8 @@ Thanks for helping improve AppBridge!
 2. Install the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0).
 3. Run `./build/Get-Ipatool.ps1` once to fetch the pinned ipatool binary.
 4. Build and run: `dotnet run --project src/AppBridge -p:Platform=x64`.
-5. Run the tests: `dotnet test tests/AppBridge.Core.Tests`.
+5. Run both suites: `dotnet test tests/AppBridge.Core.Tests` and
+   `dotnet test tests/AppBridge.ViewModel.Tests`.
 
 Use `--demo` to work on the UI without iPhones or an Apple Account:
 
@@ -16,8 +17,9 @@ Use `--demo` to work on the UI without iPhones or an Apple Account:
 dotnet run --project src/AppBridge -p:Platform=x64 -- --demo
 ```
 
-See [development priorities](docs/DEVELOPMENT.md) for concrete reliability work and
-the regression scenarios each change should cover.
+See [development priorities](docs/DEVELOPMENT.md) for completed reliability fixes and
+the remaining product work. View-model tests compile the real view-model source with
+headless UI adapters; the Windows app build checks the production WinUI integration.
 
 ## Guidelines
 

@@ -1,0 +1,168 @@
+using System.Collections.Concurrent;
+using AppBridge.Core;
+using AppBridge.Core.Devices;
+using AppBridge.Core.Ipatool;
+using AppBridge.Core.Library;
+using AppBridge.Core.Tests;
+using AppBridge.Core.Transfer;
+using AppBridge.Services;
+using AppBridge.ViewModels;
+using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml.Media;
+
+namespace AppBridge.ViewModel.Tests;
+
+public sealed class InstallViewModelTests : IDisposable
+{
+    private readonly string _folder = Path.Combine(Path.GetTempPath(), $"appbridge-vm-{Guid.NewGuid():N}");
+    private readonly FakeStore _store = new();
+    private readonly FakeDevices _devices = new();
+    private readonly IconCache _icons = new();
+
+    public InstallViewModelTests() => Directory.CreateDirectory(_folder);
+
+    public void Dispose() => Directory.Delete(_folder, recursive: true);
+
+    [Theory]
+    [InlineData(Flow.Now)]
+    [InlineData(Flow.Save)]
+    [InlineData(Flow.InstallSaved)]
+    public async Task StopDuringIconLoadingPreventsTransferAndKeepsAllAppsRetryable(Flow flow)
+    {
+        var icon = new TaskCompletionSource<ImageSource?>();
+        _icons.Load = _ => icon.Task;
+        var vm = CreateViewModel();
+        var apps = new[] { App("a"), App("b"), App("c") };
+        var run = Start(vm, apps, flow);
+
+        vm.Cancel();
+        icon.SetResult(null);
+        await run.WaitAsync(TimeSpan.FromSeconds(5));
+
+        Assert.True(vm.WasCanceled);
+        Assert.Equal(InstallState.Finished, vm.State);
+        Assert.Equal(apps.Length, vm.Items.Count);
+        Assert.Equal(apps.Length, vm.RetryableCount);
+        Assert.All(vm.Items, item => Assert.Equal(TransferStage.Canceled, item.Stage));
+        Assert.Empty(_store.Downloads);
+        Assert.Empty(_devices.Installed);
+    }
+
+    [Fact]
+    public async Task StopDoesNotWaitForAnUnfinishedIconRead()
+    {
+        var icon = new TaskCompletionSource<ImageSource?>();
+        _icons.Load = _ => icon.Task;
+        var vm = CreateViewModel();
+        var run = vm.StartSaveAsync([App("a")]);
+
+        vm.Cancel();
+        try
+        {
+            await run.WaitAsync(TimeSpan.FromSeconds(2));
+        }
+        finally
+        {
+            icon.TrySetResult(null);
+            await run.WaitAsync(TimeSpan.FromSeconds(5));
+        }
+
+        Assert.True(vm.WasCanceled);
+        Assert.Empty(_store.Downloads);
+    }
+
+    [Fact]
+    public async Task StopDuringIconLoadingAlsoWorksAfterAPreviousRun()
+    {
+        var vm = CreateViewModel();
+        await vm.StartSaveAsync([App("previous")]);
+        var icon = new TaskCompletionSource<ImageSource?>();
+        _icons.Load = _ => icon.Task;
+
+        var run = vm.StartSaveAsync([App("a"), App("b")]);
+        vm.Cancel();
+        icon.SetResult(null);
+        await run.WaitAsync(TimeSpan.FromSeconds(5));
+
+        Assert.True(vm.WasCanceled);
+        Assert.Equal(2, vm.RetryableCount);
+        Assert.Equal("previous", Assert.Single(_store.Downloads));
+    }
+
+    [Fact]
+    public async Task RetryAfterStoppingIconLoadingUsesAFreshTokenAndTransfersEveryApp()
+    {
+        var icon = new TaskCompletionSource<ImageSource?>();
+        _icons.Load = _ => icon.Task;
+        var vm = CreateViewModel();
+        var run = vm.StartAsync([App("a"), App("b")], Target());
+        vm.Cancel();
+        icon.SetResult(null);
+        await run.WaitAsync(TimeSpan.FromSeconds(5));
+
+        Assert.Equal(2, vm.RetryableCount);
+        await vm.RetryAsync().WaitAsync(TimeSpan.FromSeconds(5));
+
+        Assert.False(vm.WasCanceled);
+        Assert.Equal(2, vm.CompletedCount);
+        Assert.Equal(0, vm.RetryableCount);
+        Assert.Equal(["a", "b"], _store.Downloads);
+        Assert.Equal(["a", "b"], _devices.Installed);
+    }
+
+    private InstallViewModel CreateViewModel() => new(
+        new AppServices(_folder, new TransferRunner(_store, _devices)), _icons, new DispatcherQueue());
+
+    private Task Start(InstallViewModel vm, IReadOnlyList<InstalledApp> apps, Flow flow) => flow switch
+    {
+        Flow.Save => vm.StartSaveAsync(apps),
+        Flow.InstallSaved => vm.StartInstallSavedAsync(apps.Select(app => SavedAppLibrary.Read(TestIpa.Create(_folder, app.BundleId))).ToList(), Target()),
+        _ => vm.StartAsync(apps, Target()),
+    };
+
+    private static InstalledApp App(string id) => new(id, $"App {id}", "1.0", null, 42, null, null, null, null);
+
+    private static DeviceItemViewModel Target() => new("target", _ => Task.CompletedTask);
+
+    private sealed class FakeStore : IAppStoreClient
+    {
+        public ConcurrentQueue<string> Downloads { get; } = new();
+
+        public bool IsAvailable => true;
+
+        public Task<IpatoolAccount?> GetAccountAsync(CancellationToken cancellationToken = default) => throw new NotSupportedException();
+
+        public Task<LoginResult> LoginAsync(string email, string password, string? authCode, CancellationToken cancellationToken = default) => throw new NotSupportedException();
+
+        public Task SignOutAsync(CancellationToken cancellationToken = default) => throw new NotSupportedException();
+
+        public Task<string> DownloadAsync(DownloadRequest request, IProgress<DownloadProgress>? progress, CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            Downloads.Enqueue(request.BundleId);
+            var path = TestIpa.Create(Path.GetDirectoryName(request.OutputPath)!, request.BundleId);
+            File.Move(path, request.OutputPath);
+            return Task.FromResult(request.OutputPath);
+        }
+    }
+
+    private sealed class FakeDevices : IDeviceService
+    {
+        public ConcurrentQueue<string> Installed { get; } = new();
+
+        public Task<DeviceInfo> GetInfoAsync(string udid, CancellationToken cancellationToken = default) => throw new NotSupportedException();
+
+        public Task<bool> TrustAsync(string udid, IProgress<DeviceTrust>? progress, CancellationToken cancellationToken = default) => throw new NotSupportedException();
+
+        public Task<IReadOnlyList<InstalledApp>> GetUserAppsAsync(string udid, CancellationToken cancellationToken = default) => throw new NotSupportedException();
+
+        public Task LoadIconsAsync(string udid, IReadOnlyList<string> bundleIds, Action<string, byte[]> onIcon, CancellationToken cancellationToken = default) => Task.CompletedTask;
+
+        public Task InstallAsync(string udid, string ipaPath, IProgress<InstallProgress>? progress, CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            Installed.Enqueue(IpaPackage.Read(ipaPath).BundleId);
+            return Task.CompletedTask;
+        }
+    }
+}

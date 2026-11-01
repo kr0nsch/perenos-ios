@@ -139,13 +139,14 @@ cd AppBridge
 ./build/Get-Ipatool.ps1
 
 dotnet test tests/AppBridge.Core.Tests
+dotnet test tests/AppBridge.ViewModel.Tests
 dotnet run --project src/AppBridge -p:Platform=x64
 
 # Посмотреть интерфейс без iPhone и Apple Account.
 dotnet run --project src/AppBridge -p:Platform=x64 -- --demo
 ```
 
-Параметр `--demo-saved` добавляет демонстрационную библиотеку сохранённых приложений. Для сборки релиза установите [Inno Setup 6](https://jrsoftware.org/isinfo.php) и запустите `./build/build.ps1 -Version 1.1.0`. Установщик, портативный ZIP и контрольные суммы появятся в `artifacts/release`.
+Параметр `--demo-saved` добавляет демонстрационную библиотеку сохранённых приложений. Для сборки релиза установите [Inno Setup 6](https://jrsoftware.org/isinfo.php) и запустите `./build/build.ps1 -Version 1.1.1`. Установщик, портативный ZIP и контрольные суммы появятся в `artifacts/release`.
 
 Проекту полезны воспроизводимые отчёты об ошибках, [результаты проверок iPhone/iOS](https://github.com/kr0nsch/AppBridge/issues/new?template=compatibility_report.yml), улучшения текстов ошибок, доступности и переводов. Начните с [CONTRIBUTING.md](CONTRIBUTING.md), посмотрите [открытые задачи](https://github.com/kr0nsch/AppBridge/issues), [предложите улучшение](https://github.com/kr0nsch/AppBridge/issues/new?template=feature_request.yml) или прочитайте [историю изменений](CHANGELOG.md).
 

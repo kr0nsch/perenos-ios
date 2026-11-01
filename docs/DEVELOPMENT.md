@@ -1,51 +1,25 @@
 # Development priorities
 
-These are bounded follow-ups from a source review, not release commitments.
-The UI issues below are supported by control flow in the code; they have not
-been reproduced in a running app or on an iPhone.
+## Reliability fixes in 1.1.1
 
-## Reliability
+The three issues from the source review are fixed and covered by regression tests:
 
-### 1. Honor Stop during preparation
+- **Stop during preparation.** Cancellation applies while icons load and while apps
+  transfer. Unfinished apps remain available for retry with a fresh cancellation token.
+  Source: [InstallViewModel](../src/AppBridge/ViewModels/InstallViewModel.cs).
+- **Unsuccessful sign-out.** A failed revoke retains the signed-in account and displays
+  a localized error with a retry action. Successful sign-out clears account details
+  and form secrets; account operations cannot overlap.
+  Source: [AccountViewModel](../src/AppBridge/ViewModels/AccountViewModel.cs).
+- **Activation forwarding.** A second launch waits for a bounded period, observes
+  forwarding failures and releases the event handle even if the target stalls.
+  Source: [ActivationForwarder](../src/AppBridge/Services/ActivationForwarder.cs).
 
-Source: [InstallViewModel](../src/AppBridge/ViewModels/InstallViewModel.cs).
-
-- Condition to reproduce: start a transfer with uncached icons and press Stop
-  while the icons are still loading.
-- Static evidence: `BeginAsync` sets `Running` before awaiting icon reads;
-  `Cancel` acts on `_run`, which `RunAsync` creates afterward. The eventual
-  transfer therefore gets a fresh token despite the earlier Stop request.
-- Expected behavior: create a run token before the first asynchronous step,
-  preserve it through preparation and transfer, and finish as canceled.
-- Regression test: delay icon loading, request cancellation, then release the
-  icon read; assert that no download or installation starts and retry remains
-  possible. Also test cancellation after a previous completed run.
-
-### 2. Report unsuccessful sign-out
-
-Source: [AccountViewModel](../src/AppBridge/ViewModels/AccountViewModel.cs).
-
-- Condition to reproduce: make `IAppStoreClient.SignOutAsync` fail or time out
-  while an account is signed in, then restart the app.
-- Static evidence: `SignOutAsync` catches the exception but still clears the
-  account fields and sets `SignedOut`, without confirming session removal.
-- Expected behavior: show a useful error and retain the account state until
-  sign-out succeeds; handle local session deletion explicitly if introduced.
-- Regression tests: a failed revoke must not report successful sign-out;
-  a successful revoke must clear the account and remain signed out on refresh.
-
-### 3. Bound activation forwarding
-
-Source: [Program](../src/AppBridge/Program.cs).
-
-- Condition to reproduce: the existing app exits or activation forwarding fails
-  between finding the running instance and redirecting to it.
-- Static evidence: an exception from `RedirectActivationToAsync` skips
-  `SetEvent`, while `CoWaitForMultipleObjects` waits without a timeout.
-- Expected behavior: signal completion in `finally`, observe forwarding errors,
-  bound the wait, and close the native event handle on every exit path.
-- Regression tests: simulate successful forwarding, an exception, and a stalled
-  target; each path must finish within a bound and release the handle.
+[View-model tests](../tests/AppBridge.ViewModel.Tests) compile the production view
+models with deterministic headless UI adapters. [Core tests](../tests/AppBridge.Core.Tests)
+cover activation forwarding, saved-app storage and the transfer pipeline. Both suites
+run in CI and before release packaging. These tests do not replace real-device USB
+checks or visual checks of WinUI screens.
 
 ## Product evidence and distribution
 

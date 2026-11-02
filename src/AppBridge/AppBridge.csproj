@@ -6,7 +6,7 @@
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
     <RootNamespace>AppBridge</RootNamespace>
-    <AssemblyName>AppBridge</AssemblyName>
+    <AssemblyName>Perenos</AssemblyName>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Assets\AppBridge.ico</ApplicationIcon>
     <Platforms>x64;ARM64</Platforms>

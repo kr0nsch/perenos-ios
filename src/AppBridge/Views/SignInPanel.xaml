@@ -82,7 +82,7 @@
       </Grid.ColumnDefinitions>
       <FontIcon Glyph="&#xE72E;" FontSize="14" Foreground="{ThemeResource AppSecondaryLabelBrush}" VerticalAlignment="Top" Margin="0,2,0,0" />
       <TextBlock x:Uid="SignIn_Privacy" Grid.Column="1" Style="{StaticResource FootnoteStyle}"
-                 Text="Apps are downloaded from Apple with your own Apple Account. Your password goes only to Apple, through the open-source ipatool, and AppBridge never stores it." />
+                 Text="Apps are downloaded from Apple with your own Apple Account. Your password goes only to Apple, through the open-source ipatool, and Perenos never stores it." />
     </Grid>
   </StackPanel>
 </UserControl>

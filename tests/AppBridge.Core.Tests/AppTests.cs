@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
@@ -85,6 +87,30 @@ public class AppTests
             Assert.Equal(first, second);
             Assert.True(first.Length >= 40);
             Assert.DoesNotContain(first, File.ReadAllText(Path.Combine(dir, "keychain.key")));
+        }
+        finally
+        {
+            Directory.Delete(dir, true);
+        }
+    }
+
+    [Fact]
+    public void AppBridgeSessionRemainsReadableAfterProductRename()
+    {
+        var dir = TestPaths.TempDirectory();
+        try
+        {
+            const string passphrase = "existing-appbridge-session-passphrase";
+            var legacyKey = ProtectedData.Protect(Encoding.UTF8.GetBytes(passphrase),
+                "AppBridge.ipatool.keychain.v1"u8.ToArray(), DataProtectionScope.CurrentUser);
+            File.WriteAllBytes(Path.Combine(dir, "keychain.key"), legacyKey);
+            var account = Path.Combine(dir, ".ipatool", "account");
+            Directory.CreateDirectory(Path.GetDirectoryName(account)!);
+            File.WriteAllText(account, "existing encrypted account");
+
+            Assert.Equal(passphrase, Ipatool.KeychainPassphrase.GetOrCreate(dir));
+            Assert.Equal(legacyKey, File.ReadAllBytes(Path.Combine(dir, "keychain.key")));
+            Assert.Equal("existing encrypted account", File.ReadAllText(account));
         }
         finally
         {

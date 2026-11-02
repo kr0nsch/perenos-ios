@@ -1,5 +1,5 @@
 name: Feature request / Предложение
-description: Describe a task AppBridge could make easier / Как сделать AppBridge удобнее
+description: Describe a task Perenos could make easier / Как сделать «Перенос» удобнее
 title: "[Feature]: "
 body:
   - type: textarea

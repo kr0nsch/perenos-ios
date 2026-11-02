@@ -5,15 +5,15 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for testing AppBridge! Reports help us document real device compatibility.
+        Thanks for testing Perenos! Reports help us document real device compatibility.
         Спасибо за проверку! Укажите только модели устройств и версии ПО.
         Never attach IPA files, Apple Account details, passwords, codes or device identifiers.
         Не прикладывайте IPA-файлы, данные аккаунта, пароли, коды и идентификаторы устройств.
   - type: input
     id: version
     attributes:
-      label: AppBridge version / Версия AppBridge
-      placeholder: "1.1.0"
+      label: Perenos version / Версия «Переноса»
+      placeholder: "1.2.0"
     validations:
       required: true
   - type: dropdown

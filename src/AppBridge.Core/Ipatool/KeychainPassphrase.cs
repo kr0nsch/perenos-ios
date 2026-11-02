@@ -10,6 +10,7 @@ namespace AppBridge.Core.Ipatool;
 internal static class KeychainPassphrase
 {
     private const string KeyFileName = "keychain.key";
+    // Persistent encryption contract: changing the product name must not invalidate sessions.
     private static readonly byte[] Entropy = "AppBridge.ipatool.keychain.v1"u8.ToArray();
 
     public static string GetOrCreate(string ipatoolHome)

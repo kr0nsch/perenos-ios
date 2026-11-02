@@ -1,10 +1,10 @@
 # Contributing
 
-Thanks for helping improve AppBridge!
+Thanks for helping improve Perenos (Перенос)!
 
 ## Getting started
 
-1. On Windows, clone `https://github.com/kr0nsch/AppBridge.git` and open the repository folder.
+1. On Windows, clone `https://github.com/kr0nsch/perenos-ios.git` and open the repository folder.
 2. Install the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0).
 3. Run `./build/Get-Ipatool.ps1` once to fetch the pinned ipatool binary.
 4. Build and run: `dotnet run --project src/AppBridge -p:Platform=x64`.
@@ -21,6 +21,11 @@ See [development priorities](docs/DEVELOPMENT.md) for completed reliability fixe
 the remaining product work. View-model tests compile the real view-model source with
 headless UI adapters; the Windows app build checks the production WinUI integration.
 
+The product was previously named AppBridge. Project folders, namespaces and test
+project names retain `AppBridge`, so the build commands above are intentional.
+Existing `%LOCALAPPDATA%\AppBridge` and `Downloads\AppBridge` folders also stay
+unchanged to preserve settings, sessions and saved apps.
+
 ## Guidelines
 
 - Keep the flow simple: four steps, one primary button per screen.
@@ -36,12 +41,12 @@ headless UI adapters; the Windows app build checks the production WinUI integrat
 
 ## Help without writing code
 
-- [Report a successful transfer](https://github.com/kr0nsch/AppBridge/issues/new?template=compatibility_report.yml)
-  with your device models, iOS versions and AppBridge version. Please never attach `.ipa`
+- [Report a successful transfer](https://github.com/kr0nsch/perenos-ios/issues/new?template=compatibility_report.yml)
+  with your device models, iOS versions and Perenos version. Please never attach `.ipa`
   files, account details or full device identifiers.
-- [Report a bug](https://github.com/kr0nsch/AppBridge/issues/new?template=bug_report.yml)
+- [Report a bug](https://github.com/kr0nsch/perenos-ios/issues/new?template=bug_report.yml)
   with steps to reproduce and a diagnostic log you have checked for personal information.
-- [Suggest an improvement](https://github.com/kr0nsch/AppBridge/issues/new?template=feature_request.yml)
+- [Suggest an improvement](https://github.com/kr0nsch/perenos-ios/issues/new?template=feature_request.yml)
   by describing the task you want to complete and what currently gets in the way.
 - Improve instructions, translations or accessibility. For a new language, include every
   resource key and preserve format placeholders such as `{0}`.

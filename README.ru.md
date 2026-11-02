@@ -1,5 +1,5 @@
-# AppBridge — документация на русском
+# Перенос — документация на русском
 
 Русская документация находится в [основном README](README.md).
 
-[Скачать AppBridge](https://github.com/kr0nsch/AppBridge/releases/latest) · [English](README.en.md)
+[Скачать «Перенос»](https://github.com/kr0nsch/perenos-ios/releases/latest) · [English](README.en.md)

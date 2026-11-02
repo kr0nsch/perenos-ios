@@ -53,7 +53,7 @@
           <ColumnDefinition Width="*" />
           <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <TextBlock x:Uid="Settings_RestartHint" Style="{StaticResource FootnoteStyle}" VerticalAlignment="Center" Text="Restart AppBridge to switch the language." />
+        <TextBlock x:Uid="Settings_RestartHint" Style="{StaticResource FootnoteStyle}" VerticalAlignment="Center" Text="Restart Perenos to switch the language." />
         <Button x:Uid="Settings_Restart" Grid.Column="1" Style="{StaticResource SmallPillButtonStyle}" Content="Restart" Click="OnRestartClick" />
       </Grid>
 
@@ -112,7 +112,7 @@
         </StackPanel>
       </Border>
       <TextBlock x:Uid="Settings_Disclaimer" Style="{StaticResource FootnoteStyle}" Margin="16,10,16,4"
-                 Text="AppBridge is free, open-source software. It is not affiliated with or endorsed by Apple Inc. iPhone and App Store are trademarks of Apple Inc." />
+                 Text="Perenos is free, open-source software. It is not affiliated with or endorsed by Apple Inc. iPhone and App Store are trademarks of Apple Inc." />
     </StackPanel>
   </ScrollViewer>
 </ContentDialog>

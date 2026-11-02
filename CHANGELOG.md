@@ -1,8 +1,24 @@
 # Changelog
 
-All notable changes to AppBridge are listed here. The format follows
+All notable changes to Perenos (formerly AppBridge) are listed here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
+
+## [1.2.0] - 2026-11-03
+
+### Новое имя — «Перенос»
+- AppBridge теперь называется «Перенос» (Perenos). Репозиторий: `kr0nsch/perenos-ios`.
+- Обновлены название в интерфейсе, установщик, ярлыки и имена файлов релиза. Запуск программы — через `Perenos.exe`.
+- Установщик обновляет прежнюю установку. Настройки, библиотека приложений и зашифрованная сессия Apple Account используют прежние папки и остаются совместимыми.
+- Новый README: обложка для светлой и тёмной темы, два сценария переноса, галерея, быстрый старт и ответы на вопросы. Основной язык — русский.
+
+### Changed
+- Renamed the product to Perenos / «Перенос» and the repository to `perenos-ios`.
+- Release packages now use `Perenos-<version>-setup-x64.exe` and `Perenos-<version>-portable-x64.zip`.
+- Preserved the installer identity, existing data folders and encrypted account keys for upgrades from AppBridge.
+- Redesigned the Russian and English READMEs with editable SVG covers and theme-aware media.
+
+[1.2.0]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.2.0
 
 ## [1.1.1] - 2026-11-01
 

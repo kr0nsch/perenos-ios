@@ -9,6 +9,8 @@ namespace AppBridge.Core;
 /// </summary>
 public sealed class AppPaths
 {
+    // Storage names deliberately retain AppBridge so a Perenos upgrade keeps the existing
+    // settings, saved apps, pair records and DPAPI-protected App Store session in place.
     public const string PortableMarkerFileName = "portable.txt";
 
     private AppPaths(string appDirectory, bool isPortable, string dataDirectory, string defaultDownloadDirectory)

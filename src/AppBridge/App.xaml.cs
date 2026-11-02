@@ -47,7 +47,7 @@ public partial class App : Application
 
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        AppLog.Info($"AppBridge {AppServices.Version} started ({(Services.Paths.IsPortable ? "portable" : "installed")}).");
+        AppLog.Info($"Perenos {AppServices.Version} started ({(Services.Paths.IsPortable ? "portable" : "installed")}).");
         _window = new MainWindow(Services);
         _window.Closed += (_, _) => Services.Dispose();
         _window.Activate();

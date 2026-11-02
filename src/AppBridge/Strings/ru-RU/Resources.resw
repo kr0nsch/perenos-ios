@@ -12,6 +12,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="App_Name" xml:space="preserve">
+    <value>Перенос</value>
+  </data>
   <data name="Source_Title" xml:space="preserve">
     <value>Подключите iPhone с вашими приложениями</value>
   </data>
@@ -226,7 +229,7 @@
     <value>Первый вход может занять около минуты.</value>
   </data>
   <data name="SignIn_Privacy.Text" xml:space="preserve">
-    <value>Приложения скачиваются у Apple с вашим собственным Apple Account. Пароль передаётся только в Apple через открытый ipatool, AppBridge его не сохраняет.</value>
+    <value>Приложения скачиваются у Apple с вашим собственным Apple Account. Пароль передаётся только в Apple через открытый ipatool, «Перенос» его не сохраняет.</value>
   </data>
   <data name="SignIn_Email.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Apple Account</value>
@@ -418,7 +421,7 @@
     <value>Настройки</value>
   </data>
   <data name="ToolMissing.Text" xml:space="preserve">
-    <value>Не найден нужный компонент (ipatool), поэтому скачивание невозможно. Переустановите AppBridge.</value>
+    <value>Не найден нужный компонент (ipatool), поэтому скачивание невозможно. Переустановите «Перенос».</value>
   </data>
   <data name="Close_Title" xml:space="preserve">
     <value>Остановить установку?</value>
@@ -436,7 +439,7 @@
     <value>Что-то пошло не так</value>
   </data>
   <data name="Error_Body" xml:space="preserve">
-    <value>AppBridge столкнулся с проблемой: {0}
+    <value>В «Переносе» произошла ошибка: {0}
 
 Подробности сохранены в журнал диагностики.</value>
   </data>
@@ -474,7 +477,7 @@
     <value>Тёмное</value>
   </data>
   <data name="Settings_RestartHint.Text" xml:space="preserve">
-    <value>Перезапустите AppBridge, чтобы сменить язык.</value>
+    <value>Перезапустите «Перенос», чтобы сменить язык.</value>
   </data>
   <data name="Settings_Restart.Content" xml:space="preserve">
     <value>Перезапустить</value>
@@ -513,7 +516,7 @@
     <value>Показать</value>
   </data>
   <data name="Settings_Disclaimer.Text" xml:space="preserve">
-    <value>AppBridge — бесплатная программа с открытым исходным кодом. Она не связана с Apple Inc. и не одобрена ею. iPhone и App Store — товарные знаки Apple Inc.</value>
+    <value>«Перенос» — бесплатная программа с открытым исходным кодом. Она не связана с Apple Inc. и не одобрена ею. iPhone и App Store — товарные знаки Apple Inc.</value>
   </data>
   <data name="Apps_LoadingText" xml:space="preserve">
     <value>Читаем список приложений с iPhone…</value>
@@ -555,7 +558,7 @@
     <value>Переносятся приложения из App Store, без их данных.</value>
   </data>
   <data name="Choice_ToolMissing" xml:space="preserve">
-    <value>Не хватает компонента — переустановите AppBridge.</value>
+    <value>Не хватает компонента — переустановите «Перенос».</value>
   </data>
   <data name="Later_Title.Text" xml:space="preserve">
     <value>Перенести потом</value>
@@ -714,7 +717,7 @@
     <value>вашим Apple Account</value>
   </data>
   <data name="SaveDone_Step2.Text" xml:space="preserve">
-    <value>Подключите его и откройте AppBridge.</value>
+    <value>Подключите его и откройте «Перенос».</value>
   </data>
   <data name="SaveDone_Step3.Text" xml:space="preserve">
     <value>Выберите «Перенести потом» → «Установить на новый iPhone».</value>

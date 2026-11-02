@@ -172,7 +172,7 @@
                 <Ellipse Fill="{ThemeResource AppBlueBrush}" />
                 <TextBlock Text="2" FontSize="12" FontWeight="SemiBold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
               </Grid>
-              <TextBlock x:Uid="SaveDone_Step2" Grid.Column="1" Style="{StaticResource RowBodyStyle}" VerticalAlignment="Center" Text="Connect it and open AppBridge." />
+              <TextBlock x:Uid="SaveDone_Step2" Grid.Column="1" Style="{StaticResource RowBodyStyle}" VerticalAlignment="Center" Text="Connect it and open Perenos." />
             </Grid>
             <Rectangle Style="{StaticResource SeparatorStyle}" Margin="34,0,-16,0" />
             <Grid MinHeight="44" ColumnSpacing="12">

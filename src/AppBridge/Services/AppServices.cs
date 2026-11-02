@@ -26,7 +26,7 @@ public sealed class AppServices : IDisposable
             Devices = backend;
             Watcher = backend;
             _demoDownloads = Path.Combine(Path.GetTempPath(), "AppBridgeDemo");
-            DemoBackend.PrepareSavedApps(_demoDownloads, HasFlag("--demo-saved") || Environment.GetEnvironmentVariable("APPBRIDGE_DEMO_SAVED") == "1");
+            DemoBackend.PrepareSavedApps(_demoDownloads, HasFlag("--demo-saved") || DemoEnvironmentEnabled("DEMO_SAVED"));
         }
         else
         {
@@ -41,7 +41,7 @@ public sealed class AppServices : IDisposable
     public static string Version { get; } =
         typeof(AppServices).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion.Split('+')[0] ?? "0.0.0";
 
-    public const string RepositoryUrl = "https://github.com/kr0nsch/AppBridge";
+    public const string RepositoryUrl = "https://github.com/kr0nsch/perenos-ios";
 
     public AppPaths Paths { get; }
 
@@ -69,11 +69,16 @@ public sealed class AppServices : IDisposable
         var paths = AppPaths.Detect();
         paths.EnsureCreated();
         AppLog.Initialize(paths.LogsDirectory);
-        var demo = HasFlag("--demo") || HasFlag("--demo-saved") || Environment.GetEnvironmentVariable("APPBRIDGE_DEMO") == "1";
+        var demo = HasFlag("--demo") || HasFlag("--demo-saved") || DemoEnvironmentEnabled("DEMO");
         return new AppServices(paths, demo);
     }
 
     public void Dispose() => Watcher.Dispose();
+
+    // Keep the original variables working for existing demo and screenshot scripts.
+    private static bool DemoEnvironmentEnabled(string suffix) =>
+        Environment.GetEnvironmentVariable($"PERENOS_{suffix}") == "1"
+        || Environment.GetEnvironmentVariable($"APPBRIDGE_{suffix}") == "1";
 
     private static bool HasFlag(string flag) => Environment.GetCommandLineArgs().Any(a => a.Equals(flag, StringComparison.OrdinalIgnoreCase));
 }

@@ -12,6 +12,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="App_Name" xml:space="preserve">
+    <value>Perenos</value>
+  </data>
   <data name="Source_Title" xml:space="preserve">
     <value>Connect the iPhone with Your Apps</value>
   </data>
@@ -226,7 +229,7 @@
     <value>The first sign-in can take a minute.</value>
   </data>
   <data name="SignIn_Privacy.Text" xml:space="preserve">
-    <value>Apps are downloaded from Apple with your own Apple Account. Your password goes only to Apple, through the open-source ipatool, and AppBridge never stores it.</value>
+    <value>Apps are downloaded from Apple with your own Apple Account. Your password goes only to Apple, through the open-source ipatool, and Perenos never stores it.</value>
   </data>
   <data name="SignIn_Email.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Apple Account</value>
@@ -418,7 +421,7 @@
     <value>Settings</value>
   </data>
   <data name="ToolMissing.Text" xml:space="preserve">
-    <value>A required component (ipatool) is missing, so apps can't be downloaded. Please reinstall AppBridge.</value>
+    <value>A required component (ipatool) is missing, so apps can't be downloaded. Please reinstall Perenos.</value>
   </data>
   <data name="Close_Title" xml:space="preserve">
     <value>Stop installing?</value>
@@ -436,7 +439,7 @@
     <value>Something went wrong</value>
   </data>
   <data name="Error_Body" xml:space="preserve">
-    <value>AppBridge ran into a problem: {0}
+    <value>Perenos ran into a problem: {0}
 
 Details were saved to the diagnostic log.</value>
   </data>
@@ -474,7 +477,7 @@ Details were saved to the diagnostic log.</value>
     <value>Dark</value>
   </data>
   <data name="Settings_RestartHint.Text" xml:space="preserve">
-    <value>Restart AppBridge to switch the language.</value>
+    <value>Restart Perenos to switch the language.</value>
   </data>
   <data name="Settings_Restart.Content" xml:space="preserve">
     <value>Restart</value>
@@ -513,7 +516,7 @@ Details were saved to the diagnostic log.</value>
     <value>Show</value>
   </data>
   <data name="Settings_Disclaimer.Text" xml:space="preserve">
-    <value>AppBridge is free, open-source software. It is not affiliated with or endorsed by Apple Inc. iPhone and App Store are trademarks of Apple Inc.</value>
+    <value>Perenos is free, open-source software. It is not affiliated with or endorsed by Apple Inc. iPhone and App Store are trademarks of Apple Inc.</value>
   </data>
   <data name="Apps_LoadingText" xml:space="preserve">
     <value>Reading apps from your iPhone…</value>
@@ -555,7 +558,7 @@ Details were saved to the diagnostic log.</value>
     <value>Moves App Store apps, not their data.</value>
   </data>
   <data name="Choice_ToolMissing" xml:space="preserve">
-    <value>A component is missing. Reinstall AppBridge.</value>
+    <value>A component is missing. Reinstall Perenos.</value>
   </data>
   <data name="Later_Title.Text" xml:space="preserve">
     <value>Transfer Later</value>
@@ -714,7 +717,7 @@ Details were saved to the diagnostic log.</value>
     <value>your Apple Account</value>
   </data>
   <data name="SaveDone_Step2.Text" xml:space="preserve">
-    <value>Connect it and open AppBridge.</value>
+    <value>Connect it and open Perenos.</value>
   </data>
   <data name="SaveDone_Step3.Text" xml:space="preserve">
     <value>Choose Transfer Later → Install on New iPhone.</value>

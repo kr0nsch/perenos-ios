@@ -9,9 +9,9 @@ body:
   - type: input
     id: version
     attributes:
-      label: AppBridge version
+      label: Perenos version / Версия «Переноса»
       description: Settings → About → Version
-      placeholder: "1.0.0"
+      placeholder: "1.2.0"
     validations:
       required: true
   - type: dropdown

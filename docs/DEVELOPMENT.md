@@ -27,7 +27,7 @@ checks or visual checks of WinUI screens.
 
 Publish a short recording of a real transfer, labeled separately from the
 existing simulated demos. For each confirmed report, record source and target
-models, both iOS versions, AppBridge version, app versions, chosen flow, and
+models, both iOS versions, Perenos version, app versions, chosen flow, and
 outcome. Include failures and known limits so the compatibility matrix helps
 users decide whether to try their own devices. Share no account credentials,
 verification codes, full device identifiers, or purchased IPA files.

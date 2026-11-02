@@ -27,6 +27,8 @@ public sealed partial class MainWindow : Window
         _services = services;
         ViewModel = new MainViewModel(services, DispatcherQueue);
         InitializeComponent();
+        Title = Loc.Get("App_Name");
+        AppTitleBar.Title = Title;
 
         ExtendsContentIntoTitleBar = true;
         SetTitleBar(AppTitleBar);

@@ -1,0 +1,51 @@
+{
+  "file": "demo-ru-light.gif",
+  "width": 900,
+  "height": 751,
+  "frames": 8,
+  "duration_ms": 26500,
+  "bytes": 457347,
+  "sha256": "a99071ace4f3c14efe45122ffdf4697cd4caf9bceb20c37e69dca5d7bb08fb47",
+  "sources": [
+    {
+      "file": "ru-light/later-1-start.png",
+      "duration_ms": 2500,
+      "sha256": "f44cb59d5c247dd46c4e87fd0efb67c3ea04e68ab80eba2c64531b9f68d2dfc6"
+    },
+    {
+      "file": "ru-light/1-connect.png",
+      "duration_ms": 3000,
+      "sha256": "f762b80a7dc01e73a7fd00ed32c523bd715da476eeed0ae480a4a6e7eab5585c"
+    },
+    {
+      "file": "ru-light/2-choose-apps.png",
+      "duration_ms": 4000,
+      "sha256": "2af757a2d53f2e929eb38a2fff6eaa12e1e6403412146022d5a738c118e051c1"
+    },
+    {
+      "file": "ru-light/3-target.png",
+      "duration_ms": 3000,
+      "sha256": "268d999940f9931af613f953a2ca1a57fd5403fbbcea3fc044a89470fe348b2c"
+    },
+    {
+      "file": "ru-light/4-sign-in.png",
+      "duration_ms": 3000,
+      "sha256": "7474e5014187c3ad9654dfcf87f62ee78f426adb15eaf94bf1132a24990f60d5"
+    },
+    {
+      "file": "ru-light/5-ready.png",
+      "duration_ms": 3000,
+      "sha256": "1d8513504ae9baf11d374acbc8d28670b28a43fc1ed420a1a7d6376424faa34f"
+    },
+    {
+      "file": "ru-light/6-installing.png",
+      "duration_ms": 4000,
+      "sha256": "5a60848ac8c36d74563ccf2a4cf0a1b9441ce4a9ebe43e59a4fced506129a1bf"
+    },
+    {
+      "file": "ru-light/7-done.png",
+      "duration_ms": 4000,
+      "sha256": "d06b3ff53d40b7cc787a623851f2703bcaf2a6e420259d9d0249f664d8fff5b9"
+    }
+  ]
+}

@@ -23,6 +23,7 @@
 </p>
 
 <p align="center">
+  <a href="https://kr0nsch.github.io/perenos-ios/">Сайт проекта</a> ·
   <a href="#start">Быстрый старт</a> ·
   <a href="#features">Возможности</a> ·
   <a href="#screenshots">Интерфейс</a> ·
@@ -53,10 +54,12 @@
 
 <p align="center">
   <picture>
+    <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/2-choose-apps.png">
+    <source media="(prefers-reduced-motion: reduce)" srcset="docs/screenshots/ru-light/2-choose-apps.png">
     <source media="(prefers-color-scheme: dark)" srcset="docs/media/demo-ru-dark.gif">
     <img src="docs/media/demo-ru-light.gif" width="800" alt="Демонстрация: выбор iPhone, выбор приложений и установка с прогрессом">
   </picture>
-  <br><sub>Демо версии 1.1.1 под прежним названием AppBridge. Телефоны и приложения смоделированы.</sub>
+  <br><sub>Реальный интерфейс «Переноса» 1.2.0 в деморежиме. Телефоны и приложения смоделированы.</sub>
 </p>
 
 > [!NOTE]
@@ -113,10 +116,12 @@ gh attestation verify <скачанный-файл> -R kr0nsch/perenos-ios
 
 <p align="center">
   <picture>
+    <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/later-4-saved.png">
+    <source media="(prefers-reduced-motion: reduce)" srcset="docs/screenshots/ru-light/later-4-saved.png">
     <source media="(prefers-color-scheme: dark)" srcset="docs/media/later-ru-dark.gif">
     <img src="docs/media/later-ru-light.gif" width="800" alt="Сохранённые приложения: проверка совместимости и установка на новый iPhone">
   </picture>
-  <br><sub>Демо версии 1.1.1 до переименования; используются смоделированные устройства.</sub>
+  <br><sub>«Перенос» 1.2.0: установка ранее сохранённых приложений. Телефоны и приложения смоделированы.</sub>
 </p>
 
 </details>
@@ -144,7 +149,7 @@ gh attestation verify <скачанный-файл> -R kr0nsch/perenos-ios
   </tr>
 </table>
 
-<p align="center"><sub>Экраны деморежима 1.1.1 до переименования. <a href="docs/screenshots/ru-light">Светлая тема</a> · <a href="docs/screenshots/ru-dark">Тёмная тема</a></sub></p>
+<p align="center"><sub>Скриншоты «Переноса» 1.2.0 в деморежиме. <a href="docs/screenshots/ru-light/README.md">Светлая тема</a> · <a href="docs/screenshots/ru-dark/README.md">Тёмная тема</a> · <a href="docs/screenshots/README.md">Все скриншоты</a></sub></p>
 
 <a id="privacy"></a>
 

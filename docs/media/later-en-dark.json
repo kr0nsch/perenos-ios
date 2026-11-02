@@ -1,0 +1,41 @@
+{
+  "file": "later-en-dark.gif",
+  "width": 900,
+  "height": 751,
+  "frames": 6,
+  "duration_ms": 20500,
+  "bytes": 370686,
+  "sha256": "795976868880d8a789458d844eae1f8367c6c98309470c0bcc8123d102ab92ba",
+  "sources": [
+    {
+      "file": "en-dark/later-1-start.png",
+      "duration_ms": 2500,
+      "sha256": "670afefdb7b1b5327d6e3570d34cae1a9eb3c88bccad69652e640bf949a9bdbc"
+    },
+    {
+      "file": "en-dark/later-2-hub.png",
+      "duration_ms": 3500,
+      "sha256": "aa5d56cf3095866b0a04aa0225f4dc109e4535795282169392454b7a7ab58675"
+    },
+    {
+      "file": "en-dark/later-3-new-iphone.png",
+      "duration_ms": 3000,
+      "sha256": "d75630e2faa028bdaee9633d8509061a13298cacca7ac0d72c42236968d0ff35"
+    },
+    {
+      "file": "en-dark/later-4-saved.png",
+      "duration_ms": 4500,
+      "sha256": "cd02a17f16ed23ee5a775479bb7c7d1ef1978e8b10a9398a9dce39673376ca3e"
+    },
+    {
+      "file": "en-dark/later-5-ready.png",
+      "duration_ms": 3000,
+      "sha256": "3abf03e06ea1e26e68f88883db83cdb19bb58cd2010a9f2aeeee0c714de1917d"
+    },
+    {
+      "file": "en-dark/later-6-done.png",
+      "duration_ms": 4000,
+      "sha256": "a801131c45353252be44c90450171ad1150f806fe40ad3ee527847c8985aba9c"
+    }
+  ]
+}

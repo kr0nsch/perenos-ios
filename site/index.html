@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f6f7fa">
+  <title>Перенос — знакомые приложения на новом iPhone</title>
+  <meta name="description" content="Бесплатная программа для Windows: перенесите приложения из App Store на новый iPhone или сохраните их на компьютере заранее. Открытый код, без подписки и джейлбрейка.">
+  <link rel="canonical" href="https://kr0nsch.github.io/perenos-ios/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="Перенос">
+  <meta property="og:title" content="Новый iPhone. Знакомые приложения.">
+  <meta property="og:description" content="Перенесите приложения сейчас или сохраните их на потом. Бесплатно, через Windows, без джейлбрейка.">
+  <meta property="og:url" content="https://kr0nsch.github.io/perenos-ios/">
+  <meta property="og:image" content="https://kr0nsch.github.io/perenos-ios/assets/social.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Перенос — новый iPhone, знакомые приложения. Бесплатная программа для Windows с открытым кодом.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+  <header class="site-header">
+    <div class="container navigation">
+      <a class="brand" href="#" aria-label="Перенос — начало страницы"><img src="assets/logo.png" width="36" height="36" alt=""><span>Перенос</span></a>
+      <nav aria-label="Основная навигация">
+        <a href="#how-it-works">Как это работает</a>
+        <a href="#questions">Вопросы</a>
+        <a class="github-link" href="https://github.com/kr0nsch/perenos-ios" aria-label="Репозиторий Переноса на GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.86c-2.78.61-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.64-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.55 9.55 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.76c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg><span>GitHub</span></a>
+      </nav>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Включить тёмную тему" title="Переключить тему" hidden><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.5A8.8 8.8 0 0 1 8.5 3.8 8.8 8.8 0 1 0 20.2 15.5Z"/></svg><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero container" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="status-dot"></span> Для Windows · С открытым кодом</p>
+        <h1 id="hero-title">Новый iPhone.<br> <span>Знакомые<br class="desktop-break"> приложения.</span></h1>
+        <p class="hero-description">Переезжайте с тем, к чему привыкли. Выберите приложения на старом iPhone и установите их на новый через Windows.</p>
+        <div class="hero-actions"><a class="button primary" href="#download">Скачать бесплатно <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12m-5-5 5 5 5-5M5 17v3h14v-3"/></svg></a><a class="text-link" href="#demo">Посмотреть в работе <span aria-hidden="true">↗</span></a></div>
+        <p class="hero-note">Без подписки, рекламы и джейлбрейка.</p>
+      </div>
+      <div class="hero-visual">
+        <div class="visual-topline"><span class="tiny-label">ВАШИ ПРИЛОЖЕНИЯ, НОВЫЙ АДРЕС</span><span aria-hidden="true">↗</span></div>
+        <div class="hero-window"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/apps-dark.png"><img class="theme-image" data-asset="apps" src="assets/apps-light.png" width="926" height="773" fetchpriority="high" alt="Перенос 1.2.0: список приложений со старого iPhone с поиском и выбором"></picture></div>
+        <div class="route" aria-label="Старый iPhone, Windows, новый iPhone"><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10 5h4m-3 14h2"/></svg>Старый iPhone</span><span class="route-line" aria-hidden="true"></span><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>Windows</span><span class="route-line" aria-hidden="true"></span><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10 5h4m-3 14h2"/></svg>Новый iPhone</span></div>
+        <p class="hero-caption">Интерфейс 1.2.0 · демонстрационные данные</p>
+      </div>
+    </section>
+
+    <div class="facts-strip"><div class="container facts"><span><b>Оригиналы от Apple</b> — с вашим аккаунтом</span><span><b>Сейчас или потом</b> — в вашем темпе</span><span><b>Ваш компьютер</b> — ваша библиотека</span></div></div>
+
+    <section class="section container scenarios" id="demo" aria-labelledby="scenarios-title">
+      <div class="section-heading"><p class="eyebrow">ДВА СЦЕНАРИЯ. ОДНО ПРИЛОЖЕНИЕ.</p><h2 id="scenarios-title">Переезд по вашему плану.</h2><p>Новый телефон уже рядом? Или вы пока только готовитесь?<br class="desktop-break"> «Перенос» подходит для обоих случаев.</p></div>
+      <div class="scenario-grid">
+        <div class="scenario-copy">
+          <div class="scenario-tabs" role="tablist" aria-label="Сценарий переноса">
+            <button id="tab-now" class="scenario-tab active" role="tab" aria-selected="true" aria-controls="panel-now" type="button" data-scenario="now"><span>01</span> Перенести сейчас</button>
+            <button id="tab-later" class="scenario-tab" role="tab" aria-selected="false" aria-controls="panel-later" tabindex="-1" type="button" data-scenario="later"><span>02</span> Сохранить на потом</button>
+          </div>
+          <div id="panel-now" class="scenario-panel" role="tabpanel" aria-labelledby="tab-now" tabindex="0">
+            <h3>Оба телефона под рукой.<br> Можно начинать.</h3>
+            <p>Выберите нужные приложения на старом iPhone, подключите новый и запустите перенос. Пока одно приложение устанавливается, следующее уже скачивается.</p>
+            <ul class="check-list"><li>Не нужно переносить всё подряд</li><li>Телефоны можно подключать по очереди</li><li>Прогресс каждой операции на экране</li></ul>
+          </div>
+          <div id="panel-later" class="scenario-panel" role="tabpanel" aria-labelledby="tab-later" tabindex="0" hidden>
+            <h3>Сохраните сегодня.<br> Установите, когда удобно.</h3>
+            <p>Скачайте приложения на компьютер, пока старый iPhone ещё у вас. Позже подключите новый и выберите сохранённые пакеты — повторный вход в Apple Account на компьютере не нужен.</p>
+            <ul class="check-list"><li>Своя библиотека с иконками и версиями</li><li>Проверка совместимости с новым iPhone</li><li>Готовность к переезду заранее</li></ul>
+          </div>
+        </div>
+        <figure class="demo-figure">
+          <div class="demo-screen"><picture id="demo-picture"><source media="(prefers-color-scheme: dark)" srcset="assets/apps-dark.png"><img id="demo-image" class="theme-image" data-asset="apps" src="assets/apps-light.png" width="926" height="773" loading="lazy" alt="Выбор приложений в Переносе"></picture><button class="play-demo" id="play-demo" type="button" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 11 7-11 7Z"/></svg><span>Воспроизвести демо</span></button></div>
+          <figcaption><span><span class="live-dot" aria-hidden="true"></span> Интерфейс версии 1.2.0</span><span>Деморежим · устройства смоделированы</span></figcaption>
+          <p class="no-script-demo"><a href="https://github.com/kr0nsch/perenos-ios#screenshots">Все скриншоты и демонстрации на GitHub <span aria-hidden="true">↗</span></a></p>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section steps-section" id="how-it-works" aria-labelledby="steps-title"><div class="container">
+      <div class="section-heading"><p class="eyebrow">ОТ ПОДКЛЮЧЕНИЯ ДО УСТАНОВКИ</p><h2 id="steps-title">Четыре шага до нового iPhone.</h2></div>
+      <ol class="steps"><li><span class="step-number">01</span><h3>Подготовьте Windows</h3><p>Установите «Перенос» и <a href="https://apps.microsoft.com/detail/9NP83LWLPZ9K">«Устройства Apple»</a> или iTunes — для драйвера iPhone.</p></li><li><span class="step-number">02</span><h3>Подключите старый iPhone</h3><p>Выберите «Перенести сейчас», разблокируйте телефон и подтвердите «Доверять».</p></li><li><span class="step-number">03</span><h3>Выберите приложения</h3><p>Отметьте нужное и подключите новый iPhone. Достаточно одного USB-кабеля с передачей данных.</p></li><li><span class="step-number">04</span><h3>Запустите установку</h3><p>Войдите в Apple Account, которому принадлежат приложения. Этот же аккаунт нужен в App Store нового iPhone.</p></li></ol>
+      <div class="honest-note"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></svg><p><strong>Переносятся сами приложения.</strong> Переписка, документы и настройки восстанавливаются через iCloud, резервную копию или синхронизацию внутри приложения.</p></div>
+    </div></section>
+
+    <section class="section container trust" aria-labelledby="trust-title">
+      <div class="trust-heading"><p class="eyebrow">КАК УСТРОЕН ПЕРЕНОС</p><h2 id="trust-title">Ваш аккаунт.<br> Ваши приложения.</h2><p>Открытый код помогает понять, что происходит на каждом шаге.</p><a class="text-link" href="https://github.com/kr0nsch/perenos-ios/blob/main/SECURITY.md">Как защищены данные <span aria-hidden="true">↗</span></a></div>
+      <div class="trust-list"><div><span class="trust-index">01 /</span><div><h3>Приложения — с серверов Apple</h3><p>Вход и скачивание выполняет открытый инструмент ipatool. Пакеты остаются привязанными к аккаунту покупателя; защита FairPlay не обходится.</p></div></div><div><span class="trust-index">02 /</span><div><h3>Сессия защищена в Windows</h3><p>«Перенос» не сохраняет ваш пароль. Сессия зашифрована, её ключ защищён Windows DPAPI для вашего пользователя Windows.</p></div></div><div><span class="trust-index">03 /</span><div><h3>Без своего сервера и телеметрии</h3><p>Библиотека остаётся у вас на компьютере. Сохранённый .ipa может содержать почту покупателя — храните эти файлы приватно.</p></div></div></div>
+    </section>
+
+    <section class="section container faq" id="questions" aria-labelledby="faq-title"><div class="faq-heading"><p class="eyebrow">ПЕРЕД СТАРТОМ</p><h2 id="faq-title">То, что стоит знать.</h2><p>Честно о возможностях<br> и ограничениях.</p></div><div class="faq-items">
+      <details><summary>Можно вернуть приложение, удалённое из App Store?<span aria-hidden="true">+</span></summary><p>Только пока Apple выдаёт его вашему аккаунту или если у вас уже есть совместимый сохранённый пакет с нужной лицензией. «Перенос» скачивает приложения у Apple и не извлекает установленные пакеты со старого iPhone. Поэтому сохранить нужные приложения заранее — хорошая идея, но гарантировать их будущую работу нельзя.</p></details>
+      <details><summary>Нужен ли Apple Account?<span aria-hidden="true">+</span></summary><p>Для скачивания — да, аккаунт с правом на приложения. Платные должны быть куплены этим аккаунтом; бесплатные можно автоматически добавить в покупки. Для установки уже сохранённых пакетов повторный вход на компьютере не нужен. На новом iPhone потребуется аккаунт покупателя.</p></details>
+      <details><summary>Какие компьютеры поддерживаются?<span aria-hidden="true">+</span></summary><p>Windows 10 версии 2004 или новее и Windows 11. Готовые сборки — x64; на компьютерах с Arm используется эмуляция Windows 11. .NET и Windows App SDK включены. Для связи с iPhone нужны драйверы из «Устройств Apple» или iTunes, для скачивания — интернет.</p></details>
+      <details><summary>Чем портативная версия отличается от установщика?<span aria-hidden="true">+</span></summary><p>Возможности одинаковые. Установщик добавляет программу в меню «Пуск», права администратора не обязательны. Портативный архив достаточно распаковать и запустить Perenos.exe; настройки и загрузки хранятся в папке Data рядом с программой.</p></details>
+      <details><summary>Я пользовался AppBridge. Что изменилось?<span aria-hidden="true">+</span></summary><p>Проект получил новое имя — «Перенос». Установщик обновляет прежнюю установку; папки данных и ключ шифрования сохранены. Для обновления портативной версии скопируйте старую папку Data к новому Perenos.exe. Подробности — в <a href="https://github.com/kr0nsch/perenos-ios#faq">README</a>.</p></details>
+      <details><summary>Если приложение не установилось или iPhone не виден?<span aria-hidden="true">+</span></summary><p>Проверьте драйвер Apple, кабель, разблокировку телефона и подтверждение «Доверять». Для ошибок установки проверьте аккаунт покупателя и совместимость с iOS. Если это не помогло, <a href="https://github.com/kr0nsch/perenos-ios/issues/new?template=bug_report.yml">сообщите об ошибке</a>: укажите версию программы, модели iPhone и версии iOS. Проверьте логи на личные данные перед публикацией.</p></details>
+    </div></section>
+
+    <section class="container download-wrap" id="download" aria-labelledby="download-title"><div class="download-section">
+      <div class="download-heading"><p class="eyebrow">ГОТОВЫ К ПЕРЕЕЗДУ?</p><h2 id="download-title">Заберите привычное<br> на новый iPhone.</h2><p>Бесплатно. Исходный код открыт.<br> Выберите удобный способ запуска.</p></div>
+      <div class="download-options"><a class="download-option recommended" data-download="installer" href="https://github.com/kr0nsch/perenos-ios/releases/latest"><span class="download-option-top"><span class="download-label">Рекомендуется</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12m-5-5 5 5 5-5M5 17v3h14v-3"/></svg></span><strong>Установщик</strong><span>Привычная установка в Windows</span><small>Windows x64 · .exe</small></a><a class="download-option" data-download="portable" href="https://github.com/kr0nsch/perenos-ios/releases/latest"><span class="download-option-top"><span class="download-label">Без установки</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12m-5-5 5 5 5-5M5 17v3h14v-3"/></svg></span><strong>Портативная</strong><span>Распакуйте архив и запускайте</span><small>Windows x64 · .zip</small></a></div>
+      <div class="download-footer"><span id="release-label">Последняя версия на GitHub</span><a href="https://github.com/kr0nsch/perenos-ios/releases/latest">История изменений и контрольные суммы <span aria-hidden="true">↗</span></a></div>
+    </div></section>
+
+    <section class="container community" aria-label="Поддержать проект"><div><h2>Полезно? Пусть узнают и другие.</h2><p>Звезда на GitHub помогает проекту быть заметнее.<br> Отчёт об ошибке или проверка на ваших iPhone — стать лучше.</p></div><a class="button secondary" href="https://github.com/kr0nsch/perenos-ios"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/></svg> Поддержать на GitHub</a></section>
+  </main>
+
+  <footer class="container site-footer"><div class="footer-top"><a class="brand" href="#"><img src="assets/logo.png" width="30" height="30" alt=""><span>Перенос</span></a><div><a href="https://github.com/kr0nsch/perenos-ios/blob/main/LICENSE">Лицензия MIT</a><a href="https://github.com/kr0nsch/perenos-ios/blob/main/CONTRIBUTING.md">Участвовать</a><a href="https://github.com/kr0nsch/perenos-ios/blob/main/README.en.md" lang="en">English docs</a></div></div><p>Независимый проект, не связанный с Apple Inc. iPhone и App Store — товарные знаки Apple Inc.<br> Используйте программу только с приложениями, на которые у вас есть право.</p></footer>
+</body>
+</html>

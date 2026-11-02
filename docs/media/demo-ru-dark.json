@@ -1,0 +1,51 @@
+{
+  "file": "demo-ru-dark.gif",
+  "width": 900,
+  "height": 751,
+  "frames": 8,
+  "duration_ms": 26500,
+  "bytes": 485770,
+  "sha256": "f3f641be43a64483fbd03b4e5bb5c58dd8f358fbecb5786845bd1510dc34fc62",
+  "sources": [
+    {
+      "file": "ru-dark/later-1-start.png",
+      "duration_ms": 2500,
+      "sha256": "442602dbb50aaa42a2125bd700e166fa11ae01315b9c08d9ffd8f8d416f52c72"
+    },
+    {
+      "file": "ru-dark/1-connect.png",
+      "duration_ms": 3000,
+      "sha256": "bd3ad0a0bea153f22d53ad161d354ad067f3d7c97dd491ff65f28a0fed639cc0"
+    },
+    {
+      "file": "ru-dark/2-choose-apps.png",
+      "duration_ms": 4000,
+      "sha256": "3cdc70dbe2ecdee6e640775b2a43b62ef9651442c5bf7c4d1d1d0d6a5a46f5e0"
+    },
+    {
+      "file": "ru-dark/3-target.png",
+      "duration_ms": 3000,
+      "sha256": "0ca7295c48488b98f0fad8d76f80f77a5703eaf6fd4e28fc387ee9c9710070cf"
+    },
+    {
+      "file": "ru-dark/4-sign-in.png",
+      "duration_ms": 3000,
+      "sha256": "9dee42e904dd11a2b3bf360b694f705ccabed82e958e29d61028d274ea8227d8"
+    },
+    {
+      "file": "ru-dark/5-ready.png",
+      "duration_ms": 3000,
+      "sha256": "e4b58ca7865bf02917ebc1da8bc8d25964fb2e81a26c1e169a445dd46afd39c6"
+    },
+    {
+      "file": "ru-dark/6-installing.png",
+      "duration_ms": 4000,
+      "sha256": "358d908ee98c11d22173d5fb68a4884760844cdbef3ee004b8f666a6f8e55894"
+    },
+    {
+      "file": "ru-dark/7-done.png",
+      "duration_ms": 4000,
+      "sha256": "34fe9586aeff4c5b11096ff98f713f270855d4cfe3eecb1e3471798d7e8f238d"
+    }
+  ]
+}

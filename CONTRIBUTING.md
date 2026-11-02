@@ -51,6 +51,19 @@ unchanged to preserve settings, sessions and saved apps.
 - Improve instructions, translations or accessibility. For a new language, include every
   resource key and preserve format placeholders such as `{0}`.
 
+## Screenshots, demos and website
+
+Use the [media capture guide](docs/MEDIA.md) to refresh both languages and themes
+from the real app in demo mode. Keep personal accounts and device identifiers out
+of screenshots. The GIF generator records its source frames and timing, so the
+published tours can be reproduced.
+
+The [project website](site/README.md) is built from this repository with
+`python site/build.py`. Its GitHub Pages workflow validates pull requests and
+publishes changes merged into `main`. Website-only changes need the static build
+and browser checks of both themes, mobile layout, keyboard navigation and download
+links. They do not require a new application release.
+
 ## Releasing
 
 1. Update `CHANGELOG.md`.

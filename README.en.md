@@ -23,6 +23,7 @@
 </p>
 
 <p align="center">
+  <a href="https://kr0nsch.github.io/perenos-ios/">Project website</a> ·
   <a href="#start">Quick start</a> ·
   <a href="#features">Features</a> ·
   <a href="#screenshots">Interface</a> ·
@@ -53,10 +54,12 @@
 
 <p align="center">
   <picture>
+    <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: dark)" srcset="docs/screenshots/en-dark/2-choose-apps.png">
+    <source media="(prefers-reduced-motion: reduce)" srcset="docs/screenshots/en-light/2-choose-apps.png">
     <source media="(prefers-color-scheme: dark)" srcset="docs/media/demo-en-dark.gif">
     <img src="docs/media/demo-en-light.gif" width="800" alt="Demo: choose iPhones and apps, then follow installation progress">
   </picture>
-  <br><sub>Version 1.1.1 demo under the previous AppBridge name. The iPhones and apps are simulated.</sub>
+  <br><sub>The real Perenos 1.2.0 interface in demo mode. The iPhones and apps are simulated.</sub>
 </p>
 
 > [!NOTE]
@@ -113,10 +116,12 @@ Choose **Transfer Later → Save Apps**, connect the old iPhone, select the apps
 
 <p align="center">
   <picture>
+    <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: dark)" srcset="docs/screenshots/en-dark/later-4-saved.png">
+    <source media="(prefers-reduced-motion: reduce)" srcset="docs/screenshots/en-light/later-4-saved.png">
     <source media="(prefers-color-scheme: dark)" srcset="docs/media/later-en-dark.gif">
     <img src="docs/media/later-en-light.gif" width="800" alt="Saved apps: compatibility checks and installation on the new iPhone">
   </picture>
-  <br><sub>Version 1.1.1 demo before the rename, using simulated devices.</sub>
+  <br><sub>Perenos 1.2.0: installing previously saved apps. The iPhones and apps are simulated.</sub>
 </p>
 
 </details>
@@ -144,7 +149,7 @@ Choose **Transfer Later → Save Apps**, connect the old iPhone, select the apps
   </tr>
 </table>
 
-<p align="center"><sub>Version 1.1.1 demo screens before the rename. <a href="docs/screenshots/en-light">Light theme</a> · <a href="docs/screenshots/en-dark">Dark theme</a></sub></p>
+<p align="center"><sub>Perenos 1.2.0 screenshots in demo mode. <a href="docs/screenshots/en-light/README.md">Light theme</a> · <a href="docs/screenshots/en-dark/README.md">Dark theme</a> · <a href="docs/screenshots/README.md">All screenshots</a></sub></p>
 
 <a id="privacy"></a>
 

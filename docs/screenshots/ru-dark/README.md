@@ -28,8 +28,8 @@
       <br><b>3. Выберите новый iPhone</b><br><sub>Телефон, на который будут установлены приложения.</sub>
     </td>
     <td width="50%" valign="top">
-      <a href="4-sign-in.png"><img src="4-sign-in.png" width="380" alt="Войдите в Apple Account — Форма входа с вымышленными данными деморежима."></a>
-      <br><b>4. Войдите в Apple Account</b><br><sub>Форма входа с вымышленными данными деморежима.</sub>
+      <a href="4-sign-in.png"><img src="4-sign-in.png" width="380" alt="Войдите в Apple Account — Форма входа в деморежиме; используются только вымышленные данные."></a>
+      <br><b>4. Войдите в Apple Account</b><br><sub>Форма входа в деморежиме; используются только вымышленные данные.</sub>
     </td>
   </tr>
   <tr>

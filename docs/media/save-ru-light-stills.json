@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "version": "1.2.0",
+  "source": {
+    "recording": "ru-light/save",
+    "format": "lossless PNG",
+    "capture_method": "PrintWindow(PW_RENDERFULLCONTENT)",
+    "cursor_captured": false,
+    "width": 926,
+    "height": 773,
+    "frames": 831,
+    "first_timestamp_ms": 1793659319464,
+    "last_timestamp_ms": 1793659399627,
+    "capture_json_sha256": "35329711264e2239d131984fa42e2e145cad07e310f58c1ca98d0b639c706242",
+    "frames_csv_sha256": "3eb1cc5225b67cf624efba5d17ec263f739c0f73dc07fae8c061957d92ee2a5a",
+    "window_txt_sha256": "b34237fb3ecaf6ba1737d5fa4ac2c386f6b41e7f2661c186b4a31b2f7b7cd962",
+    "timeline_sha256": "3ac6f90aebdc71dc630d31adedc608133a1042f51d7016a8264fdd34b82b673d",
+    "raw_frames_sha256": "6cd3aeb3e486d2fad1cdf71a3f27cb4d71869ec665287b1ffd054cc6a5b6a3b2",
+    "raw_frames_hash_format": "SHA-256 of UTF-8 index,timestamp_ms,png_sha256\\n entries in frame order"
+  },
+  "stills": [
+    {
+      "file": "ru-light/save-1-apps.png",
+      "requested_timestamp_ms": 1793659378945,
+      "source_frame": "f00616.png",
+      "source_timestamp_ms": 1793659378927,
+      "sha256": "dcb2677fa3c6ddc1e5e47f2f618b041b978878a04c6afc836f6077c8604d94f5"
+    },
+    {
+      "file": "ru-light/save-2-ready.png",
+      "requested_timestamp_ms": 1793659395682,
+      "source_frame": "f00788.png",
+      "source_timestamp_ms": 1793659395604,
+      "sha256": "56ad97b163f979cb99b4da3829d3f967496df9f169ea1553f4b3ad00ba3d1609"
+    },
+    {
+      "file": "ru-light/save-3-done.png",
+      "requested_timestamp_ms": 1793659399411,
+      "source_frame": "f00827.png",
+      "source_timestamp_ms": 1793659399339,
+      "sha256": "eff4bd7e2ddaf31ad2239c09d170916868018d9b6ed46dbeb00f136ae0ddd8f6"
+    }
+  ]
+}

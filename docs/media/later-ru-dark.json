@@ -1,41 +1,123 @@
 {
+  "schema_version": 2,
+  "version": "1.2.0",
   "file": "later-ru-dark.gif",
   "width": 900,
   "height": 751,
-  "frames": 6,
-  "duration_ms": 20500,
-  "bytes": 331335,
-  "sha256": "1d37651cf047d12334833161433fb30356f135041177498f76798fe883e68022",
-  "sources": [
+  "frames": 416,
+  "fps": 12,
+  "duration_ms": 34660,
+  "bytes": 1086114,
+  "sha256": "6c0f274cf20b099f41821ced3594b0af93bd3eefc229baeb41a6ea030f5ff9af",
+  "cursor": "none",
+  "encoding": {
+    "scaling": "lanczos",
+    "max_colors": 256,
+    "palette_stats": "diff",
+    "dither": "sierra2_4a"
+  },
+  "source": {
+    "recording": "ru-dark/later",
+    "format": "lossless PNG",
+    "capture_method": "PrintWindow(PW_RENDERFULLCONTENT)",
+    "cursor_captured": false,
+    "width": 926,
+    "height": 773,
+    "frames": 565,
+    "first_timestamp_ms": 1793659780454,
+    "last_timestamp_ms": 1793659835086,
+    "capture_json_sha256": "c0f7037d3da651d1b0786992b900bd19b19ed01af6e99510ef5f396cfc689d3d",
+    "frames_csv_sha256": "9690a2196f353d08bfd7967133d7df472f694f37a09a74f8d7d522f525e6fe14",
+    "window_txt_sha256": "b34237fb3ecaf6ba1737d5fa4ac2c386f6b41e7f2661c186b4a31b2f7b7cd962",
+    "timeline_sha256": "e2a0fb4d3309c8a04572a277fed14fbecad575351d0b49f190e0af3209c7b266",
+    "raw_frames_sha256": "00dd94d3537fe8581e0ea3809c912190f030f381b3bb740e54fd70c82d2453a6",
+    "raw_frames_hash_format": "SHA-256 of UTF-8 index,timestamp_ms,png_sha256\\n entries in frame order"
+  },
+  "segments": [
+    {
+      "start_ms": 1793659782297,
+      "end_ms": 1793659784097,
+      "output_duration_ms": 1800
+    },
+    {
+      "start_ms": 1793659784097,
+      "end_ms": 1793659788143,
+      "output_duration_ms": 2500
+    },
+    {
+      "start_ms": 1793659788143,
+      "end_ms": 1793659792891,
+      "output_duration_ms": 2200
+    },
+    {
+      "start_ms": 1793659792891,
+      "end_ms": 1793659797460,
+      "output_duration_ms": 1200
+    },
+    {
+      "start_ms": 1793659797460,
+      "end_ms": 1793659803035,
+      "output_duration_ms": 3500
+    },
+    {
+      "start_ms": 1793659803035,
+      "end_ms": 1793659809180,
+      "output_duration_ms": 2500
+    },
+    {
+      "start_ms": 1793659809180,
+      "end_ms": 1793659832124,
+      "output_duration_ms": 18000
+    },
+    {
+      "start_ms": 1793659832124,
+      "end_ms": 1793659835086,
+      "output_duration_ms": 2962
+    }
+  ],
+  "sampled_frames_sha256": "b26c3d05388d2ebb218005cb217e635636be6b763ada6a33a436d2362912c648",
+  "stills": [
     {
       "file": "ru-dark/later-1-start.png",
-      "duration_ms": 2500,
-      "sha256": "442602dbb50aaa42a2125bd700e166fa11ae01315b9c08d9ffd8f8d416f52c72"
+      "requested_timestamp_ms": 1793659783847,
+      "source_frame": "f00034.png",
+      "source_timestamp_ms": 1793659783769,
+      "sha256": "a0829b8f88d591069382d38320cd1ca5be5383d1c4dcb9b74e3f7722c5808185"
     },
     {
       "file": "ru-dark/later-2-hub.png",
-      "duration_ms": 3500,
-      "sha256": "b37f24d7c73f0ef858a5372db59baf6f8dca41fd0e7fb12604e92a0ca3bfe3b8"
+      "requested_timestamp_ms": 1793659787893,
+      "source_frame": "f00077.png",
+      "source_timestamp_ms": 1793659787891,
+      "sha256": "34b41e93d334b7e8b472b3ca0413062b0541c216cf2fe43f5658524b38209e34"
     },
     {
       "file": "ru-dark/later-3-new-iphone.png",
-      "duration_ms": 3000,
-      "sha256": "abfb137e2f3670ff1c6f511b37b7d6bdf331fdce729cc3bb78de0dbec2362b42"
+      "requested_timestamp_ms": 1793659797210,
+      "source_frame": "f00174.png",
+      "source_timestamp_ms": 1793659797203,
+      "sha256": "2101d8128235aeabbbabf9c802de132e15084306314cb4712b46ab743382596b"
     },
     {
       "file": "ru-dark/later-4-saved.png",
-      "duration_ms": 4500,
-      "sha256": "b123f46608f6af23ff8e0182f7a47c76e335f9b802d46ed80e97a36112538a88"
+      "requested_timestamp_ms": 1793659802785,
+      "source_frame": "f00231.png",
+      "source_timestamp_ms": 1793659802727,
+      "sha256": "0ca57160be219968cb18a64f487b2e280586e12e77806176c2f93ed06e5dba1a"
     },
     {
       "file": "ru-dark/later-5-ready.png",
-      "duration_ms": 3000,
-      "sha256": "4b32bf1f12204ec0049b9a1812620ff937d9b8279e125ca996a3d02cb6d60696"
+      "requested_timestamp_ms": 1793659808930,
+      "source_frame": "f00294.png",
+      "source_timestamp_ms": 1793659808904,
+      "sha256": "d7c6a190bc5ca41b544af490a962efd3d12a481d09ab6eb065ecea1dd96a42ce"
     },
     {
       "file": "ru-dark/later-6-done.png",
-      "duration_ms": 4000,
-      "sha256": "645c4b8e53205e6b983934c104c1b9c760c538cee158f8facf65e1cf82afea1b"
+      "requested_timestamp_ms": 1793659831874,
+      "source_frame": "f00530.png",
+      "source_timestamp_ms": 1793659831810,
+      "sha256": "0292a930fae7730d13ac4abc59b073d0d14760d1fd927e7753aa5a6de64117dc"
     }
   ]
 }

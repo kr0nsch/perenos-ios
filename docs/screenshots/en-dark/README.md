@@ -28,8 +28,8 @@ Choose your devices and apps, sign in, then install.
       <br><b>3. Choose the new iPhone</b><br><sub>The device that will receive the apps.</sub>
     </td>
     <td width="50%" valign="top">
-      <a href="4-sign-in.png"><img src="4-sign-in.png" width="380" alt="Sign in to your Apple Account — The sign-in form with fictional demo credentials."></a>
-      <br><b>4. Sign in to your Apple Account</b><br><sub>The sign-in form with fictional demo credentials.</sub>
+      <a href="4-sign-in.png"><img src="4-sign-in.png" width="380" alt="Sign in to your Apple Account — The sign-in form in demo mode; only fictional credentials are used."></a>
+      <br><b>4. Sign in to your Apple Account</b><br><sub>The sign-in form in demo mode; only fictional credentials are used.</sub>
     </td>
   </tr>
   <tr>

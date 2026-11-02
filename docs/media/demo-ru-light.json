@@ -1,51 +1,160 @@
 {
+  "schema_version": 2,
+  "version": "1.2.0",
   "file": "demo-ru-light.gif",
   "width": 900,
   "height": 751,
-  "frames": 8,
-  "duration_ms": 26500,
-  "bytes": 457347,
-  "sha256": "a99071ace4f3c14efe45122ffdf4697cd4caf9bceb20c37e69dca5d7bb08fb47",
-  "sources": [
+  "frames": 531,
+  "fps": 12,
+  "duration_ms": 44250,
+  "bytes": 1244306,
+  "sha256": "26a117026d7c6be95998837ce90ce09a9cb5c477c723ad1f2b74519098110e76",
+  "cursor": "none",
+  "encoding": {
+    "scaling": "lanczos",
+    "max_colors": 256,
+    "palette_stats": "diff",
+    "dither": "sierra2_4a"
+  },
+  "source": {
+    "recording": "ru-light/demo",
+    "format": "lossless PNG",
+    "capture_method": "PrintWindow(PW_RENDERFULLCONTENT)",
+    "cursor_captured": false,
+    "width": 926,
+    "height": 773,
+    "frames": 1312,
+    "first_timestamp_ms": 1793659060172,
+    "last_timestamp_ms": 1793659187149,
+    "capture_json_sha256": "7e9562ec9a7152a7dfdbdefea1394d0ec97dbe766d1946dc0f916a467f6e3abc",
+    "frames_csv_sha256": "8f241a39f5bf7a5b3d979db47c488e2007388ce3410e844f0b9947977674e8b8",
+    "window_txt_sha256": "b34237fb3ecaf6ba1737d5fa4ac2c386f6b41e7f2661c186b4a31b2f7b7cd962",
+    "timeline_sha256": "a59ff4c7bcfb6fac03c44287ebf65dee3286f0dd82af1e366fbf767c58f2acc7",
+    "raw_frames_sha256": "b297557fd4ce73376e97ac48b52acb0fd9836fe1c359e07f81ee48dbebfda1a4",
+    "raw_frames_hash_format": "SHA-256 of UTF-8 index,timestamp_ms,png_sha256\\n entries in frame order"
+  },
+  "segments": [
     {
-      "file": "ru-light/later-1-start.png",
-      "duration_ms": 2500,
-      "sha256": "f44cb59d5c247dd46c4e87fd0efb67c3ea04e68ab80eba2c64531b9f68d2dfc6"
+      "start_ms": 1793659090550,
+      "end_ms": 1793659092350,
+      "output_duration_ms": 1800
     },
     {
+      "start_ms": 1793659092350,
+      "end_ms": 1793659105972,
+      "output_duration_ms": 3000
+    },
+    {
+      "start_ms": 1793659105972,
+      "end_ms": 1793659116473,
+      "output_duration_ms": 3000
+    },
+    {
+      "start_ms": 1793659116473,
+      "end_ms": 1793659116547,
+      "output_duration_ms": 74
+    },
+    {
+      "start_ms": 1793659116547,
+      "end_ms": 1793659116761,
+      "output_duration_ms": 214
+    },
+    {
+      "start_ms": 1793659116761,
+      "end_ms": 1793659128224,
+      "output_duration_ms": 3500
+    },
+    {
+      "start_ms": 1793659128224,
+      "end_ms": 1793659136697,
+      "output_duration_ms": 3000
+    },
+    {
+      "start_ms": 1793659136697,
+      "end_ms": 1793659139890,
+      "output_duration_ms": 3000
+    },
+    {
+      "start_ms": 1793659139890,
+      "end_ms": 1793659139994,
+      "output_duration_ms": 104
+    },
+    {
+      "start_ms": 1793659139994,
+      "end_ms": 1793659146956,
+      "output_duration_ms": 3000
+    },
+    {
+      "start_ms": 1793659146956,
+      "end_ms": 1793659154555,
+      "output_duration_ms": 3000
+    },
+    {
+      "start_ms": 1793659154555,
+      "end_ms": 1793659160960,
+      "output_duration_ms": 3000
+    },
+    {
+      "start_ms": 1793659160960,
+      "end_ms": 1793659169493,
+      "output_duration_ms": 3000
+    },
+    {
+      "start_ms": 1793659169493,
+      "end_ms": 1793659183993,
+      "output_duration_ms": 14500
+    }
+  ],
+  "sampled_frames_sha256": "a1f706b9c47d40206bee1d592cd08ba441f0fab9d7d0bf937cb3f4db00dc80d0",
+  "stills": [
+    {
       "file": "ru-light/1-connect.png",
-      "duration_ms": 3000,
-      "sha256": "f762b80a7dc01e73a7fd00ed32c523bd715da476eeed0ae480a4a6e7eab5585c"
+      "requested_timestamp_ms": 1793659105722,
+      "source_frame": "f00471.png",
+      "source_timestamp_ms": 1793659105649,
+      "sha256": "6e18c090edfb52512fda8b4e0118fefffa54fcfb58ea48fae08c5ce800b587e8"
     },
     {
       "file": "ru-light/2-choose-apps.png",
-      "duration_ms": 4000,
-      "sha256": "2af757a2d53f2e929eb38a2fff6eaa12e1e6403412146022d5a738c118e051c1"
+      "requested_timestamp_ms": 1793659127973,
+      "source_frame": "f00702.png",
+      "source_timestamp_ms": 1793659127962,
+      "sha256": "aaefadd075955986ffe5fee690323039ecc9c8108c82d74ac6e922f030cf3b26"
     },
     {
       "file": "ru-light/3-target.png",
-      "duration_ms": 3000,
-      "sha256": "268d999940f9931af613f953a2ca1a57fd5403fbbcea3fc044a89470fe348b2c"
+      "requested_timestamp_ms": 1793659136446,
+      "source_frame": "f00789.png",
+      "source_timestamp_ms": 1793659136434,
+      "sha256": "926738e472c1ade55b2959fc5277367b6400092ae30af5b784aaeab8b71b435d"
     },
     {
       "file": "ru-light/4-sign-in.png",
-      "duration_ms": 3000,
-      "sha256": "7474e5014187c3ad9654dfcf87f62ee78f426adb15eaf94bf1132a24990f60d5"
+      "requested_timestamp_ms": 1793659139639,
+      "source_frame": "f00821.png",
+      "source_timestamp_ms": 1793659139587,
+      "sha256": "ffe0b43dc960bcbbb3965e990352f4a50c9327eabc0c8cc49fb92c22d2d64ca0"
     },
     {
       "file": "ru-light/5-ready.png",
-      "duration_ms": 3000,
-      "sha256": "1d8513504ae9baf11d374acbc8d28670b28a43fc1ed420a1a7d6376424faa34f"
+      "requested_timestamp_ms": 1793659169242,
+      "source_frame": "f01125.png",
+      "source_timestamp_ms": 1793659169174,
+      "sha256": "399e4e9a64c960f3c4fdc6d0afd5ca31296a141099ad704ec12886a6b27b337b"
     },
     {
       "file": "ru-light/6-installing.png",
-      "duration_ms": 4000,
-      "sha256": "5a60848ac8c36d74563ccf2a4cf0a1b9441ce4a9ebe43e59a4fced506129a1bf"
+      "requested_timestamp_ms": 1793659178326,
+      "source_frame": "f01219.png",
+      "source_timestamp_ms": 1793659178272,
+      "sha256": "40de118aaecafa6d1cf79c9b15cff76902067e81354b0aca8f4ef9489505a383"
     },
     {
       "file": "ru-light/7-done.png",
-      "duration_ms": 4000,
-      "sha256": "d06b3ff53d40b7cc787a623851f2703bcaf2a6e420259d9d0249f664d8fff5b9"
+      "requested_timestamp_ms": 1793659186971,
+      "source_frame": "f01309.png",
+      "source_timestamp_ms": 1793659186952,
+      "sha256": "7c6deca4f3dc519602b02412856b47a16c7aadc2f4447118864e5cbc0a04deb7"
     }
   ]
 }

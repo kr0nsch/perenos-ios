@@ -99,6 +99,12 @@
   <data name="Apps_Search.PlaceholderText" xml:space="preserve">
     <value>Поиск</value>
   </data>
+  <data name="Apps_SortByName" xml:space="preserve">
+    <value>По имени</value>
+  </data>
+  <data name="Apps_SortBySize" xml:space="preserve">
+    <value>Сначала большие</value>
+  </data>
   <data name="Apps_TryAgain.Content" xml:space="preserve">
     <value>Повторить</value>
   </data>

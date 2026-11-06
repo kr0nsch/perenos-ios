@@ -26,8 +26,9 @@ public sealed partial class AppsViewModel(IDeviceService devices, IconCache icon
             return;
 
         _loading?.Cancel();
-        _loading = new CancellationTokenSource();
-        var token = _loading.Token;
+        var loading = new CancellationTokenSource();
+        _loading = loading;
+        var token = loading.Token;
         LoadedFromUdid = null;
 
         IsLoading = true;
@@ -36,6 +37,9 @@ public sealed partial class AppsViewModel(IDeviceService devices, IconCache icon
         try
         {
             var apps = await devices.GetUserAppsAsync(source.Udid, token);
+            token.ThrowIfCancellationRequested();
+            if (!ReferenceEquals(_loading, loading))
+                return;
             _notFromStore = apps.Count(a => !a.IsFromAppStore);
             SetItems(apps.Where(a => a.IsFromAppStore).Select(a => new AppItemViewModel(a)).ToList());
             UpdateFootnote();
@@ -45,7 +49,7 @@ public sealed partial class AppsViewModel(IDeviceService devices, IconCache icon
         catch (OperationCanceledException)
         {
         }
-        catch (DeviceOperationException ex)
+        catch (DeviceOperationException ex) when (!token.IsCancellationRequested && ReferenceEquals(_loading, loading))
         {
             AppLog.Warn($"Could not read apps: {ex.Kind} {ex.Message}");
             Error = ex.Kind switch
@@ -58,7 +62,7 @@ public sealed partial class AppsViewModel(IDeviceService devices, IconCache icon
         }
         finally
         {
-            if (!token.IsCancellationRequested)
+            if (!token.IsCancellationRequested && ReferenceEquals(_loading, loading))
                 IsLoading = false;
         }
     }
@@ -91,12 +95,19 @@ public sealed partial class AppsViewModel(IDeviceService devices, IconCache icon
             var ids = All.Select(a => a.App.BundleId).ToList();
             await devices.LoadIconsAsync(udid, ids, (bundleId, png) =>
             {
+                if (token.IsCancellationRequested)
+                    return;
                 icons.Store(bundleId, png);
                 dispatcher.TryEnqueue(async () =>
                 {
+                    if (token.IsCancellationRequested)
+                        return;
                     var item = All.FirstOrDefault(a => a.App.BundleId == bundleId);
-                    if (item is not null)
-                        item.Icon = await icons.GetAsync(bundleId);
+                    if (item is null)
+                        return;
+                    var icon = await icons.GetAsync(bundleId);
+                    if (!token.IsCancellationRequested)
+                        item.Icon = icon;
                 });
             }, token);
         }

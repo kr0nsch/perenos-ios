@@ -8,7 +8,11 @@ namespace Microsoft.UI.Dispatching
 {
     public sealed class DispatcherQueue
     {
-        public bool TryEnqueue(Action callback)
+        public Func<Action, bool>? Handler { get; set; }
+
+        public bool TryEnqueue(Action callback) => Handler?.Invoke(callback) ?? Run(callback);
+
+        private static bool Run(Action callback)
         {
             callback();
             return true;
@@ -56,5 +60,7 @@ namespace AppBridge.Services
         public static string Get(string key) => key;
 
         public static string Format(string key, params object?[] values) => $"{key}: {string.Join(", ", values)}";
+
+        public static string Plural(string key, int count, params object?[] values) => Format(key, [count, .. values]);
     }
 }

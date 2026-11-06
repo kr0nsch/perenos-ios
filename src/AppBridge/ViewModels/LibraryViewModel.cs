@@ -54,6 +54,7 @@ public sealed partial class LibraryViewModel(AppServices services) : ObservableO
         {
             // Directory.Exists can stall on an offline network folder, so it runs in the background too.
             var (scan, exists) = await Task.Run(() => (SavedAppLibrary.Scan(folder, language, token), Directory.Exists(folder)), token);
+            token.ThrowIfCancellationRequested();
             if (services.IsDemo)
                 scan = DemoBackend.WithRealisticSizes(scan);
             Scan = scan;

@@ -110,8 +110,42 @@ public sealed class InstallViewModelTests : IDisposable
         Assert.Equal(["a", "b"], _devices.Installed);
     }
 
-    private InstallViewModel CreateViewModel() => new(
-        new AppServices(_folder, new TransferRunner(_store, _devices)), _icons, new DispatcherQueue());
+    [Fact]
+    public async Task QueuedProgressFromAnOldRunCannotChangeANewRun()
+    {
+        var queued = new Queue<Action>();
+        var dispatcher = new DispatcherQueue
+        {
+            Handler = callback =>
+            {
+                queued.Enqueue(callback);
+                return true;
+            },
+        };
+        var vm = CreateViewModel(dispatcher);
+        await vm.StartSaveAsync([App("a")]);
+        Assert.NotEmpty(queued);
+
+        vm.Reset();
+        var icon = new TaskCompletionSource<ImageSource?>();
+        _icons.Load = _ => icon.Task;
+        var currentRun = vm.StartSaveAsync([App("a")]);
+        while (queued.Count > 0)
+            queued.Dequeue()();
+
+        Assert.Equal(InstallState.Running, vm.State);
+        Assert.Equal(0, vm.CompletedCount);
+        Assert.All(vm.Items, item => Assert.False(item.IsCompleted));
+
+        icon.SetResult(null);
+        await currentRun.WaitAsync(TimeSpan.FromSeconds(5));
+        while (queued.Count > 0)
+            queued.Dequeue()();
+        Assert.Equal(1, vm.CompletedCount);
+    }
+
+    private InstallViewModel CreateViewModel(DispatcherQueue? dispatcher = null) => new(
+        new AppServices(_folder, new TransferRunner(_store, _devices)), _icons, dispatcher ?? new DispatcherQueue());
 
     private Task Start(InstallViewModel vm, IReadOnlyList<InstalledApp> apps, Flow flow) => flow switch
     {

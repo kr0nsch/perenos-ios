@@ -29,6 +29,7 @@ public sealed partial class InstallViewModel : ObservableObject
     private readonly ConcurrentDictionary<string, TransferUpdate> _lastUpdate = new();
     private readonly Dictionary<string, SavedApp> _saved = new(StringComparer.Ordinal);
     private CancellationTokenSource? _run;
+    private int _runGeneration;
     private string? _targetUdid;
 
     public InstallViewModel(AppServices services, IconCache icons, DispatcherQueue dispatcher)
@@ -122,11 +123,16 @@ public sealed partial class InstallViewModel : ObservableObject
     public Task RetryAsync()
     {
         var retry = Items.Where(i => i.IsFailed || i.Stage == TransferStage.Canceled).Select(i => i.App).ToList();
-        return retry.Count == 0 || (_targetUdid is null && Flow != Flow.Save) ? Task.CompletedTask : RunAsync(retry);
+        if (retry.Count == 0 || (_targetUdid is null && Flow != Flow.Save))
+            return Task.CompletedTask;
+        _run?.Cancel();
+        return RunAsync(retry, generation: ++_runGeneration);
     }
 
     private async Task BeginAsync(Flow flow, IReadOnlyList<InstalledApp> apps, DeviceItemViewModel? target)
     {
+        var generation = ++_runGeneration;
+        _run?.Cancel();
         _targetUdid = target?.Udid;
         TargetName = target?.Name ?? "iPhone";
         if (_retryPending && Flow == flow)
@@ -145,7 +151,7 @@ public sealed partial class InstallViewModel : ObservableObject
         for (var i = 0; i < apps.Count; i++)
             Items.Add(new TransferItemViewModel(apps[i], null, flow) { ShowSeparator = i > 0 });
 
-        await RunAsync(apps, loadIcons: true);
+        await RunAsync(apps, loadIcons: true, generation);
     }
 
     public void Cancel() => _run?.Cancel();
@@ -159,9 +165,11 @@ public sealed partial class InstallViewModel : ObservableObject
 
     public void Reset()
     {
+        ++_runGeneration;
         _retryPending = false;
         _run?.Cancel();
         Items.Clear();
+        _lastUpdate.Clear();
         State = InstallState.Ready;
         OverallProgress = 0;
         CompletedCount = 0;
@@ -169,10 +177,15 @@ public sealed partial class InstallViewModel : ObservableObject
         WasCanceled = false;
     }
 
-    private async Task RunAsync(IReadOnlyList<InstalledApp> apps, bool loadIcons = false)
+    private async Task RunAsync(IReadOnlyList<InstalledApp> apps, bool loadIcons = false, int generation = 0)
     {
+        if (generation != _runGeneration)
+            return;
+
         using var run = new CancellationTokenSource();
         _run = run;
+        var flow = Flow;
+        var targetUdid = _targetUdid;
         State = InstallState.Running;
         WasCanceled = false;
         Recount();
@@ -183,7 +196,7 @@ public sealed partial class InstallViewModel : ObservableObject
             _services.Settings.Current.VersionPolicy,
             _services.Settings.Current.AcquireFreeLicenses);
 
-        AppLog.Info($"{Flow}: {apps.Count} app(s).");
+        AppLog.Info($"{flow}: {apps.Count} app(s).");
         KeepAwake.Enable();
         try
         {
@@ -194,26 +207,33 @@ public sealed partial class InstallViewModel : ObservableObject
                     run.Token.ThrowIfCancellationRequested();
                     var icon = await _icons.GetAsync(apps[i].BundleId).WaitAsync(run.Token);
                     run.Token.ThrowIfCancellationRequested();
-                    Items[i] = new TransferItemViewModel(apps[i], icon, Flow) { ShowSeparator = i > 0 };
+                    if (generation == _runGeneration)
+                        Items[i] = new TransferItemViewModel(apps[i], icon, flow) { ShowSeparator = i > 0 };
                 }
             }
 
-            switch (Flow)
+            run.Token.ThrowIfCancellationRequested();
+            if (generation != _runGeneration)
+                return;
+            void ReportCurrent(InstalledApp app, TransferUpdate update) => Report(app, update, generation);
+            switch (flow)
             {
                 case Flow.Save:
                     Directory.CreateDirectory(options.DownloadDirectory);
-                    await _services.Transfers.SaveAsync(apps, options with { KeepDownloads = true }, Report, run.Token);
+                    await _services.Transfers.SaveAsync(apps, options with { KeepDownloads = true }, ReportCurrent, run.Token);
                     break;
                 case Flow.InstallSaved:
-                    await _services.Transfers.InstallSavedAsync(apps.Select(a => _saved[a.BundleId]).ToList(), _targetUdid!, Report, run.Token);
+                    await _services.Transfers.InstallSavedAsync(apps.Select(a => _saved[a.BundleId]).ToList(), targetUdid!, ReportCurrent, run.Token);
                     break;
                 default:
-                    await _services.Transfers.RunAsync(apps, _targetUdid!, options, Report, run.Token);
+                    await _services.Transfers.RunAsync(apps, targetUdid!, options, ReportCurrent, run.Token);
                     break;
             }
         }
         catch (OperationCanceledException)
         {
+            if (generation != _runGeneration)
+                return;
             WasCanceled = true;
             foreach (var item in Items.Where(i => !i.IsCompleted && !i.IsFailed))
                 item.Apply(new TransferUpdate(TransferStage.Canceled));
@@ -221,6 +241,8 @@ public sealed partial class InstallViewModel : ObservableObject
         }
         catch (Exception ex)
         {
+            if (generation != _runGeneration)
+                return;
             AppLog.Error("The installation run failed.", ex);
             foreach (var item in Items.Where(i => !i.IsCompleted && !i.IsFailed))
                 item.Apply(new TransferUpdate(TransferStage.Failed, Failure: TransferFailure.Unknown, Detail: ex.Message));
@@ -228,18 +250,24 @@ public sealed partial class InstallViewModel : ObservableObject
         finally
         {
             KeepAwake.Disable();
-            _run = null;
+            if (ReferenceEquals(_run, run))
+                _run = null;
         }
 
         // Let the last queued progress updates land before summarising.
         await Task.Delay(150);
+        if (generation != _runGeneration)
+            return;
         Recount();
         State = InstallState.Finished;
         AppLog.Info($"Finished: {CompletedCount} done, {FailedCount} failed.");
     }
 
-    private void Report(InstalledApp app, TransferUpdate update)
+    private void Report(InstalledApp app, TransferUpdate update, int generation)
     {
+        if (generation != _runGeneration)
+            return;
+
         // Progress arrives very often; only forward visible changes to the UI thread.
         if (_lastUpdate.TryGetValue(app.BundleId, out var last) && last.Stage == update.Stage
             && Math.Abs((last.Fraction ?? 0) - (update.Fraction ?? 0)) < 0.005
@@ -249,6 +277,8 @@ public sealed partial class InstallViewModel : ObservableObject
 
         _dispatcher.TryEnqueue(() =>
         {
+            if (generation != _runGeneration)
+                return;
             var item = Items.FirstOrDefault(i => i.App.BundleId == app.BundleId);
             if (item is null)
                 return;

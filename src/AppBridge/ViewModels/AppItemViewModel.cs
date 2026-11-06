@@ -72,5 +72,7 @@ public sealed partial class AppItemViewModel(InstalledApp app, SavedApp? saved =
         string.IsNullOrWhiteSpace(query)
         || App.Name.Contains(query, StringComparison.CurrentCultureIgnoreCase)
         || (App.Developer?.Contains(query, StringComparison.CurrentCultureIgnoreCase) ?? false)
-        || App.BundleId.Contains(query, StringComparison.OrdinalIgnoreCase);
+        || App.BundleId.Contains(query, StringComparison.OrdinalIgnoreCase)
+        || (Account?.Contains(query, StringComparison.OrdinalIgnoreCase) ?? false)
+        || (App.PurchaserAppleId?.Contains(query, StringComparison.OrdinalIgnoreCase) ?? false);
 }

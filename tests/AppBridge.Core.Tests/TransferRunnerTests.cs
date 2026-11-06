@@ -99,6 +99,30 @@ public sealed class TransferRunnerTests : IDisposable
     }
 
     [Fact]
+    public async Task CleanupFailureDoesNotTurnSuccessfulInstallIntoFailure()
+    {
+        string? temporaryFile = null;
+        _devices.OnInstall = _ =>
+        {
+            temporaryFile = Directory.GetFiles(Path.Combine(_downloads, TransferRunner.StagingFolderName), "*.ipa").Single();
+            File.SetAttributes(temporaryFile, FileAttributes.ReadOnly);
+        };
+
+        try
+        {
+            await Run([App("a")], keep: false);
+
+            Assert.Equal(TransferStage.Completed, _final["a"].Stage);
+            Assert.Equal(["a"], _devices.Installed);
+        }
+        finally
+        {
+            if (temporaryFile is not null && File.Exists(temporaryFile))
+                File.SetAttributes(temporaryFile, FileAttributes.Normal);
+        }
+    }
+
+    [Fact]
     public async Task WrongPackageIsRejected()
     {
         _store.WrongBundle.Add("a");
@@ -247,12 +271,14 @@ public sealed class TransferRunnerTests : IDisposable
     [InlineData("Weather", "2.1", "com.example", "Weather 2.1.ipa")]
     [InlineData("A/B: C?", "1.0", "com.example", "A_B_ C_ 1.0.ipa")]
     [InlineData("...", "", "com.example", "com.example.ipa")]
+    [InlineData("Weather", "../../1:2?", "com.example", "Weather _.._1_2_.ipa")]
     public void SavedNamesAreReadableAndSafe(string name, string version, string bundle, string expected) =>
         Assert.Equal(expected, TransferRunner.SavedFileName(name, version, bundle));
 
     [Theory]
     [InlineData("com.example.app", null, "com.example.app_42.ipa")]
     [InlineData("com.example.app", "999", "com.example.app_42_v999.ipa")]
+    [InlineData("com.example.app", "../999", "com.example.app_42_v_999.ipa")]
     [InlineData("bad/name:with*chars", null, "bad_name_with_chars_42.ipa")]
     public void PackageNamesAreSafe(string bundle, string? version, string expected)
     {

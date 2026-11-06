@@ -27,17 +27,22 @@
       <TextBlock Style="{StaticResource HeroSubtitleStyle}" Text="{x:Bind ViewModel.AppsSubtitle, Mode=OneWay}" />
     </StackPanel>
 
-    <!-- Search and select all -->
+    <!-- Search, sorting and select all -->
     <Grid Grid.Row="1" Margin="0,22,0,12" ColumnSpacing="12" Visibility="{x:Bind ViewModel.AppList.ShowList, Mode=OneWay}">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
       <TextBox x:Uid="Apps_Search" Style="{StaticResource SearchBoxStyle}" PlaceholderText="Search"
                Text="{x:Bind ViewModel.AppList.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
       <FontIcon Glyph="&#xE721;" FontSize="14" Foreground="{ThemeResource AppSecondaryLabelBrush}"
                 HorizontalAlignment="Left" Margin="12,0,0,0" IsHitTestVisible="False" />
-      <HyperlinkButton Grid.Column="1" Content="{x:Bind ViewModel.AppList.SelectAllText, Mode=OneWay}"
+      <Button Grid.Column="1" Style="{StaticResource SmallPillButtonStyle}" Content="{x:Bind ViewModel.AppList.SortButtonText, Mode=OneWay}"
+              Command="{x:Bind ViewModel.AppList.ToggleSortModeCommand, Mode=OneWay}"
+              ToolTipService.ToolTip="{x:Bind ViewModel.AppList.SortButtonText, Mode=OneWay}"
+              AutomationProperties.Name="{x:Bind ViewModel.AppList.SortButtonText, Mode=OneWay}" />
+      <HyperlinkButton Grid.Column="2" Content="{x:Bind ViewModel.AppList.SelectAllText, Mode=OneWay}"
                        Command="{x:Bind ViewModel.AppList.ToggleSelectAllCommand, Mode=OneWay}" FontWeight="SemiBold" />
     </Grid>
 

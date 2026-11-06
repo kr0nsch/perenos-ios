@@ -18,6 +18,8 @@
     <!-- Exercise the production view models without starting WinUI or requiring an iPhone. -->
     <Compile Include="..\..\src\AppBridge\ViewModels\InstallViewModel.cs" Link="Production\InstallViewModel.cs" />
     <Compile Include="..\..\src\AppBridge\ViewModels\AccountViewModel.cs" Link="Production\AccountViewModel.cs" />
+    <Compile Include="..\..\src\AppBridge\ViewModels\AppListViewModel.cs" Link="Production\AppListViewModel.cs" />
+    <Compile Include="..\..\src\AppBridge\ViewModels\AppItemViewModel.cs" Link="Production\AppItemViewModel.cs" />
     <Compile Include="..\..\src\AppBridge\ViewModels\TransferItemViewModel.cs" Link="Production\TransferItemViewModel.cs" />
     <Compile Include="..\..\src\AppBridge\ViewModels\DeviceItemViewModel.cs" Link="Production\DeviceItemViewModel.cs" />
     <Compile Include="..\..\src\AppBridge\Services\Format.cs" Link="Production\Format.cs" />

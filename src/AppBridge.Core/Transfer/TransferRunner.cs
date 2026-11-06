@@ -196,8 +196,15 @@ public sealed class TransferRunner(IAppStoreClient ipatool, IDeviceService devic
     internal static string PackageFileName(InstalledApp app, string? externalVersionId)
     {
         var safeBundle = string.Concat(app.BundleId.Select(c => char.IsAsciiLetterOrDigit(c) || c is '.' or '-' or '_' ? c : '_'));
+        var safeExternalVersion = externalVersionId is null ? "" : SafeFilePart(externalVersionId);
         var id = (app.AppStoreId ?? 0).ToString(CultureInfo.InvariantCulture);
-        return externalVersionId is null ? $"{safeBundle}_{id}.ipa" : $"{safeBundle}_{id}_v{externalVersionId}.ipa";
+        return safeExternalVersion.Length == 0 ? $"{safeBundle}_{id}.ipa" : $"{safeBundle}_{id}_v{safeExternalVersion}.ipa";
+    }
+
+    private static string SafeFilePart(string value)
+    {
+        var invalid = Path.GetInvalidFileNameChars();
+        return string.Concat(value.Select(c => invalid.Contains(c) || char.IsControl(c) ? '_' : c)).Trim(' ', '.');
     }
 
     private async Task<string> DownloadAsync(InstalledApp app, TransferOptions options, Action<TransferUpdate> report, CancellationToken token)
@@ -264,16 +271,16 @@ public sealed class TransferRunner(IAppStoreClient ipatool, IDeviceService devic
     /// <summary>File name for an app saved to install later, readable in Explorer: "Name 1.2.3.ipa".</summary>
     internal static string SavedFileName(string name, string version, string bundleId, int copy = 1)
     {
-        var invalid = Path.GetInvalidFileNameChars();
-        var clean = string.Concat(name.Select(c => invalid.Contains(c) || char.IsControl(c) ? '_' : c)).Trim(' ', '.');
+        var clean = SafeFilePart(name);
         if (clean.Length == 0)
-            clean = bundleId;
+            clean = SafeFilePart(bundleId);
         var suffix = copy > 1 ? $" ({copy})" : "";
         var maxNameLength = 80 - suffix.Length;
         if (clean.Length > maxNameLength)
             clean = clean[..maxNameLength].TrimEnd();
         clean += suffix;
-        return string.IsNullOrWhiteSpace(version) ? $"{clean}.ipa" : $"{clean} {version}.ipa";
+        var safeVersion = SafeFilePart(version);
+        return safeVersion.Length == 0 ? $"{clean}.ipa" : $"{clean} {safeVersion}.ipa";
     }
 
     /// <summary>
@@ -340,8 +347,9 @@ public sealed class TransferRunner(IAppStoreClient ipatool, IDeviceService devic
                     _downloaded.TryRemove(key, out _);
             }
         }
-        catch (IOException ex)
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
+            // The install has already succeeded; a locked temporary file must not turn it into a failure.
             AppLog.Warn($"Could not delete {Path.GetFileName(path)}.", ex);
         }
     }

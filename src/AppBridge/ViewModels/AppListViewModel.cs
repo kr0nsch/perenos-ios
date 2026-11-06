@@ -5,6 +5,12 @@ using AppBridge.Services;
 
 namespace AppBridge.ViewModels;
 
+public enum AppSortMode
+{
+    Name,
+    SizeDescending,
+}
+
 /// <summary>
 /// A searchable, checkable list of apps. The apps step shows either the apps on the source
 /// iPhone (<see cref="AppsViewModel"/>) or the apps saved on this PC (<see cref="SavedAppsViewModel"/>).
@@ -14,6 +20,17 @@ public abstract partial class AppListViewModel : ObservableObject
     private List<AppItemViewModel> _all = [];
 
     public ObservableCollection<AppItemViewModel> Visible { get; } = [];
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SortButtonText))]
+    public partial AppSortMode SortMode { get; set; }
+
+    public string SortButtonText => Loc.Get(SortMode == AppSortMode.Name ? "Apps_SortByName" : "Apps_SortBySize");
+
+    [RelayCommand]
+    private void ToggleSortMode() => SortMode = SortMode == AppSortMode.Name ? AppSortMode.SizeDescending : AppSortMode.Name;
+
+    partial void OnSortModeChanged(AppSortMode value) => ApplyFilter();
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ShowList), nameof(ShowEmpty))]
@@ -131,17 +148,23 @@ public abstract partial class AppListViewModel : ObservableObject
 
     private void ApplyFilter()
     {
-        var matches = _all.Where(a => a.Matches(SearchText.Trim())).ToList();
+        var matches = _all.Where(a => a.Matches(SearchText.Trim()));
+        // Keep incompatible saved apps in their own group at the bottom, whatever the sort mode.
+        var ordered = matches.OrderByDescending(a => a.IsSelectable);
+        var sorted = SortMode == AppSortMode.SizeDescending
+            ? ordered.ThenByDescending(a => a.App.SizeBytes ?? -1).ThenBy(a => a.Name, StringComparer.CurrentCultureIgnoreCase)
+            : ordered.ThenBy(a => a.Name, StringComparer.CurrentCultureIgnoreCase);
+        var visible = sorted.ThenBy(a => a.App.BundleId, StringComparer.OrdinalIgnoreCase).ToList();
         Visible.Clear();
         var headerShown = false;
-        for (var i = 0; i < matches.Count; i++)
+        for (var i = 0; i < visible.Count; i++)
         {
-            matches[i].ShowSeparator = i > 0;
-            matches[i].ShowSectionHeader = !matches[i].IsSelectable && !headerShown && matches[i].SectionHeader.Length > 0;
-            headerShown |= matches[i].ShowSectionHeader;
-            Visible.Add(matches[i]);
+            visible[i].ShowSeparator = i > 0;
+            visible[i].ShowSectionHeader = !visible[i].IsSelectable && !headerShown && visible[i].SectionHeader.Length > 0;
+            headerShown |= visible[i].ShowSectionHeader;
+            Visible.Add(visible[i]);
         }
 
-        VisibleCount = matches.Count;
+        VisibleCount = visible.Count;
     }
 }

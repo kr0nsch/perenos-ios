@@ -36,6 +36,8 @@ namespace AppBridge.Services
     {
         public Func<string, Task<ImageSource?>> Load { get; set; } = _ => Task.FromResult<ImageSource?>(null);
 
+        public void Store(string bundleId, byte[] png) { }
+
         public Task<ImageSource?> GetAsync(string bundleId) => Load(bundleId);
     }
 

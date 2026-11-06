@@ -4,6 +4,28 @@ All notable changes to Perenos (formerly AppBridge) are listed here. The format 
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.3.0] - 2026-11-06
+
+### Добавлено
+- На подключённом iPhone автоматически находятся приложения текущего Apple Account, которых сейчас нет в российском App Store. Они отмечаются в общем списке, а фильтр «Только недоступные» показывает их отдельно.
+- Проверка повторяется после смены аккаунта. Публичному каталогу Apple передаются только числовые ID приложений, без Apple ID и учётных данных.
+- Приложения можно сортировать по имени или размеру; поиск также находит аккаунт покупателя.
+
+### Исправлено
+- Поздние ответы отменённой загрузки, повторного переноса или сброса больше не изменяют новый список и текущий прогресс.
+- Недопустимые символы в версиях и именах приложений больше не создают ошибки путей; заблокированный временный файл после успешной установки не помечает её как неудачную.
+
+### Added
+- Automatically finds installed apps owned by the current Apple Account but currently absent from the Russian App Store, marks them and offers an unavailable-only filter.
+- Rechecks after account changes and sends only numeric app IDs to Apple's public catalog, never account credentials.
+- Adds name/size sorting and purchaser-account search.
+
+### Fixed
+- Prevents stale results from canceled loads, retried transfers or resets from changing a newer list or transfer run.
+- Sanitizes app names and versions used in paths and no longer reports a successful install as failed when a temporary file is locked.
+
+[1.3.0]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.3.0
+
 ## [1.2.0] - 2026-11-03
 
 ### Новое имя — «Перенос»

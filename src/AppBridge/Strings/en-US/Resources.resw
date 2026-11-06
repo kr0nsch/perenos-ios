@@ -611,6 +611,39 @@ Details were saved to the diagnostic log.</value>
   <data name="Apps_AlreadySaved" xml:space="preserve">
     <value>Already saved</value>
   </data>
+  <data name="Storefront_Checking" xml:space="preserve">
+    <value>Checking the current Apple Account’s apps in the Russian App Store…</value>
+  </data>
+  <data name="Storefront_SignIn" xml:space="preserve">
+    <value>Sign in to your Apple Account in the title bar to find apps unavailable in the Russian App Store.</value>
+  </data>
+  <data name="Storefront_NoOwned" xml:space="preserve">
+    <value>No apps obtained with the current Apple Account were found on this iPhone.</value>
+  </data>
+  <data name="Storefront_AllAvailable" xml:space="preserve">
+    <value>All apps from the current Apple Account are available in the Russian App Store.</value>
+  </data>
+  <data name="Storefront_CheckFailed" xml:space="preserve">
+    <value>Couldn’t check availability in the Russian App Store.</value>
+  </data>
+  <data name="Storefront_Unavailable" xml:space="preserve">
+    <value>Currently unavailable in the Russian App Store</value>
+  </data>
+  <data name="Storefront_UnavailableCount_One" xml:space="preserve">
+    <value>{0} app is currently unavailable in the Russian App Store</value>
+  </data>
+  <data name="Storefront_UnavailableCount_Few" xml:space="preserve">
+    <value>{0} apps are currently unavailable in the Russian App Store</value>
+  </data>
+  <data name="Storefront_UnavailableCount_Many" xml:space="preserve">
+    <value>{0} apps are currently unavailable in the Russian App Store</value>
+  </data>
+  <data name="Storefront_ShowUnavailable" xml:space="preserve">
+    <value>Unavailable only</value>
+  </data>
+  <data name="Storefront_ShowAll" xml:space="preserve">
+    <value>Show all</value>
+  </data>
   <data name="Saved_Subtitle" xml:space="preserve">
     <value>Saved on this PC. Select the ones to install on {0}.</value>
   </data>

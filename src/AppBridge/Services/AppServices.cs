@@ -2,6 +2,7 @@ using System.Reflection;
 using AppBridge.Core;
 using AppBridge.Core.Devices;
 using AppBridge.Core.Ipatool;
+using AppBridge.Core.Storefront;
 using AppBridge.Core.Transfer;
 using AppBridge.Demo;
 
@@ -17,6 +18,7 @@ public sealed class AppServices : IDisposable
         Paths = paths;
         IsDemo = demo;
         Settings = new SettingsStore(paths.SettingsFile);
+        IStorefrontCatalog storefront;
 
         if (demo)
         {
@@ -25,6 +27,7 @@ public sealed class AppServices : IDisposable
             AppStore = backend;
             Devices = backend;
             Watcher = backend;
+            storefront = backend;
             _demoDownloads = Path.Combine(Path.GetTempPath(), "AppBridgeDemo");
             DemoBackend.PrepareSavedApps(_demoDownloads, HasFlag("--demo-saved") || DemoEnvironmentEnabled("DEMO_SAVED"));
         }
@@ -33,9 +36,11 @@ public sealed class AppServices : IDisposable
             AppStore = new IpatoolClient(paths.IpatoolExecutable, paths.IpatoolHome);
             Devices = new DeviceService(paths.PairRecordsDirectory);
             Watcher = new DeviceWatcher();
+            storefront = new StorefrontCatalog();
         }
 
         Transfers = new TransferRunner(AppStore, Devices);
+        StorefrontScanner = new UnavailableAppScanner(AppStore, storefront);
     }
 
     public static string Version { get; } =
@@ -56,6 +61,8 @@ public sealed class AppServices : IDisposable
     public IDeviceWatcher Watcher { get; }
 
     public TransferRunner Transfers { get; }
+
+    public UnavailableAppScanner StorefrontScanner { get; }
 
     /// <summary>Icons survive restarts so saved apps keep them; demo icons stay out of the real cache.</summary>
     public string IconsDirectory => _demoDownloads is null ? Paths.IconsDirectory : Path.Combine(Path.GetTempPath(), "AppBridgeDemoIcons");

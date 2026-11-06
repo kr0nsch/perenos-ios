@@ -17,6 +17,12 @@ public interface IAppStoreClient
     Task<string> DownloadAsync(DownloadRequest request, IProgress<DownloadProgress>? progress, CancellationToken cancellationToken = default);
 }
 
+/// <summary>Public App Store catalog lookups for a particular country storefront.</summary>
+public interface IStorefrontCatalog
+{
+    Task<IReadOnlySet<long>> GetAvailableAppIdsAsync(IEnumerable<long> appIds, string storefront, CancellationToken cancellationToken = default);
+}
+
 /// <summary>Operations on one connected iPhone, addressed by UDID.</summary>
 public interface IDeviceService
 {

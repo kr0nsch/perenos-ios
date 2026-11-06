@@ -2,15 +2,15 @@
 .SYNOPSIS
   Builds Perenos release artifacts: a portable ZIP and an installer per architecture.
 .EXAMPLE
-  ./build/build.ps1 -Version 1.2.0
-  ./build/build.ps1 -Version 1.2.0 -RuntimeIdentifier win-x64, win-arm64
+  ./build/build.ps1 -Version 1.3.0
+  ./build/build.ps1 -Version 1.3.0 -RuntimeIdentifier win-x64, win-arm64
 .NOTES
   Outputs go to artifacts\release together with SHA256SUMS.txt.
   Requires the .NET 10 SDK and Inno Setup 6 (ISCC.exe) for the installer.
 #>
 [CmdletBinding()]
 param(
-    [string] $Version = '1.2.0',
+    [string] $Version = '1.3.0',
     [ValidateSet('win-x64', 'win-arm64')]
     [string[]] $RuntimeIdentifier = @('win-x64'),
     [switch] $SkipTests,

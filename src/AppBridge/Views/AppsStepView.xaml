@@ -18,6 +18,7 @@
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
       <RowDefinition Height="*" />
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
@@ -46,15 +47,36 @@
                        Command="{x:Bind ViewModel.AppList.ToggleSelectAllCommand, Mode=OneWay}" FontWeight="SemiBold" />
     </Grid>
 
+    <!-- Current-account apps missing from the Russian storefront. -->
+    <Border Grid.Row="2" Style="{StaticResource GroupCardStyle}" Margin="0,0,0,12" Padding="14,10"
+            Visibility="{x:Bind ViewModel.ShowStorefrontStatus, Mode=OneWay}">
+      <Grid ColumnSpacing="12">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <ProgressRing Width="16" Height="16" VerticalAlignment="Center"
+                      IsActive="{x:Bind ViewModel.Apps.IsStorefrontScanning, Mode=OneWay}"
+                      Visibility="{x:Bind ViewModel.Apps.IsStorefrontScanning, Mode=OneWay}" />
+        <TextBlock Grid.Column="1" Style="{StaticResource RowSubtitleStyle}" TextWrapping="Wrap" VerticalAlignment="Center"
+                   Text="{x:Bind ViewModel.Apps.StorefrontStatus, Mode=OneWay}" />
+        <HyperlinkButton Grid.Column="2" VerticalAlignment="Center" Padding="8,4" FontWeight="SemiBold"
+                         Content="{x:Bind ViewModel.Apps.UnavailableFilterText, Mode=OneWay}"
+                         Command="{x:Bind ViewModel.Apps.ToggleUnavailableFilterCommand, Mode=OneWay}"
+                         Visibility="{x:Bind ViewModel.Apps.HasUnavailableApps, Mode=OneWay}" />
+      </Grid>
+    </Border>
+
     <!-- Loading -->
-    <StackPanel Grid.Row="2" Visibility="{x:Bind ViewModel.AppList.IsLoading, Mode=OneWay}" VerticalAlignment="Center" Spacing="14">
+    <StackPanel Grid.Row="3" Visibility="{x:Bind ViewModel.AppList.IsLoading, Mode=OneWay}" VerticalAlignment="Center" Spacing="14">
       <ProgressRing IsActive="{x:Bind ViewModel.AppList.IsLoading, Mode=OneWay}" Width="32" Height="32" />
       <TextBlock Style="{StaticResource RowBodyStyle}" Foreground="{ThemeResource AppSecondaryLabelBrush}"
                  HorizontalAlignment="Center" Text="{x:Bind ViewModel.AppList.LoadingText, Mode=OneWay}" />
     </StackPanel>
 
     <!-- Error -->
-    <StackPanel Grid.Row="2" Visibility="{x:Bind ViewModel.AppList.HasError, Mode=OneWay}" VerticalAlignment="Center" Spacing="14" Margin="0,24,0,0">
+    <StackPanel Grid.Row="3" Visibility="{x:Bind ViewModel.AppList.HasError, Mode=OneWay}" VerticalAlignment="Center" Spacing="14" Margin="0,24,0,0">
       <FontIcon Glyph="&#xE7BA;" FontSize="32" Foreground="{ThemeResource AppOrangeBrush}" />
       <TextBlock Style="{StaticResource RowBodyStyle}" TextAlignment="Center" HorizontalAlignment="Center" MaxWidth="440"
                  Text="{x:Bind ViewModel.AppList.Error, Mode=OneWay}" />
@@ -63,14 +85,14 @@
     </StackPanel>
 
     <!-- Nothing to list -->
-    <StackPanel Grid.Row="2" Visibility="{x:Bind ViewModel.AppList.ShowEmpty, Mode=OneWay}" VerticalAlignment="Center" Spacing="10" Margin="0,24,0,0">
+    <StackPanel Grid.Row="3" Visibility="{x:Bind ViewModel.AppList.ShowEmpty, Mode=OneWay}" VerticalAlignment="Center" Spacing="10" Margin="0,24,0,0">
       <FontIcon Glyph="&#xE71D;" FontSize="32" Foreground="{ThemeResource AppTertiaryLabelBrush}" />
       <TextBlock Style="{StaticResource RowBodyStyle}" TextAlignment="Center" HorizontalAlignment="Center" MaxWidth="440"
                  Foreground="{ThemeResource AppSecondaryLabelBrush}" Text="{x:Bind ViewModel.AppList.EmptyText, Mode=OneWay}" />
     </StackPanel>
 
     <!-- App list -->
-    <Border Grid.Row="2" Style="{StaticResource GroupCardStyle}" Padding="0,4" Visibility="{x:Bind ViewModel.AppList.ShowList, Mode=OneWay}">
+    <Border Grid.Row="3" Style="{StaticResource GroupCardStyle}" Padding="0,4" Visibility="{x:Bind ViewModel.AppList.ShowList, Mode=OneWay}">
       <Grid>
         <ListView ItemsSource="{x:Bind ViewModel.AppList.Visible, Mode=OneWay}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="OnAppClick"
                   ItemContainerStyle="{StaticResource InsetRowItemStyle}">
@@ -111,6 +133,8 @@
                         <TextBlock Style="{StaticResource RowSubtitleStyle}" Text="{x:Bind Caption, Mode=OneWay}" Foreground="{ThemeResource AppBlueBrush}"
                                    Visibility="{x:Bind CaptionIsAccent}" />
                       </Grid>
+                      <TextBlock Style="{StaticResource RowSubtitleStyle}" Text="{x:Bind AvailabilityText, Mode=OneWay}"
+                                 Foreground="{ThemeResource AppOrangeBrush}" Visibility="{x:Bind HasAvailability, Mode=OneWay}" />
                     </StackPanel>
                     <TextBlock Grid.Column="3" Text="{x:Bind SizeText}" FontSize="12" Foreground="{ThemeResource AppSecondaryLabelBrush}"
                                VerticalAlignment="Center" />
@@ -125,7 +149,7 @@
       </Grid>
     </Border>
 
-    <TextBlock Grid.Row="3" Style="{StaticResource FootnoteStyle}" Margin="16,10,16,0" TextAlignment="Center"
+    <TextBlock Grid.Row="4" Style="{StaticResource FootnoteStyle}" Margin="16,10,16,0" TextAlignment="Center"
                Visibility="{x:Bind ViewModel.AppList.HasFootnote, Mode=OneWay}" Text="{x:Bind ViewModel.AppList.Footnote, Mode=OneWay}"
                ToolTipService.ToolTip="{x:Bind ViewModel.AppList.FootnoteDetail, Mode=OneWay}" />
   </Grid>

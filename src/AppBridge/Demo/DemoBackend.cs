@@ -11,7 +11,7 @@ namespace AppBridge.Demo;
 /// Simulated iPhones and App Store, enabled with <c>--demo</c>. Used to develop the UI and to
 /// take screenshots without hardware or an Apple Account. All names here are fictional.
 /// </summary>
-internal sealed class DemoBackend : IAppStoreClient, IDeviceService, IDeviceWatcher
+internal sealed class DemoBackend : IAppStoreClient, IStorefrontCatalog, IDeviceService, IDeviceWatcher
 {
     private const string SourceUdid = "00008110-DEMO0000000000A1";
     private const string TargetUdid = "00008140-DEMO0000000000B2";
@@ -125,6 +125,14 @@ internal sealed class DemoBackend : IAppStoreClient, IDeviceService, IDeviceWatc
     // App Store --------------------------------------------------------------------------
 
     public Task<IpatoolAccount?> GetAccountAsync(CancellationToken cancellationToken = default) => Task.FromResult(_account);
+
+    public async Task<IReadOnlySet<long>> GetAvailableAppIdsAsync(
+        IEnumerable<long> appIds, string storefront, CancellationToken cancellationToken = default)
+    {
+        await Task.Delay(900, cancellationToken);
+        // Two fictional apps are deliberately absent from the demo Russian storefront.
+        return appIds.Where(id => id is not (1_400_000_006 or 1_400_000_009)).ToHashSet();
+    }
 
     public async Task<LoginResult> LoginAsync(string email, string password, string? authCode, CancellationToken cancellationToken = default)
     {

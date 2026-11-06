@@ -611,6 +611,39 @@
   <data name="Apps_AlreadySaved" xml:space="preserve">
     <value>Уже сохранено</value>
   </data>
+  <data name="Storefront_Checking" xml:space="preserve">
+    <value>Проверяем доступность приложений текущего Apple Account в российском App Store…</value>
+  </data>
+  <data name="Storefront_SignIn" xml:space="preserve">
+    <value>Войдите в Apple Account в верхней панели, чтобы найти приложения, недоступные в российском App Store.</value>
+  </data>
+  <data name="Storefront_NoOwned" xml:space="preserve">
+    <value>На iPhone не найдено приложений, полученных с текущим Apple Account.</value>
+  </data>
+  <data name="Storefront_AllAvailable" xml:space="preserve">
+    <value>Все приложения текущего Apple Account доступны в российском App Store.</value>
+  </data>
+  <data name="Storefront_CheckFailed" xml:space="preserve">
+    <value>Не удалось проверить доступность в российском App Store.</value>
+  </data>
+  <data name="Storefront_Unavailable" xml:space="preserve">
+    <value>Сейчас недоступно в российском App Store</value>
+  </data>
+  <data name="Storefront_UnavailableCount_One" xml:space="preserve">
+    <value>{0} приложение сейчас недоступно в российском App Store</value>
+  </data>
+  <data name="Storefront_UnavailableCount_Few" xml:space="preserve">
+    <value>{0} приложения сейчас недоступны в российском App Store</value>
+  </data>
+  <data name="Storefront_UnavailableCount_Many" xml:space="preserve">
+    <value>{0} приложений сейчас недоступны в российском App Store</value>
+  </data>
+  <data name="Storefront_ShowUnavailable" xml:space="preserve">
+    <value>Только недоступные</value>
+  </data>
+  <data name="Storefront_ShowAll" xml:space="preserve">
+    <value>Показать все</value>
+  </data>
   <data name="Saved_Subtitle" xml:space="preserve">
     <value>Сохранены на этом компьютере. Отметьте, что установить на «{0}».</value>
   </data>

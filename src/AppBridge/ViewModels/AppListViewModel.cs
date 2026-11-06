@@ -146,9 +146,11 @@ public abstract partial class AppListViewModel : ObservableObject
         FootnoteDetail = null;
     }
 
-    private void ApplyFilter()
+    protected virtual bool IncludeInFilter(AppItemViewModel item) => true;
+
+    protected void ApplyFilter()
     {
-        var matches = _all.Where(a => a.Matches(SearchText.Trim()));
+        var matches = _all.Where(a => IncludeInFilter(a) && a.Matches(SearchText.Trim()));
         // Keep incompatible saved apps in their own group at the bottom, whatever the sort mode.
         var ordered = matches.OrderByDescending(a => a.IsSelectable);
         var sorted = SortMode == AppSortMode.SizeDescending

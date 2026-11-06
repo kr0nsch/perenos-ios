@@ -1,3 +1,5 @@
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using AppBridge.Core;
 using AppBridge.Core.Devices;
 using AppBridge.Core.Library;
@@ -7,9 +9,14 @@ using Microsoft.UI.Dispatching;
 namespace AppBridge.ViewModels;
 
 /// <summary>Step 2: the App Store apps found on the source iPhone and which ones to copy or save.</summary>
-public sealed partial class AppsViewModel(IDeviceService devices, IconCache icons, DispatcherQueue dispatcher) : AppListViewModel
+public sealed partial class AppsViewModel(
+    IDeviceService devices,
+    Core.Storefront.UnavailableAppScanner storefrontScanner,
+    IconCache icons,
+    DispatcherQueue dispatcher) : AppListViewModel
 {
     private CancellationTokenSource? _loading;
+    private CancellationTokenSource? _storefront;
     private int _notFromStore;
 
     public string? LoadedFromUdid { get; private set; }
@@ -20,12 +27,31 @@ public sealed partial class AppsViewModel(IDeviceService devices, IconCache icon
 
     public IReadOnlyList<InstalledApp> SelectedApps => All.Where(a => a.IsSelected).Select(a => a.App).ToList();
 
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ShowStorefrontStatus))]
+    public partial string StorefrontStatus { get; set; } = "";
+
+    public bool ShowStorefrontStatus => StorefrontStatus.Length > 0;
+
+    [ObservableProperty]
+    public partial bool IsStorefrontScanning { get; set; }
+
+    [ObservableProperty]
+    public partial bool HasUnavailableApps { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(UnavailableFilterText))]
+    public partial bool ShowUnavailableOnly { get; set; }
+
+    public string UnavailableFilterText => Loc.Get(ShowUnavailableOnly ? "Storefront_ShowAll" : "Storefront_ShowUnavailable");
+
     public async Task LoadAsync(DeviceItemViewModel source)
     {
         if (LoadedFromUdid == source.Udid && Error is null)
             return;
 
         _loading?.Cancel();
+        ResetStorefront();
         var loading = new CancellationTokenSource();
         _loading = loading;
         var token = loading.Token;
@@ -45,6 +71,7 @@ public sealed partial class AppsViewModel(IDeviceService devices, IconCache icon
             UpdateFootnote();
             LoadedFromUdid = source.Udid;
             _ = LoadIconsAsync(source.Udid, token);
+            CheckStorefront();
         }
         catch (OperationCanceledException)
         {
@@ -80,10 +107,96 @@ public sealed partial class AppsViewModel(IDeviceService devices, IconCache icon
     public void Reset()
     {
         _loading?.Cancel();
+        ResetStorefront();
         LoadedFromUdid = null;
         Error = null;
         IsLoading = false;
         Clear();
+    }
+
+    /// <summary>Checks the loaded source iPhone again after the account changes.</summary>
+    public void CheckStorefront()
+    {
+        if (All.Count == 0 || HasError)
+            return;
+
+        _storefront?.Cancel();
+        foreach (var item in All)
+            item.IsUnavailableInRussia = false;
+        ShowUnavailableOnly = false;
+        HasUnavailableApps = false;
+        StorefrontStatus = Loc.Get("Storefront_Checking");
+        IsStorefrontScanning = true;
+        var scan = new CancellationTokenSource();
+        _storefront = scan;
+        _ = ScanStorefrontAsync(All.Select(a => a.App).ToList(), scan);
+    }
+
+    [RelayCommand]
+    private void ToggleUnavailableFilter() => ShowUnavailableOnly = !ShowUnavailableOnly;
+
+    partial void OnShowUnavailableOnlyChanged(bool value)
+    {
+        ApplyFilter();
+        OnPropertyChanged(nameof(SelectAllText));
+    }
+
+    protected override bool IncludeInFilter(AppItemViewModel item) => !ShowUnavailableOnly || item.IsUnavailableInRussia;
+
+    private async Task ScanStorefrontAsync(IReadOnlyList<InstalledApp> apps, CancellationTokenSource scan)
+    {
+        try
+        {
+            var result = await storefrontScanner.ScanAsync(apps, cancellationToken: scan.Token);
+            scan.Token.ThrowIfCancellationRequested();
+            if (!ReferenceEquals(_storefront, scan))
+                return;
+
+            if (result.RequiresSignIn)
+            {
+                StorefrontStatus = Loc.Get("Storefront_SignIn");
+            }
+            else if (result.OwnedCount == 0)
+            {
+                StorefrontStatus = Loc.Get("Storefront_NoOwned");
+            }
+            else
+            {
+                foreach (var item in All)
+                    item.IsUnavailableInRussia = item.App.AppStoreId is > 0 && result.UnavailableAppIds.Contains(item.App.AppStoreId.Value);
+                HasUnavailableApps = result.UnavailableAppIds.Count > 0;
+                StorefrontStatus = HasUnavailableApps
+                    ? Loc.Plural("Storefront_UnavailableCount", result.UnavailableAppIds.Count)
+                    : Loc.Get("Storefront_AllAvailable");
+                ApplyFilter();
+                OnPropertyChanged(nameof(SelectAllText));
+            }
+        }
+        catch (OperationCanceledException) when (scan.Token.IsCancellationRequested)
+        {
+        }
+        catch (Exception ex) when (!scan.Token.IsCancellationRequested && ReferenceEquals(_storefront, scan))
+        {
+            AppLog.Warn($"Could not check the Russian App Store: {ex.Message}");
+            StorefrontStatus = Loc.Get("Storefront_CheckFailed");
+        }
+        finally
+        {
+            if (!scan.Token.IsCancellationRequested && ReferenceEquals(_storefront, scan))
+                IsStorefrontScanning = false;
+        }
+    }
+
+    private void ResetStorefront()
+    {
+        _storefront?.Cancel();
+        _storefront = null;
+        foreach (var item in All)
+            item.IsUnavailableInRussia = false;
+        ShowUnavailableOnly = false;
+        HasUnavailableApps = false;
+        IsStorefrontScanning = false;
+        StorefrontStatus = "";
     }
 
     private void UpdateFootnote() => Footnote = _notFromStore > 0 ? Loc.Plural("Apps_NotFromStore", _notFromStore) : "";

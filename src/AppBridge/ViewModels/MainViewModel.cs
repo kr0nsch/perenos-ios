@@ -48,7 +48,7 @@ public sealed partial class MainViewModel : ObservableObject
         Services = services;
         Icons = new IconCache(services.IconsDirectory);
         Devices = new DeviceListViewModel(services.Watcher, services.Devices, dispatcher);
-        Apps = new AppsViewModel(services.Devices, Icons, dispatcher);
+        Apps = new AppsViewModel(services.Devices, services.StorefrontScanner, Icons, dispatcher);
         Saved = new SavedAppsViewModel(services.Devices, Icons);
         Library = new LibraryViewModel(services);
         Account = new AccountViewModel(services.AppStore);
@@ -174,6 +174,8 @@ public sealed partial class MainViewModel : ObservableObject
         Flow.Save => Source is null ? "" : Loc.Format("Apps_SubtitleSave", Source.Name),
         _ => Source is null ? "" : Loc.Format("Apps_Subtitle", Source.Name),
     };
+
+    public bool ShowStorefrontStatus => IsAppsStep && Flow != Flow.InstallSaved && Apps.ShowStorefrontStatus;
 
     // Install step -----------------------------------------------------------------------
 
@@ -592,6 +594,8 @@ public sealed partial class MainViewModel : ObservableObject
     {
         if (sender == Install && e.PropertyName == nameof(InstallViewModel.State) && Install.IsFinished && Install.NeedsSignIn)
             Account.MarkSessionExpired();
+        if (sender == Account && e.PropertyName == nameof(AccountViewModel.State) && IsAppsStep && Flow != Flow.InstallSaved)
+            Apps.CheckStorefront();
         RefreshAll();
     }
 
@@ -600,7 +604,7 @@ public sealed partial class MainViewModel : ObservableObject
         nameof(IsStartStep), nameof(IsLaterStep), nameof(IsSourceStep), nameof(IsAppsStep), nameof(IsTargetStep), nameof(IsInstallStep),
         nameof(IsDeviceStep), nameof(AppList), nameof(DotCount), nameof(DotIndex), nameof(CanDownload), nameof(NowSubtitle), nameof(LaterSubtitle), nameof(LaterSubtitleIsAccent),
         nameof(SaveSubtitle), nameof(CanInstallSaved), nameof(InstallSavedSubtitle), nameof(FolderDisplay),
-        nameof(DeviceStepTitle), nameof(DeviceStepSubtitle), nameof(DeviceStepTone), nameof(AppsSubtitle),
+        nameof(DeviceStepTitle), nameof(DeviceStepSubtitle), nameof(DeviceStepTone), nameof(AppsSubtitle), nameof(ShowStorefrontStatus),
         nameof(InstallTitle), nameof(InstallSubtitle), nameof(InstallGlyph), nameof(InstallTone), nameof(InstallRingProgress),
         nameof(InstallGlyphIsSuccess), nameof(InstallGlyphIsWarning), nameof(InstallGlyphIsNormal),
         nameof(ShowSignInPanel), nameof(ShowInstallSummary), nameof(ShowOptions), nameof(ShowKeepOption), nameof(ShowSummaryTo),

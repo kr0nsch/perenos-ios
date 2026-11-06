@@ -103,11 +103,14 @@ Build provenance and Windows publisher signing are separate. If SmartScreen show
 | | Feature |
 |---|---|
 | **Original apps from Apple** | Apps are downloaded from Apple's servers using your Apple Account. |
-| **Only the apps you want** | Search, select individual apps and install over USB. |
+| **Only the apps you want** | Search, sort by name or size, select individual apps and install over USB. |
+| **Find apps unavailable in Russia** | Automatically finds apps owned by the current Apple Account that are currently not listed in the Russian App Store: **Sber, Avito, T-Bank, ChatGPT, Gemini, LinkedIn** and others. Show them as a separate filtered list. |
 | **Your own library** | Saved `.ipa` files with icons, versions and compatibility checks against the new phone's iOS. |
 | **Your choice of version** | The latest from the App Store or the version on the old iPhone, while Apple still offers it. |
 | **Clear progress** | Downloads and installations overlap; failed operations can be retried. |
 | **Your preferred interface** | English and Russian, light and dark themes, installer and portable builds. |
+
+The check compares the purchaser account stored on the iPhone with the current Apple Account and sends only numeric app IDs to Apple's public catalog. A mark means **current unavailability**: it cannot distinguish an app removed from the Russian storefront from one that was never listed there.
 
 <details>
 <summary><b>See the Save for Later flow</b></summary>
@@ -235,7 +238,7 @@ dotnet run --project src/AppBridge -p:Platform=x64
 dotnet run --project src/AppBridge -p:Platform=x64 -- --demo
 ```
 
-`--demo-saved` adds a simulated saved-app library. Building the installer requires [Inno Setup 6](https://jrsoftware.org/isinfo.php): `./build/build.ps1 -Version 1.2.0`. Output goes to `artifacts/release`.
+`--demo-saved` adds a simulated saved-app library. Building the installer requires [Inno Setup 6](https://jrsoftware.org/isinfo.php): `./build/build.ps1 -Version 1.3.0`. Output goes to `artifacts/release`.
 
 Built with [WinUI 3](https://github.com/microsoft/microsoft-ui-xaml), [Netimobiledevice](https://github.com/artehe/Netimobiledevice) and [ipatool](https://github.com/majd/ipatool). [Dependency licenses](THIRD-PARTY-NOTICES.txt) · [Changelog](CHANGELOG.md) · [Development priorities](docs/DEVELOPMENT.md).
 

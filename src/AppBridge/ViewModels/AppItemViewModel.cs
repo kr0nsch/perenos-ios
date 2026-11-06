@@ -38,6 +38,14 @@ public sealed partial class AppItemViewModel(InstalledApp app, SavedApp? saved =
     public bool ShowInitial => Icon is null;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(AvailabilityText), nameof(HasAvailability))]
+    public partial bool IsUnavailableInRussia { get; set; }
+
+    public string AvailabilityText => IsUnavailableInRussia ? Loc.Get("Storefront_Unavailable") : "";
+
+    public bool HasAvailability => IsUnavailableInRussia;
+
+    [ObservableProperty]
     public partial bool IsSelected { get; set; }
 
     /// <summary>False for apps this iPhone can't run: dimmed, without a checkmark.</summary>

@@ -1,62 +1,81 @@
 """Generate editable, dependency-free SVG covers for the Perenos READMEs."""
-from pathlib import Path
 from html import escape
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 COPY = {
-    "ru": ("Перенос", "Новый iPhone.", "Знакомые приложения.", "Перенесите сейчас. Или сохраните на потом.", "ДЛЯ WINDOWS", "БЕСПЛАТНО · ОТКРЫТЫЙ КОД", "ВАШИ ПРИЛОЖЕНИЯ", "НОВЫЙ IPHONE"),
-    "en": ("Perenos", "New iPhone.", "Familiar apps.", "Transfer now. Or save for later.", "FOR WINDOWS", "FREE · OPEN SOURCE", "YOUR APPS", "NEW IPHONE"),
+    "ru": {
+        "brand": "Перенос", "eyebrow": "ВЕРСИЯ 1.3.0  ·  WINDOWS 10 / 11",
+        "line1": "Новый iPhone.", "line2": "Ваши приложения.",
+        "caption": "Перенесите сейчас. Или сохраните на потом.",
+        "meta": "БЕСПЛАТНО  ·  ОТКРЫТЫЙ КОД  ·  БЕЗ ДЖЕЙЛБРЕЙКА",
+        "window": "Приложения на старом iPhone", "count": "3 выбрано",
+        "search": "Поиск приложений", "filter": "Только недоступные",
+        "route": "СТАРЫЙ IPHONE   →   WINDOWS   →   НОВЫЙ IPHONE",
+        "badge": "НОВОЕ: ПОИСК НЕДОСТУПНЫХ В РФ",
+        "apps": (("Bloom Journal", "Заметки и дневник"), ("Cloudy", "Прогноз погоды"), ("Daily Planner", "Планы на каждый день")),
+    },
+    "en": {
+        "brand": "Perenos", "eyebrow": "VERSION 1.3.0  ·  WINDOWS 10 / 11",
+        "line1": "New iPhone.", "line2": "Your apps.",
+        "caption": "Transfer now. Or save for later.",
+        "meta": "FREE  ·  OPEN SOURCE  ·  NO JAILBREAK",
+        "window": "Apps on your old iPhone", "count": "3 selected",
+        "search": "Search apps", "filter": "Unavailable only",
+        "route": "OLD IPHONE   →   WINDOWS   →   NEW IPHONE",
+        "badge": "NEW: FIND APPS UNAVAILABLE IN RUSSIA",
+        "apps": (("Bloom Journal", "Notes and journaling"), ("Cloudy", "Weather forecast"), ("Daily Planner", "Plan every day")),
+    },
 }
 
 
-def phone(x, y, label, target=False):
-    icons = ""
-    colors = ["#3096ff", "#a387ff", "#ffb34e", "#f976a9", "#53c9b4", "#6b8fff"]
-    for i, color in enumerate(colors):
-        cx, cy = x + 25 + (i % 2) * 58, y + 72 + (i // 2) * 58
-        icons += f'<rect x="{cx}" y="{cy}" width="43" height="43" rx="12" fill="{color}" opacity="{0.5 if target and i > 3 else 1}"/>'
-        icons += f'<path d="M{cx+14} {cy+22}h15m-7-7v14" stroke="white" stroke-width="3" stroke-linecap="round" opacity=".8"/>'
-    return f'''<g><rect x="{x}" y="{y}" width="151" height="282" rx="29" fill="var(--phone)" stroke="var(--line)" stroke-width="2"/>
-      <rect x="{x+52}" y="{y+14}" width="47" height="9" rx="5" fill="var(--line)"/>{icons}
-      <path d="M{x+57} {y+264}h37" stroke="var(--muted)" stroke-width="3" stroke-linecap="round"/>
-      <text x="{x+75}" y="{y+314}" text-anchor="middle" class="label">{escape(label)}</text></g>'''
+def logo(x, y, size=48):
+    scale = size / 48
+    return f'''<g transform="translate({x} {y}) scale({scale})"><rect width="48" height="48" rx="13" fill="#2563eb"/>
+    <g fill="none" stroke="white" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"><path d="M23 13V9a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v27a3 3 0 0 1-3 3h-7M17 35v4a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V16a3 3 0 0 1 3-3h6"/>
+    <path d="M15 25h18m-6-6 6 6-6 6"/></g></g>'''
+
+
+def app_rows(apps, dark):
+    rows = []
+    colors = ("#4d8ef7", "#32a5b8", "#ee9b43")
+    for i, ((name, subtitle), color) in enumerate(zip(apps, colors)):
+        y = 238 + i * 59
+        rows.append(f'''<g><rect x="708" y="{y}" width="412" height="49" rx="9" fill="var(--row)"/>
+        <rect x="721" y="{y+10}" width="28" height="28" rx="8" fill="{color}"/>
+        <path d="M729 {y+24}h12m-6-6v12" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+        <text x="761" y="{y+21}" class="app-name">{escape(name)}</text><text x="761" y="{y+36}" class="app-subtitle">{escape(subtitle)}</text>
+        <rect x="1081" y="{y+14}" width="20" height="20" rx="6" fill="#2563eb"/><path d="m1086 {y+24} 4 4 7-8" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>''')
+    return "".join(rows)
 
 
 def render(lang, dark):
-    title, line1, line2, caption, platform, meta, source, target = COPY[lang]
-    colors = ("#0d1324", "#f4f7ff", "#b1bed8", "#19243c", "#354563", "#72b4ff") if dark else ("#f4f7fd", "#14233c", "#536684", "#ffffff", "#cbd8ec", "#1767d6")
-    bg, ink, muted, card, stroke, accent = colors
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="470" viewBox="0 0 1200 470" role="img" aria-labelledby="title desc">
-  <title id="title">{title} — {line1} {line2}</title>
-  <desc id="desc">{caption} Windows 10 / 11.</desc>
-  <style>:root{{--bg:{bg};--ink:{ink};--muted:{muted};--phone:{card};--line:{stroke};--accent:{accent}}}
-    text{{font-family:'Segoe UI',Arial,sans-serif;fill:var(--ink)}}
-    .label{{font-size:11px;font-weight:600;letter-spacing:1.5px;fill:var(--muted)}}
-  </style>
-  <defs>
-    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#248aff" stop-opacity=".19"/><stop offset="1" stop-color="#8a62ee" stop-opacity=".05"/></linearGradient>
-    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#11b4ed"/><stop offset=".55" stop-color="#087bff"/><stop offset="1" stop-color="#5749dd"/></linearGradient>
-  </defs>
-  <rect width="1200" height="470" rx="24" fill="var(--bg)"/>
-  <path d="M660 0h516a24 24 0 0 1 24 24v422a24 24 0 0 1-24 24H574z" fill="url(#glow)"/>
-  <circle cx="934" cy="244" r="197" fill="none" stroke="var(--line)" opacity=".35"/>
-  <circle cx="934" cy="244" r="165" fill="none" stroke="var(--line)" opacity=".25"/>
-  <rect x="56" y="48" width="56" height="56" rx="16" fill="url(#blue)"/>
-  <g fill="none" stroke="white" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M82 75V63a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v24a3 3 0 0 1-3 3H77m5-5-5 5 5 5"/>
-    <path d="M75 68h-6a3 3 0 0 0-3 3v22a3 3 0 0 0 3 3h4"/>
-  </g>
-  <text x="128" y="86" font-size="35" font-weight="650" letter-spacing="-.7">{title}</text>
-  <text x="58" y="177" class="label" fill="var(--accent)">{platform}</text>
-  <text x="54" y="238" font-size="49" font-weight="650" letter-spacing="-1.5">{line1}</text>
-  <text x="54" y="297" font-size="49" font-weight="650" letter-spacing="-1.5">{line2}</text>
-  <text x="57" y="344" font-size="19" style="fill:var(--muted)">{caption}</text>
-  <path d="M57 380h40" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
-  <text x="57" y="414" class="label">{meta}</text>
-  {phone(723, 95, source)}
-  {phone(978, 57, target, True)}
-  <circle cx="925" cy="219" r="29" fill="url(#blue)"/>
-  <path d="M912 219h26m-9-9 10 9-10 9" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    c = COPY[lang]
+    colors = {
+        "bg": "#101828" if dark else "#f5f8fc", "card": "#1d2939" if dark else "#ffffff",
+        "ink": "#f2f4f7" if dark else "#101828", "muted": "#aab6c8" if dark else "#526078",
+        "line": "#344054" if dark else "#d9e2ef", "wash": "#162c4b" if dark else "#eaf2ff",
+        "row": "#26364b" if dark else "#f8faff", "soft": "#26364b" if dark else "#edf2f8",
+    }
+    variables = ";".join(f"--{key}:{value}" for key, value in colors.items())
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" role="img" aria-labelledby="title desc">
+<title id="title">{escape(c['brand'])} — {escape(c['line1'])} {escape(c['line2'])}</title><desc id="desc">{escape(c['caption'])} {escape(c['eyebrow'])}</desc>
+<style>:root{{{variables}}}text{{font-family:Manrope,'Segoe UI',Arial,sans-serif;fill:var(--ink)}}.mono{{font-family:Consolas,monospace;font-size:11px;letter-spacing:1.1px;fill:var(--muted)}}.app-name{{font-size:12px;font-weight:650}}.app-subtitle{{font-size:9px;fill:var(--muted)}}</style>
+<rect width="1200" height="500" rx="24" fill="var(--bg)"/><circle cx="1150" cy="20" r="250" fill="#2563eb" opacity=".055"/>
+{logo(52, 42)}<text x="113" y="76" font-size="30" font-weight="750" letter-spacing="-1">{escape(c['brand'])}</text>
+<rect x="885" y="49" width="265" height="29" rx="14.5" fill="var(--wash)"/><text x="1017.5" y="68" text-anchor="middle" class="mono" style="fill:#3b82f6;font-size:9px;letter-spacing:.5">{escape(c['badge'])}</text>
+<text x="54" y="146" class="mono" style="fill:#3b82f6">{escape(c['eyebrow'])}</text>
+<text x="51" y="211" font-size="49" font-weight="700" letter-spacing="-2">{escape(c['line1'])}</text><text x="51" y="269" font-size="49" font-weight="700" letter-spacing="-2" style="fill:#2563eb">{escape(c['line2'])}</text>
+<text x="54" y="315" font-size="17" style="fill:var(--muted)">{escape(c['caption'])}</text>
+<rect x="54" y="354" width="194" height="45" rx="9" fill="#2563eb"/><text x="151" y="382" text-anchor="middle" font-size="13" font-weight="700" style="fill:white">{escape('Скачать для Windows' if lang == 'ru' else 'Download for Windows')}</text>
+<text x="54" y="447" class="mono" style="font-size:10px;letter-spacing:.6">{escape(c['meta'])}</text>
+<g><rect x="674" y="108" width="478" height="345" rx="18" fill="var(--wash)"/><rect x="691" y="125" width="444" height="311" rx="11" fill="var(--card)" stroke="var(--line)"/>
+<circle cx="713" cy="146" r="3" fill="#ff7c72"/><circle cx="724" cy="146" r="3" fill="#f5c45b"/><circle cx="735" cy="146" r="3" fill="#56c89a"/>
+<text x="713" y="177" font-size="15" font-weight="700">{escape(c['window'])}</text><text x="1109" y="176" text-anchor="end" class="mono" style="font-size:9px;letter-spacing:0;fill:#3b82f6">{escape(c['count'])}</text>
+<rect x="708" y="191" width="229" height="31" rx="7" fill="var(--soft)"/><text x="724" y="211" class="app-subtitle">{escape(c['search'])}</text>
+<rect x="946" y="191" width="174" height="31" rx="7" fill="var(--wash)"/><text x="1033" y="211" text-anchor="middle" class="app-subtitle" style="fill:#3b82f6">{escape(c['filter'])}</text>
+{app_rows(c['apps'], dark)}<rect x="990" y="406" width="130" height="17" rx="5" fill="#2563eb"/></g>
+<text x="913" y="479" text-anchor="middle" class="mono" style="font-size:9px;letter-spacing:.8">{escape(c['route'])}</text>
 </svg>'''
 
 

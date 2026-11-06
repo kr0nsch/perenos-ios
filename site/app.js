@@ -22,23 +22,26 @@
     demoPicture.querySelector('source').srcset = source;
     demoImage.src = source;
     demoImage.alt = playing
-      ? `Демонстрация ${scenario === 'now' ? 'переноса приложений' : 'установки сохранённых приложений'} в Переносе 1.2.0`
-      : (scenario === 'now' ? 'Выбор приложений в Переносе' : 'Библиотека сохранённых приложений и проверка совместимости');
+      ? `Демонстрация ${scenario === 'now' ? 'переноса приложений' : 'установки сохранённых приложений'} в Переносе 1.3.0`
+      : (scenario === 'now' ? 'Выбор приложений в Переносе 1.3.0' : 'Библиотека сохранённых приложений в Переносе 1.3.0');
     playButton.querySelector('span').textContent = playing ? 'Остановить демо' : 'Воспроизвести демо';
     playButton.setAttribute('aria-pressed', String(playing));
     playButton.querySelector('path').setAttribute('d', playing ? 'M6 5h4v14H6Zm8 0h4v14h-4Z' : 'm9 5 11 7-11 7Z');
+    document.querySelector('#demo-caption').textContent = `${scenario === 'now' ? 'Перенос сейчас' : 'Установка сохранённого'} · версия 1.3.0`;
   }
 
   function applyTheme() {
+    playing = false;
     const theme = activeTheme();
     root.dataset.theme = theme;
-    document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#0c111b' : '#f6f7fa';
+    document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#111827' : '#f7f9fc';
     document.querySelectorAll('.theme-image').forEach(img => {
       if (img === demoImage) return;
       const src = `assets/${img.dataset.asset}-${theme}.png`;
       img.src = src;
       img.closest('picture')?.querySelector('source')?.setAttribute('srcset', src);
     });
+    document.querySelectorAll('[data-gallery]').forEach(link => { link.href = `assets/${link.dataset.gallery}-${theme}.png`; });
     themeButton.setAttribute('aria-label', theme === 'dark' ? 'Включить светлую тему' : 'Включить тёмную тему');
     themeButton.title = theme === 'dark' ? 'Светлая тема' : 'Тёмная тема';
     updateDemo();
@@ -81,8 +84,7 @@
   themeButton.hidden = false;
   playButton.hidden = false;
 
-  // The static links remain useful when GitHub's API is unavailable or rate-limited.
-  // Only verified asset URLs from this repository may replace those links.
+  // Keep safe release-page fallbacks when GitHub's API is unavailable.
   async function updateDownloads() {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 5000);
@@ -104,8 +106,8 @@
         const size = Number(asset.size);
         if (Number.isFinite(size) && size > 0) link.querySelector('small').textContent += ` · ${Math.round(size / 1048576)} МБ`;
       }
-      document.querySelector('#release-label').textContent = `Версия ${release.tag_name.slice(1)} · Windows x64`;
-    } catch { /* Keep the links to the latest release page. */ }
+      document.querySelector('#release-label').textContent = `Актуальная версия: ${release.tag_name.slice(1)} · Windows x64`;
+    } catch { /* Static release links remain usable. */ }
     finally { clearTimeout(timeout); }
   }
   updateDownloads();

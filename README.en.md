@@ -59,7 +59,7 @@
     <source media="(prefers-color-scheme: dark)" srcset="docs/media/demo-en-dark.gif">
     <img src="docs/media/demo-en-light.gif" width="800" alt="Demo: choose iPhones and apps, then follow installation progress">
   </picture>
-  <br><sub>The real Perenos 1.2.0 interface in demo mode. The iPhones and apps are simulated.</sub>
+  <br><sub>The real Perenos 1.3.0 interface in demo mode. The iPhones and apps are simulated.</sub>
 </p>
 
 > [!NOTE]
@@ -112,6 +112,14 @@ Build provenance and Windows publisher signing are separate. If SmartScreen show
 
 The check compares the purchaser account stored on the iPhone with the current Apple Account and sends only numeric app IDs to Apple's public catalog. A mark means **current unavailability**: it cannot distinguish an app removed from the Russian storefront from one that was never listed there.
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/en-dark/unavailable-filter.png">
+    <img src="docs/screenshots/en-light/unavailable-filter.png" width="800" alt="Perenos 1.3.0 with the Unavailable only filter enabled">
+  </picture>
+  <br><sub>Apps currently unavailable in the Russian storefront. Harbor Maps and Pocket Budget are fictional demo apps; a mark does not prove that an app was specifically removed from the Russian App Store.</sub>
+</p>
+
 <details>
 <summary><b>See the Save for Later flow</b></summary>
 
@@ -124,7 +132,7 @@ Choose **Transfer Later → Save Apps**, connect the old iPhone, select the apps
     <source media="(prefers-color-scheme: dark)" srcset="docs/media/later-en-dark.gif">
     <img src="docs/media/later-en-light.gif" width="800" alt="Saved apps: compatibility checks and installation on the new iPhone">
   </picture>
-  <br><sub>Perenos 1.2.0: installing previously saved apps. The iPhones and apps are simulated.</sub>
+  <br><sub>Perenos 1.3.0: installing previously saved apps. The iPhones and apps are simulated.</sub>
 </p>
 
 </details>
@@ -152,7 +160,7 @@ Choose **Transfer Later → Save Apps**, connect the old iPhone, select the apps
   </tr>
 </table>
 
-<p align="center"><sub>Perenos 1.2.0 screenshots in demo mode. <a href="docs/screenshots/en-light/README.md">Light theme</a> · <a href="docs/screenshots/en-dark/README.md">Dark theme</a> · <a href="docs/screenshots/README.md">All screenshots</a></sub></p>
+<p align="center"><sub>Perenos 1.3.0 screenshots in demo mode. <a href="docs/screenshots/en-light/README.md">Light theme</a> · <a href="docs/screenshots/en-dark/README.md">Dark theme</a> · <a href="docs/screenshots/README.md">All screenshots</a></sub></p>
 
 <a id="privacy"></a>
 

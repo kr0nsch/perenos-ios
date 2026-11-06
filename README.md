@@ -59,7 +59,7 @@
     <source media="(prefers-color-scheme: dark)" srcset="docs/media/demo-ru-dark.gif">
     <img src="docs/media/demo-ru-light.gif" width="800" alt="Демонстрация: выбор iPhone, выбор приложений и установка с прогрессом">
   </picture>
-  <br><sub>Реальный интерфейс «Переноса» 1.2.0 в деморежиме. Телефоны и приложения смоделированы.</sub>
+  <br><sub>Реальный интерфейс «Переноса» 1.3.0 в деморежиме. Телефоны и приложения смоделированы.</sub>
 </p>
 
 > [!NOTE]
@@ -112,6 +112,14 @@ gh attestation verify <скачанный-файл> -R kr0nsch/perenos-ios
 
 Проверка сопоставляет аккаунт покупателя на iPhone с текущим Apple Account и отправляет публичному каталогу Apple только числовые ID приложений. Отметка означает **текущую недоступность**: по ней нельзя отличить приложение, удалённое из российской витрины, от того, которого там никогда не было.
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/unavailable-filter.png">
+    <img src="docs/screenshots/ru-light/unavailable-filter.png" width="800" alt="Фильтр «Только недоступные» в Переносе 1.3.0">
+  </picture>
+  <br><sub>Фильтр приложений, сейчас недоступных в российской витрине. Harbor Maps и Pocket Budget на кадре вымышленные; отметка не доказывает, что приложение было именно удалено из российского App Store.</sub>
+</p>
+
 <details>
 <summary><b>Посмотреть сценарий «Сохранить на потом»</b></summary>
 
@@ -124,7 +132,7 @@ gh attestation verify <скачанный-файл> -R kr0nsch/perenos-ios
     <source media="(prefers-color-scheme: dark)" srcset="docs/media/later-ru-dark.gif">
     <img src="docs/media/later-ru-light.gif" width="800" alt="Сохранённые приложения: проверка совместимости и установка на новый iPhone">
   </picture>
-  <br><sub>«Перенос» 1.2.0: установка ранее сохранённых приложений. Телефоны и приложения смоделированы.</sub>
+  <br><sub>«Перенос» 1.3.0: установка ранее сохранённых приложений. Телефоны и приложения смоделированы.</sub>
 </p>
 
 </details>
@@ -152,7 +160,7 @@ gh attestation verify <скачанный-файл> -R kr0nsch/perenos-ios
   </tr>
 </table>
 
-<p align="center"><sub>Скриншоты «Переноса» 1.2.0 в деморежиме. <a href="docs/screenshots/ru-light/README.md">Светлая тема</a> · <a href="docs/screenshots/ru-dark/README.md">Тёмная тема</a> · <a href="docs/screenshots/README.md">Все скриншоты</a></sub></p>
+<p align="center"><sub>Скриншоты «Переноса» 1.3.0 в деморежиме. <a href="docs/screenshots/ru-light/README.md">Светлая тема</a> · <a href="docs/screenshots/ru-dark/README.md">Тёмная тема</a> · <a href="docs/screenshots/README.md">Все скриншоты</a></sub></p>
 
 <a id="privacy"></a>
 

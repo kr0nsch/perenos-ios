@@ -2,12 +2,12 @@
 
 [All galleries](../README.md) · [About the project](../../../README.en.md) · [Light theme](../en-light/README.md) · [Русский](../ru-dark/README.md)
 
-The real **Perenos 1.2.0** interface in demo mode. The iPhones, apps and account are fictional. These frames show the workflow, not transfer speeds on real devices.
+The real **Perenos 1.3.0** interface in demo mode. The iPhones, apps and account are fictional. These frames show the workflow, not transfer speeds on real devices.
 
 Select a thumbnail to open the full image. Each section can be collapsed; animated tours are also available: [Transfer now](../../media/demo-en-dark.gif) · [Install later](../../media/later-en-dark.gif).
 
 <details open>
-<summary><b>01 · Transfer now</b> · 7 screenshots</summary>
+<summary><b>01 · Transfer now</b> · 8 screenshots</summary>
 
 Choose your devices and apps, sign in, then install.
 
@@ -21,6 +21,13 @@ Choose your devices and apps, sign in, then install.
       <a href="2-choose-apps.png"><img src="2-choose-apps.png" width="380" alt="Select the apps you need — Browse icons, search and select apps."></a>
       <br><b>2. Select the apps you need</b><br><sub>Browse icons, search and select apps.</sub>
     </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <a href="unavailable-filter.png"><img src="unavailable-filter.png" width="380" alt="Unavailable only — Apps currently unavailable in the Russian storefront."></a>
+      <br><b>Filter · Find unavailable apps</b><br><sub>Fictional Harbor Maps and Pocket Budget demonstrate current unavailability, not proven removal.</sub>
+    </td>
+    <td width="50%"></td>
   </tr>
   <tr>
     <td width="50%" valign="top">
@@ -94,11 +101,18 @@ From the start screen to installation from your library. No repeat sign-in on th
 </details>
 
 <details>
-<summary><b>03 · Save to your PC</b> · 3 screenshots</summary>
+<summary><b>03 · Save to your PC</b> · 4 screenshots</summary>
 
 Prepare your library while the old iPhone is still with you.
 
 <table>
+  <tr>
+    <td width="50%" valign="top">
+      <a href="save-source.png"><img src="save-source.png" width="380" alt="Save Apps — A separate workflow for saving apps to the PC."></a>
+      <br><b>Start · Choose Save Apps</b><br><sub>This separate workflow was captured in a fresh --demo session.</sub>
+    </td>
+    <td width="50%"></td>
+  </tr>
   <tr>
     <td width="50%" valign="top">
       <a href="save-1-apps.png"><img src="save-1-apps.png" width="380" alt="Choose apps to save — Select what you want to keep on your PC."></a>

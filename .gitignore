@@ -1,4 +1,5 @@
 # Build output
+node_modules/
 bin/
 obj/
 artifacts/

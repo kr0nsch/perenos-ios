@@ -59,6 +59,7 @@
 | Начало | `later-1-start.png` | Стартовый экран с двумя сценариями |
 | Перенести сейчас | `1-connect.png` | Выбор старого iPhone |
 | | `2-choose-apps.png` | Список приложений после загрузки иконок |
+| | `unavailable-filter.png` | Фильтр «Только недоступные» с вымышленными Harbor Maps и Pocket Budget |
 | | `3-target.png` | Выбор нового iPhone, доверие подтверждено |
 | | `4-sign-in.png` | Форма входа с пустыми полями или вымышленным адресом, без настоящих секретов |
 | | `5-ready.png` | Сводка перед установкой |
@@ -69,20 +70,22 @@
 | | `later-4-saved.png` | Библиотека с версиями и совместимостью |
 | | `later-5-ready.png` | Сводка перед установкой сохранённых приложений |
 | | `later-6-done.png` | Итог установки |
-| Сохранить | `save-1-apps.png` | Выбор приложений для сохранения |
+| Сохранить | `save-source.png` | Выбор «Сохранить приложения» в отдельной демосессии |
+| | `save-1-apps.png` | Выбор приложений для сохранения |
 | | `save-2-ready.png` | Сводка перед скачиванием |
 | | `save-3-done.png` | Итог сохранения на компьютер |
 
-В серии 1.2.0 для переноса сейчас и сохранения выбраны три бесплатных приложения:
-`Bloom Journal`, `Cloudy` и `Daily Planner`. Сохранение снято после переноса в той же
-демосессии: отметки «Уже сохранено» показывают повторное сохранение существующих файлов.
-Для установки из библиотеки приложение запущено заново с `--demo-saved`: в библиотеке
-11 приложений, автоматически выбраны 9 совместимых, вход в аккаунт не выполняется.
-Повторяйте эту последовательность для каждого языка и темы, чтобы серии были сопоставимы.
+В серии 1.3.0 для переноса сейчас и сохранения явно выбраны три бесплатных приложения:
+`Bloom Journal`, `Cloudy` и `Daily Planner`. Перенос записан с `--demo`; сохранение —
+отдельным запуском с `--demo`, чтобы исходный выбор и статус файлов не зависели от
+предыдущего сценария. Дополнительный кадр фильтра содержит вымышленные `Harbor Maps` и
+`Pocket Budget`: они показывают текущую недоступность в витрине, а не доказанное удаление.
 
-Для демонстрации ошибки
-можно отдельно выбрать `Grand Chess`: деморежим специально показывает отказ от покупки
-платного приложения. Не выдавайте этот учебный сценарий за результат реального переноса.
+Для установки из библиотеки приложение запущено заново с `--demo-saved`: в библиотеке
+11 приложений, кнопка «Выбрать все» отмечает 10 совместимых, несовместимое остаётся
+невыбранным, вход в аккаунт не выполняется. Все сценарии завершаются установкой или
+сохранением на вымышленный iPhone 17 Pro / для него. Повторяйте последовательность для
+каждого языка и темы, чтобы серии были сопоставимы.
 
 Проверьте каждый PNG: правильное название и язык, загруженные иконки, отсутствие
 случайного меню, системных окон, частично отрисованных переходов или обрезанных элементов.
@@ -100,7 +103,7 @@
 ```powershell
 # Вместо 1234 укажите PID своей изолированной демо-копии.
 powershell -NoProfile -ExecutionPolicy Bypass -File build/Record-DemoWindow.ps1 `
-  -ProcessId 1234 -OutDir artifacts/recordings-1.2.0/ru-light/demo `
+  -ProcessId 1234 -OutDir artifacts/recordings-1.3.0/ru-light/demo `
   -IntervalMs 90 -MaxSeconds 600
 ```
 
@@ -109,7 +112,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File build/Record-DemoWindow.ps1 
 остановите рекордер. Чтобы остановить запись из другого терминала:
 
 ```powershell
-New-Item -ItemType File -Path artifacts/recordings-1.2.0/ru-light/demo/stop
+New-Item -ItemType File -Path artifacts/recordings-1.3.0/ru-light/demo/stop
 ```
 
 Демоприложение после этого остаётся открытым. Не используйте массовое завершение
@@ -144,12 +147,13 @@ New-Item -ItemType File -Path artifacts/recordings-1.2.0/ru-light/demo/stop
 чтобы восстановить библиотеку из 11 приложений. Отдельно снимите сценарий сохранения
 в папку `save` для трёх статичных кадров `save-*`.
 
-Для галереи выберите из записей 16 полностью отрисованных кадров и укажите их время
-в `timeline.json`, как описано ниже. Генератор сохранит их под именами из таблицы
-в `docs/screenshots/<язык>-<тема>/`. Проверяйте выбранные PNG до сборки;
-для `6-installing.png` нужна выполняющаяся установка, а не итоговый экран.
-Размер каждого кадра должен совпадать с исходной записью. Все четыре серии дают
-**64 PNG**. Для отдельного статичного снимка можно сделать короткую запись с
+Для каждой галереи генератор выбирает из записей 16 полностью отрисованных кадров и
+сохраняет их по времени из `timeline.json` в `docs/screenshots/<язык>-<тема>/`.
+Проверяйте выбранные PNG до сборки; для `6-installing.png` нужна выполняющаяся
+установка, а не итоговый экран. Размер каждого кадра должен совпадать с исходной
+записью. Все четыре серии дают **64 основных PNG**. Ещё два кадра на вариант —
+`unavailable-filter.png` и `save-source.png` — снимаются отдельно, поэтому в галереях
+всего **72 PNG**. Для отдельного статичного снимка можно сделать короткую запись с
 `-MaxSeconds 1` и выбрать стабильный кадр из неё.
 
 JPEG в этом процессе не используется. Конвертация JPEG в PNG не возвращает потерянные
@@ -171,7 +175,7 @@ JPEG в этом процессе не используется. Конверт�
 ```json
 {
   "schema_version": 1,
-  "version": "1.2.0",
+  "version": "1.3.0",
   "language": "ru",
   "theme": "light",
   "flow": "demo",
@@ -225,16 +229,17 @@ python -m pip install Pillow
 ffmpeg -version
 
 # Проверка входных записей, монтажа и выбранных PNG без записи результатов.
-python build/generate-demo-media.py --recordings-dir artifacts/recordings-1.2.0 --check
-python build/generate-demo-media.py --recordings-dir artifacts/recordings-1.2.0 --flows save --stills-only --check
+python build/generate-demo-media.py --recordings-dir artifacts/recordings-1.3.0 --check
+python build/generate-demo-media.py --recordings-dir artifacts/recordings-1.3.0 --flows save --stills-only --check
 
 # Два ролика для каждого из четырёх вариантов языка и темы, плюс статичные кадры.
-python build/generate-demo-media.py --recordings-dir artifacts/recordings-1.2.0
-python build/generate-demo-media.py --recordings-dir artifacts/recordings-1.2.0 --flows save --stills-only
+python build/generate-demo-media.py --recordings-dir artifacts/recordings-1.3.0
+python build/generate-demo-media.py --recordings-dir artifacts/recordings-1.3.0 --flows save --stills-only
 ```
 
-Результат — **8 GIF**: `demo-{ru,en}-{light,dark}.gif` и
-`later-{ru,en}-{light,dark}.gif`, а также **64 PNG** в четырёх галереях.
+Результат — **8 GIF**: `demo-{ru,en}-{light,dark}.gif` длительностью 28 секунд и
+`later-{ru,en}-{light,dark}.gif` длительностью 26 секунд, а также **64 основных PNG**
+в четырёх галереях. Ещё 8 отдельно снятых PNG дают итоговые 72 изображения.
 Параметры `--languages ru` и `--themes light` позволяют собрать один полный вариант.
 `--flows` выбирает сценарии, `--stills-only` сохраняет только статичные PNG.
 
@@ -258,7 +263,7 @@ SHA-256. Для GIF манифест называется, например, `de
 Для пробной сборки, которая не меняет опубликованные файлы:
 
 ```powershell
-python build/generate-demo-media.py --recordings-dir artifacts/recordings-1.2.0 `
+python build/generate-demo-media.py --recordings-dir artifacts/recordings-1.3.0 `
   --languages ru --themes light `
   --screenshots-dir artifacts/media-check/screenshots --output-dir artifacts/media-check/gifs
 ```

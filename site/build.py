@@ -40,8 +40,6 @@ class LocalReferences(HTMLParser):
 def build(output: Path) -> None:
     output = output.resolve()
     artifacts = ROOT / "artifacts"
-    # Resolve links before deletion and require a strict child of the intended
-    # artifacts directory. Neither artifacts itself nor an outside link is safe.
     if artifacts.resolve() != artifacts or output == artifacts or not output.is_relative_to(artifacts):
         raise ValueError("Output must be strictly inside the repository's artifacts directory")
     if output.exists():
@@ -51,16 +49,27 @@ def build(output: Path) -> None:
     assets.mkdir(exist_ok=True)
     for name in ("index.html", "styles.css", "app.js"):
         shutil.copy2(SITE / name, output / name)
+    image_sources = (
+        ("apps", "2-choose-apps.png"),
+        ("saved", "later-4-saved.png"),
+        ("unavailable", "unavailable-filter.png"),
+        ("target", "3-target.png"),
+        ("save-done", "save-3-done.png"),
+    )
     for theme in ("light", "dark"):
-        for name, source in (("apps", "2-choose-apps.png"), ("saved", "later-4-saved.png")):
+        for name, source in image_sources:
             shutil.copy2(ROOT / "docs" / "screenshots" / f"ru-{theme}" / source, assets / f"{name}-{theme}.png")
         for name in ("demo", "later"):
             shutil.copy2(ROOT / "docs" / "media" / f"{name}-ru-{theme}.gif", assets / f"{name}-{theme}.gif")
+    fonts = assets / "fonts"
+    fonts.mkdir()
+    for source in sorted((SITE / "fonts").iterdir()):
+        if source.is_file():
+            shutil.copy2(source, fonts / source.name)
     shutil.copy2(ROOT / "assets" / "logo.png", assets / "logo.png")
     shutil.copy2(SITE / "social-card.svg", assets / "social-card.svg")
     social_card = SITE / "social-card.png"
     if not social_card.is_file():
-        # Keeps local previews usable before the editable SVG is exported.
         social_card = ROOT / "docs" / "screenshots" / "ru-light" / "2-choose-apps.png"
     shutil.copy2(social_card, assets / "social.png")
     (output / ".nojekyll").write_text("", encoding="utf-8")

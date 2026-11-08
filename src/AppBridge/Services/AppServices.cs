@@ -1,5 +1,6 @@
 using System.Reflection;
 using AppBridge.Core;
+using AppBridge.Core.Catalog;
 using AppBridge.Core.Devices;
 using AppBridge.Core.Ipatool;
 using AppBridge.Core.Storefront;
@@ -41,7 +42,7 @@ public sealed class AppServices : IDisposable
 
         Transfers = new TransferRunner(AppStore, Devices);
         StorefrontScanner = new UnavailableAppScanner(AppStore, storefront);
-        RestorableAppScanner = new RestorableAppScanner(AppStore, storefront);
+        RestorableAppScanner = new RestorableAppScanner(AppStore, storefront, RussianServiceCatalog.LoadDefault());
     }
 
     public static string Version { get; } =

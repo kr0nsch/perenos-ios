@@ -46,6 +46,23 @@ internal sealed partial class IpatoolOutput
     public static bool? GetBool(JsonElement e, string name) =>
         e.ValueKind == JsonValueKind.Object && e.TryGetProperty(name, out var v) && v.ValueKind is JsonValueKind.True or JsonValueKind.False ? v.GetBoolean() : null;
 
+    internal static string? GetLatestVersionId(JsonElement e)
+    {
+        if (e.ValueKind != JsonValueKind.Object || !e.TryGetProperty("externalVersionIdentifiers", out var versions) || versions.ValueKind != JsonValueKind.Array)
+            return null;
+
+        string? latest = null;
+        foreach (var version in versions.EnumerateArray())
+        {
+            if (version.ValueKind == JsonValueKind.String && !string.IsNullOrWhiteSpace(version.GetString()))
+                latest = version.GetString();
+            else if (version.ValueKind == JsonValueKind.Number)
+                latest = version.ToString();
+        }
+
+        return latest;
+    }
+
     internal static OwnedAppsPage? ReadOwnedAppsPage(JsonElement e)
     {
         if (e.ValueKind != JsonValueKind.Object

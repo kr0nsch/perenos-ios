@@ -69,6 +69,25 @@ internal sealed class InstallationProxyClient(LockdownServiceProvider lockdown, 
         }
     }
 
+    public async Task UninstallAsync(string bundleId, CancellationToken cancellationToken)
+    {
+        Service.SetTimeout((int)TimeSpan.FromMinutes(10).TotalMilliseconds);
+        var command = new DictionaryNode
+        {
+            { "Command", new StringNode("Uninstall") },
+            { "ClientOptions", new DictionaryNode() },
+            { "ApplicationIdentifier", new StringNode(bundleId) },
+        };
+        await Service.SendPlistAsync(command, cancellationToken: cancellationToken).ConfigureAwait(false);
+
+        while (true)
+        {
+            var response = await ReceiveAsync(cancellationToken).ConfigureAwait(false);
+            if (GetString(response, "Status") == "Complete")
+                return;
+        }
+    }
+
     private async Task<DictionaryNode> ReceiveAsync(CancellationToken cancellationToken)
     {
         var node = await Service.ReceivePlistAsync(cancellationToken).ConfigureAwait(false);

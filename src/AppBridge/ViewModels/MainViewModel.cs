@@ -202,6 +202,10 @@ public sealed partial class MainViewModel : ObservableObject
 
     public bool ShowRestoreContent => !ShowRestoreSignIn;
 
+    public bool ShowRestoreFilter => IsAppsStep && Flow == Flow.Restore && AppList.TotalCount > 0;
+
+    public string RestoreFilterText => Restore.FilterText;
+
     // Install step -----------------------------------------------------------------------
 
     private bool NeedsSignIn => Flow != Flow.InstallSaved;
@@ -692,7 +696,7 @@ public sealed partial class MainViewModel : ObservableObject
         nameof(IsStartStep), nameof(IsLaterStep), nameof(IsSourceStep), nameof(IsAppsStep), nameof(IsTargetStep), nameof(IsInstallStep),
         nameof(IsDeviceStep), nameof(AppList), nameof(DotCount), nameof(DotIndex), nameof(CanDownload), nameof(NowSubtitle), nameof(RestoreSubtitle), nameof(LaterSubtitle), nameof(LaterSubtitleIsAccent),
         nameof(SaveSubtitle), nameof(CanInstallSaved), nameof(InstallSavedSubtitle), nameof(FolderDisplay),
-        nameof(DeviceStepTitle), nameof(DeviceStepSubtitle), nameof(DeviceStepTone), nameof(AppsTitle), nameof(AppsSubtitle), nameof(ShowStorefrontStatus), nameof(ShowRestoreSignIn), nameof(ShowRestoreContent),
+        nameof(DeviceStepTitle), nameof(DeviceStepSubtitle), nameof(DeviceStepTone), nameof(AppsTitle), nameof(AppsSubtitle), nameof(ShowStorefrontStatus), nameof(ShowRestoreSignIn), nameof(ShowRestoreContent), nameof(ShowRestoreFilter), nameof(RestoreFilterText),
         nameof(InstallTitle), nameof(InstallSubtitle), nameof(InstallGlyph), nameof(InstallTone), nameof(InstallRingProgress),
         nameof(InstallGlyphIsSuccess), nameof(InstallGlyphIsWarning), nameof(InstallGlyphIsNormal),
         nameof(ShowSignInPanel), nameof(ShowInstallSummary), nameof(ShowOptions), nameof(ShowVersionOption), nameof(ShowFreeOption), nameof(ShowKeepOption), nameof(ShowSummaryTo),

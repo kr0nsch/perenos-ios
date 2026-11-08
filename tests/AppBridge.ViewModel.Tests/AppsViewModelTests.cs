@@ -117,6 +117,8 @@ public sealed class AppsViewModelTests
 
         public Task InstallAsync(string udid, string ipaPath, IProgress<InstallProgress>? progress, CancellationToken cancellationToken = default) =>
             throw new NotSupportedException();
+
+        public Task<bool> UninstallAsync(string udid, string bundleId, CancellationToken cancellationToken = default) => throw new NotSupportedException();
     }
 
     private sealed class FakeStore : IAppStoreClient

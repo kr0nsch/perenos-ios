@@ -122,6 +122,8 @@ internal sealed class DemoBackend : IAppStoreClient, IStorefrontCatalog, IDevice
         }
     }
 
+    public Task<bool> UninstallAsync(string udid, string bundleId, CancellationToken cancellationToken = default) => Task.FromResult(true);
+
     // App Store --------------------------------------------------------------------------
 
     public Task<IpatoolAccount?> GetAccountAsync(CancellationToken cancellationToken = default) => Task.FromResult(_account);

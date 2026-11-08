@@ -37,6 +37,8 @@ public interface IDeviceService
     Task LoadIconsAsync(string udid, IReadOnlyList<string> bundleIds, Action<string, byte[]> onIcon, CancellationToken cancellationToken = default);
 
     Task InstallAsync(string udid, string ipaPath, IProgress<InstallProgress>? progress, CancellationToken cancellationToken = default);
+
+    Task<bool> UninstallAsync(string udid, string bundleId, CancellationToken cancellationToken = default);
 }
 
 /// <summary>Keeps track of which iPhones are plugged in.</summary>

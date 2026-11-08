@@ -97,8 +97,8 @@ public abstract partial class AppListViewModel : ObservableObject
 
     protected long SelectedBytes => _all.Where(a => a.IsSelected).Sum(a => a.App.SizeBytes ?? 0);
 
-    /// <summary>While searching, Select All applies to the matching apps only; apps that can't be installed never count.</summary>
-    private List<AppItemViewModel> SelectionScope => (string.IsNullOrWhiteSpace(SearchText) ? _all : Visible.AsEnumerable()).Where(a => a.IsSelectable).ToList();
+    /// <summary>Select All applies only to apps matching the active search and filter that can be installed.</summary>
+    private List<AppItemViewModel> SelectionScope => (string.IsNullOrWhiteSpace(SearchText) ? _all.Where(a => IncludeInFilter(a)) : Visible.AsEnumerable()).Where(a => a.IsSelectable).ToList();
 
     public void ClearSelection()
     {

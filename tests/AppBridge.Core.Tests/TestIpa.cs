@@ -7,19 +7,23 @@ namespace AppBridge.Core.Tests;
 internal static class TestIpa
 {
     public static string Create(string directory, string bundleId, string version = "1.2.3", string? minimumOs = "16.0",
-        bool withMetadata = true, bool withSinf = true, string appName = "Demo")
+        bool withMetadata = true, bool withSinf = true, string appName = "Demo", string? appStoreId = null)
     {
-        var path = Path.Combine(directory, $"{bundleId}.ipa");
+        var actualBundleId = string.IsNullOrEmpty(bundleId) ? appName : bundleId;
+        var path = Path.Combine(directory, $"{actualBundleId}.ipa");
         using var zip = ZipFile.Open(path, ZipArchiveMode.Create);
         Write(zip, $"Payload/{appName}.app/Info.plist", Plist(new Dictionary<string, string?>
         {
-            ["CFBundleIdentifier"] = bundleId,
+            ["CFBundleIdentifier"] = actualBundleId,
             ["CFBundleShortVersionString"] = version,
             ["MinimumOSVersion"] = minimumOs,
         }));
         Write(zip, $"Payload/{appName}.app/Frameworks/Inner.framework/Info.plist", Plist(new Dictionary<string, string?> { ["CFBundleIdentifier"] = "inner.framework" }));
         if (withMetadata)
-            Write(zip, "iTunesMetadata.plist", Plist(new Dictionary<string, string?> { ["itemName"] = appName }));
+        {
+            var metadata = new Dictionary<string, string?> { ["itemName"] = appName, ["itemId"] = appStoreId };
+            Write(zip, "iTunesMetadata.plist", Plist(metadata));
+        }
         if (withSinf)
             zip.CreateEntry($"Payload/{appName}.app/SC_Info/{appName}.sinf").Open().Write([1, 2, 3, 4]);
         return path;

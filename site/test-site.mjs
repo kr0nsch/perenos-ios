@@ -102,10 +102,10 @@ try {
         status: 200,
         contentType: 'application/json',
         body: JSON.stringify({
-          tag_name: 'v1.3.1', draft: false, prerelease: false,
+          tag_name: 'v1.5.0', draft: false, prerelease: false,
           assets: [
-            { name: 'Perenos-1.3.1-setup-x64.exe', size: 80 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.3.1/Perenos-1.3.1-setup-x64.exe' },
-            { name: 'Perenos-1.3.1-portable-x64.zip', size: 75 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.3.1/Perenos-1.3.1-portable-x64.zip' },
+            { name: 'Perenos-1.5.0-setup-x64.exe', size: 80 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.5.0/Perenos-1.5.0-setup-x64.exe' },
+            { name: 'Perenos-1.5.0-portable-x64.zip', size: 75 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.5.0/Perenos-1.5.0-portable-x64.zip' },
           ],
         }),
       }));
@@ -152,9 +152,27 @@ try {
       await faq.locator('summary').click();
       assert.equal(await faq.getAttribute('open'), null);
       await page.waitForFunction(() => document.querySelector('[data-download="installer"]').href.includes('/releases/download/'));
-      assert.ok((await page.locator('[data-download="installer"]').getAttribute('href')).endsWith('Perenos-1.3.1-setup-x64.exe'));
-      assert.ok((await page.locator('[data-download="portable"]').getAttribute('href')).endsWith('Perenos-1.3.1-portable-x64.zip'));
-      assert.match(await page.locator('#release-label').textContent(), /1\.3\.1/);
+      assert.ok((await page.locator('[data-download="installer"]').getAttribute('href')).endsWith('Perenos-1.5.0-setup-x64.exe'));
+      assert.ok((await page.locator('[data-download="portable"]').getAttribute('href')).endsWith('Perenos-1.5.0-portable-x64.zip'));
+      assert.match(await page.locator('#release-label').textContent(), /1\.5\.0/);
+
+      if (width === 390 && theme === 'light') {
+        assert.match(await page.title(), /Перенос приложений с iPhone на iPhone/);
+        assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'), 'https://kr0nsch.github.io/perenos-ios/');
+        const structuredData = await page.locator('script[type="application/ld+json"]').allTextContents();
+        const schemas = structuredData.map(text => JSON.parse(text));
+        const software = schemas.find(schema => schema['@type'] === 'SoftwareApplication');
+        assert.equal(software.softwareVersion, '1.5.0');
+        assert.equal(software.offers.price, '0');
+        const faqSchema = schemas.find(schema => schema['@type'] === 'FAQPage');
+        assert.equal(faqSchema.mainEntity.length, await page.locator('.faq-items details').count());
+        const faqNames = await page.locator('.faq-items summary').allTextContents();
+        assert.deepEqual(faqSchema.mainEntity.map(question => question.name), faqNames.map(name => name.replace(/\+$/, '').trim()));
+        const sitemap = await (await fetch(`${PAGE}sitemap.xml`)).text();
+        const robots = await (await fetch(`${PAGE}robots.txt`)).text();
+        assert.match(sitemap, /<loc>https:\/\/kr0nsch\.github\.io\/perenos-ios\/<\/loc>/);
+        assert.match(robots, /Sitemap: https:\/\/kr0nsch\.github\.io\/perenos-ios\/sitemap\.xml/);
+      }
 
       for (const selector of ['.hero-window img', '.availability-figure img', '.gallery-grid img']) {
         const images = page.locator(selector);
@@ -168,12 +186,12 @@ try {
       if (width === 1440) {
         await capture(page, `desktop-${toggled}-hero`);
         await capture(page, `desktop-${toggled}-demo`, '#demo');
-        await capture(page, `desktop-${toggled}-unavailable`, '#unavailable');
+        await capture(page, `desktop-${toggled}-restore`, '#restore');
         await capture(page, `desktop-${toggled}-download`, '#download');
       }
       if (width === 390) {
         await capture(page, `mobile-${toggled}-hero`);
-        await capture(page, `mobile-${toggled}-unavailable`, '#unavailable');
+        await capture(page, `mobile-${toggled}-restore`, '#restore');
         await capture(page, `mobile-${toggled}-download`, '#download');
       }
       assert.deepEqual(errors, [], `Browser errors at ${width}x${height}/${theme}`);

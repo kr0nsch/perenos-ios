@@ -22,7 +22,7 @@ public sealed class TransferRunnerTests : IDisposable
 
         await Run(apps);
 
-        Assert.All(apps, a => Assert.Equal(TransferStage.Completed, _final[a.BundleId].Stage));
+        Assert.All(apps, a => Assert.Equal(TransferStage.Completed, _final[a.PackageKey].Stage));
         Assert.Equal(["a", "b", "c"], _devices.Installed);
     }
 
@@ -33,9 +33,9 @@ public sealed class TransferRunnerTests : IDisposable
 
         await Run([App("a"), App("b"), App("c")]);
 
-        Assert.Equal(TransferStage.Completed, _final["a"].Stage);
-        Assert.Equal(TransferFailure.NotPurchased, _final["b"].Failure);
-        Assert.Equal(TransferStage.Completed, _final["c"].Stage);
+        Assert.Equal(TransferStage.Completed, _final[App("a").PackageKey].Stage);
+        Assert.Equal(TransferFailure.NotPurchased, _final[App("b").PackageKey].Failure);
+        Assert.Equal(TransferStage.Completed, _final[App("c").PackageKey].Stage);
     }
 
     [Fact]
@@ -45,9 +45,9 @@ public sealed class TransferRunnerTests : IDisposable
 
         await Run([App("a"), App("b"), App("c"), App("d")]);
 
-        Assert.Equal(TransferStage.Completed, _final["a"].Stage);
-        Assert.Equal(TransferFailure.DeviceDisconnected, _final["b"].Failure);
-        Assert.Equal(TransferStage.Canceled, _final["d"].Stage);
+        Assert.Equal(TransferStage.Completed, _final[App("a").PackageKey].Stage);
+        Assert.Equal(TransferFailure.DeviceDisconnected, _final[App("b").PackageKey].Failure);
+        Assert.Equal(TransferStage.Canceled, _final[App("d").PackageKey].Stage);
         Assert.DoesNotContain("d", _devices.Installed);
     }
 
@@ -58,8 +58,8 @@ public sealed class TransferRunnerTests : IDisposable
 
         await Run([App("a"), App("b")]);
 
-        Assert.Equal(TransferFailure.NotSignedIn, _final["a"].Failure);
-        Assert.Equal(TransferStage.Canceled, _final["b"].Stage);
+        Assert.Equal(TransferFailure.NotSignedIn, _final[App("a").PackageKey].Failure);
+        Assert.Equal(TransferStage.Canceled, _final[App("b").PackageKey].Stage);
         Assert.Single(_store.Requests);
     }
 
@@ -112,7 +112,7 @@ public sealed class TransferRunnerTests : IDisposable
         {
             await Run([App("a")], keep: false);
 
-            Assert.Equal(TransferStage.Completed, _final["a"].Stage);
+            Assert.Equal(TransferStage.Completed, _final[App("a").PackageKey].Stage);
             Assert.Equal(["a"], _devices.Installed);
         }
         finally
@@ -129,7 +129,7 @@ public sealed class TransferRunnerTests : IDisposable
 
         await Run([App("a")]);
 
-        Assert.Equal(TransferStage.Failed, _final["a"].Stage);
+        Assert.Equal(TransferStage.Failed, _final[App("a").PackageKey].Stage);
         Assert.Empty(_devices.Installed);
     }
 
@@ -145,7 +145,7 @@ public sealed class TransferRunnerTests : IDisposable
 
         await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Run([App("a"), App("b")], token: cts.Token));
 
-        Assert.Equal(TransferStage.Canceled, _final["b"].Stage);
+        Assert.Equal(TransferStage.Canceled, _final[App("b").PackageKey].Stage);
     }
 
     [Fact]
@@ -153,9 +153,9 @@ public sealed class TransferRunnerTests : IDisposable
     {
         await new TransferRunner(_store, _devices).SaveAsync([App("a"), App("b")],
             new TransferOptions(_downloads, true, VersionPolicy.Latest, AcquireFreeLicenses: true),
-            (app, update) => _final[app.BundleId] = update, CancellationToken.None);
+            (app, update) => _final[app.PackageKey] = update, CancellationToken.None);
 
-        Assert.All(new[] { "a", "b" }, id => Assert.Equal(TransferStage.Completed, _final[id].Stage));
+        Assert.All(new[] { "a", "b" }, id => Assert.Equal(TransferStage.Completed, _final[App(id).PackageKey].Stage));
         Assert.Empty(_devices.Installed);
         Assert.Equal(["App a 1.2.3.ipa", "App b 1.2.3.ipa"], Directory.GetFiles(_downloads, "*.ipa").Select(Path.GetFileName).Order());
     }
@@ -165,15 +165,15 @@ public sealed class TransferRunnerTests : IDisposable
     {
         var runner = new TransferRunner(_store, _devices);
         var options = new TransferOptions(_downloads, true, VersionPolicy.Latest, AcquireFreeLicenses: true);
-        await runner.SaveAsync([App("a")], options, (app, update) => _final[app.BundleId] = update, CancellationToken.None);
+        await runner.SaveAsync([App("a")], options, (app, update) => _final[app.PackageKey] = update, CancellationToken.None);
         var original = Assert.Single(Directory.GetFiles(_downloads, "*.ipa"));
         var newFolder = Path.Combine(_downloads, "new-library");
         Directory.CreateDirectory(newFolder);
 
         await runner.SaveAsync([App("a")], options with { DownloadDirectory = newFolder },
-            (app, update) => _final[app.BundleId] = update, CancellationToken.None);
+            (app, update) => _final[app.PackageKey] = update, CancellationToken.None);
 
-        Assert.Equal(TransferStage.Completed, _final["a"].Stage);
+        Assert.Equal(TransferStage.Completed, _final[App("a").PackageKey].Stage);
         var saved = Assert.Single(Directory.GetFiles(newFolder, "*.ipa"));
         Assert.Equal("a", IpaPackage.Read(saved).BundleId);
         Assert.True(File.Exists(original), "changing the folder must preserve the original library");
@@ -185,11 +185,11 @@ public sealed class TransferRunnerTests : IDisposable
         var saved = new[] { "a", "b", "c" }.Select(id => SavedAppLibrary.Read(TestIpa.Create(_downloads, id))).ToList();
         File.Delete(saved[1].FilePath);
 
-        await new TransferRunner(_store, _devices).InstallSavedAsync(saved, "target", (app, update) => _final[app.BundleId] = update, CancellationToken.None);
+        await new TransferRunner(_store, _devices).InstallSavedAsync(saved, "target", (app, update) => _final[app.PackageKey] = update, CancellationToken.None);
 
         Assert.Empty(_store.Requests);
         Assert.Equal(["a", "c"], _devices.Installed);
-        Assert.Equal(TransferFailure.FileMissing, _final["b"].Failure);
+        Assert.Equal(TransferFailure.FileMissing, _final[saved[1].ToInstalledApp().PackageKey].Failure);
         Assert.True(File.Exists(saved[0].FilePath), "saved files are kept after installing");
     }
 
@@ -204,7 +204,7 @@ public sealed class TransferRunnerTests : IDisposable
 
         await new TransferRunner(_store, _devices).SaveAsync([App("a")],
             new TransferOptions(_downloads, true, VersionPolicy.Latest, AcquireFreeLicenses: true),
-            (app, update) => _final[app.BundleId] = update, CancellationToken.None);
+            (app, update) => _final[app.PackageKey] = update, CancellationToken.None);
 
         var versions = Directory.GetFiles(_downloads, "*.ipa").Select(f => (Path.GetFileName(f), IpaPackage.Read(f).BundleId, IpaPackage.Read(f).Version)).Order().ToList();
         Assert.Equal(
@@ -220,7 +220,7 @@ public sealed class TransferRunnerTests : IDisposable
         File.Move(TestIpa.Create(_downloads, "other.app"), clash);
         var run = new TransferRunner(_store, _devices).SaveAsync([app],
             new TransferOptions(_downloads, true, VersionPolicy.Latest, AcquireFreeLicenses: true),
-            (item, update) => _final[item.BundleId] = update, CancellationToken.None);
+            (item, update) => _final[item.PackageKey] = update, CancellationToken.None);
 
         try
         {
@@ -247,7 +247,7 @@ public sealed class TransferRunnerTests : IDisposable
             }
         }
 
-        Assert.Equal(TransferStage.Completed, _final[app.BundleId].Stage);
+        Assert.Equal(TransferStage.Completed, _final[app.PackageKey].Stage);
         Assert.Equal("other.app", IpaPackage.Read(clash).BundleId);
         var saved = Assert.Single(Directory.GetFiles(_downloads, "*.ipa"), path => path != clash);
         Assert.Equal("a", IpaPackage.Read(saved).BundleId);
@@ -262,7 +262,7 @@ public sealed class TransferRunnerTests : IDisposable
 
         await Run([App("a")], policy: VersionPolicy.SameAsSource, keep: false);
 
-        Assert.Equal(TransferStage.Completed, _final["a"].Stage);
+        Assert.Equal(TransferStage.Completed, _final[App("a").PackageKey].Stage);
         Assert.Single(Directory.GetFiles(_downloads, "*.ipa"));
         Assert.Empty(Directory.GetFiles(Path.Combine(_downloads, TransferRunner.StagingFolderName)));
     }
@@ -286,11 +286,47 @@ public sealed class TransferRunnerTests : IDisposable
         Assert.Equal(expected, TransferRunner.PackageFileName(app, version));
     }
 
+    [Fact]
+    public async Task UnknownBundleIdsAreTrackedByAppStoreId()
+    {
+        var first = new InstalledApp("", "First", "1.0", null, 101, null, null, null, null);
+        var second = new InstalledApp("", "Second", "1.0", null, 102, null, null, null, null);
+
+        await Run([first, second]);
+
+        Assert.Equal(TransferStage.Completed, _final["id:101"].Stage);
+        Assert.Equal(TransferStage.Completed, _final["id:102"].Stage);
+        Assert.Equal(["101", "102"], _devices.Installed);
+    }
+
+    [Fact]
+    public async Task UnknownBundleIdRejectsWrongAppStoreId()
+    {
+        _store.WrongAppIds.Add(101);
+        var app = new InstalledApp("", "First", "1.0", null, 101, null, null, null, null);
+
+        await Run([app]);
+
+        Assert.Equal(TransferFailure.Unknown, _final["id:101"].Failure);
+        Assert.Empty(_devices.Installed);
+    }
+
+    [Fact]
+    public async Task CatalogCandidateUsesItsVerifiedLatestVersion()
+    {
+        var app = new InstalledApp("", "First", "1.0", null, 101, "old-version", null, null, null, LatestExternalVersionId: "verified-latest");
+
+        await Run([app]);
+
+        Assert.Equal("verified-latest", _store.Requests.Single().ExternalVersionId);
+        Assert.Equal(TransferStage.Completed, _final[app.PackageKey].Stage);
+    }
+
     private Task Run(IReadOnlyList<InstalledApp> apps, TransferRunner? runner = null, VersionPolicy policy = VersionPolicy.Latest,
         bool keep = true, CancellationToken token = default) =>
         (runner ?? new TransferRunner(_store, _devices)).RunAsync(
             apps, "target", new TransferOptions(_downloads, keep, policy, AcquireFreeLicenses: true),
-            (app, update) => _final[app.BundleId] = update, token);
+            (app, update) => _final[app.PackageKey] = update, token);
 
     private static InstalledApp App(string id) => new(id, $"App {id}", "1.0", "Dev", 100 + id[0], $"ext-{id}", null, null, 1000);
 
@@ -299,6 +335,8 @@ public sealed class TransferRunnerTests : IDisposable
         public ConcurrentDictionary<string, IpatoolErrorKind> Failures { get; } = new();
 
         public ConcurrentBag<string> WrongBundle { get; } = [];
+
+        public HashSet<long> WrongAppIds { get; } = [];
 
         public ConcurrentQueue<DownloadRequest> Requests { get; } = new();
 
@@ -321,7 +359,8 @@ public sealed class TransferRunnerTests : IDisposable
                 throw new IpatoolException(kind, kind.ToString());
             progress?.Report(new DownloadProgress(DownloadPhase.Downloading, 0.5, 10));
             var dir = Path.GetDirectoryName(request.OutputPath)!;
-            var built = TestIpa.Create(dir, WrongBundle.Contains(request.BundleId) ? "other.app" : request.BundleId);
+            var appId = WrongAppIds.Contains(request.AppId) ? request.AppId + 1 : request.AppId;
+            var built = TestIpa.Create(dir, WrongBundle.Contains(request.BundleId) ? "other.app" : request.BundleId, appName: appId.ToString(), appStoreId: appId.ToString());
             File.Move(built, request.OutputPath, overwrite: true);
             return Task.FromResult(request.OutputPath);
         }
@@ -345,6 +384,8 @@ public sealed class TransferRunnerTests : IDisposable
 
         public Task LoadIconsAsync(string udid, IReadOnlyList<string> bundleIds, Action<string, byte[]> onIcon, CancellationToken cancellationToken = default) =>
             Task.CompletedTask;
+
+        public Task<bool> UninstallAsync(string udid, string bundleId, CancellationToken cancellationToken = default) => throw new NotSupportedException();
 
         public async Task InstallAsync(string udid, string ipaPath, IProgress<InstallProgress>? progress, CancellationToken cancellationToken = default)
         {

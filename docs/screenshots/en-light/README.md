@@ -2,7 +2,9 @@
 
 [All galleries](../README.md) · [About the project](../../../README.en.md) · [Dark theme](../en-dark/README.md) · [Русский](../ru-light/README.md)
 
-The real **Perenos 1.3.0** interface in demo mode. The iPhones, apps and account are fictional. These frames show the workflow, not transfer speeds on real devices.
+The real **Perenos 1.3.0** interface in demo mode, with restoration from **Perenos 1.5.0**. The iPhones, apps and account are fictional. These frames show the workflow, not transfer speeds on real devices.
+
+[![Update & Restore: Apple Account purchases in Perenos 1.5.0](restore-purchases.png)](restore-purchases.png)
 
 Select a thumbnail to open the full image. Each section can be collapsed; animated tours are also available: [Transfer now](../../media/demo-en-light.gif) · [Install later](../../media/later-en-light.gif).
 

@@ -16,6 +16,14 @@ public class IpatoolOutputTests
     }
 
     [Fact]
+    public void ReadsLatestVersionId()
+    {
+        using var document = System.Text.Json.JsonDocument.Parse("""{"externalVersionIdentifiers":["814162087","816141148","887160241"]}""");
+
+        Assert.Equal("887160241", IpatoolOutput.GetLatestVersionId(document.RootElement));
+    }
+
+    [Fact]
     public void ParsesErrorEvent()
     {
         var output = new IpatoolOutput();

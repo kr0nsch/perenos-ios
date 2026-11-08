@@ -2,7 +2,7 @@ namespace AppBridge.Core.Ipatool;
 
 public sealed record IpatoolAccount(string Email, string Name);
 
-public sealed record OwnedApp(long AppId, string BundleId, string Name, string Version, DateTimeOffset? PurchaseDate);
+public sealed record OwnedApp(long AppId, string BundleId, string Name, string Version, DateTimeOffset? PurchaseDate, string? LatestExternalVersionId = null);
 
 internal sealed record OwnedAppsPage(int Page, int TotalCount, IReadOnlyList<OwnedApp> Apps);
 

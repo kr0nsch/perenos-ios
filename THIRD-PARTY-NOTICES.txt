@@ -6,8 +6,8 @@ Its binary releases include the third-party components listed below. Each is the
 property of its respective owners and is used under the license shown.
 
 ------------------------------------------------------------------------------
-ipatool 2.7.0+001d8898 (bundled as tools\ipatool.exe, built from unmodified upstream source)
-https://github.com/majd/ipatool/tree/001d889896fcb118546443c5dfe0997d11b74f56
+ipatool 2.7.0+72c47d5 (bundled as tools\ipatool.exe, built from unmodified upstream source)
+https://github.com/majd/ipatool/tree/72c47d538b726df397fbf17bb3af809d69ef51b7
 https://github.com/majd/ipatool
 ------------------------------------------------------------------------------
 
@@ -184,3 +184,17 @@ https://developer.microsoft.com/microsoft-edge/webview2/
 
 Redistributed under the WebView2 SDK license:
 https://www.nuget.org/packages/Microsoft.Web.WebView2/1.0.3719.77/License
+
+
+------------------------------------------------------------------------------
+Russian App Store candidate catalog metadata
+https://github.com/ToXiTy13/RestoreIPA
+------------------------------------------------------------------------------
+
+catalog/russian-app-catalog.json is derived from the public
+removed_ru_appstore_app_ids.csv metadata, with current Apple storefront checks,
+normalized ecosystems and aliases. The upstream metadata is licensed under
+GPL-3.0; the complete license is preserved in catalog/LICENSE and included in
+application packages as Licenses/RussianServiceCatalog.GPL-3.0.txt.
+No IPA packages are included from that project. App names, IDs, bundle IDs and
+storefront metadata are checked against Apple's public catalog where available.

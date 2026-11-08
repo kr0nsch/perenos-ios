@@ -63,7 +63,7 @@ public sealed class TransferRunner(IAppStoreClient ipatool, IDeviceService devic
             var path = files[app.BundleId];
             if (!File.Exists(path))
                 throw new FileNotFoundException("The saved file is no longer there.", path);
-            if (!IsValidPackage(path, app.BundleId))
+            if (!IsValidPackage(path, app))
                 throw new InvalidDataException("The saved file is damaged or holds a different app.");
             return Task.FromResult(path);
         }, targetUdid, stagingDirectory: null, report, cancellationToken);
@@ -91,13 +91,13 @@ public sealed class TransferRunner(IAppStoreClient ipatool, IDeviceService devic
 
         void Finish(InstalledApp app, TransferUpdate update)
         {
-            finished[app.BundleId] = true;
+            finished[app.PackageKey] = true;
             report(app, update);
         }
 
         void Fail(InstalledApp app, TransferFailure failure, string detail, bool fatal)
         {
-            AppLog.Warn($"{app.BundleId}: {failure} - {detail}");
+            AppLog.Warn($"{app.PackageKey}: {failure} - {detail}");
             Finish(app, new TransferUpdate(TransferStage.Failed, Failure: failure, Detail: detail));
             if (fatal)
                 abort.Cancel();
@@ -186,7 +186,7 @@ public sealed class TransferRunner(IAppStoreClient ipatool, IDeviceService devic
         }
         finally
         {
-            foreach (var app in apps.Where(a => !finished.ContainsKey(a.BundleId)))
+            foreach (var app in apps.Where(a => !finished.ContainsKey(a.PackageKey)))
                 report(app, new TransferUpdate(TransferStage.Canceled));
         }
 
@@ -209,12 +209,12 @@ public sealed class TransferRunner(IAppStoreClient ipatool, IDeviceService devic
 
     private async Task<string> DownloadAsync(InstalledApp app, TransferOptions options, Action<TransferUpdate> report, CancellationToken token)
     {
-        var externalVersion = options.VersionPolicy == VersionPolicy.SameAsSource ? app.ExternalVersionId : null;
+        var externalVersion = options.VersionPolicy == VersionPolicy.SameAsSource ? app.ExternalVersionId : app.LatestExternalVersionId;
         var downloadFolder = Path.TrimEndingDirectorySeparator(Path.GetFullPath(options.DownloadDirectory));
-        var cacheKey = $"{downloadFolder}|{app.BundleId}|{externalVersion}";
-        if (_downloaded.TryGetValue(cacheKey, out var known) && IsValidPackage(known, app.BundleId))
+        var cacheKey = $"{downloadFolder}|{app.AppStoreId ?? 0}|{app.BundleId}|{externalVersion}";
+        if (_downloaded.TryGetValue(cacheKey, out var known) && IsValidPackage(known, app))
         {
-            AppLog.Info($"{app.BundleId}: using the package already downloaded.");
+            AppLog.Info($"{app.PackageKey}: using the package already downloaded.");
             return known;
         }
 
@@ -229,10 +229,10 @@ public sealed class TransferRunner(IAppStoreClient ipatool, IDeviceService devic
             : new TransferUpdate(TransferStage.Downloading, p.Fraction, p.BytesReceived)));
 
         var request = new DownloadRequest(app.AppStoreId ?? 0, app.BundleId, target, externalVersion, options.AcquireFreeLicenses);
-        AppLog.Info($"{app.BundleId}: downloading{(externalVersion is null ? "" : $" version {externalVersion}")}.");
+        AppLog.Info($"{app.PackageKey}: downloading{(externalVersion is null ? "" : $" version {externalVersion}")}.");
         var path = await ipatool.DownloadAsync(request, progress, token).ConfigureAwait(false);
 
-        if (!IsValidPackage(path, app.BundleId))
+        if (!IsValidPackage(path, app))
         {
             DeleteDownload(path);
             throw new IpatoolException(IpatoolErrorKind.Unknown, "The downloaded package is not the expected app.");
@@ -295,7 +295,7 @@ public sealed class TransferRunner(IAppStoreClient ipatool, IDeviceService devic
 
         var version = IpaPackage.Read(path).Version;
         var target = Path.Combine(folder, SavedFileName(app.Name, version, app.BundleId));
-        for (var n = 2; File.Exists(target) && !IsSamePackage(target, app.BundleId, version); n++)
+        for (var n = 2; File.Exists(target) && !IsSamePackage(target, app, version); n++)
             target = Path.Combine(folder, SavedFileName(app.Name, version, app.BundleId, copy: n));
 
         File.Move(path, target, overwrite: true);
@@ -308,12 +308,11 @@ public sealed class TransferRunner(IAppStoreClient ipatool, IDeviceService devic
         return target;
     }
 
-    private static bool IsSamePackage(string path, string bundleId, string version)
+    private static bool IsSamePackage(string path, InstalledApp app, string version)
     {
         try
         {
-            var package = IpaPackage.Read(path);
-            return package.BundleId == bundleId && package.Version == version;
+            return IsValidPackage(path, app) && IpaPackage.Read(path).Version == version;
         }
         catch (Exception ex) when (ex is not OperationCanceledException)
         {
@@ -321,13 +320,18 @@ public sealed class TransferRunner(IAppStoreClient ipatool, IDeviceService devic
         }
     }
 
-    private static bool IsValidPackage(string path, string bundleId)
+    private static bool IsValidPackage(string path, InstalledApp app)
     {
         if (!File.Exists(path))
             return false;
         try
         {
-            return string.Equals(IpaPackage.Read(path).BundleId, bundleId, StringComparison.Ordinal);
+            var package = IpaPackage.Read(path);
+            if (app.BundleId.Length == 0)
+                return app.AppStoreId is not > 0 || package.AppStoreId == app.AppStoreId;
+
+            return package.BundleId == app.BundleId
+                && (app.AppStoreId is not > 0 || package.AppStoreId is null || package.AppStoreId == app.AppStoreId);
         }
         catch (Exception ex) when (ex is not OperationCanceledException)
         {

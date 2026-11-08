@@ -789,7 +789,7 @@ Details were saved to the diagnostic log.</value>
     <value>Update and restore apps</value>
   </data>
   <data name="Restore_AppsSubtitle" xml:space="preserve">
-    <value>Your apps missing from the Russian App Store. Install their latest available versions on {0}.</value>
+    <value>Your account purchases and Russian services from the catalog. Choose what to install on {0}. Nothing is selected automatically.</value>
   </data>
   <data name="Restore_SignInTitle.Text" xml:space="preserve">
     <value>Sign in to see your purchases</value>
@@ -801,7 +801,7 @@ Details were saved to the diagnostic log.</value>
     <value>Reading your purchase history and checking the Russian App Store…</value>
   </data>
   <data name="Restore_Empty" xml:space="preserve">
-    <value>No owned apps are currently missing from the Russian App Store.</value>
+    <value>No purchases were found for this account.</value>
   </data>
   <data name="Restore_HistoryFailed" xml:space="preserve">
     <value>Apple couldn’t provide your purchase history. Try again later. Installed apps won’t be used as a substitute.</value>
@@ -820,5 +820,23 @@ Details were saved to the diagnostic log.</value>
   </data>
   <data name="Summary_Purchases" xml:space="preserve">
     <value>Your Apple Account purchases</value>
+  </data>
+  <data name="Restore_FilterRussian" xml:space="preserve">
+    <value>Filter: Russian services</value>
+  </data>
+  <data name="Restore_FilterAll" xml:space="preserve">
+    <value>Filter: all purchases</value>
+  </data>
+  <data name="Restore_FilterUnavailable" xml:space="preserve">
+    <value>Filter: unavailable in Russia</value>
+  </data>
+  <data name="Restore_Filter.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Switch filter: all purchases → unavailable in Russia → Russian services</value>
+  </data>
+  <data name="Restore_Filter.AutomationProperties.Name" xml:space="preserve">
+    <value>Switch app list filter</value>
+  </data>
+  <data name="Restore_CatalogCandidate" xml:space="preserve">
+    <value>From the catalog — license is checked during installation</value>
   </data>
 </root>

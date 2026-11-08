@@ -158,6 +158,18 @@ public sealed class DeviceService(string pairRecordsDirectory) : IDeviceService
         return true;
     }, cancellationToken);
 
+    public Task<bool> UninstallAsync(string udid, string bundleId, CancellationToken cancellationToken = default) => RunAsync(async () =>
+    {
+        if (string.IsNullOrWhiteSpace(bundleId))
+            throw new ArgumentException("A bundle identifier is required.", nameof(bundleId));
+
+        using var lockdown = ConnectTrusted(udid);
+        using var proxy = new InstallationProxyClient(lockdown, _logger);
+        await proxy.UninstallAsync(bundleId, cancellationToken).ConfigureAwait(false);
+        AppLog.Info($"Uninstalled {bundleId} from {DeviceWatcher.Redact(udid)}.");
+        return true;
+    }, cancellationToken);
+
     internal static InstalledApp? ParseApp(DictionaryNode app)
     {
         var bundleId = GetString(app, "CFBundleIdentifier");

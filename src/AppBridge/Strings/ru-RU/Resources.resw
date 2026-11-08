@@ -789,7 +789,7 @@
     <value>Обновление и восстановление</value>
   </data>
   <data name="Restore_AppsSubtitle" xml:space="preserve">
-    <value>Ваши приложения, которых нет в российском App Store. Установите их последние доступные версии на «{0}».</value>
+    <value>Покупки вашего аккаунта и российские сервисы из каталога. Выберите, что установить на «{0}». Ничего не выбрано автоматически.</value>
   </data>
   <data name="Restore_SignInTitle.Text" xml:space="preserve">
     <value>Войдите, чтобы увидеть покупки</value>
@@ -801,7 +801,7 @@
     <value>Читаем историю покупок и проверяем российский App Store…</value>
   </data>
   <data name="Restore_Empty" xml:space="preserve">
-    <value>В покупках текущего аккаунта нет приложений, недоступных в российском App Store.</value>
+    <value>Покупки текущего аккаунта не найдены.</value>
   </data>
   <data name="Restore_HistoryFailed" xml:space="preserve">
     <value>Apple не выдала историю покупок. Попробуйте позже. Список установленных приложений не используется вместо полной истории.</value>
@@ -820,5 +820,23 @@
   </data>
   <data name="Summary_Purchases" xml:space="preserve">
     <value>Покупки вашего Apple Account</value>
+  </data>
+  <data name="Restore_FilterRussian" xml:space="preserve">
+    <value>Фильтр: российские сервисы</value>
+  </data>
+  <data name="Restore_FilterAll" xml:space="preserve">
+    <value>Фильтр: все покупки</value>
+  </data>
+  <data name="Restore_FilterUnavailable" xml:space="preserve">
+    <value>Фильтр: недоступные в РФ</value>
+  </data>
+  <data name="Restore_Filter.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Переключить фильтр: все покупки → недоступные в РФ → российские сервисы</value>
+  </data>
+  <data name="Restore_Filter.AutomationProperties.Name" xml:space="preserve">
+    <value>Переключить фильтр списка приложений</value>
+  </data>
+  <data name="Restore_CatalogCandidate" xml:space="preserve">
+    <value>Из каталога — лицензия проверяется при установке</value>
   </data>
 </root>

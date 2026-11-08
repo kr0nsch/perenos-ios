@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using AppBridge.Core.Devices;
 using AppBridge.Core.Library;
+using AppBridge.Core.Storefront;
 using AppBridge.Services;
 using Microsoft.UI.Xaml.Media;
 
@@ -12,6 +13,8 @@ public sealed partial class AppItemViewModel(InstalledApp app, SavedApp? saved =
 
     /// <summary>The file to install from, for apps saved on this PC.</summary>
     public SavedApp? Saved { get; } = saved;
+
+    public RestorableApp? Restore { get; init; }
 
     public string Name => App.Name;
 
@@ -82,5 +85,8 @@ public sealed partial class AppItemViewModel(InstalledApp app, SavedApp? saved =
         || (App.Developer?.Contains(query, StringComparison.CurrentCultureIgnoreCase) ?? false)
         || App.BundleId.Contains(query, StringComparison.OrdinalIgnoreCase)
         || (Account?.Contains(query, StringComparison.OrdinalIgnoreCase) ?? false)
-        || (App.PurchaserAppleId?.Contains(query, StringComparison.OrdinalIgnoreCase) ?? false);
+        || (App.PurchaserAppleId?.Contains(query, StringComparison.OrdinalIgnoreCase) ?? false)
+        || (Restore?.ServiceFamily?.Contains(query, StringComparison.CurrentCultureIgnoreCase) ?? false)
+        || (Restore?.ServiceAlias?.Contains(query, StringComparison.CurrentCultureIgnoreCase) ?? false)
+        || (Restore is not null && Restore.Owned.Name.Contains(query, StringComparison.CurrentCultureIgnoreCase));
 }

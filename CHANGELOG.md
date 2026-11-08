@@ -4,6 +4,52 @@ All notable changes to Perenos (formerly AppBridge) are listed here. The format 
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.5.0] - 2026-11-08
+
+### Добавлено
+- **Все покупки аккаунта** в сценарии «Обновить и восстановить», а не только приложения, отсутствующие в российской витрине. Ничего не выбирается автоматически.
+- Фильтры всех покупок, недоступных в РФ приложений и российских сервисов. Поиск учитывает название из истории, семейство сервиса и альтернативное имя. «Выбрать все» действует только в пределах текущего фильтра и поискового запроса.
+- Встроенный каталог из 459 приложений, не найденных в российской витрине на дату проверки, включая 243 записи известных российских экосистем. Кандидаты из каталога помечены отдельно; Apple проверяет лицензию при скачивании.
+- Последние известные `externalVersionId` из публичной витрины для точного скачивания версий. Проверка IPA учитывает `iTunesMetadata.itemId`, а операции различают приложения по числовому App Store ID.
+
+### Исправлено
+- Встроенный ipatool обновлён до проверенного upstream-коммита `72c47d5`: актуальный `User-Agent: Configurator/2.21` восстанавливает получение истории покупок вместо ошибки `DAAP 401`. Источник, Go toolchain и SHA-256 архива закреплены.
+- Исправлен вызов удаления приложения через `installation_proxy`: bundle ID передаётся в обязательном поле `ApplicationIdentifier`.
+- Пустой ответ истории больше не скрывает кандидатов из каталога. Ошибка истории по-прежнему не подменяется списком установленных приложений.
+
+### Документация и сайт
+- Переработаны русский и английский README: три сценария, новая обложка, понятная инструкция восстановления, требования к IPA и ограничения работы без Apple Account.
+- Добавлены новые кадры реального интерфейса 1.5.0 в деморежиме и обложка 1200×630 для ссылок.
+- Обновлены заголовок, описание, Open Graph, `SoftwareApplication` и `FAQPage`, canonical URL, sitemap и актуальные ссылки на релиз. Описание и темы репозитория GitHub приведены в соответствие с возможностями проекта.
+
+### Проверено
+- 139 автоматических тестов, Release-сборка и полный демонстрационный сценарий восстановления.
+- На iPhone 17 с iOS 27.2 получены 206 покупок аккаунта. Установлены Авито, VK, VK Видео, Почта Mail.ru и «Цифровой сейф» Газпромбанка. Сбер уже был актуален. Последняя очередь обновлений: 95 установлено, 18 уже актуальны, одно устройство не ответило вовремя.
+- Установка подтверждена, но первый запуск и работа приложений вообще без Apple Account на устройстве не проверены. Полная совместимость со всеми моделями iPhone, версиями iOS и приложениями не гарантируется.
+
+### Added
+- **All account purchases** in Update & Restore, not just apps missing from the Russian storefront. Nothing is selected automatically.
+- Filters for all purchases, apps unavailable in Russia and Russian services. Search includes history names, service families and aliases. Select All is limited to the active filter and search.
+- An embedded catalog of 459 apps absent from the Russian storefront at the recorded check date, including 243 known Russian ecosystem entries. Catalog candidates are clearly marked; Apple verifies their licenses when downloading.
+- Exact downloads using known public `externalVersionId` values. IPA validation reads `iTunesMetadata.itemId`, and operations distinguish apps by numeric App Store ID.
+
+### Fixed
+- Updated bundled ipatool to verified upstream commit `72c47d5`, whose current `Configurator/2.21` user agent restores purchase-history access instead of `DAAP 401`. The source, Go toolchain and archive SHA-256 are pinned.
+- Corrected app removal through `installation_proxy` by passing the bundle ID in the required `ApplicationIdentifier` field.
+- Empty purchase history no longer hides catalog candidates. History failures still never fall back to installed apps as a substitute.
+
+### Documentation and website
+- Redesigned Russian and English READMEs with three workflows, new covers, restoration instructions, IPA requirements and honest Apple Account limitations.
+- Added real Perenos 1.5.0 demo screenshots and a 1200×630 social card.
+- Updated the title, description, Open Graph metadata, `SoftwareApplication` and `FAQPage` structured data, canonical URL, sitemap and release links. Updated GitHub repository topics and description.
+
+### Verification and known limitations
+- 139 automated tests, a Release build and the complete restoration demo pass.
+- On an iPhone 17 running iOS 27.2, retrieved 206 account purchases and installed Avito, VK, VK Video, Mail.ru Mail and Gazprombank's Digital Safe. Sber was already current. The latest queue installed 95 updates, found 18 apps current and encountered one device-response timeout.
+- Installation is confirmed, but first launch and operation without any Apple Account on the device have not been verified. Compatibility with every iPhone, iOS version and app is not guaranteed.
+
+[1.5.0]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.5.0
+
 ## [1.4.0] - 2026-11-08
 
 ### Добавлено

@@ -171,7 +171,7 @@ public sealed class InstallViewModelTests : IDisposable
         _ => vm.StartAsync(apps, Target()),
     };
 
-    private static InstalledApp App(string id) => new(id, $"App {id}", "1.0", null, 42, null, null, null, null);
+    private static InstalledApp App(string id) => new(id, $"App {id}", "1.0", null, 100 + id[0], null, null, null, null);
 
     private static DeviceItemViewModel Target() => new("target", _ => Task.CompletedTask);
 
@@ -220,5 +220,7 @@ public sealed class InstallViewModelTests : IDisposable
             Installed.Enqueue(IpaPackage.Read(ipaPath).BundleId);
             return Task.CompletedTask;
         }
+
+        public Task<bool> UninstallAsync(string udid, string bundleId, CancellationToken cancellationToken = default) => throw new NotSupportedException();
     }
 }

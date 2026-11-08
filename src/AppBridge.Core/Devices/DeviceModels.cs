@@ -34,10 +34,13 @@ public sealed record InstalledApp(
     string? ExternalVersionId,
     string? PurchaserAppleId,
     string? MinimumOsVersion,
-    long? SizeBytes)
+    long? SizeBytes,
+    string? LatestExternalVersionId = null)
 {
     /// <summary>Only App Store apps carry the store identifiers needed to download them again.</summary>
     public bool IsFromAppStore => AppStoreId is > 0;
+
+    public string PackageKey => AppStoreId is > 0 ? $"id:{AppStoreId.Value}" : $"bundle:{BundleId}";
 }
 
 public enum InstallPhase

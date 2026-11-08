@@ -5,26 +5,26 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 COPY = {
     "ru": {
-        "brand": "Перенос", "eyebrow": "ВЕРСИЯ 1.3.0  ·  WINDOWS 10 / 11",
+        "brand": "Перенос", "eyebrow": "ВЕРСИЯ 1.5.0  ·  WINDOWS 10 / 11",
         "line1": "Новый iPhone.", "line2": "Ваши приложения.",
-        "caption": "Перенесите сейчас. Или сохраните на потом.",
+        "caption": "Перенесите. Обновите. Восстановите свои покупки.",
         "meta": "БЕСПЛАТНО  ·  ОТКРЫТЫЙ КОД  ·  БЕЗ ДЖЕЙЛБРЕЙКА",
-        "window": "Приложения на старом iPhone", "count": "3 выбрано",
-        "search": "Поиск приложений", "filter": "Только недоступные",
-        "route": "СТАРЫЙ IPHONE   →   WINDOWS   →   НОВЫЙ IPHONE",
-        "badge": "НОВОЕ: ПОИСК НЕДОСТУПНЫХ В РФ",
-        "apps": (("Bloom Journal", "Заметки и дневник"), ("Cloudy", "Прогноз погоды"), ("Daily Planner", "Планы на каждый день")),
+        "window": "Обновить и восстановить", "count": "0 выбрано",
+        "search": "Поиск приложений", "filter": "Все покупки",
+        "route": "APPLE ACCOUNT   →   WINDOWS   →   ВАШ IPHONE",
+        "badge": "НОВОЕ: ВОССТАНОВЛЕНИЕ ПОКУПОК",
+        "apps": (("Bloom Journal", "Ваши покупки App Store"), ("Cloudy", "Последняя доступная версия"), ("Daily Planner", "Установка на ваш iPhone")),
     },
     "en": {
-        "brand": "Perenos", "eyebrow": "VERSION 1.3.0  ·  WINDOWS 10 / 11",
+        "brand": "Perenos", "eyebrow": "VERSION 1.5.0  ·  WINDOWS 10 / 11",
         "line1": "New iPhone.", "line2": "Your apps.",
-        "caption": "Transfer now. Or save for later.",
+        "caption": "Transfer. Update. Restore your purchases.",
         "meta": "FREE  ·  OPEN SOURCE  ·  NO JAILBREAK",
-        "window": "Apps on your old iPhone", "count": "3 selected",
-        "search": "Search apps", "filter": "Unavailable only",
-        "route": "OLD IPHONE   →   WINDOWS   →   NEW IPHONE",
-        "badge": "NEW: FIND APPS UNAVAILABLE IN RUSSIA",
-        "apps": (("Bloom Journal", "Notes and journaling"), ("Cloudy", "Weather forecast"), ("Daily Planner", "Plan every day")),
+        "window": "Update & Restore", "count": "0 selected",
+        "search": "Search apps", "filter": "All purchases",
+        "route": "APPLE ACCOUNT   →   WINDOWS   →   YOUR IPHONE",
+        "badge": "NEW: RESTORE YOUR PURCHASES",
+        "apps": (("Bloom Journal", "Your App Store purchases"), ("Cloudy", "Latest available version"), ("Daily Planner", "Install on your iPhone")),
     },
 }
 
@@ -45,7 +45,7 @@ def app_rows(apps, dark):
         <rect x="721" y="{y+10}" width="28" height="28" rx="8" fill="{color}"/>
         <path d="M729 {y+24}h12m-6-6v12" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
         <text x="761" y="{y+21}" class="app-name">{escape(name)}</text><text x="761" y="{y+36}" class="app-subtitle">{escape(subtitle)}</text>
-        <rect x="1081" y="{y+14}" width="20" height="20" rx="6" fill="#2563eb"/><path d="m1086 {y+24} 4 4 7-8" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>''')
+        <rect x="1081" y="{y+14}" width="20" height="20" rx="6" fill="none" stroke="var(--line)" stroke-width="1.5"/></g>''')
     return "".join(rows)
 
 

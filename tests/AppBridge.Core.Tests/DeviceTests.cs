@@ -12,7 +12,7 @@ public class DeviceTests
         var dir = TestPaths.TempDirectory();
         try
         {
-            var ipa = TestIpa.Create(dir, "com.example.notes", version: "4.5", minimumOs: "17.2");
+            var ipa = TestIpa.Create(dir, "com.example.notes", version: "4.5", minimumOs: "17.2", appStoreId: "1234567890");
 
             var package = IpaPackage.Read(ipa);
 
@@ -20,6 +20,7 @@ public class DeviceTests
             Assert.Equal("4.5", package.Version);
             Assert.Equal("17.2", package.MinimumOsVersion);
             Assert.NotNull(package.ITunesMetadata);
+            Assert.Equal(1234567890, package.AppStoreId);
             Assert.Equal([1, 2, 3, 4], package.Sinf);
         }
         finally

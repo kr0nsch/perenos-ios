@@ -11,7 +11,7 @@ namespace AppBridge.ViewModel.Tests;
 public sealed class RestoreAppsViewModelTests
 {
     [Fact]
-    public async Task ListsUpdatesAndDeletedPurchasesAsSelected()
+    public async Task ListsAllPurchasesWithoutSelectingThemAutomatically()
     {
         var store = new FakeStore
         {
@@ -27,12 +27,14 @@ public sealed class RestoreAppsViewModelTests
 
         await vm.LoadAsync(Target());
 
-        Assert.Equal(2, vm.TotalCount);
-        Assert.Equal(2, vm.SelectedCount);
+        Assert.Equal(3, vm.TotalCount);
+        Assert.Equal(0, vm.SelectedCount);
         Assert.Equal("Restore_Update", vm.Visible.Single(item => item.App.AppStoreId == 2).Caption);
         Assert.Equal("2.0", vm.Visible.Single(item => item.App.AppStoreId == 2).App.Version);
         Assert.Equal("Restore_Reinstall", vm.Visible.Single(item => item.App.AppStoreId == 3).Caption);
-        Assert.True(vm.Visible.All(item => item.IsUnavailableInRussia));
+        Assert.False(vm.Visible.Single(item => item.App.AppStoreId == 1).IsUnavailableInRussia);
+        Assert.True(vm.Visible.Single(item => item.App.AppStoreId == 2).IsUnavailableInRussia);
+        Assert.True(vm.Visible.Single(item => item.App.AppStoreId == 3).IsUnavailableInRussia);
     }
 
     [Fact]
@@ -66,6 +68,52 @@ public sealed class RestoreAppsViewModelTests
         Assert.False(vm.NeedsSignIn);
         Assert.Null(vm.Error);
         Assert.Equal(1, vm.TotalCount);
+    }
+
+    [Fact]
+    public async Task FiltersUnavailableAndRussianServicesWithoutSelectingThem()
+    {
+        var store = new FakeStore
+        {
+            Owned =
+            [
+                new OwnedApp(1, "app.listed", "Listed", "1.0", null),
+                new OwnedApp(2, "app.installed", "Installed", "1.0", null),
+                new OwnedApp(3, "app.removed", "Removed", "3.0", null),
+            ],
+        };
+        var services = new[]
+        {
+            new AppBridge.Core.Catalog.RussianServiceApp(3, "app.removed", "Removed", "Family", null, "other", null),
+            new AppBridge.Core.Catalog.RussianServiceApp(1054372220, "", "ВК Музыка", "ВК Музыка", "VK Музыка", "music", null),
+        };
+        var devices = new FakeDevices { Installed = [App(2, "Installed", "2.0")] };
+        var vm = new RestoreAppsViewModel(devices, new RestorableAppScanner(store, new FakeCatalog { Available = new HashSet<long> { 1 } }, services), new IconCache(), new DispatcherQueue());
+        await vm.LoadAsync(Target());
+
+        Assert.Equal(4, vm.TotalCount);
+        Assert.Equal(0, vm.SelectedCount);
+        Assert.DoesNotContain(vm.Visible, item => item.App.AppStoreId == 1054372220);
+
+        vm.CycleFilterCommand.Execute(null);
+        Assert.Equal(RestoreListFilter.Unavailable, vm.Filter);
+        Assert.Equal(2, vm.Visible.Count);
+
+        vm.CycleFilterCommand.Execute(null);
+        Assert.Equal(RestoreListFilter.RussianServices, vm.Filter);
+        Assert.Equal(2, vm.Visible.Count);
+        var candidate = vm.Visible.Single(item => item.App.AppStoreId == 1054372220);
+        Assert.Equal("Restore_CatalogCandidate", candidate.Caption);
+        vm.ToggleSelectAllCommand.Execute(null);
+        Assert.Equal(2, vm.SelectedCount);
+        Assert.Equal(new long[] { 3, 1054372220 }, vm.SelectedApps.Select(app => app.AppStoreId.GetValueOrDefault()).Order().ToArray());
+
+        vm.ClearSelection();
+        vm.SearchText = "VK";
+        Assert.Equal(0, vm.SelectedCount);
+        Assert.Single(vm.Visible);
+        vm.ToggleSelectAllCommand.Execute(null);
+        Assert.Equal(1054372220, Assert.Single(vm.SelectedApps).AppStoreId);
     }
 
     private static DeviceItemViewModel Target() => new("target", _ => Task.CompletedTask);
@@ -106,6 +154,8 @@ public sealed class RestoreAppsViewModelTests
         public Task LoadIconsAsync(string udid, IReadOnlyList<string> bundleIds, Action<string, byte[]> onIcon, CancellationToken cancellationToken = default) => Task.CompletedTask;
 
         public Task InstallAsync(string udid, string ipaPath, IProgress<InstallProgress>? progress, CancellationToken cancellationToken = default) => throw new NotSupportedException();
+
+        public Task<bool> UninstallAsync(string udid, string bundleId, CancellationToken cancellationToken = default) => throw new NotSupportedException();
     }
 
     private sealed class FakeCatalog : IStorefrontCatalog

@@ -1,33 +1,33 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" role="img" aria-labelledby="title desc">
-<title id="title">Перенос — Новый iPhone. Ваши приложения.</title><desc id="desc">Перенесите сейчас. Или сохраните на потом. ВЕРСИЯ 1.3.0  ·  WINDOWS 10 / 11</desc>
+<title id="title">Перенос — Новый iPhone. Ваши приложения.</title><desc id="desc">Перенесите. Обновите. Восстановите свои покупки. ВЕРСИЯ 1.5.0  ·  WINDOWS 10 / 11</desc>
 <style>:root{--bg:#101828;--card:#1d2939;--ink:#f2f4f7;--muted:#aab6c8;--line:#344054;--wash:#162c4b;--row:#26364b;--soft:#26364b}text{font-family:Manrope,'Segoe UI',Arial,sans-serif;fill:var(--ink)}.mono{font-family:Consolas,monospace;font-size:11px;letter-spacing:1.1px;fill:var(--muted)}.app-name{font-size:12px;font-weight:650}.app-subtitle{font-size:9px;fill:var(--muted)}</style>
 <rect width="1200" height="500" rx="24" fill="var(--bg)"/><circle cx="1150" cy="20" r="250" fill="#2563eb" opacity=".055"/>
 <g transform="translate(52 42) scale(1.0)"><rect width="48" height="48" rx="13" fill="#2563eb"/>
     <g fill="none" stroke="white" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"><path d="M23 13V9a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v27a3 3 0 0 1-3 3h-7M17 35v4a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V16a3 3 0 0 1 3-3h6"/>
     <path d="M15 25h18m-6-6 6 6-6 6"/></g></g><text x="113" y="76" font-size="30" font-weight="750" letter-spacing="-1">Перенос</text>
-<rect x="885" y="49" width="265" height="29" rx="14.5" fill="var(--wash)"/><text x="1017.5" y="68" text-anchor="middle" class="mono" style="fill:#3b82f6;font-size:9px;letter-spacing:.5">НОВОЕ: ПОИСК НЕДОСТУПНЫХ В РФ</text>
-<text x="54" y="146" class="mono" style="fill:#3b82f6">ВЕРСИЯ 1.3.0  ·  WINDOWS 10 / 11</text>
+<rect x="885" y="49" width="265" height="29" rx="14.5" fill="var(--wash)"/><text x="1017.5" y="68" text-anchor="middle" class="mono" style="fill:#3b82f6;font-size:9px;letter-spacing:.5">НОВОЕ: ВОССТАНОВЛЕНИЕ ПОКУПОК</text>
+<text x="54" y="146" class="mono" style="fill:#3b82f6">ВЕРСИЯ 1.5.0  ·  WINDOWS 10 / 11</text>
 <text x="51" y="211" font-size="49" font-weight="700" letter-spacing="-2">Новый iPhone.</text><text x="51" y="269" font-size="49" font-weight="700" letter-spacing="-2" style="fill:#2563eb">Ваши приложения.</text>
-<text x="54" y="315" font-size="17" style="fill:var(--muted)">Перенесите сейчас. Или сохраните на потом.</text>
+<text x="54" y="315" font-size="17" style="fill:var(--muted)">Перенесите. Обновите. Восстановите свои покупки.</text>
 <rect x="54" y="354" width="194" height="45" rx="9" fill="#2563eb"/><text x="151" y="382" text-anchor="middle" font-size="13" font-weight="700" style="fill:white">Скачать для Windows</text>
 <text x="54" y="447" class="mono" style="font-size:10px;letter-spacing:.6">БЕСПЛАТНО  ·  ОТКРЫТЫЙ КОД  ·  БЕЗ ДЖЕЙЛБРЕЙКА</text>
 <g><rect x="674" y="108" width="478" height="345" rx="18" fill="var(--wash)"/><rect x="691" y="125" width="444" height="311" rx="11" fill="var(--card)" stroke="var(--line)"/>
 <circle cx="713" cy="146" r="3" fill="#ff7c72"/><circle cx="724" cy="146" r="3" fill="#f5c45b"/><circle cx="735" cy="146" r="3" fill="#56c89a"/>
-<text x="713" y="177" font-size="15" font-weight="700">Приложения на старом iPhone</text><text x="1109" y="176" text-anchor="end" class="mono" style="font-size:9px;letter-spacing:0;fill:#3b82f6">3 выбрано</text>
+<text x="713" y="177" font-size="15" font-weight="700">Обновить и восстановить</text><text x="1109" y="176" text-anchor="end" class="mono" style="font-size:9px;letter-spacing:0;fill:#3b82f6">0 выбрано</text>
 <rect x="708" y="191" width="229" height="31" rx="7" fill="var(--soft)"/><text x="724" y="211" class="app-subtitle">Поиск приложений</text>
-<rect x="946" y="191" width="174" height="31" rx="7" fill="var(--wash)"/><text x="1033" y="211" text-anchor="middle" class="app-subtitle" style="fill:#3b82f6">Только недоступные</text>
+<rect x="946" y="191" width="174" height="31" rx="7" fill="var(--wash)"/><text x="1033" y="211" text-anchor="middle" class="app-subtitle" style="fill:#3b82f6">Все покупки</text>
 <g><rect x="708" y="238" width="412" height="49" rx="9" fill="var(--row)"/>
         <rect x="721" y="248" width="28" height="28" rx="8" fill="#4d8ef7"/>
         <path d="M729 262h12m-6-6v12" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
-        <text x="761" y="259" class="app-name">Bloom Journal</text><text x="761" y="274" class="app-subtitle">Заметки и дневник</text>
-        <rect x="1081" y="252" width="20" height="20" rx="6" fill="#2563eb"/><path d="m1086 262 4 4 7-8" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g><g><rect x="708" y="297" width="412" height="49" rx="9" fill="var(--row)"/>
+        <text x="761" y="259" class="app-name">Bloom Journal</text><text x="761" y="274" class="app-subtitle">Ваши покупки App Store</text>
+        <rect x="1081" y="252" width="20" height="20" rx="6" fill="none" stroke="var(--line)" stroke-width="1.5"/></g><g><rect x="708" y="297" width="412" height="49" rx="9" fill="var(--row)"/>
         <rect x="721" y="307" width="28" height="28" rx="8" fill="#32a5b8"/>
         <path d="M729 321h12m-6-6v12" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
-        <text x="761" y="318" class="app-name">Cloudy</text><text x="761" y="333" class="app-subtitle">Прогноз погоды</text>
-        <rect x="1081" y="311" width="20" height="20" rx="6" fill="#2563eb"/><path d="m1086 321 4 4 7-8" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g><g><rect x="708" y="356" width="412" height="49" rx="9" fill="var(--row)"/>
+        <text x="761" y="318" class="app-name">Cloudy</text><text x="761" y="333" class="app-subtitle">Последняя доступная версия</text>
+        <rect x="1081" y="311" width="20" height="20" rx="6" fill="none" stroke="var(--line)" stroke-width="1.5"/></g><g><rect x="708" y="356" width="412" height="49" rx="9" fill="var(--row)"/>
         <rect x="721" y="366" width="28" height="28" rx="8" fill="#ee9b43"/>
         <path d="M729 380h12m-6-6v12" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
-        <text x="761" y="377" class="app-name">Daily Planner</text><text x="761" y="392" class="app-subtitle">Планы на каждый день</text>
-        <rect x="1081" y="370" width="20" height="20" rx="6" fill="#2563eb"/><path d="m1086 380 4 4 7-8" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g><rect x="990" y="406" width="130" height="17" rx="5" fill="#2563eb"/></g>
-<text x="913" y="479" text-anchor="middle" class="mono" style="font-size:9px;letter-spacing:.8">СТАРЫЙ IPHONE   →   WINDOWS   →   НОВЫЙ IPHONE</text>
+        <text x="761" y="377" class="app-name">Daily Planner</text><text x="761" y="392" class="app-subtitle">Установка на ваш iPhone</text>
+        <rect x="1081" y="370" width="20" height="20" rx="6" fill="none" stroke="var(--line)" stroke-width="1.5"/></g><rect x="990" y="406" width="130" height="17" rx="5" fill="#2563eb"/></g>
+<text x="913" y="479" text-anchor="middle" class="mono" style="font-size:9px;letter-spacing:.8">APPLE ACCOUNT   →   WINDOWS   →   ВАШ IPHONE</text>
 </svg>

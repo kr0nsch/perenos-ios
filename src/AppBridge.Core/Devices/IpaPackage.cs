@@ -9,7 +9,8 @@ public sealed record IpaPackage(
     string Version,
     string? MinimumOsVersion,
     byte[]? ITunesMetadata,
-    byte[]? Sinf)
+    byte[]? Sinf,
+    long? AppStoreId = null)
 {
     private const long MaxMetadataBytes = 8 * 1024 * 1024;
 
@@ -37,12 +38,14 @@ public sealed record IpaPackage(
         var version = GetString(info, "CFBundleShortVersionString") ?? GetString(info, "CFBundleVersion") ?? "";
 
         var metadataEntry = zip.GetEntry("iTunesMetadata.plist");
+        var metadata = metadataEntry is null ? null : PropertyList.LoadFromByteArray(ReadSmall(metadataEntry)) as DictionaryNode;
         return new IpaPackage(
             bundleId,
             version,
             GetString(info, "MinimumOSVersion"),
             metadataEntry is null ? null : ReadSmall(metadataEntry),
-            sinf is null ? null : ReadSmall(sinf));
+            sinf is null ? null : ReadSmall(sinf),
+            GetLong(metadata, "itemId"));
     }
 
     private static byte[] ReadSmall(ZipArchiveEntry entry)
@@ -57,4 +60,12 @@ public sealed record IpaPackage(
 
     private static string? GetString(DictionaryNode dict, string key) =>
         dict.TryGetValue(key, out var node) && node is StringNode s ? s.Value : null;
+
+    private static long? GetLong(DictionaryNode? dict, string key) =>
+        dict is not null && dict.TryGetValue(key, out var node) ? node switch
+        {
+            IntegerNode i => i.SignedValue,
+            StringNode s when long.TryParse(s.Value, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out var value) => value,
+            _ => null,
+        } : null;
 }

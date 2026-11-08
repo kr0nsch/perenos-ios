@@ -120,6 +120,19 @@ public sealed class IpatoolClient : IAppStoreClient
         }
     }
 
+    public async Task<string> GetLatestVersionIdAsync(long appId, CancellationToken cancellationToken = default)
+    {
+        var output = await RunAsync(
+            ["list-versions", "--app-id", appId.ToString(CultureInfo.InvariantCulture), "--platform", "iphone"],
+            interactive: false, onSegment: null, TimeSpan.FromMinutes(5), cancellationToken).ConfigureAwait(false);
+        var version = output.Events.Select(IpatoolOutput.GetLatestVersionId).LastOrDefault(versionId => !string.IsNullOrEmpty(versionId));
+        if (version is not null)
+            return version;
+
+        var error = output.Error ?? "ipatool returned no version identifiers.";
+        throw new IpatoolException(IpatoolOutput.Classify(error), error);
+    }
+
     /// <summary>Downloads an IPA and returns the path of the finished file.</summary>
     public async Task<string> DownloadAsync(DownloadRequest request, IProgress<DownloadProgress>? progress, CancellationToken cancellationToken = default)
     {

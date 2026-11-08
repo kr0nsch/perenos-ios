@@ -53,6 +53,7 @@ def build(output: Path) -> None:
         ("apps", "2-choose-apps.png"),
         ("saved", "later-4-saved.png"),
         ("unavailable", "unavailable-filter.png"),
+        ("restore", "restore-purchases.png"),
         ("target", "3-target.png"),
         ("save-done", "save-3-done.png"),
     )

@@ -67,6 +67,7 @@
           CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
     <None Include="..\..\LICENSE" Link="LICENSE.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
     <None Include="..\..\THIRD-PARTY-NOTICES.txt" Link="THIRD-PARTY-NOTICES.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Include="..\..\catalog\LICENSE" Link="Licenses\RussianServiceCatalog.GPL-3.0.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
   <Target Name="WarnMissingIpatool" BeforeTargets="Build" Condition="!Exists('$(IpatoolPath)')">
     <Warning Text="ipatool not found at $(IpatoolPath). Run build\Get-Ipatool.ps1 -RuntimeIdentifier $(IpatoolRid) so the app can download apps." />

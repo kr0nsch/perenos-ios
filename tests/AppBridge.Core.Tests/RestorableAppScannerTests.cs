@@ -7,7 +7,7 @@ namespace AppBridge.Core.Tests;
 public sealed class RestorableAppScannerTests
 {
     [Fact]
-    public async Task IncludesInstalledUpdatesAndPurchasesRemovedFromTheDevice()
+    public async Task IncludesAllPurchasesAndMarksAppsMissingFromTheStorefront()
     {
         var installed = new InstalledApp("app.two", "Installed name", "1.2", "Developer", 2, "external-2", "owner@example.com", "16.0", 123);
         var store = new FakeStore
@@ -23,10 +23,13 @@ public sealed class RestorableAppScannerTests
 
         var result = await new RestorableAppScanner(store, catalog).ScanAsync([installed]);
 
-        Assert.Equal([2L, 3L], result.Select(app => app.Owned.AppId));
-        Assert.Same(installed, result[0].Installed);
-        Assert.Null(result[1].Installed);
-        Assert.Equal("Removed from device", result[1].ToInstalledApp().Name);
+        Assert.Equal([1L, 2L, 3L], result.Select(app => app.Owned.AppId));
+        Assert.False(result[0].IsUnavailableInRussia);
+        Assert.True(result[1].IsUnavailableInRussia);
+        Assert.Same(installed, result[1].Installed);
+        Assert.True(result[2].IsUnavailableInRussia);
+        Assert.Null(result[2].Installed);
+        Assert.Equal("Removed from device", result[2].ToInstalledApp().Name);
         Assert.Equal([1L, 2L, 3L], catalog.Requested);
     }
 
@@ -42,13 +45,41 @@ public sealed class RestorableAppScannerTests
     }
 
     [Fact]
-    public async Task EmptyHistoryDoesNotQueryCatalog()
+    public async Task AddsCatalogCandidatesWithoutDuplicatingPurchaseHistory()
+    {
+        var store = new FakeStore { Owned = [new OwnedApp(3, "app.three", "Owned", "1.0", null)] };
+        var services = new[]
+        {
+            new AppBridge.Core.Catalog.RussianServiceApp(3, "app.three", "Owned", "Family", null, "other", null),
+            new AppBridge.Core.Catalog.RussianServiceApp(1054372220, "", "ВК Музыка", "ВК Музыка", "VK Музыка", "music", null),
+        };
+
+        var result = await new RestorableAppScanner(store, new FakeCatalog(), services).ScanAsync([]);
+
+        Assert.Equal(2, result.Count);
+        Assert.Equal("Family", result[0].ServiceFamily);
+        Assert.True(result[0].InPurchaseHistory);
+        var candidate = result[1];
+        Assert.Equal(1054372220, candidate.Owned.AppId);
+        Assert.False(candidate.InPurchaseHistory);
+        Assert.True(candidate.IsUnavailableInRussia);
+        Assert.Equal("ВК Музыка", candidate.ServiceFamily);
+    }
+
+    [Fact]
+    public async Task EmptyHistoryStillListsCandidatesWithoutQueryingStorefront()
     {
         var catalog = new FakeCatalog();
+        var services = new[]
+        {
+            new AppBridge.Core.Catalog.RussianServiceApp(1054372220, "", "ВК Музыка", "ВК Музыка", "VK Музыка", "music", null),
+        };
 
-        var result = await new RestorableAppScanner(new FakeStore(), catalog).ScanAsync([]);
+        var result = await new RestorableAppScanner(new FakeStore(), catalog, services).ScanAsync([]);
 
-        Assert.Empty(result);
+        var candidate = Assert.Single(result);
+        Assert.False(candidate.InPurchaseHistory);
+        Assert.Equal(1054372220, candidate.Owned.AppId);
         Assert.Equal(0, catalog.Calls);
     }
 

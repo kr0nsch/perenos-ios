@@ -1,3 +1,5 @@
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using AppBridge.Core;
 using AppBridge.Core.Devices;
 using AppBridge.Core.Ipatool;
@@ -7,7 +9,14 @@ using Microsoft.UI.Dispatching;
 
 namespace AppBridge.ViewModels;
 
-/// <summary>Owned apps absent from the Russian storefront, for updating or reinstalling on one iPhone.</summary>
+public enum RestoreListFilter
+{
+    Purchases,
+    Unavailable,
+    RussianServices,
+}
+
+/// <summary>All owned apps, with optional filters for unavailable apps and Russian services.</summary>
 public sealed partial class RestoreAppsViewModel(
     IDeviceService devices,
     RestorableAppScanner scanner,
@@ -20,11 +29,43 @@ public sealed partial class RestoreAppsViewModel(
 
     public bool NeedsSignIn { get; private set; }
 
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(FilterText))]
+    public partial RestoreListFilter Filter { get; set; }
+
+    public string FilterText => Filter switch
+    {
+        RestoreListFilter.Purchases => Loc.Get("Restore_FilterAll"),
+        RestoreListFilter.Unavailable => Loc.Get("Restore_FilterUnavailable"),
+        _ => Loc.Get("Restore_FilterRussian"),
+    };
+
     public override string LoadingText => Loc.Get("Restore_Loading");
 
     public override string EmptyText => Loc.Get("Restore_Empty");
 
     public IReadOnlyList<InstalledApp> SelectedApps => All.Where(app => app.IsSelected).Select(app => app.App).ToList();
+
+    [RelayCommand]
+    private void CycleFilter() => Filter = Filter switch
+    {
+        RestoreListFilter.Purchases => RestoreListFilter.Unavailable,
+        RestoreListFilter.Unavailable => RestoreListFilter.RussianServices,
+        _ => RestoreListFilter.Purchases,
+    };
+
+    partial void OnFilterChanged(RestoreListFilter value)
+    {
+        ApplyFilter();
+        OnPropertyChanged(nameof(SelectAllText));
+    }
+
+    protected override bool IncludeInFilter(AppItemViewModel item) => Filter switch
+    {
+        RestoreListFilter.Purchases => item.Restore?.InPurchaseHistory != false,
+        RestoreListFilter.Unavailable => item.Restore?.InPurchaseHistory == true && item.IsUnavailableInRussia,
+        _ => item.Restore?.ServiceFamily is not null,
+    };
 
     public async Task LoadAsync(DeviceItemViewModel target)
     {
@@ -50,9 +91,9 @@ public sealed partial class RestoreAppsViewModel(
 
             var items = apps.Select(app => new AppItemViewModel(app.ToInstalledApp())
             {
-                IsSelected = true,
-                IsUnavailableInRussia = true,
-                Caption = Loc.Get(app.Installed is null ? "Restore_Reinstall" : "Restore_Update"),
+                Restore = app,
+                IsUnavailableInRussia = app.IsUnavailableInRussia,
+                Caption = Loc.Get(!app.InPurchaseHistory ? "Restore_CatalogCandidate" : app.Installed is null ? "Restore_Reinstall" : "Restore_Update"),
             }).ToList();
             SetItems(items);
             LoadedFromUdid = target.Udid;
@@ -97,6 +138,7 @@ public sealed partial class RestoreAppsViewModel(
         NeedsSignIn = false;
         IsLoading = false;
         Error = null;
+        Filter = RestoreListFilter.Purchases;
         Clear();
     }
 

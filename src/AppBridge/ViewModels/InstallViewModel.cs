@@ -272,17 +272,17 @@ public sealed partial class InstallViewModel : ObservableObject
             return;
 
         // Progress arrives very often; only forward visible changes to the UI thread.
-        if (_lastUpdate.TryGetValue(app.BundleId, out var last) && last.Stage == update.Stage
+        if (_lastUpdate.TryGetValue(app.PackageKey, out var last) && last.Stage == update.Stage
             && Math.Abs((last.Fraction ?? 0) - (update.Fraction ?? 0)) < 0.005
             && Math.Abs(last.BytesReceived - update.BytesReceived) < 2_000_000)
             return;
-        _lastUpdate[app.BundleId] = update;
+        _lastUpdate[app.PackageKey] = update;
 
         _dispatcher.TryEnqueue(() =>
         {
             if (generation != _runGeneration)
                 return;
-            var item = Items.FirstOrDefault(i => i.App.BundleId == app.BundleId);
+            var item = Items.FirstOrDefault(i => i.App.PackageKey == app.PackageKey);
             if (item is null)
                 return;
             item.Apply(update);

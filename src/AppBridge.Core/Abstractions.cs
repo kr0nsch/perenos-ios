@@ -10,6 +10,8 @@ public interface IAppStoreClient
 
     Task<IpatoolAccount?> GetAccountAsync(CancellationToken cancellationToken = default);
 
+    Task<IReadOnlyList<OwnedApp>> GetOwnedAppsAsync(CancellationToken cancellationToken = default);
+
     Task<LoginResult> LoginAsync(string email, string password, string? authCode, CancellationToken cancellationToken = default);
 
     Task SignOutAsync(CancellationToken cancellationToken = default);

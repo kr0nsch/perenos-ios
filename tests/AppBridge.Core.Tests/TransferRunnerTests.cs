@@ -306,6 +306,8 @@ public sealed class TransferRunnerTests : IDisposable
 
         public Task<IpatoolAccount?> GetAccountAsync(CancellationToken cancellationToken = default) => Task.FromResult<IpatoolAccount?>(new("a@b.c", "A"));
 
+        public Task<IReadOnlyList<OwnedApp>> GetOwnedAppsAsync(CancellationToken cancellationToken = default) => throw new NotSupportedException();
+
         public Task<LoginResult> LoginAsync(string email, string password, string? authCode, CancellationToken cancellationToken = default) =>
             throw new NotSupportedException();
 

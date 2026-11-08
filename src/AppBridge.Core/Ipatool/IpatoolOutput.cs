@@ -46,12 +46,45 @@ internal sealed partial class IpatoolOutput
     public static bool? GetBool(JsonElement e, string name) =>
         e.ValueKind == JsonValueKind.Object && e.TryGetProperty(name, out var v) && v.ValueKind is JsonValueKind.True or JsonValueKind.False ? v.GetBoolean() : null;
 
+    internal static OwnedAppsPage? ReadOwnedAppsPage(JsonElement e)
+    {
+        if (e.ValueKind != JsonValueKind.Object
+            || !e.TryGetProperty("apps", out var items) || items.ValueKind != JsonValueKind.Array
+            || !e.TryGetProperty("page", out var pageElement) || !pageElement.TryGetInt32(out var page)
+            || !e.TryGetProperty("totalCount", out var totalElement) || !totalElement.TryGetInt32(out var total))
+            return null;
+
+        var apps = new List<OwnedApp>();
+        foreach (var item in items.EnumerateArray())
+        {
+            if (!item.TryGetProperty("id", out var idElement))
+                throw new InvalidDataException("An owned app has no App Store ID.");
+            long id;
+            if (idElement.ValueKind == JsonValueKind.Number)
+                idElement.TryGetInt64(out id);
+            else
+                long.TryParse(idElement.GetString(), NumberStyles.Integer, CultureInfo.InvariantCulture, out id);
+            var bundleId = GetString(item, "bundleID") ?? "";
+            if (id <= 0 || string.IsNullOrWhiteSpace(bundleId))
+                throw new InvalidDataException("An owned app has an invalid App Store ID or bundle identifier.");
+
+            DateTimeOffset? purchased = null;
+            if (DateTimeOffset.TryParse(GetString(item, "purchaseDate"), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out var date))
+                purchased = date;
+            apps.Add(new OwnedApp(id, bundleId, GetString(item, "name") ?? bundleId, GetString(item, "version") ?? "", purchased));
+        }
+
+        return new OwnedAppsPage(page, total, apps);
+    }
+
     public static IpatoolErrorKind Classify(string? error)
     {
         if (string.IsNullOrEmpty(error))
             return IpatoolErrorKind.Unknown;
 
         var e = error.ToLowerInvariant();
+        if (e.Contains("purchase history") && (e.Contains("http 401") || e.Contains("http 403") || e.Contains("daap status 401") || e.Contains("daap status 403") || e.Contains("framework rejected response")))
+            return IpatoolErrorKind.HistoryUnavailable;
         if (e.Contains("failed to get account") || e.Contains("keychain passphrase") || e.Contains("integrity check failed"))
             return IpatoolErrorKind.NotSignedIn;
         if (e.Contains("password token is expired") || e.Contains("auth code is required"))

@@ -52,6 +52,10 @@
   </tr>
 </table>
 
+### Update and restore on one iPhone
+
+Choose **Update &amp; Restore**, connect an iPhone and sign in to the purchaser's Apple Account. Perenos reads the complete iPhone purchase history and finds apps currently missing from the Russian App Store. Update installed apps or reinstall apps removed from the device at the latest version Apple still supplies to the account. This mode never acquires new apps.
+
 <p align="center">
   <picture>
     <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: dark)" srcset="docs/screenshots/en-dark/2-choose-apps.png">

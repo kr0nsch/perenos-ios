@@ -75,6 +75,51 @@ public sealed class IpatoolClient : IAppStoreClient
         AppLog.Info("Signed out of the App Store.");
     }
 
+    /// <summary>Reads the account's complete iPhone purchase history, including delisted apps.</summary>
+    public Task<IReadOnlyList<OwnedApp>> GetOwnedAppsAsync(CancellationToken cancellationToken = default) =>
+        CollectOwnedAppsAsync(async (page, token) =>
+        {
+            var output = await RunAsync(
+                ["list-purchases", "--platform", "iphone", "--max-results", "100", "--page", page.ToString(CultureInfo.InvariantCulture)],
+                interactive: false, onSegment: null, TimeSpan.FromMinutes(5), token).ConfigureAwait(false);
+            var result = output.Events.Select(IpatoolOutput.ReadOwnedAppsPage).LastOrDefault(pageResult => pageResult is not null);
+            if (result is not null)
+                return result;
+
+            var error = output.Error ?? "ipatool returned no purchase history.";
+            throw new IpatoolException(IpatoolOutput.Classify(error), error);
+        }, cancellationToken);
+
+    internal static async Task<IReadOnlyList<OwnedApp>> CollectOwnedAppsAsync(
+        Func<int, CancellationToken, Task<OwnedAppsPage>> readPage, CancellationToken cancellationToken = default)
+    {
+        const int pageSize = 100;
+        var apps = new Dictionary<long, OwnedApp>();
+        int? expectedTotal = null;
+        for (var page = 1; ; page++)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            var result = await readPage(page, cancellationToken).ConfigureAwait(false);
+            if (result.Page != page || result.TotalCount < 0 || expectedTotal is not null && result.TotalCount != expectedTotal)
+                throw new IpatoolException(IpatoolErrorKind.Unknown, "ipatool returned an inconsistent purchase-history page.");
+            expectedTotal = result.TotalCount;
+            foreach (var app in result.Apps)
+                apps[app.AppId] = app;
+
+            var lastPage = Math.Max(1, (int)((result.TotalCount + (long)pageSize - 1) / pageSize));
+            if (page < lastPage)
+            {
+                if (result.Apps.Count == 0)
+                    throw new IpatoolException(IpatoolErrorKind.Unknown, "ipatool returned an incomplete purchase history.");
+                continue;
+            }
+
+            if (apps.Count != result.TotalCount)
+                throw new IpatoolException(IpatoolErrorKind.Unknown, "ipatool returned an incomplete purchase history.");
+            return apps.Values.ToList();
+        }
+    }
+
     /// <summary>Downloads an IPA and returns the path of the finished file.</summary>
     public async Task<string> DownloadAsync(DownloadRequest request, IProgress<DownloadProgress>? progress, CancellationToken cancellationToken = default)
     {

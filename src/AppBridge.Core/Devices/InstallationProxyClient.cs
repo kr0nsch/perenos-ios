@@ -44,6 +44,7 @@ internal sealed class InstallationProxyClient(LockdownServiceProvider lockdown, 
 
     public async Task InstallAsync(string packagePath, IpaPackage package, Action<int> onPercent, CancellationToken cancellationToken)
     {
+        Service.SetTimeout((int)TimeSpan.FromMinutes(10).TotalMilliseconds);
         var options = new DictionaryNode();
         if (package.ITunesMetadata is { } metadata)
             options.Add("iTunesMetadata", new DataNode(metadata));

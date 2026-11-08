@@ -108,6 +108,9 @@ public sealed partial class InstallViewModel : ObservableObject
     /// <summary>Transfer Now: download from the App Store and install on <paramref name="target"/>.</summary>
     public Task StartAsync(IReadOnlyList<InstalledApp> apps, DeviceItemViewModel target) => BeginAsync(Flow.Now, apps, target);
 
+    /// <summary>Restore owned apps on the same iPhone, always using their latest App Store versions.</summary>
+    public Task StartRestoreAsync(IReadOnlyList<InstalledApp> apps, DeviceItemViewModel target) => BeginAsync(Flow.Restore, apps, target);
+
     /// <summary>Transfer Later, part one: download into the saved-apps folder.</summary>
     public Task StartSaveAsync(IReadOnlyList<InstalledApp> apps) => BeginAsync(Flow.Save, apps, null);
 
@@ -193,8 +196,8 @@ public sealed partial class InstallViewModel : ObservableObject
         var options = new TransferOptions(
             _services.DownloadDirectory,
             _services.Settings.Current.KeepDownloads,
-            _services.Settings.Current.VersionPolicy,
-            _services.Settings.Current.AcquireFreeLicenses);
+            flow == Flow.Restore ? VersionPolicy.Latest : _services.Settings.Current.VersionPolicy,
+            flow != Flow.Restore && _services.Settings.Current.AcquireFreeLicenses);
 
         AppLog.Info($"{flow}: {apps.Count} app(s).");
         KeepAwake.Enable();

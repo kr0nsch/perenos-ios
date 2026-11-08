@@ -773,4 +773,52 @@
   <data name="Failure_FileDamaged" xml:space="preserve">
     <value>Файл повреждён</value>
   </data>
+  <data name="Start_Restore.Title" xml:space="preserve">
+    <value>Обновить и восстановить</value>
+  </data>
+  <data name="Start_RestoreSubtitle" xml:space="preserve">
+    <value>Обновите недоступные в РФ приложения и установите свои покупки на один iPhone.</value>
+  </data>
+  <data name="Restore_DeviceTitle" xml:space="preserve">
+    <value>Подключите ваш iPhone</value>
+  </data>
+  <data name="Restore_DeviceSubtitle" xml:space="preserve">
+    <value>Используйте USB-кабель, разблокируйте iPhone и подтвердите доверие компьютеру. Для скачивания понадобится ваш Apple Account.</value>
+  </data>
+  <data name="Restore_AppsTitle" xml:space="preserve">
+    <value>Обновление и восстановление</value>
+  </data>
+  <data name="Restore_AppsSubtitle" xml:space="preserve">
+    <value>Ваши приложения, которых нет в российском App Store. Установите их последние доступные версии на «{0}».</value>
+  </data>
+  <data name="Restore_SignInTitle.Text" xml:space="preserve">
+    <value>Войдите, чтобы увидеть покупки</value>
+  </data>
+  <data name="Restore_SignInSubtitle.Text" xml:space="preserve">
+    <value>Используйте Apple Account, которому принадлежат приложения. Восстановить можно только то, что Apple ещё выдаёт вашему аккаунту.</value>
+  </data>
+  <data name="Restore_Loading" xml:space="preserve">
+    <value>Читаем историю покупок и проверяем российский App Store…</value>
+  </data>
+  <data name="Restore_Empty" xml:space="preserve">
+    <value>В покупках текущего аккаунта нет приложений, недоступных в российском App Store.</value>
+  </data>
+  <data name="Restore_HistoryFailed" xml:space="preserve">
+    <value>Apple не выдала историю покупок. Попробуйте позже. Список установленных приложений не используется вместо полной истории.</value>
+  </data>
+  <data name="Restore_Network" xml:space="preserve">
+    <value>Не удалось загрузить покупки. Проверьте подключение к интернету и повторите попытку.</value>
+  </data>
+  <data name="Restore_Update" xml:space="preserve">
+    <value>Обновить до последней версии, доступной у Apple</value>
+  </data>
+  <data name="Restore_Reinstall" xml:space="preserve">
+    <value>Нет на этом iPhone — установить из покупок</value>
+  </data>
+  <data name="Restore_InstallFootnote" xml:space="preserve">
+    <value>Скачиваются только ваши покупки с серверов Apple, в последних доступных аккаунту версиях. Новые приложения не приобретаются.</value>
+  </data>
+  <data name="Summary_Purchases" xml:space="preserve">
+    <value>Покупки вашего Apple Account</value>
+  </data>
 </root>

@@ -2,6 +2,10 @@ namespace AppBridge.Core.Ipatool;
 
 public sealed record IpatoolAccount(string Email, string Name);
 
+public sealed record OwnedApp(long AppId, string BundleId, string Name, string Version, DateTimeOffset? PurchaseDate);
+
+internal sealed record OwnedAppsPage(int Page, int TotalCount, IReadOnlyList<OwnedApp> Apps);
+
 public enum LoginStatus
 {
     SignedIn,
@@ -17,6 +21,7 @@ public enum IpatoolErrorKind
     ToolMissing,
     NotSignedIn,
     SessionExpired,
+    HistoryUnavailable,
     LicenseRequired,
     PaidAppNotSupported,
     SubscriptionRequired,

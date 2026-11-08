@@ -60,6 +60,8 @@ public class IpatoolOutputTests
     [InlineData("license is required", IpatoolErrorKind.LicenseRequired)]
     [InlineData("failed to purchase item with param 'STDQ': purchasing paid apps is not supported", IpatoolErrorKind.PaidAppNotSupported)]
     [InlineData("password token is expired", IpatoolErrorKind.SessionExpired)]
+    [InlineData("password token is expired: purchase history items request returned HTTP 401", IpatoolErrorKind.HistoryUnavailable)]
+    [InlineData("failed to retrieve purchase history items: request failed: framework rejected response", IpatoolErrorKind.HistoryUnavailable)]
     [InlineData("received error: item is temporarily unavailable", IpatoolErrorKind.TemporarilyUnavailable)]
     [InlineData("app not found", IpatoolErrorKind.AppNotFound)]
     [InlineData("request failed: dial tcp: lookup p25-buy.itunes.apple.com: no such host", IpatoolErrorKind.Network)]

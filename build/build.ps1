@@ -10,7 +10,7 @@
 #>
 [CmdletBinding()]
 param(
-    [string] $Version = '1.3.1',
+    [string] $Version = '1.4.0',
     [ValidateSet('win-x64', 'win-arm64')]
     [string[]] $RuntimeIdentifier = @('win-x64'),
     [switch] $SkipTests,

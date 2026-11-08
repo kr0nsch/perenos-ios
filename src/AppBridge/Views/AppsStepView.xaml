@@ -14,7 +14,8 @@
     <SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="Transparent" />
   </UserControl.Resources>
 
-  <Grid MaxWidth="680" Padding="24,4,24,8">
+  <Grid>
+    <Grid MaxWidth="680" Padding="24,4,24,8" Visibility="{x:Bind ViewModel.ShowRestoreContent, Mode=OneWay}">
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
@@ -24,7 +25,7 @@
     </Grid.RowDefinitions>
 
     <StackPanel>
-      <TextBlock x:Uid="Apps_Title" Style="{StaticResource LargeTitleStyle}" Text="Choose Apps" />
+      <TextBlock Style="{StaticResource LargeTitleStyle}" Text="{x:Bind ViewModel.AppsTitle, Mode=OneWay}" />
       <TextBlock Style="{StaticResource HeroSubtitleStyle}" Text="{x:Bind ViewModel.AppsSubtitle, Mode=OneWay}" />
     </StackPanel>
 
@@ -152,5 +153,16 @@
     <TextBlock Grid.Row="4" Style="{StaticResource FootnoteStyle}" Margin="16,10,16,0" TextAlignment="Center"
                Visibility="{x:Bind ViewModel.AppList.HasFootnote, Mode=OneWay}" Text="{x:Bind ViewModel.AppList.Footnote, Mode=OneWay}"
                ToolTipService.ToolTip="{x:Bind ViewModel.AppList.FootnoteDetail, Mode=OneWay}" />
+    </Grid>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollMode="Disabled"
+                  Visibility="{x:Bind ViewModel.ShowRestoreSignIn, Mode=OneWay}">
+      <StackPanel MaxWidth="560" Padding="24,0,24,32" VerticalAlignment="Center">
+        <TextBlock x:Uid="Restore_SignInTitle" Style="{StaticResource LargeTitleStyle}" Text="Sign in to see your purchases" />
+        <TextBlock x:Uid="Restore_SignInSubtitle" Style="{StaticResource HeroSubtitleStyle}" Margin="0,0,0,24"
+                   Text="Use the Apple Account that owns your apps." />
+        <views:SignInPanel Account="{x:Bind ViewModel.Account}" />
+      </StackPanel>
+    </ScrollViewer>
   </Grid>
 </UserControl>

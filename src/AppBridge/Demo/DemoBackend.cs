@@ -126,6 +126,10 @@ internal sealed class DemoBackend : IAppStoreClient, IStorefrontCatalog, IDevice
 
     public Task<IpatoolAccount?> GetAccountAsync(CancellationToken cancellationToken = default) => Task.FromResult(_account);
 
+    public Task<IReadOnlyList<OwnedApp>> GetOwnedAppsAsync(CancellationToken cancellationToken = default) =>
+        Task.FromResult<IReadOnlyList<OwnedApp>>(Catalog.Select((app, index) => new OwnedApp(
+            1_400_000_000 + index, app.Bundle, app.Name, VersionOf(index), DateTimeOffset.UtcNow.AddDays(-index))).ToList());
+
     public async Task<IReadOnlySet<long>> GetAvailableAppIdsAsync(
         IEnumerable<long> appIds, string storefront, CancellationToken cancellationToken = default)
     {

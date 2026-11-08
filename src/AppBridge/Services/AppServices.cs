@@ -41,6 +41,7 @@ public sealed class AppServices : IDisposable
 
         Transfers = new TransferRunner(AppStore, Devices);
         StorefrontScanner = new UnavailableAppScanner(AppStore, storefront);
+        RestorableAppScanner = new RestorableAppScanner(AppStore, storefront);
     }
 
     public static string Version { get; } =
@@ -63,6 +64,8 @@ public sealed class AppServices : IDisposable
     public TransferRunner Transfers { get; }
 
     public UnavailableAppScanner StorefrontScanner { get; }
+
+    public RestorableAppScanner RestorableAppScanner { get; }
 
     /// <summary>Icons survive restarts so saved apps keep them; demo icons stay out of the real cache.</summary>
     public string IconsDirectory => _demoDownloads is null ? Paths.IconsDirectory : Path.Combine(Path.GetTempPath(), "AppBridgeDemoIcons");

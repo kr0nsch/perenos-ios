@@ -18,6 +18,11 @@
                               IsRowEnabled="{x:Bind ViewModel.CanDownload, Mode=OneWay}"
                               Command="{x:Bind ViewModel.TransferNowCommand}" />
           <Rectangle Style="{StaticResource SeparatorStyle}" Margin="68,0,0,0" />
+          <controls:ChoiceRow x:Uid="Start_Restore" Glyph="&#xE72C;" Tone="Blue" Title="Update &amp; Restore"
+                              Subtitle="{x:Bind ViewModel.RestoreSubtitle, Mode=OneWay}"
+                              IsRowEnabled="{x:Bind ViewModel.CanDownload, Mode=OneWay}"
+                              Command="{x:Bind ViewModel.RestoreAppsCommand}" />
+          <Rectangle Style="{StaticResource SeparatorStyle}" Margin="68,0,0,0" />
           <controls:ChoiceRow x:Uid="Start_Later" Glyph="&#xE823;" Tone="Indigo" Title="Transfer Later"
                               Subtitle="{x:Bind ViewModel.LaterSubtitle, Mode=OneWay}"
                               SubtitleIsAccent="{x:Bind ViewModel.LaterSubtitleIsAccent, Mode=OneWay}"

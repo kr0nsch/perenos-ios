@@ -27,6 +27,7 @@ public sealed class InstallViewModelTests : IDisposable
     [InlineData(Flow.Now)]
     [InlineData(Flow.Save)]
     [InlineData(Flow.InstallSaved)]
+    [InlineData(Flow.Restore)]
     public async Task StopDuringIconLoadingPreventsTransferAndKeepsAllAppsRetryable(Flow flow)
     {
         var icon = new TaskCompletionSource<ImageSource?>();
@@ -144,6 +145,21 @@ public sealed class InstallViewModelTests : IDisposable
         Assert.Equal(1, vm.CompletedCount);
     }
 
+    [Fact]
+    public async Task RestoreUsesLatestVersionAndNeverAcquiresLicenses()
+    {
+        var vm = CreateViewModel();
+        vm.UseSourceVersion = true;
+        vm.AcquireFreeLicenses = true;
+
+        await vm.StartRestoreAsync([App("a")], Target());
+
+        var request = Assert.Single(_store.Requests);
+        Assert.Null(request.ExternalVersionId);
+        Assert.False(request.AcquireLicense);
+        Assert.Equal(Flow.Restore, vm.Flow);
+    }
+
     private InstallViewModel CreateViewModel(DispatcherQueue? dispatcher = null) => new(
         new AppServices(_folder, new TransferRunner(_store, _devices)), _icons, dispatcher ?? new DispatcherQueue());
 
@@ -151,6 +167,7 @@ public sealed class InstallViewModelTests : IDisposable
     {
         Flow.Save => vm.StartSaveAsync(apps),
         Flow.InstallSaved => vm.StartInstallSavedAsync(apps.Select(app => SavedAppLibrary.Read(TestIpa.Create(_folder, app.BundleId))).ToList(), Target()),
+        Flow.Restore => vm.StartRestoreAsync(apps, Target()),
         _ => vm.StartAsync(apps, Target()),
     };
 
@@ -162,9 +179,13 @@ public sealed class InstallViewModelTests : IDisposable
     {
         public ConcurrentQueue<string> Downloads { get; } = new();
 
+        public ConcurrentQueue<DownloadRequest> Requests { get; } = new();
+
         public bool IsAvailable => true;
 
         public Task<IpatoolAccount?> GetAccountAsync(CancellationToken cancellationToken = default) => throw new NotSupportedException();
+
+        public Task<IReadOnlyList<OwnedApp>> GetOwnedAppsAsync(CancellationToken cancellationToken = default) => throw new NotSupportedException();
 
         public Task<LoginResult> LoginAsync(string email, string password, string? authCode, CancellationToken cancellationToken = default) => throw new NotSupportedException();
 
@@ -174,6 +195,7 @@ public sealed class InstallViewModelTests : IDisposable
         {
             cancellationToken.ThrowIfCancellationRequested();
             Downloads.Enqueue(request.BundleId);
+            Requests.Enqueue(request);
             var path = TestIpa.Create(Path.GetDirectoryName(request.OutputPath)!, request.BundleId);
             File.Move(path, request.OutputPath);
             return Task.FromResult(request.OutputPath);

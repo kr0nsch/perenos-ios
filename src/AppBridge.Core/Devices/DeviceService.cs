@@ -267,6 +267,7 @@ public sealed class DeviceService(string pairRecordsDirectory) : IDeviceService
         NoDeviceConnectedException or DeviceDisconnectedException or SocketException or IOException or ObjectDisposedException
             => new(DeviceErrorKind.Disconnected, "The iPhone was disconnected.", ex),
         InvalidDataException => new(DeviceErrorKind.InstallFailed, ex.Message, ex),
+        TimeoutException => new(DeviceErrorKind.InstallFailed, "The iPhone took too long to respond.", ex),
         _ => new(DeviceErrorKind.Unknown, ex.Message, ex),
     };
 

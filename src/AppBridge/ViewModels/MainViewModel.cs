@@ -31,10 +31,13 @@ public enum Flow
 
     /// <summary>New iPhone only: install apps saved on this PC.</summary>
     InstallSaved,
+
+    /// <summary>One iPhone: update or reinstall owned apps missing from the Russian storefront.</summary>
+    Restore,
 }
 
 /// <summary>
-/// The whole app: the start screen, then one of three short flows built from the same steps.
+/// The whole app: the start screen, then one of four short flows built from the same steps.
 /// Owns the shared footer (Back / primary button) so every step behaves the same way.
 /// </summary>
 public sealed partial class MainViewModel : ObservableObject
@@ -42,6 +45,7 @@ public sealed partial class MainViewModel : ObservableObject
     private static readonly WizardStep[] NowSteps = [WizardStep.Source, WizardStep.Apps, WizardStep.Target, WizardStep.Install];
     private static readonly WizardStep[] SaveSteps = [WizardStep.Source, WizardStep.Apps, WizardStep.Install];
     private static readonly WizardStep[] InstallSavedSteps = [WizardStep.Target, WizardStep.Apps, WizardStep.Install];
+    private static readonly WizardStep[] RestoreSteps = [WizardStep.Source, WizardStep.Apps, WizardStep.Install];
 
     public MainViewModel(AppServices services, DispatcherQueue dispatcher)
     {
@@ -49,6 +53,7 @@ public sealed partial class MainViewModel : ObservableObject
         Icons = new IconCache(services.IconsDirectory);
         Devices = new DeviceListViewModel(services.Watcher, services.Devices, dispatcher);
         Apps = new AppsViewModel(services.Devices, services.StorefrontScanner, Icons, dispatcher);
+        Restore = new RestoreAppsViewModel(services.Devices, services.RestorableAppScanner, Icons, dispatcher);
         Saved = new SavedAppsViewModel(services.Devices, Icons);
         Library = new LibraryViewModel(services);
         Account = new AccountViewModel(services.AppStore);
@@ -56,6 +61,7 @@ public sealed partial class MainViewModel : ObservableObject
 
         Devices.StateChanged += (_, _) => OnDevicesChanged();
         Apps.PropertyChanged += OnChildChanged;
+        Restore.PropertyChanged += OnChildChanged;
         Saved.PropertyChanged += OnChildChanged;
         Library.PropertyChanged += OnChildChanged;
         Account.PropertyChanged += OnChildChanged;
@@ -70,6 +76,8 @@ public sealed partial class MainViewModel : ObservableObject
     public DeviceListViewModel Devices { get; }
 
     public AppsViewModel Apps { get; }
+
+    public RestoreAppsViewModel Restore { get; }
 
     public SavedAppsViewModel Saved { get; }
 
@@ -112,6 +120,7 @@ public sealed partial class MainViewModel : ObservableObject
     {
         Flow.Save => SaveSteps,
         Flow.InstallSaved => InstallSavedSteps,
+        Flow.Restore => RestoreSteps,
         _ => NowSteps,
     };
 
@@ -125,6 +134,8 @@ public sealed partial class MainViewModel : ObservableObject
     public bool CanDownload => !IsToolMissing;
 
     public string NowSubtitle => IsToolMissing ? Loc.Get("Choice_ToolMissing") : Loc.Get("Start_NowSubtitle");
+
+    public string RestoreSubtitle => IsToolMissing ? Loc.Get("Choice_ToolMissing") : Loc.Get("Start_RestoreSubtitle");
 
     public string LaterSubtitle => Library.HasApps ? Loc.Plural("Start_SavedCount", Library.Count) : Loc.Get("Start_LaterSubtitle");
 
@@ -145,6 +156,7 @@ public sealed partial class MainViewModel : ObservableObject
     {
         (Flow.Save, WizardStep.Source) => Loc.Get("Old_Title"),
         (Flow.InstallSaved, WizardStep.Target) => Loc.Get("New_Title"),
+        (Flow.Restore, WizardStep.Source) => Loc.Get("Restore_DeviceTitle"),
         (_, WizardStep.Target) => Loc.Get("Target_Title"),
         _ => Loc.Get("Source_Title"),
     };
@@ -152,6 +164,7 @@ public sealed partial class MainViewModel : ObservableObject
     public string DeviceStepSubtitle => (Flow, Step) switch
     {
         (Flow.InstallSaved, WizardStep.Target) => Loc.Get("New_Subtitle"),
+        (Flow.Restore, WizardStep.Source) => Loc.Get("Restore_DeviceSubtitle"),
         (_, WizardStep.Target) => Loc.Get("Target_Subtitle"),
         _ => Loc.Get("Source_Subtitle"),
     };
@@ -165,23 +178,35 @@ public sealed partial class MainViewModel : ObservableObject
 
     // Apps step --------------------------------------------------------------------------
 
-    /// <summary>The apps on the source iPhone, or the apps saved on this PC when installing later.</summary>
-    public AppListViewModel AppList => Flow == Flow.InstallSaved ? Saved : Apps;
+    /// <summary>The apps on the source iPhone, saved on this PC, or owned in the purchase history.</summary>
+    public AppListViewModel AppList => Flow switch
+    {
+        Flow.InstallSaved => Saved,
+        Flow.Restore => Restore,
+        _ => Apps,
+    };
+
+    public string AppsTitle => Loc.Get(Flow == Flow.Restore ? "Restore_AppsTitle" : "Apps_Title.Text");
 
     public string AppsSubtitle => Flow switch
     {
         Flow.InstallSaved => Loc.Format("Saved_Subtitle", Target?.Name ?? "iPhone"),
         Flow.Save => Source is null ? "" : Loc.Format("Apps_SubtitleSave", Source.Name),
+        Flow.Restore => Loc.Format("Restore_AppsSubtitle", Source?.Name ?? "iPhone"),
         _ => Source is null ? "" : Loc.Format("Apps_Subtitle", Source.Name),
     };
 
-    public bool ShowStorefrontStatus => IsAppsStep && Flow != Flow.InstallSaved && Apps.ShowStorefrontStatus;
+    public bool ShowStorefrontStatus => IsAppsStep && Flow is Flow.Now or Flow.Save && Apps.ShowStorefrontStatus;
+
+    public bool ShowRestoreSignIn => IsAppsStep && Flow == Flow.Restore && !Account.IsSignedIn;
+
+    public bool ShowRestoreContent => !ShowRestoreSignIn;
 
     // Install step -----------------------------------------------------------------------
 
     private bool NeedsSignIn => Flow != Flow.InstallSaved;
 
-    private int SelectedCount => Flow == Flow.InstallSaved ? Saved.SelectedCount : Apps.SelectedCount;
+    private int SelectedCount => Flow == Flow.InstallSaved ? Saved.SelectedCount : AppList.SelectedCount;
 
     private bool AllDone => Install.FailedCount == 0 && !Install.WasCanceled;
 
@@ -245,13 +270,17 @@ public sealed partial class MainViewModel : ObservableObject
 
     public bool InstallGlyphIsNormal => !InstallGlyphIsSuccess && !InstallGlyphIsWarning;
 
-    public bool ShowSignInPanel => IsInstallStep && Install.IsReady && NeedsSignIn && !Account.IsSignedIn;
+    public bool ShowSignInPanel => ShowRestoreSignIn || IsInstallStep && Install.IsReady && NeedsSignIn && !Account.IsSignedIn;
 
     public bool ShowInstallSummary => IsInstallStep && Install.IsReady && (!NeedsSignIn || Account.IsSignedIn);
 
     public bool ShowOptions => Flow != Flow.InstallSaved;
 
-    public bool ShowKeepOption => Flow == Flow.Now;
+    public bool ShowVersionOption => Flow is Flow.Now or Flow.Save;
+
+    public bool ShowFreeOption => Flow is Flow.Now or Flow.Save;
+
+    public bool ShowKeepOption => Flow is Flow.Now or Flow.Restore;
 
     public bool ShowSummaryTo => Flow != Flow.Save;
 
@@ -259,7 +288,12 @@ public sealed partial class MainViewModel : ObservableObject
 
     public bool ShowSignOut => NeedsSignIn;
 
-    public string SummaryFrom => Flow == Flow.InstallSaved ? Loc.Get("Summary_ThisPc") : Source?.Name ?? "—";
+    public string SummaryFrom => Flow switch
+    {
+        Flow.InstallSaved => Loc.Get("Summary_ThisPc"),
+        Flow.Restore => Loc.Get("Summary_Purchases"),
+        _ => Source?.Name ?? "—",
+    };
 
     public string SummaryTo => Target?.Name ?? "—";
 
@@ -278,6 +312,7 @@ public sealed partial class MainViewModel : ObservableObject
     {
         Flow.InstallSaved => Loc.Format("InstallSaved_Footnote", SavedAccountPhrase),
         Flow.Save => Loc.Get("Save_Footnote"),
+        Flow.Restore => Loc.Get("Restore_InstallFootnote"),
         _ => Loc.Get("Now_Footnote"),
     };
 
@@ -319,7 +354,7 @@ public sealed partial class MainViewModel : ObservableObject
     public bool IsPrimaryEnabled => Step switch
     {
         WizardStep.Source => Source?.IsReady == true,
-        WizardStep.Apps => AppList.HasSelection && !AppList.IsLoading,
+        WizardStep.Apps => AppList.HasSelection && !AppList.IsLoading && (Flow != Flow.Restore || Account.IsSignedIn),
         WizardStep.Target => Target?.IsReady == true && (Flow == Flow.InstallSaved || !IsSource(Target)),
         WizardStep.Install => Install.State != InstallState.Ready || Flow switch
         {
@@ -340,6 +375,7 @@ public sealed partial class MainViewModel : ObservableObject
     public string FooterHint => Step switch
     {
         WizardStep.Start => Loc.Get("Start_Footer"),
+        WizardStep.Apps when ShowRestoreSignIn => "",
         WizardStep.Apps => AppList.SelectionSummary,
         WizardStep.Target when Flow == Flow.Now && Target is not null && IsSource(Target) => Loc.Get("Target_SameDevice"),
         WizardStep.Install when Install.IsReady && Flow != Flow.Save && Target?.IsReady != true => Loc.Get("Install_TargetMissing"),
@@ -356,6 +392,16 @@ public sealed partial class MainViewModel : ObservableObject
         if (IsToolMissing)
             return;
         Begin(Flow.Now, WizardStep.Source);
+    }
+
+    [RelayCommand]
+    private void RestoreApps()
+    {
+        if (IsToolMissing)
+            return;
+        Source = null;
+        Target = null;
+        Begin(Flow.Restore, WizardStep.Source);
     }
 
     [RelayCommand]
@@ -395,11 +441,19 @@ public sealed partial class MainViewModel : ObservableObject
         {
             case WizardStep.Source when Source?.IsReady == true:
                 Step = WizardStep.Apps;
-                var load = Apps.LoadAsync(Source);
-                if (Flow == Flow.Save)
-                    await Library.RefreshAsync();
-                await load;
-                Apps.ShowSaved(Flow == Flow.Save ? Library.Scan : null);
+                if (Flow == Flow.Restore)
+                {
+                    Target = Source;
+                    await LoadRestoreAppsAsync();
+                }
+                else
+                {
+                    var load = Apps.LoadAsync(Source);
+                    if (Flow == Flow.Save)
+                        await Library.RefreshAsync();
+                    await load;
+                    Apps.ShowSaved(Flow == Flow.Save ? Library.Scan : null);
+                }
                 break;
             case WizardStep.Target when Flow == Flow.InstallSaved && Target is not null:
                 Step = WizardStep.Apps;
@@ -423,6 +477,9 @@ public sealed partial class MainViewModel : ObservableObject
                 break;
             case WizardStep.Install when Flow == Flow.InstallSaved && Target is not null:
                 await Install.StartInstallSavedAsync(Saved.SelectedApps, Target);
+                break;
+            case WizardStep.Install when Flow == Flow.Restore && Target is not null:
+                await Install.StartRestoreAsync(Restore.SelectedApps, Target);
                 break;
             case WizardStep.Install when Target is not null:
                 await Install.StartAsync(Apps.SelectedApps, Target);
@@ -453,7 +510,7 @@ public sealed partial class MainViewModel : ObservableObject
         Step = (Flow, Step) switch
         {
             (_, WizardStep.Later) => WizardStep.Start,
-            (Flow.Now, WizardStep.Source) => WizardStep.Start,
+            (Flow.Now, WizardStep.Source) or (Flow.Restore, WizardStep.Source) => WizardStep.Start,
             (Flow.Save, WizardStep.Source) or (Flow.InstallSaved, WizardStep.Target) => WizardStep.Later,
             (Flow.InstallSaved, WizardStep.Apps) => WizardStep.Target,
             (_, WizardStep.Apps) => WizardStep.Source,
@@ -473,7 +530,11 @@ public sealed partial class MainViewModel : ObservableObject
         if (device is null || !device.IsReady)
             return;
         if (IsSourceStep)
+        {
             Source = device;
+            if (Flow == Flow.Restore)
+                Target = device;
+        }
         else if (IsTargetStep && (Flow == Flow.InstallSaved || !IsSource(device)))
             Target = device;
         RefreshAll();
@@ -484,6 +545,8 @@ public sealed partial class MainViewModel : ObservableObject
     {
         if (Flow == Flow.InstallSaved)
             await LoadSavedAsync();
+        else if (Flow == Flow.Restore)
+            await LoadRestoreAppsAsync();
         else if (Source is not null)
         {
             await Apps.LoadAsync(Source);
@@ -495,6 +558,7 @@ public sealed partial class MainViewModel : ObservableObject
     {
         Install.Reset();
         Apps.ClearSelection();
+        Restore.Reset();
         Saved.Reset();
         Flow = flow;
         Step = first;
@@ -502,13 +566,14 @@ public sealed partial class MainViewModel : ObservableObject
         RefreshAll();
     }
 
-    /// <summary>"Done": Transfer Now returns to the start screen, the later flows to their hub.</summary>
+    /// <summary>"Done": the now and restore flows return to the start screen, the later flows to their hub.</summary>
     private void Finish()
     {
         Install.Reset();
         Apps.ClearSelection();
+        Restore.Reset();
         Saved.Reset();
-        Step = Flow == Flow.Now ? WizardStep.Start : WizardStep.Later;
+        Step = Flow is Flow.Now or Flow.Restore ? WizardStep.Start : WizardStep.Later;
         _ = Library.RefreshAsync();
     }
 
@@ -523,6 +588,16 @@ public sealed partial class MainViewModel : ObservableObject
         if (Step != WizardStep.Apps || Flow != Flow.InstallSaved)
             return;
         await Saved.LoadAsync(target, Library.Scan, Library.Folder);
+        RefreshAll();
+    }
+
+    private async Task LoadRestoreAppsAsync()
+    {
+        if (Flow != Flow.Restore || Step != WizardStep.Apps || Source is null || !Account.IsSignedIn)
+            return;
+        await Restore.LoadAsync(Source);
+        if (Restore.NeedsSignIn)
+            Account.MarkSessionExpired();
         RefreshAll();
     }
 
@@ -561,7 +636,11 @@ public sealed partial class MainViewModel : ObservableObject
             Target = back;
         if (Source is null && Step is WizardStep.Apps or WizardStep.Install && _sourceUdid is not null && Flow != Flow.InstallSaved
             && Devices.Find(_sourceUdid) is { IsReady: true } again)
+        {
             Source = again;
+            if (Flow == Flow.Restore)
+                Target = again;
+        }
         AutoSelect();
         RefreshAll();
     }
@@ -594,20 +673,29 @@ public sealed partial class MainViewModel : ObservableObject
     {
         if (sender == Install && e.PropertyName == nameof(InstallViewModel.State) && Install.IsFinished && Install.NeedsSignIn)
             Account.MarkSessionExpired();
-        if (sender == Account && e.PropertyName == nameof(AccountViewModel.State) && IsAppsStep && Flow != Flow.InstallSaved)
-            Apps.CheckStorefront();
+        if (sender == Account && e.PropertyName == nameof(AccountViewModel.State) && IsAppsStep)
+        {
+            if (Flow is Flow.Now or Flow.Save)
+                Apps.CheckStorefront();
+            else if (Flow == Flow.Restore)
+            {
+                Restore.Reset();
+                if (Account.IsSignedIn)
+                    _ = LoadRestoreAppsAsync();
+            }
+        }
         RefreshAll();
     }
 
     private static readonly string[] Derived =
     [
         nameof(IsStartStep), nameof(IsLaterStep), nameof(IsSourceStep), nameof(IsAppsStep), nameof(IsTargetStep), nameof(IsInstallStep),
-        nameof(IsDeviceStep), nameof(AppList), nameof(DotCount), nameof(DotIndex), nameof(CanDownload), nameof(NowSubtitle), nameof(LaterSubtitle), nameof(LaterSubtitleIsAccent),
+        nameof(IsDeviceStep), nameof(AppList), nameof(DotCount), nameof(DotIndex), nameof(CanDownload), nameof(NowSubtitle), nameof(RestoreSubtitle), nameof(LaterSubtitle), nameof(LaterSubtitleIsAccent),
         nameof(SaveSubtitle), nameof(CanInstallSaved), nameof(InstallSavedSubtitle), nameof(FolderDisplay),
-        nameof(DeviceStepTitle), nameof(DeviceStepSubtitle), nameof(DeviceStepTone), nameof(AppsSubtitle), nameof(ShowStorefrontStatus),
+        nameof(DeviceStepTitle), nameof(DeviceStepSubtitle), nameof(DeviceStepTone), nameof(AppsTitle), nameof(AppsSubtitle), nameof(ShowStorefrontStatus), nameof(ShowRestoreSignIn), nameof(ShowRestoreContent),
         nameof(InstallTitle), nameof(InstallSubtitle), nameof(InstallGlyph), nameof(InstallTone), nameof(InstallRingProgress),
         nameof(InstallGlyphIsSuccess), nameof(InstallGlyphIsWarning), nameof(InstallGlyphIsNormal),
-        nameof(ShowSignInPanel), nameof(ShowInstallSummary), nameof(ShowOptions), nameof(ShowKeepOption), nameof(ShowSummaryTo),
+        nameof(ShowSignInPanel), nameof(ShowInstallSummary), nameof(ShowOptions), nameof(ShowVersionOption), nameof(ShowFreeOption), nameof(ShowKeepOption), nameof(ShowSummaryTo),
         nameof(ShowSummaryFolder), nameof(ShowSignOut), nameof(SummaryFrom), nameof(SummaryTo), nameof(SummaryApps), nameof(SummaryAccount),
         nameof(InstallFootnote), nameof(ShowSaveDoneCard), nameof(SaveDoneStep1), nameof(SaveDoneFootnote), nameof(ShowAccountCard),
         nameof(AccountCardText), nameof(ShowBack), nameof(PrimaryText), nameof(IsPrimaryEnabled), nameof(ShowPrimary),

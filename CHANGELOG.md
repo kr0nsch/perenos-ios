@@ -4,6 +4,40 @@ All notable changes to Perenos (formerly AppBridge) are listed here. The format 
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.4.0] - 2026-11-08
+
+### Добавлено
+- Новый сценарий **«Обновить и восстановить»** для одного iPhone: вход в аккаунт покупателя, чтение всех страниц истории покупок iPhone и проверка текущей российской витрины.
+- В список попадают приложения, недоступные в российском App Store: установленные можно обновить, а отсутствующие на устройстве — установить заново, если Apple ещё выдаёт их аккаунту. Используются последние доступные версии; новые приложения не приобретаются.
+- При смене аккаунта история загружается заново. Неполный или противоречивый ответ истории не выдаётся за полный список.
+
+### Исправлено
+- Увеличен до 10 минут тайм-аут ответа `installation_proxy`: большие официальные IPA больше не прерываются преждевременно во время установки на iPhone.
+- Тайм-аут установки теперь отображается как ошибка установки, а не как неизвестный сбой.
+
+### Проверено
+- 132 автоматических теста, Release-сборка и полный демонстрационный сценарий восстановления.
+- На iPhone 16 Pro с iOS 27.2 успешно установлены 19 из 20 последних версий приложений, недоступных в российской витрине. Red Shield VPN не обновлён: iPhone не ответил на установку за 10 минут.
+
+### Известное ограничение
+- На тестовой учётной записи Apple отклоняет запрос полной истории с `DAAP 401`. В этом случае Perenos показывает ошибку и не подменяет историю списком установленных приложений. Восстановление таких покупок, удалённых с устройства, требует дальнейшей работы.
+
+### Added
+- New **Update & Restore** flow for one iPhone: purchaser sign-in, complete paged iPhone purchase history and a check against the current Russian storefront.
+- Updates installed apps or reinstalls owned apps missing from the device when Apple still supplies them, always using the latest available versions and never acquiring new apps.
+- Reloads history after account changes and rejects incomplete or inconsistent purchase-history responses.
+
+### Fixed
+- Increases the `installation_proxy` response timeout to ten minutes so large official IPA packages can finish installing.
+- Reports installation timeouts as installation failures instead of unknown errors.
+
+### Verification and known limitations
+- 132 automated tests, a Release build and the complete restoration demo pass.
+- On an iPhone 16 Pro running iOS 27.2, 19 of 20 unavailable apps were installed at their latest versions. Red Shield VPN remained unchanged because the iPhone did not answer within ten minutes.
+- Apple rejected the test account's complete purchase-history request with `DAAP 401`. Perenos reports this without substituting installed apps for account history; restoring purchases removed from that device remains unresolved.
+
+[1.4.0]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.4.0
+
 ## [1.3.1] - 2026-11-08
 
 ### Исправлено

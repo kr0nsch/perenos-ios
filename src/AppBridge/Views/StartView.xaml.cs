@@ -3,7 +3,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace AppBridge.Views;
 
-/// <summary>The first screen: transfer now (both iPhones here) or later (save apps on this PC).</summary>
+/// <summary>The first screen: transfer now, update and restore on one iPhone, or transfer later.</summary>
 public sealed partial class StartView : UserControl
 {
     public StartView(MainViewModel viewModel)

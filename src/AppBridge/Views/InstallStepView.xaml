@@ -88,7 +88,7 @@
                      Visibility="{x:Bind ViewModel.ShowOptions, Mode=OneWay}" />
           <Border Style="{StaticResource GroupCardStyle}" Padding="16,0" Visibility="{x:Bind ViewModel.ShowOptions, Mode=OneWay}">
             <StackPanel>
-              <Grid MinHeight="52" ColumnSpacing="16">
+              <Grid MinHeight="52" ColumnSpacing="16" Visibility="{x:Bind ViewModel.ShowVersionOption, Mode=OneWay}">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="*" />
                   <ColumnDefinition Width="Auto" />
@@ -107,8 +107,8 @@
                   </Grid>
                 </Border>
               </Grid>
-              <Rectangle Style="{StaticResource SeparatorStyle}" Margin="0,0,-16,0" />
-              <Grid MinHeight="52" ColumnSpacing="16">
+              <Rectangle Style="{StaticResource SeparatorStyle}" Margin="0,0,-16,0" Visibility="{x:Bind ViewModel.ShowFreeOption, Mode=OneWay}" />
+              <Grid MinHeight="52" ColumnSpacing="16" Visibility="{x:Bind ViewModel.ShowFreeOption, Mode=OneWay}">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="*" />
                   <ColumnDefinition Width="Auto" />

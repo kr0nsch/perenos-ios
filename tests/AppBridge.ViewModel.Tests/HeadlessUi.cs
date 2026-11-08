@@ -27,7 +27,7 @@ namespace Microsoft.UI.Xaml.Media
 
 namespace AppBridge.ViewModels
 {
-    public enum Flow { Now, Save, InstallSaved }
+    public enum Flow { Now, Save, InstallSaved, Restore }
 }
 
 namespace AppBridge.Services

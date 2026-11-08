@@ -65,6 +65,7 @@ public sealed class AppsViewModelTests
         Assert.True(vm.IsStorefrontScanning);
 
         vm.Reset();
+        await catalog.Cancellation.Task.WaitAsync(TimeSpan.FromSeconds(2));
 
         Assert.False(vm.IsStorefrontScanning);
         Assert.False(vm.ShowStorefrontStatus);
@@ -126,6 +127,8 @@ public sealed class AppsViewModelTests
 
         public Task<IpatoolAccount?> GetAccountAsync(CancellationToken cancellationToken = default) => Task.FromResult(Account);
 
+        public Task<IReadOnlyList<OwnedApp>> GetOwnedAppsAsync(CancellationToken cancellationToken = default) => throw new NotSupportedException();
+
         public Task<LoginResult> LoginAsync(string email, string password, string? authCode, CancellationToken cancellationToken = default) =>
             throw new NotSupportedException();
 
@@ -140,6 +143,8 @@ public sealed class AppsViewModelTests
         public int Calls { get; private set; }
 
         public bool WasCanceled { get; private set; }
+
+        public TaskCompletionSource Cancellation { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
 
         public bool WaitForCancellation { get; init; }
 
@@ -162,6 +167,7 @@ public sealed class AppsViewModelTests
                 catch (OperationCanceledException)
                 {
                     WasCanceled = true;
+                    Cancellation.TrySetResult();
                     throw;
                 }
             }

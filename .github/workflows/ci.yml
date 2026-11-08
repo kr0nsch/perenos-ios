@@ -26,7 +26,12 @@ jobs:
         with:
           global-json-file: global.json
 
-      - name: Fetch ipatool (checksum-verified)
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26.5"
+          cache: false
+
+      - name: Build ipatool (checksum-verified source)
         shell: pwsh
         run: ./build/Get-Ipatool.ps1 -RuntimeIdentifier win-x64
 

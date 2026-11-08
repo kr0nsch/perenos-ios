@@ -21,8 +21,8 @@ reproduce it. You should get a reply within a week.
   (or the portable `Data` folder).
 - Diagnostic logs never contain passwords, verification codes or passphrases, and device
   identifiers are shortened.
-- The bundled ipatool binary is downloaded from its official GitHub release and checked
-  against a pinned SHA-256 checksum (`build/ipatool.json`) during every build.
+- The bundled ipatool binary is built from an upstream source snapshot pinned by full commit
+  and SHA-256 checksum (`build/ipatool.json`) with a fixed Go toolchain during every build.
 - Release files are built by GitHub Actions from the tagged commit and carry a Sigstore build
   provenance attestation: `gh attestation verify <file> -R kr0nsch/perenos-ios`.
 - Authenticode signing of the application binaries and installer turns on automatically

@@ -102,10 +102,10 @@ try {
         status: 200,
         contentType: 'application/json',
         body: JSON.stringify({
-          tag_name: 'v1.3.0', draft: false, prerelease: false,
+          tag_name: 'v1.3.1', draft: false, prerelease: false,
           assets: [
-            { name: 'Perenos-1.3.0-setup-x64.exe', size: 80 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.3.0/Perenos-1.3.0-setup-x64.exe' },
-            { name: 'Perenos-1.3.0-portable-x64.zip', size: 75 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.3.0/Perenos-1.3.0-portable-x64.zip' },
+            { name: 'Perenos-1.3.1-setup-x64.exe', size: 80 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.3.1/Perenos-1.3.1-setup-x64.exe' },
+            { name: 'Perenos-1.3.1-portable-x64.zip', size: 75 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.3.1/Perenos-1.3.1-portable-x64.zip' },
           ],
         }),
       }));
@@ -152,9 +152,9 @@ try {
       await faq.locator('summary').click();
       assert.equal(await faq.getAttribute('open'), null);
       await page.waitForFunction(() => document.querySelector('[data-download="installer"]').href.includes('/releases/download/'));
-      assert.ok((await page.locator('[data-download="installer"]').getAttribute('href')).endsWith('Perenos-1.3.0-setup-x64.exe'));
-      assert.ok((await page.locator('[data-download="portable"]').getAttribute('href')).endsWith('Perenos-1.3.0-portable-x64.zip'));
-      assert.match(await page.locator('#release-label').textContent(), /1\.3\.0/);
+      assert.ok((await page.locator('[data-download="installer"]').getAttribute('href')).endsWith('Perenos-1.3.1-setup-x64.exe'));
+      assert.ok((await page.locator('[data-download="portable"]').getAttribute('href')).endsWith('Perenos-1.3.1-portable-x64.zip'));
+      assert.match(await page.locator('#release-label').textContent(), /1\.3\.1/);
 
       for (const selector of ['.hero-window img', '.availability-figure img', '.gallery-grid img']) {
         const images = page.locator(selector);

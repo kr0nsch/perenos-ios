@@ -4,6 +4,24 @@ All notable changes to Perenos (formerly AppBridge) are listed here. The format 
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.3.1] - 2026-11-08
+
+### Исправлено
+- Обновлён встроенный ipatool до upstream-коммита `001d8898`: восстановлены вход в Apple Account и скачивание приложений из App Store, включая повторное скачивание снятых с публикации приложений, если Apple выдаёт их аккаунту.
+- Исправленная версия собирается из проверенного снапшота исходников ipatool с закреплёнными коммитом, toolchain Go и SHA-256.
+
+### Важно
+- При первом входе ipatool однократно загружает и кэширует компоненты Apple для локальной проверки подлинности (около 200 МБ на диске). Это может занять несколько минут.
+
+### Fixed
+- Updated bundled ipatool to upstream commit `001d8898`, restoring Apple Account sign-in and App Store downloads, including redownloads of delisted apps when Apple still grants the account access.
+- The fixed version is built from a checksum-verified source snapshot with a pinned commit, Go toolchain and SHA-256.
+
+### Note
+- On first sign-in, ipatool downloads and caches Apple components for local authentication (approximately 200 MB on disk). This can take several minutes.
+
+[1.3.1]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.3.1
+
 ## [1.3.0] - 2026-11-06
 
 ### Добавлено

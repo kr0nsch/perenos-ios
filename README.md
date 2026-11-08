@@ -168,6 +168,8 @@ gh attestation verify <скачанный-файл> -R kr0nsch/perenos-ios
 
 Вход выполняет встроенный инструмент с открытым кодом **[ipatool](https://github.com/majd/ipatool)**. Он обращается к Apple; «Перенос» не сохраняет ваш пароль. Сессия зашифрована, а её ключ защищён Windows DPAPI для вашего пользователя Windows.
 
+При первом входе ipatool однократно загружает и кэширует компоненты Apple для локальной проверки подлинности (около 200 МБ на диске). Подготовка может занять несколько минут.
+
 У проекта нет своего сервера, рекламы и телеметрии. Приложения остаются привязанными к аккаунту покупателя; защита FairPlay не обходится. `.ipa` может содержать адрес почты покупателя — храните эти файлы приватно.
 
 Подробнее о хранении секретов, видимости пароля процессам текущего пользователя во время входа и сообщениях об уязвимостях — в **[политике безопасности](SECURITY.md)**.
@@ -231,7 +233,7 @@ gh attestation verify <скачанный-файл> -R kr0nsch/perenos-ios
 <details>
 <summary><b>Собрать и запустить из исходников</b></summary>
 
-Нужны Windows и [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0). Внутренние имена проектов AppBridge сохранены.
+Нужны Windows, [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) и [Go 1.26.5](https://go.dev/dl/go1.26.5.windows-amd64.zip) для сборки встроенного ipatool. Внутренние имена проектов AppBridge сохранены.
 
 ```powershell
 git clone https://github.com/kr0nsch/perenos-ios.git
@@ -246,7 +248,7 @@ dotnet run --project src/AppBridge -p:Platform=x64
 dotnet run --project src/AppBridge -p:Platform=x64 -- --demo
 ```
 
-`--demo-saved` добавляет демонстрационную библиотеку. Для сборки установщика нужен [Inno Setup 6](https://jrsoftware.org/isinfo.php): `./build/build.ps1 -Version 1.3.0`. Результат — в `artifacts/release`.
+`--demo-saved` добавляет демонстрационную библиотеку. Для сборки установщика нужен [Inno Setup 6](https://jrsoftware.org/isinfo.php): `./build/build.ps1 -Version 1.3.1`. Результат — в `artifacts/release`.
 
 Основа проекта: [WinUI 3](https://github.com/microsoft/microsoft-ui-xaml), [Netimobiledevice](https://github.com/artehe/Netimobiledevice) и [ipatool](https://github.com/majd/ipatool). [Лицензии зависимостей](THIRD-PARTY-NOTICES.txt) · [История изменений](CHANGELOG.md) · [План развития](docs/DEVELOPMENT.md).
 

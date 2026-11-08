@@ -29,6 +29,11 @@ jobs:
         with:
           global-json-file: global.json
 
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26.5"
+          cache: false
+
       - name: Determine version
         id: version
         shell: pwsh

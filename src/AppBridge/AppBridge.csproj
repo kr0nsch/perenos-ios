@@ -55,7 +55,7 @@
     <TrimmerRootAssembly Include="System.Reactive" />
   </ItemGroup>
 
-  <!-- ipatool is downloaded and checksum-verified by build\Get-Ipatool.ps1 (never committed). -->
+  <!-- ipatool is built from a checksum-verified source snapshot by build\Get-Ipatool.ps1 (never committed). -->
   <PropertyGroup>
     <IpatoolRid Condition="'$(RuntimeIdentifier)' != ''">$(RuntimeIdentifier)</IpatoolRid>
     <IpatoolRid Condition="'$(IpatoolRid)' == '' and '$(Platform)' == 'ARM64'">win-arm64</IpatoolRid>

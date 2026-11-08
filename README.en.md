@@ -168,6 +168,8 @@ Choose **Transfer Later → Save Apps**, connect the old iPhone, select the apps
 
 Sign-in uses the bundled, open-source **[ipatool](https://github.com/majd/ipatool)**. It authenticates with Apple; Perenos does not save your password. The session is encrypted, and Windows DPAPI protects its key for your Windows user.
 
+On first sign-in, ipatool downloads and caches Apple components for local authentication (approximately 200 MB on disk). This preparation can take several minutes.
+
 The project has no service backend, ads or telemetry. Apps remain tied to the purchasing account; FairPlay protection is not bypassed. `.ipa` files may contain the purchaser's email address, so keep them private.
 
 See the **[security policy](SECURITY.md)** for details on secret storage, password visibility to processes running as your Windows user during sign-in, and vulnerability reporting.
@@ -231,7 +233,7 @@ Help by reporting a bug, testing on your iPhones, improving translations or cont
 <details>
 <summary><b>Build and run from source</b></summary>
 
-You need Windows and the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0). Internal AppBridge project names are preserved.
+You need Windows, the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) and [Go 1.26.5](https://go.dev/dl/go1.26.5.windows-amd64.zip) to build the bundled ipatool. Internal AppBridge project names are preserved.
 
 ```powershell
 git clone https://github.com/kr0nsch/perenos-ios.git
@@ -246,7 +248,7 @@ dotnet run --project src/AppBridge -p:Platform=x64
 dotnet run --project src/AppBridge -p:Platform=x64 -- --demo
 ```
 
-`--demo-saved` adds a simulated saved-app library. Building the installer requires [Inno Setup 6](https://jrsoftware.org/isinfo.php): `./build/build.ps1 -Version 1.3.0`. Output goes to `artifacts/release`.
+`--demo-saved` adds a simulated saved-app library. Building the installer requires [Inno Setup 6](https://jrsoftware.org/isinfo.php): `./build/build.ps1 -Version 1.3.1`. Output goes to `artifacts/release`.
 
 Built with [WinUI 3](https://github.com/microsoft/microsoft-ui-xaml), [Netimobiledevice](https://github.com/artehe/Netimobiledevice) and [ipatool](https://github.com/majd/ipatool). [Dependency licenses](THIRD-PARTY-NOTICES.txt) · [Changelog](CHANGELOG.md) · [Development priorities](docs/DEVELOPMENT.md).
 

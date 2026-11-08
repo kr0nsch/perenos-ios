@@ -5,8 +5,9 @@ Thanks for helping improve Perenos (Перенос)!
 ## Getting started
 
 1. On Windows, clone `https://github.com/kr0nsch/perenos-ios.git` and open the repository folder.
-2. Install the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0).
-3. Run `./build/Get-Ipatool.ps1` once to fetch the pinned ipatool binary.
+2. Install the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) and
+   [Go 1.26.5](https://go.dev/dl/go1.26.5.windows-amd64.zip).
+3. Run `./build/Get-Ipatool.ps1` once to build the checksum-verified ipatool source snapshot.
 4. Build and run: `dotnet run --project src/AppBridge -p:Platform=x64`.
 5. Run both suites: `dotnet test tests/AppBridge.Core.Tests` and
    `dotnet test tests/AppBridge.ViewModel.Tests`.

@@ -1,8 +1,38 @@
 # Changelog
 
-All notable changes to Perenos (formerly AppBridge) are listed here. The format follows
+All notable changes to Perenos are listed here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
+
+## [1.6.0] - 2026-11-10
+
+### Добавлено
+- Понятная навигация: подписанные этапы и прогресс, «Назад» слева, основное действие справа, явные названия сценариев и текстовая кнопка настроек.
+- Отдельные меню фильтров и сортировки вместо переключения по кругу. Кнопка «Выбрать видимые» действует только на текущий фильтр и поисковую выдачу.
+- Полное переименование в Perenos: solution, проекты, пространства имён, ресурсы, установщик, логи и пути данных.
+- Автоматическая миграция настроек, зашифрованной сессии, записей доверия iPhone и библиотеки. Существующие файлы не перезаписываются, пользовательская папка загрузок не перемещается.
+
+### Изменено
+- Встроенный ipatool обновлён до `2.8.0+e0e2908`: официальный v2.8.0 и пять последующих upstream-коммитов с улучшением входа и параллельным скачиванием больших IPA.
+- Коммит и SHA-256 архива закреплены; `go generate ./...` и `go test ./...` прошли. История из 206 покупок, получение версий и реальное скачивание VK Музыки 8.30.1 проверены без установки на устройство.
+
+### Проверено
+- 143 автоматических теста, Release-сборки x64 и ARM64, полный демонстрационный сценарий на русском и английском в светлой и тёмной темах, браузерные проверки пяти размеров экрана и режима без JavaScript.
+- Перенос установки проверен Inno Setup на изолированных папках: прежняя папка переименовывается, существующая новая не перезаписывается. Реальная установка и данные пользователя не затрагиваются.
+
+### Added
+- Clear navigation with labeled steps, progress, Back on the left, the primary action on the right, task-based flow names and a labeled Settings button.
+- Explicit filter and sort menus instead of cycling. Select Visible applies only to the current filter and search results.
+- Complete Perenos renaming across the solution, projects, namespaces, resources, installer, logs and data paths.
+- Automatic migration of settings, encrypted sessions, iPhone pair records and the app library. Existing files are preserved, and custom download folders are not moved.
+
+### Changed
+- Updated bundled ipatool to `2.8.0+e0e2908`: the official v2.8.0 plus five verified upstream commits improving sign-in and parallel downloads of large IPA files.
+- Pinned the commit and archive SHA-256; `go generate ./...` and `go test ./...` pass. Verified 206 purchases, version lookup and a real VK Music 8.30.1 download without installing it on a device.
+
+### Verification
+- 143 automated tests, x64 and ARM64 Release builds, the complete demo in Russian and English, light and dark themes, browser checks at five viewport sizes and with JavaScript disabled.
+- Inno Setup migration checks on isolated folders: the previous installation is renamed, while an existing new installation is preserved. The real installation and user data are not touched.
 
 ## [1.5.0] - 2026-11-08
 
@@ -48,6 +78,7 @@ All notable changes to Perenos (formerly AppBridge) are listed here. The format 
 - On an iPhone 17 running iOS 27.2, retrieved 206 account purchases and installed Avito, VK, VK Video, Mail.ru Mail and Gazprombank's Digital Safe. Sber was already current. The latest queue installed 95 updates, found 18 apps current and encountered one device-response timeout.
 - Installation is confirmed, but first launch and operation without any Apple Account on the device have not been verified. Compatibility with every iPhone, iOS version and app is not guaranteed.
 
+[1.6.0]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.6.0
 [1.5.0]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.5.0
 
 ## [1.4.0] - 2026-11-08
@@ -126,16 +157,16 @@ All notable changes to Perenos (formerly AppBridge) are listed here. The format 
 
 ## [1.2.0] - 2026-11-03
 
-### Новое имя — «Перенос»
-- AppBridge теперь называется «Перенос» (Perenos). Репозиторий: `kr0nsch/perenos-ios`.
+### Имя «Перенос»
+- Версия 1.2.0 представила текущее название «Перенос» (Perenos). Репозиторий: `kr0nsch/perenos-ios`.
 - Обновлены название в интерфейсе, установщик, ярлыки и имена файлов релиза. Запуск программы — через `Perenos.exe`.
 - Установщик обновляет прежнюю установку. Настройки, библиотека приложений и зашифрованная сессия Apple Account используют прежние папки и остаются совместимыми.
 - Новый README: обложка для светлой и тёмной темы, два сценария переноса, галерея, быстрый старт и ответы на вопросы. Основной язык — русский.
 
 ### Changed
-- Renamed the product to Perenos / «Перенос» and the repository to `perenos-ios`.
+- Introduced the Perenos name and moved the repository to `perenos-ios`.
 - Release packages now use `Perenos-<version>-setup-x64.exe` and `Perenos-<version>-portable-x64.zip`.
-- Preserved the installer identity, existing data folders and encrypted account keys for upgrades from AppBridge.
+- Preserved the installer identity, existing data folders and encrypted account keys for upgrades.
 - Redesigned the Russian and English READMEs with editable SVG covers and theme-aware media.
 
 [1.2.0]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.2.0
@@ -160,7 +191,7 @@ All notable changes to Perenos (formerly AppBridge) are listed here. The format 
 - The Russian main README and the separate English README have a shorter quick start and clearer requirements and transfer limits.
 - Added forms for compatibility reports and feature requests, plus contributor development priorities.
 
-[1.1.1]: https://github.com/kr0nsch/AppBridge/releases/tag/v1.1.1
+[1.1.1]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.1.1
 
 ## [1.1.0] - 2026-10-27
 
@@ -170,16 +201,16 @@ All notable changes to Perenos (formerly AppBridge) are listed here. The format 
   - **Save Apps** downloads the apps from the old iPhone to this PC (the downloads folder).
   - **Install on New iPhone** installs saved apps over USB later, without signing in to the App Store on the PC.
 - Saved apps are listed with their icons and home-screen names, including `.ipa` files kept by 1.0 or copied into the folder.
-  - For each app, AppBridge picks the newest saved version that the new iPhone can run.
+  - For each app, Perenos picks the newest saved version that the new iPhone can run.
   - Apps the iPhone can't run (iOS too old, iPad only) are listed separately with the reason.
   - Apps already on the iPhone are marked and left unticked; older installed versions are updated.
 - Saved files get readable names such as `Telegram 12.1.ipa`, and different versions of an app are kept side by side.
 - Icons read from an iPhone are cached, so saved apps keep them after the phone is unplugged.
 
 ### Changed
-- AppBridge opens on the start screen. Back from the first step and Done return to it.
+- Perenos opens on the start screen. Back from the first step and Done return to it.
 
-[1.1.0]: https://github.com/kr0nsch/AppBridge/releases/tag/v1.1.0
+[1.1.0]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.1.0
 
 ## [1.0.0] - 2026-10-26
 
@@ -198,4 +229,4 @@ First release of the Windows app.
 ### Changed
 - The original Python/Tkinter prototype moved to `legacy/python`.
 
-[1.0.0]: https://github.com/kr0nsch/AppBridge/releases/tag/v1.0.0
+[1.0.0]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.0.0

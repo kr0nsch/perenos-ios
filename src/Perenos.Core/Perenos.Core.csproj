@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <RootNamespace>Perenos.Core</RootNamespace>
+    <IsTrimmable>true</IsTrimmable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Perenos.Core.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\catalog\russian-app-catalog.json" Link="Catalog\russian-app-catalog.json" LogicalName="Perenos.Core.Catalog.russian-app-catalog.json" />
+    <PackageReference Include="Netimobiledevice" Version="2.5.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.14" />
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="10.0.14" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Netimobiledevice only needs WinTun for network tunnels, which Perenos never uses.
+         Its package declares no license, so its files are kept out of the build output. -->
+    <PackageReference Include="Unofficial.WinTun" Version="0.14.1.3" ExcludeAssets="all" />
+  </ItemGroup>
+
+</Project>

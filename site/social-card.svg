@@ -17,7 +17,7 @@
   <text x="129" y="86" font-size="34" font-weight="750" letter-spacing="-1" fill="#101828">Перенос</text>
   <rect x="410" y="51" width="224" height="40" rx="20" fill="#eaf2ff"/>
   <text x="522" y="77" text-anchor="middle" class="mono" font-size="12" fill="#2563eb">WINDOWS 10 / 11</text>
-  <text x="60" y="168" class="mono" font-size="13" letter-spacing="1.2" fill="#2563eb">ВЕРСИЯ 1.5.0  ·  ОТКРЫТЫЙ КОД</text>
+  <text x="60" y="168" class="mono" font-size="13" letter-spacing="1.2" fill="#2563eb">WINDOWS 10 / 11  ·  ОТКРЫТЫЙ КОД</text>
   <text x="55" y="248" font-size="58" font-weight="700" letter-spacing="-2.4" fill="#101828">Ваши приложения.</text>
   <text x="55" y="320" font-size="58" font-weight="700" letter-spacing="-2.4" fill="#2563eb">Ваш новый iPhone.</text>
   <text x="60" y="374" font-size="22" fill="#526078">Перенесите. Обновите. Восстановите покупки.</text>
@@ -27,7 +27,7 @@
   <text x="60" y="577" font-size="15" fill="#526078">Оригинальные приложения с серверов Apple</text>
   <rect x="748" y="119" width="404" height="433" rx="25" fill="#e6effe"/>
   <rect x="766" y="137" width="368" height="397" rx="15" fill="white" stroke="#d5e0ee"/>
-  <text x="790" y="179" font-size="19" font-weight="700" fill="#101828">Обновить и восстановить</text>
+  <text x="790" y="179" font-size="19" font-weight="700" fill="#101828">Ваши покупки</text>
   <text x="1108" y="177" text-anchor="end" class="mono" font-size="10" fill="#2563eb">0 выбрано</text>
   <rect x="790" y="199" width="320" height="39" rx="8" fill="#edf4ff"/>
   <text x="950" y="224" text-anchor="middle" font-size="13" font-weight="650" fill="#2563eb">Фильтр: все покупки</text>

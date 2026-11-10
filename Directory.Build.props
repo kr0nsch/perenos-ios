@@ -1,11 +1,11 @@
 <Project>
   <PropertyGroup>
     <!-- CI overrides this from the release tag: dotnet publish -p:Version=1.2.3 -->
-    <Version>1.4.0</Version>
+    <Version>1.6.0</Version>
     <Product>Перенос</Product>
     <Company>Perenos contributors</Company>
     <Authors>Perenos contributors</Authors>
-    <Copyright>Copyright (c) 2026 AppBridge contributors</Copyright>
+    <Copyright>Copyright (c) 2026 Perenos contributors</Copyright>
     <RepositoryUrl>https://github.com/kr0nsch/perenos-ios</RepositoryUrl>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>

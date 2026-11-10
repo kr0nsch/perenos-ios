@@ -102,10 +102,10 @@ try {
         status: 200,
         contentType: 'application/json',
         body: JSON.stringify({
-          tag_name: 'v1.5.0', draft: false, prerelease: false,
+          tag_name: 'v1.6.0', draft: false, prerelease: false,
           assets: [
-            { name: 'Perenos-1.5.0-setup-x64.exe', size: 80 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.5.0/Perenos-1.5.0-setup-x64.exe' },
-            { name: 'Perenos-1.5.0-portable-x64.zip', size: 75 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.5.0/Perenos-1.5.0-portable-x64.zip' },
+            { name: 'Perenos-1.6.0-setup-x64.exe', size: 80 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.6.0/Perenos-1.6.0-setup-x64.exe' },
+            { name: 'Perenos-1.6.0-portable-x64.zip', size: 75 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.6.0/Perenos-1.6.0-portable-x64.zip' },
           ],
         }),
       }));
@@ -152,9 +152,9 @@ try {
       await faq.locator('summary').click();
       assert.equal(await faq.getAttribute('open'), null);
       await page.waitForFunction(() => document.querySelector('[data-download="installer"]').href.includes('/releases/download/'));
-      assert.ok((await page.locator('[data-download="installer"]').getAttribute('href')).endsWith('Perenos-1.5.0-setup-x64.exe'));
-      assert.ok((await page.locator('[data-download="portable"]').getAttribute('href')).endsWith('Perenos-1.5.0-portable-x64.zip'));
-      assert.match(await page.locator('#release-label').textContent(), /1\.5\.0/);
+      assert.ok((await page.locator('[data-download="installer"]').getAttribute('href')).endsWith('Perenos-1.6.0-setup-x64.exe'));
+      assert.ok((await page.locator('[data-download="portable"]').getAttribute('href')).endsWith('Perenos-1.6.0-portable-x64.zip'));
+      assert.match(await page.locator('#release-label').textContent(), /1\.6\.0/);
 
       if (width === 390 && theme === 'light') {
         assert.match(await page.title(), /Перенос приложений с iPhone на iPhone/);
@@ -162,7 +162,7 @@ try {
         const structuredData = await page.locator('script[type="application/ld+json"]').allTextContents();
         const schemas = structuredData.map(text => JSON.parse(text));
         const software = schemas.find(schema => schema['@type'] === 'SoftwareApplication');
-        assert.equal(software.softwareVersion, '1.5.0');
+        assert.equal(software.softwareVersion, '1.6.0');
         assert.equal(software.offers.price, '0');
         const faqSchema = schemas.find(schema => schema['@type'] === 'FAQPage');
         assert.equal(faqSchema.mainEntity.length, await page.locator('.faq-items details').count());

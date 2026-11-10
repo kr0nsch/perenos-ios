@@ -17,7 +17,7 @@ reproduce it. You should get a reply within a week.
   and is never stored or logged by Perenos. While that request runs, it is visible on
   ipatool's command line to other programs running under the same Windows user.
 - ipatool's session file is encrypted with a random passphrase. The passphrase is stored
-  with Windows DPAPI (current-user scope) in `%LOCALAPPDATA%\AppBridge\ipatool\keychain.key`
+  with Windows DPAPI (current-user scope) in `%LOCALAPPDATA%\Perenos\ipatool\keychain.key`
   (or the portable `Data` folder).
 - Diagnostic logs never contain passwords, verification codes or passphrases, and device
   identifiers are shortened.
@@ -29,7 +29,8 @@ reproduce it. You should get a reply within a week.
   when the repository secrets `WINDOWS_SIGNING_CERT` (base64 .pfx) and
   `WINDOWS_SIGNING_CERT_PASSWORD` are set.
 
-Perenos (Перенос) was previously named AppBridge. Installed data stays in
-`%LOCALAPPDATA%\AppBridge`, and the default saved-app folder remains
-`Downloads\AppBridge`, so existing settings, sessions and saved apps remain available.
-Portable copies continue to use their existing `Data` folder.
+Perenos stores installed data in `%LOCALAPPDATA%\Perenos`, and its default saved-app
+folder is `Downloads\Perenos`. Existing settings, sessions, pair records and saved apps
+migrate automatically from earlier versions without overwriting newer files or moving
+custom download folders. Portable copies continue to use their existing `Data` folder.
+The DPAPI encryption contract remains unchanged so existing sessions stay readable.

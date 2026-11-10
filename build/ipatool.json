@@ -1,12 +1,12 @@
 {
-  "version": "2.7.0+72c47d5",
-  "source": "https://github.com/majd/ipatool/tree/72c47d538b726df397fbf17bb3af809d69ef51b7",
+  "version": "2.8.0+e0e2908",
+  "source": "https://github.com/majd/ipatool/tree/e0e2908dc866651cbd6ad86edd954119c003c46b",
   "license": "MIT",
-  "commit": "72c47d538b726df397fbf17bb3af809d69ef51b7",
+  "commit": "e0e2908dc866651cbd6ad86edd954119c003c46b",
   "go_version": "1.26.5",
   "archive": {
-    "file": "ipatool-72c47d5.tar.gz",
-    "url": "https://codeload.github.com/majd/ipatool/tar.gz/72c47d538b726df397fbf17bb3af809d69ef51b7",
-    "sha256": "b1dc7eeda70ec53e6da6c4d64d97423808d2991ff9c416be1b7a9998984aaa59"
+    "file": "ipatool-e0e2908.tar.gz",
+    "url": "https://codeload.github.com/majd/ipatool/tar.gz/e0e2908dc866651cbd6ad86edd954119c003c46b",
+    "sha256": "254053bb19c8d76d882705be53e4febec3bcd66d4e7d0270e95f339deace844c"
   }
 }

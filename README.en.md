@@ -35,15 +35,15 @@
   <a href="#faq">FAQ</a>
 </p>
 
-<p align="center"><sub>Previously called AppBridge. Now Perenos (Перенос). Your settings and saved apps remain compatible.</sub></p>
+<p align="center"><sub>The app is called Perenos (Перенос). Settings and your library move forward automatically from earlier versions.</sub></p>
 
 ## One app — three ways to get your apps back
 
 | | What you need | How it works |
 |---|---|---|
-| **01 · Transfer now** | Both iPhones are at hand | Select apps on the old phone and install them on the new one through Windows. |
-| **02 · Update &amp; Restore** | Your own purchases on one iPhone | Open the account's purchase history, find the apps and install their latest available versions. |
-| **03 · Save for later** | The new iPhone will arrive later | Save your apps to the PC now, then install them from your library later. |
+| **Transfer to a new iPhone** | Both iPhones are at hand | Select apps on the old phone and install them on the new one through Windows. |
+| **Update or restore on this iPhone** | Your own purchases on one iPhone | Open the account's purchase history, find the apps and install their latest available versions. |
+| **Library on this PC** | The new iPhone will arrive later | Save your apps to the PC now, then install them from your library later. |
 
 > [!IMPORTANT]
 > Perenos downloads **original apps from Apple's servers**, not from file-sharing sites. Downloads depend on your account's license and whether Apple still supplies the app. FairPlay is not bypassed and other people's purchases are not unlocked.
@@ -52,20 +52,22 @@
 
 ## Restore VK Music, Sber and other apps you own
 
-Choose **Update &amp; Restore** when an app was removed from your iPhone or is unavailable in the Russian App Store but previously belonged to your account. The same flow updates apps already on the device.
+Choose **Update or restore on this iPhone** when an app was removed from your iPhone or is unavailable in the Russian App Store but previously belonged to your account. The same flow updates apps already on the device.
 
 1. **Connect your iPhone over USB.** Unlock it and tap Trust.
-2. **Choose Update &amp; Restore and sign in to the purchaser's Apple Account.** This signs in on the PC; it does not change the iPhone's account.
+2. **Choose Update or restore on this iPhone and sign in to the purchaser's Apple Account.** This signs in on the PC; it does not change the iPhone's account.
 3. **Wait for your purchases to load.** All purchases includes the apps returned by Apple. Nothing is selected automatically.
-4. **Find what you need.** The filter button cycles through all purchases → unavailable in Russia → Russian services. Select All applies only to the current filter and search.
+4. **Find what you need.** Use the Filter menu to choose all purchases, unavailable in Russia or Russian services. Select Visible applies only to the current filter and search.
 5. **Select apps and click Continue → Install.** Perenos asks Apple for the latest available versions. This flow never acquires new apps.
+
+The current step is shown above the list. **Back is at the bottom left, and the next action is at the bottom right.**
 
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/en-dark/restore-purchases.png">
-    <img src="docs/screenshots/en-light/restore-purchases.png" width="850" alt="Restore apps from Apple Account purchases in Perenos 1.5.0">
+    <img src="docs/screenshots/en-light/restore-purchases.png" width="850" alt="Restore apps from Apple Account purchases in Perenos">
   </picture>
-  <br><sub>The real Perenos 1.5.0 interface in demo mode. The account, devices and apps shown are fictional.</sub>
+  <br><sub>The current Perenos interface in demo mode. The account, devices and apps shown are fictional.</sub>
 </p>
 
 ### If a purchase is missing from the list
@@ -84,7 +86,7 @@ Open the **Russian services** filter. The catalog can find an app omitted from t
 You need **Windows 10 version 2004+ or Windows 11**, a data-capable USB cable and **[Apple Devices](https://apps.microsoft.com/detail/9NP83LWLPZ9K)** or iTunes for the iPhone driver.
 
 1. **Download the [latest release](https://github.com/kr0nsch/perenos-ios/releases/latest).** Install the app or extract the portable version.
-2. **Choose Transfer Now and connect your old iPhone.** Trust the computer on the phone.
+2. **Choose Transfer to a new iPhone and connect your old iPhone.** Trust the computer on the phone.
 3. **Choose your apps.** Connect the new iPhone; you can connect the phones one at a time with the same cable.
 4. **Sign in to the purchaser's Apple Account on the PC and click Install.** Choose the latest version or the old phone's version if Apple still offers it.
 
@@ -98,7 +100,7 @@ While one app installs, the next one downloads. Select only what you need instea
 <details>
 <summary><b>Save apps now and install them later</b></summary>
 
-Choose **Transfer Later → Save Apps**, connect the old iPhone, select the apps and sign in to your Apple Account. Later, open **Transfer Later → Install on New iPhone** and choose the saved apps.
+Choose **Library on this PC → Add apps from an iPhone**, connect the old iPhone, select the apps and sign in to your Apple Account. Later, open **Library on this PC → Install saved apps on an iPhone** and choose the saved apps.
 
 <p align="center">
   <picture>
@@ -116,7 +118,7 @@ Choose **Transfer Later → Save Apps**, connect the old iPhone, select the apps
 
 ## Install IPA files on an iPhone with Windows
 
-Open **Transfer Later → Install on New iPhone**. Copy your `.ipa` files into the library folder shown in the app, select compatible packages and install them over USB. You do not need to sign in again on the PC.
+Open **Library on this PC → Install saved apps on an iPhone**. Copy your `.ipa` files into the library folder shown in the app, select compatible packages and install them over USB. You do not need to sign in again on the PC.
 
 Perenos supports packages downloaded from Apple and your own IPA files from trusted sources **with a valid license and signature**. It compares known App Store and bundle IDs, reads the version and checks iOS requirements. It cannot turn someone else's or a decrypted IPA into an independent app and does not remove FairPlay.
 
@@ -171,14 +173,14 @@ If SmartScreen shows an unknown publisher, check that the file came from this re
 <details>
 <summary><b>Can I download an app removed from the App Store?</b></summary>
 
-Sometimes: if it belongs to your purchases and Apple still supplies it to your account. Choose Update &amp; Restore or look for it under Russian services. This cannot unlock someone else's purchases, make paid apps free or restore every removed app without limits.
+Sometimes: if it belongs to your purchases and Apple still supplies it to your account. Choose Update or restore on this iPhone or look for it under Russian services. This cannot unlock someone else's purchases, make paid apps free or restore every removed app without limits.
 
 </details>
 
 <details>
 <summary><b>How do I get VK Music back?</b></summary>
 
-Connect your iPhone, choose Update &amp; Restore and sign in to the account that originally obtained VK Music. Find it in purchases or the Russian services filter, select just that app and install it. If Apple rejects the license or package request, Perenos reports the error instead of downloading an unknown copy from the web.
+Connect your iPhone, choose Update or restore on this iPhone and sign in to the account that originally obtained VK Music. Find it in purchases or the Russian services filter, select just that app and install it. If Apple rejects the license or package request, Perenos reports the error instead of downloading an unknown copy from the web.
 
 </details>
 
@@ -226,21 +228,21 @@ These are individual test results, not a guarantee for every device, iOS version
 <details>
 <summary><b>Build from source</b></summary>
 
-You need Windows, the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) and [Go 1.26.5](https://go.dev/dl/go1.26.5.windows-amd64.zip) to build the bundled ipatool. Internal AppBridge project names are preserved.
+You need Windows, the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) and [Go 1.26.5](https://go.dev/dl/go1.26.5.windows-amd64.zip) to build the bundled ipatool. Internal Perenos project names are preserved.
 
 ```powershell
 git clone https://github.com/kr0nsch/perenos-ios.git
 cd perenos-ios
 ./build/Get-Ipatool.ps1
 
-dotnet test AppBridge.sln
-dotnet run --project src/AppBridge -p:Platform=x64
+dotnet test Perenos.sln
+dotnet run --project src/Perenos -p:Platform=x64
 
 # Demo without iPhones or an Apple Account
-dotnet run --project src/AppBridge -p:Platform=x64 -- --demo
+dotnet run --project src/Perenos -p:Platform=x64 -- --demo
 ```
 
-`--demo-saved` adds a simulated saved-app library. Building the installer requires [Inno Setup 6](https://jrsoftware.org/isinfo.php): `./build/build.ps1 -Version 1.5.0`. Output goes to `artifacts/release`.
+`--demo-saved` adds a simulated saved-app library. Building the installer requires [Inno Setup 6](https://jrsoftware.org/isinfo.php): `./build/build.ps1 -Version 1.6.0`. Output goes to `artifacts/release`.
 
 Built with [WinUI 3](https://github.com/microsoft/microsoft-ui-xaml), [Netimobiledevice](https://github.com/artehe/Netimobiledevice) and [ipatool](https://github.com/majd/ipatool). Project code is available under [MIT](LICENSE); third-party components and the catalog have their own licenses in [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt). [Changelog](CHANGELOG.md) · [Development priorities](docs/DEVELOPMENT.md).
 

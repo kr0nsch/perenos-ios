@@ -8,34 +8,33 @@ Thanks for helping improve Perenos (Перенос)!
 2. Install the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) and
    [Go 1.26.5](https://go.dev/dl/go1.26.5.windows-amd64.zip).
 3. Run `./build/Get-Ipatool.ps1` once to build the checksum-verified ipatool source snapshot.
-4. Build and run: `dotnet run --project src/AppBridge -p:Platform=x64`.
-5. Run both suites: `dotnet test tests/AppBridge.Core.Tests` and
-   `dotnet test tests/AppBridge.ViewModel.Tests`.
+4. Build and run: `dotnet run --project src/Perenos -p:Platform=x64`.
+5. Run both suites: `dotnet test tests/Perenos.Core.Tests` and
+   `dotnet test tests/Perenos.ViewModel.Tests`.
 
 Use `--demo` to work on the UI without iPhones or an Apple Account:
 
 ```powershell
-dotnet run --project src/AppBridge -p:Platform=x64 -- --demo
+dotnet run --project src/Perenos -p:Platform=x64 -- --demo
 ```
 
 See [development priorities](docs/DEVELOPMENT.md) for completed reliability fixes and
 the remaining product work. View-model tests compile the real view-model source with
 headless UI adapters; the Windows app build checks the production WinUI integration.
 
-The product was previously named AppBridge. Project folders, namespaces and test
-project names retain `AppBridge`, so the build commands above are intentional.
-Existing `%LOCALAPPDATA%\AppBridge` and `Downloads\AppBridge` folders also stay
-unchanged to preserve settings, sessions and saved apps.
+Projects, namespaces and test projects all use the `Perenos` name. Settings,
+encrypted sessions, pair records and the default app library migrate automatically
+from earlier versions. Custom download folders are never moved.
 
 ## Guidelines
 
 - Keep the flow simple: four steps, one primary button per screen.
-- Every user-visible string goes into `src/AppBridge/Strings/en-US/Resources.resw` **and**
+- Every user-visible string goes into `src/Perenos/Strings/en-US/Resources.resw` **and**
   `ru-RU/Resources.resw`. A unit test checks that both files have the same keys and placeholders.
 - Keep `README.md` (Russian, the main page) and `README.en.md` (English) in sync.
   `README.ru.md` is a compatibility link for existing bookmarks.
 - Never log or persist passwords, verification codes or passphrases.
-- Device and App Store code lives in `AppBridge.Core` behind `IDeviceService`,
+- Device and App Store code lives in `Perenos.Core` behind `IDeviceService`,
   `IDeviceWatcher` and `IAppStoreClient`, so it can be tested with fakes.
 - Run the tests before opening a pull request. If you change USB code, please say which
   iPhone models and iOS versions you tried.

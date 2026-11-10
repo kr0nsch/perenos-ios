@@ -59,8 +59,8 @@ if ([IO.Directory]::Exists($outputPath) -and [IO.Directory]::GetFileSystemEntrie
 $processInfo = Get-CimInstance Win32_Process -Filter "ProcessId=$ProcessId"
 if (-not $processInfo -or -not $processInfo.ExecutablePath) { throw 'The target process is unavailable.' }
 $exePath = [string] $processInfo.ExecutablePath
-if ([IO.Path]::GetFileName($exePath) -notin @('Perenos.exe', 'AppBridge.exe')) {
-    throw 'Only a running Perenos/AppBridge demonstration process may be recorded.'
+if ([IO.Path]::GetFileName($exePath) -notin @('Perenos.exe')) {
+    throw 'Only a running Perenos demonstration process may be recorded.'
 }
 if ([string] $processInfo.CommandLine -notmatch '(?:^|\s|\")--demo(?:-saved)?(?:\s|\"|$)') {
     throw 'The target must have been launched with --demo or --demo-saved.'

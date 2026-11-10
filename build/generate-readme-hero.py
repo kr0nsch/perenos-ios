@@ -5,22 +5,22 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 COPY = {
     "ru": {
-        "brand": "Перенос", "eyebrow": "ВЕРСИЯ 1.5.0  ·  WINDOWS 10 / 11",
+        "brand": "Перенос", "eyebrow": "WINDOWS 10 / 11  ·  ОТКРЫТЫЙ КОД",
         "line1": "Новый iPhone.", "line2": "Ваши приложения.",
         "caption": "Перенесите. Обновите. Восстановите свои покупки.",
         "meta": "БЕСПЛАТНО  ·  ОТКРЫТЫЙ КОД  ·  БЕЗ ДЖЕЙЛБРЕЙКА",
-        "window": "Обновить и восстановить", "count": "0 выбрано",
+        "window": "Ваши покупки", "count": "0 выбрано",
         "search": "Поиск приложений", "filter": "Все покупки",
         "route": "APPLE ACCOUNT   →   WINDOWS   →   ВАШ IPHONE",
         "badge": "НОВОЕ: ВОССТАНОВЛЕНИЕ ПОКУПОК",
         "apps": (("Bloom Journal", "Ваши покупки App Store"), ("Cloudy", "Последняя доступная версия"), ("Daily Planner", "Установка на ваш iPhone")),
     },
     "en": {
-        "brand": "Perenos", "eyebrow": "VERSION 1.5.0  ·  WINDOWS 10 / 11",
+        "brand": "Perenos", "eyebrow": "WINDOWS 10 / 11  ·  OPEN SOURCE",
         "line1": "New iPhone.", "line2": "Your apps.",
         "caption": "Transfer. Update. Restore your purchases.",
         "meta": "FREE  ·  OPEN SOURCE  ·  NO JAILBREAK",
-        "window": "Update & Restore", "count": "0 selected",
+        "window": "Your purchases", "count": "0 selected",
         "search": "Search apps", "filter": "All purchases",
         "route": "APPLE ACCOUNT   →   WINDOWS   →   YOUR IPHONE",
         "badge": "NEW: RESTORE YOUR PURCHASES",

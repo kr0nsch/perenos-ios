@@ -6,17 +6,17 @@ The three issues from the source review are fixed and covered by regression test
 
 - **Stop during preparation.** Cancellation applies while icons load and while apps
   transfer. Unfinished apps remain available for retry with a fresh cancellation token.
-  Source: [InstallViewModel](../src/AppBridge/ViewModels/InstallViewModel.cs).
+  Source: [InstallViewModel](../src/Perenos/ViewModels/InstallViewModel.cs).
 - **Unsuccessful sign-out.** A failed revoke retains the signed-in account and displays
   a localized error with a retry action. Successful sign-out clears account details
   and form secrets; account operations cannot overlap.
-  Source: [AccountViewModel](../src/AppBridge/ViewModels/AccountViewModel.cs).
+  Source: [AccountViewModel](../src/Perenos/ViewModels/AccountViewModel.cs).
 - **Activation forwarding.** A second launch waits for a bounded period, observes
   forwarding failures and releases the event handle even if the target stalls.
-  Source: [ActivationForwarder](../src/AppBridge/Services/ActivationForwarder.cs).
+  Source: [ActivationForwarder](../src/Perenos/Services/ActivationForwarder.cs).
 
-[View-model tests](../tests/AppBridge.ViewModel.Tests) compile the production view
-models with deterministic headless UI adapters. [Core tests](../tests/AppBridge.Core.Tests)
+[View-model tests](../tests/Perenos.ViewModel.Tests) compile the production view
+models with deterministic headless UI adapters. [Core tests](../tests/Perenos.Core.Tests)
 cover activation forwarding, saved-app storage and the transfer pipeline. Both suites
 run in CI and before release packaging. These tests do not replace real-device USB
 checks or visual checks of WinUI screens.

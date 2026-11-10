@@ -2,15 +2,15 @@
 .SYNOPSIS
   Builds Perenos release artifacts: a portable ZIP and an installer per architecture.
 .EXAMPLE
-  ./build/build.ps1 -Version 1.5.0
-  ./build/build.ps1 -Version 1.5.0 -RuntimeIdentifier win-x64, win-arm64
+  ./build/build.ps1 -Version 1.6.0
+  ./build/build.ps1 -Version 1.6.0 -RuntimeIdentifier win-x64, win-arm64
 .NOTES
   Outputs go to artifacts\release together with SHA256SUMS.txt.
   Requires the .NET 10 SDK, Go 1.26.5 and Inno Setup 6 (ISCC.exe) for the installer.
 #>
 [CmdletBinding()]
 param(
-    [string] $Version = '1.5.0',
+    [string] $Version = '1.6.0',
     [ValidateSet('win-x64', 'win-arm64')]
     [string[]] $RuntimeIdentifier = @('win-x64'),
     [switch] $SkipTests,
@@ -26,10 +26,6 @@ $artifacts = Join-Path $root 'artifacts'
 $release = Join-Path $artifacts 'release'
 $env:DOTNET_CLI_UI_LANGUAGE = 'en'
 $env:DOTNET_NOLOGO = '1'
-
-# Keep existing local signing configurations working after the product rename.
-if (-not $SignCertificate) { $SignCertificate = $env:APPBRIDGE_SIGN_PFX }
-if (-not $SignPassword) { $SignPassword = $env:APPBRIDGE_SIGN_PASSWORD }
 
 function Remove-BuildDirectory([string] $Path) {
     $target = [IO.Path]::GetFullPath($Path)
@@ -83,8 +79,8 @@ New-Item -ItemType Directory -Force -Path $release | Out-Null
 if (-not $SkipTests) {
     & (Join-Path $PSScriptRoot 'Get-Ipatool.ps1') -RuntimeIdentifier win-x64
     Write-Host "Running tests..." -ForegroundColor Cyan
-    Invoke-Checked { dotnet test (Join-Path $root 'tests\AppBridge.Core.Tests\AppBridge.Core.Tests.csproj') -c Release }
-    Invoke-Checked { dotnet test (Join-Path $root 'tests\AppBridge.ViewModel.Tests\AppBridge.ViewModel.Tests.csproj') -c Release }
+    Invoke-Checked { dotnet test (Join-Path $root 'tests\Perenos.Core.Tests\Perenos.Core.Tests.csproj') -c Release }
+    Invoke-Checked { dotnet test (Join-Path $root 'tests\Perenos.ViewModel.Tests\Perenos.ViewModel.Tests.csproj') -c Release }
 }
 
 foreach ($rid in $RuntimeIdentifier) {
@@ -97,12 +93,12 @@ foreach ($rid in $RuntimeIdentifier) {
     Write-Host "Publishing $rid..." -ForegroundColor Cyan
     Remove-BuildDirectory $publish
     Invoke-Checked {
-        dotnet publish (Join-Path $root 'src\AppBridge\AppBridge.csproj') -c Release -r $rid -p:Platform=$platform `
+        dotnet publish (Join-Path $root 'src\Perenos\Perenos.csproj') -c Release -r $rid -p:Platform=$platform `
             -p:Version=$Version -p:ContinuousIntegrationBuild=true -o $publish
     }
     if (-not (Test-Path (Join-Path $publish 'tools\ipatool.exe'))) { throw "ipatool.exe is missing from the $rid build." }
-    # Only Perenos's own binaries are signed; the internal Core assembly retains its name.
-    Invoke-Sign @((Join-Path $publish 'Perenos.exe'), (Join-Path $publish 'Perenos.dll'), (Join-Path $publish 'AppBridge.Core.dll'))
+    # Sign the application and its Core library; ipatool retains its upstream build.
+    Invoke-Sign @((Join-Path $publish 'Perenos.exe'), (Join-Path $publish 'Perenos.dll'), (Join-Path $publish 'Perenos.Core.dll'))
 
     # Portable: same files plus the marker that keeps all data next to the app.
     $portableRoot = Join-Path $artifacts "staging\Perenos-$Version-portable-$arch"
@@ -128,7 +124,7 @@ foreach ($rid in $RuntimeIdentifier) {
             $isccArgs += '/DSign=1'
             $isccArgs += "/Ssigntool=`"$signTool`" sign /fd sha256 /tr http://timestamp.digicert.com /td sha256 /f `"$SignCertificate`" /p `"$SignPassword`" " + '$f'
         }
-        Invoke-Checked { & $iscc @isccArgs (Join-Path $root 'installer\AppBridge.iss') }
+        Invoke-Checked { & $iscc @isccArgs (Join-Path $root 'installer\Perenos.iss') }
         Write-Host "Created Perenos-$Version-setup-$arch.exe" -ForegroundColor Green
     }
 }

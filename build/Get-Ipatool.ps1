@@ -2,7 +2,7 @@
 .SYNOPSIS
   Builds the pinned ipatool source snapshot after verifying its SHA-256 checksum.
 .DESCRIPTION
-  The executable is written to artifacts\tools\<rid>\ipatool.exe, where the AppBridge
+  The executable is written to artifacts\tools\<rid>\ipatool.exe, where the Perenos
   project picks it up. Version, commit, Go toolchain and checksum live in build\ipatool.json.
 #>
 [CmdletBinding()]

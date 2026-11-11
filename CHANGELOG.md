@@ -6,11 +6,14 @@ All notable changes to Perenos are listed here. The format follows
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-11-11
+
 ### Добавлено
 - Единый интерфейс на **Avalonia 12 / .NET 10** для Windows и macOS: общие сценарии, MVVM, русская и английская локализация, светлая и тёмная темы.
 - Сборка `.app` и DMG для Apple Silicon и Intel на macOS 15+, нативный ipatool с CGO, защита сессии в macOS Keychain, необязательные подпись Developer ID и нотаризация.
 - Отдельная библиотека `Perenos.Presentation`, headless-тесты Avalonia, изолированные данные деморежима и повторяемый UI-прогон `build/Demo-Check.ps1`.
 - Новый двуязычный сайт с адаптивным дизайном, локальными шрифтами, кадрами текущего интерфейса и ссылками на Mac-пакеты только при их наличии в релизе.
+- Обновлённые README с быстрым стартом и понятными ограничениями, русскоязычные описание и topics репозитория, SEO-метаданные для поиска по РФ.
 
 ### Исправлено
 - Строка приложения использует один стандартный `ToggleButton`: выбор не переключается дважды и имеет видимую галочку, которая не перекрыта иконкой.
@@ -18,6 +21,7 @@ All notable changes to Perenos are listed here. The format follows
 - Динамические строки и культура форматирования обновляются при смене языка без перезапуска. Демо запоминает установки до конца запуска и не затрагивает настройки пользователя.
 - Основные кнопки, активная навигация и ссылки используют контрастный цвет текста; компактное меню и переключатели имеют доступные имена.
 - Имена сохраняемых IPA одинаково очищаются на Windows и macOS, включая символы `:` и `?`.
+- macOS-пакет собирается одним файлом, текстовые ресурсы находятся в `Contents/Resources`, строгая проверка `codesign --deep --strict` проходит на обеих архитектурах. Release не блокируется при отсутствии настроенной macOS-подписи.
 
 ### Ограничения проверки
 - Новая кроссплатформенная версия проверяется в деморежиме и headless-тестах. Реальные USB и Apple Account на Windows и macOS, а также первый запуск подписанного DMG требуют отдельной проверки на оборудовании.
@@ -28,6 +32,7 @@ All notable changes to Perenos are listed here. The format follows
 - `.app` and DMG packaging for Apple Silicon and Intel on macOS 15+, native ipatool with CGO, macOS Keychain session protection, and optional Developer ID signing and notarization.
 - A separate `Perenos.Presentation` library, Avalonia headless tests, isolated demo data and the repeatable `build/Demo-Check.ps1` UI test runner.
 - A redesigned bilingual website with responsive layouts, local fonts, current screenshots and Mac download links only when matching release assets exist.
+- Clearer README quick-start guides and limitations, a Russian-focused repository description and topics, and SEO metadata for discovery in Russia.
 
 ### Fixed
 - A single standard `ToggleButton` per app row prevents double toggling and shows a visible checkmark that is not covered by the icon.
@@ -35,6 +40,7 @@ All notable changes to Perenos are listed here. The format follows
 - Computed text and formatting culture update live when the language changes. Demo installations persist for the session and never alter real user settings.
 - Primary actions, active navigation and links use contrasting text colors; compact navigation and toggle switches have accessible names.
 - Saved IPA filenames are sanitized consistently on Windows and macOS, including `:` and `?` characters.
+- The macOS app is published as a single file, text resources live in `Contents/Resources`, and strict `codesign --deep --strict` verification passes on both architectures. Releases no longer stop when macOS signing is not configured.
 
 ### Verification limits
 - The new cross-platform version is verified through demo workflows and headless tests. Physical USB and Apple Account checks on Windows and macOS, and the first launch of a signed DMG, require separate hardware verification.
@@ -114,6 +120,7 @@ All notable changes to Perenos are listed here. The format follows
 - On an iPhone 17 running iOS 27.2, retrieved 206 account purchases and installed Avito, VK, VK Video, Mail.ru Mail and Gazprombank's Digital Safe. Sber was already current. The latest queue installed 95 updates, found 18 apps current and encountered one device-response timeout.
 - Installation is confirmed, but first launch and operation without any Apple Account on the device have not been verified. Compatibility with every iPhone, iOS version and app is not guaranteed.
 
+[1.7.0]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.7.0
 [1.6.0]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.6.0
 [1.5.0]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.5.0
 

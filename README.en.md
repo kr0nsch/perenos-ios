@@ -1,92 +1,124 @@
-<p align="center"><img src="assets/logo.png" width="76" alt="Perenos"></p>
+<p align="center"><img src="assets/logo.png" width="76" alt="Perenos logo"></p>
 <h1 align="center">Perenos</h1>
-<p align="center"><b>Your favorite apps. Your new iPhone.</b><br>
-Free, open-source software for Windows and macOS.<br>
-Transfer apps between iPhones, restore your App Store purchases<br>
-and keep original IPAs in your own library.</p>
+<p align="center"><b>Your favorite apps on a new iPhone — no jailbreak.</b><br>
+Free, open-source software for Windows and macOS.</p>
 
-<p align="center"><a href="https://github.com/kr0nsch/perenos-ios/releases/latest"><b>Download</b></a> · <a href="https://kr0nsch.github.io/perenos-ios/en/">Project website</a> · <a href="README.md">Русский</a></p>
+<p align="center">
+Transfer apps <b>between iPhones through your computer</b>, install original IPAs<br>
+and restore <b>your own App Store purchases unavailable in Russia</b>, including VK Music and Avito.
+</p>
+
+<p align="center">
+  <a href="https://github.com/kr0nsch/perenos-ios/releases/latest"><b>Download for Windows</b></a> ·
+  <a href="https://kr0nsch.github.io/perenos-ios/en/"><b>Project website</b></a> ·
+  <a href="README.md">Русский</a>
+</p>
 
 <p align="center">
   <a href="https://github.com/kr0nsch/perenos-ios/releases/latest"><img src="https://img.shields.io/github/v/release/kr0nsch/perenos-ios?label=Release" alt="Latest release"></a>
   <a href="https://github.com/kr0nsch/perenos-ios/actions/workflows/ci.yml"><img src="https://github.com/kr0nsch/perenos-ios/actions/workflows/ci.yml/badge.svg" alt="Build and tests"></a>
-  <img src="https://img.shields.io/badge/.NET%2010-Avalonia-7053d9" alt=".NET 10 and Avalonia">
+  <img src="https://img.shields.io/badge/Windows%2010%2B%20%C2%B7%20macOS%2015%2B-Avalonia-7053d9" alt="Windows 10+, macOS 15+, Avalonia">
   <a href="LICENSE"><img src="https://img.shields.io/badge/MIT-open%20source-27765e" alt="MIT open-source license"></a>
 </p>
 
-## Three workflows
+> [!IMPORTANT]
+> Perenos downloads **original apps from Apple's servers**, not copies from file-sharing sites. Apps must already belong to your Apple Account. Perenos does not bypass FairPlay, unlock other people's paid purchases, or change the region or account on your iPhone.
+
+## Download and get started
+
+### 1. Install Perenos
+
+Choose a package from the [latest release](https://github.com/kr0nsch/perenos-ios/releases/latest):
+
+- **`Perenos-<version>-setup-x64.exe`** — the recommended installer for Windows 10 version 2004+ or Windows 11.
+- **`Perenos-<version>-portable-x64.zip`** — no installation required. Extract it and run `Perenos.exe`; settings stay in `Data` beside the app.
+
+To connect an iPhone on Windows, install [Apple Devices](https://apps.microsoft.com/detail/9NP83LWLPZ9K) or iTunes.
+
+**On Mac:** Perenos supports macOS 15+ on Apple Silicon and Intel. Public DMGs appear in releases only after Developer ID signing and Apple notarization. If a release has no DMG, you can [build from source](#build-from-source) or use development packages from CI; those do not replace a signed release.
+
+### 2. Connect your iPhone
+
+Connect the phone over USB, unlock it and tap **Trust**. You can connect the old and new iPhone together or one after the other. On Mac, allow the connection in Finder.
+
+### 3. Choose a task
 
 | Workflow | What it does |
 |---|---|
-| **New iPhone** | Select apps on the old phone and install only what you need on the new one. Connect both at once or one after the other. |
-| **Update or restore** | View purchases from your Apple Account and install their latest available versions on one iPhone. |
-| **Computer library** | Save apps now and install them later, with version, size and iOS compatibility checks. |
+| **New iPhone** | Select apps on the old phone and install only what you need on the new one. |
+| **Update or restore** | Find your App Store purchases and install the latest versions Apple offers your account. |
+| **Library** | Save original IPAs on your computer and install them later. |
 
-> [!IMPORTANT]
-> Perenos downloads **original apps from Apple's servers**, not copies from file-sharing sites. Availability depends on the account's license and whether Apple still supplies the package. FairPlay is not bypassed, other people's purchases are not unlocked and the account on your iPhone is not changed.
+To download or update apps, sign in to the purchaser's Apple Account **on the computer**. You do not need to change the account on the iPhone.
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/avalonia/restore-en-US-Dark.png"><img src="docs/screenshots/avalonia/restore-en-US-Light.png" width="1000" alt="Restoring apps in the new Perenos interface"></picture><br><sub>The current Avalonia interface in demo mode. Accounts, devices and apps are fictional.</sub></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/avalonia/restore-en-US-Dark.png">
+    <img src="docs/screenshots/avalonia/restore-en-US-Light.png" width="1000" alt="Restoring VK Music and other App Store purchases with Perenos">
+  </picture><br>
+  <sub>The current interface in demo mode. Accounts, devices and apps shown are fictional.</sub>
+</p>
 
-## Restore VK Music, Avito and your other apps
+## Restore VK Music, Avito and other purchases
 
-1. Connect your iPhone over USB, unlock it and tap **Trust**.
-2. Open **Restore apps** and sign in to the purchaser's Apple Account **on the computer**. You do not need to change the account on the phone.
-3. Wait for the purchase history. Nothing is selected automatically.
-4. Find apps by name. The filter menu offers **all purchases**, **unavailable in Russia** and **Russian services**. Select Visible applies only to the current filter and search.
-5. Select apps and click **Continue → Install**.
+1. Open **Restore apps** and sign in to the purchaser's Apple Account on the computer.
+2. Wait for the purchase history. Nothing is selected automatically.
+3. Search by name. Filters show **all purchases**, apps **unavailable in Russia** and **Russian services**.
+4. Select the apps and click **Continue → Install**.
 
-If a purchase is missing, try Russian services. Catalog entries are candidates, not proof of ownership; Apple checks the license when downloading. Account history may be incomplete after a region change, and Apple may stop serving an app or an older version.
+If an app is missing from history, check Russian services. A **catalog** badge marks a candidate, not proof of ownership: Apple checks the license when downloading. History may be incomplete after a region change, and Apple may stop serving an app or a specific version.
 
-[`catalog/russian-app-catalog.json`](catalog/russian-app-catalog.json) has 459 entries not found in the Russian storefront at the recorded check date, including 243 known ecosystem entries. It is not an official Apple removal registry or a guarantee of restoration.
+The [`russian-app-catalog.json`](catalog/russian-app-catalog.json) contains 459 entries not found in the Russian storefront at the recorded check date, including 243 known ecosystem entries. It is not an official Apple registry or a guarantee of restoration.
 
-## Library and IPA installation
+## Your IPA library
 
-Choose **Library → Add apps from an iPhone** to save apps. To install them later, choose **Install saved apps on an iPhone**. You can add your own `.ipa` files to the library folder in Settings.
+Choose **Library → Add apps from an iPhone** to save apps on your computer. Later, choose **Install saved apps on an iPhone**. In Settings, you can choose a folder and add your own `.ipa` files from trusted sources **with a valid license and signature**.
 
-Perenos supports original Apple packages and your own trusted IPAs **with a valid license and signature**. It reads metadata and checks iOS requirements. It does not turn someone else's or decrypted IPA into a standalone app.
+Perenos reads package metadata, shows version and size, and checks iOS compatibility. Installing a saved IPA does not require signing in again on the computer, but **iOS may still request the purchaser's Apple Account on first launch or update**.
 
-**Installing without signing in again on the computer does not guarantee launching without an Apple Account.** Apps remain tied to the purchaser, and iOS may request that account on first launch or update. Apps are transferred, not their messages, documents or settings; restore data using iCloud, a backup or the app's own synchronization.
+## What to know
 
-## Requirements
+| Perenos does | Perenos does not |
+|---|---|
+| Downloads original Apple packages available to your account | Does not download other people's paid apps or purchases you never owned for free |
+| Transfers and updates apps, installs IPAs | Does not bypass licenses, FairPlay or Apple's regional restrictions |
+| Works locally over USB, without jailbreak | Does not transfer messages, documents or app settings |
+| Checks package versions and compatibility | Does not guarantee that every IPA launches or every purchase can be restored |
 
-- **Windows 10 version 2004+ or Windows 11**, x64, with [Apple Devices](https://apps.microsoft.com/detail/9NP83LWLPZ9K) or iTunes.
-- **macOS 15+**, Apple Silicon or Intel. Allow the iPhone connection in Finder. Public DMGs are published only with Developer ID signing and Apple notarization.
+Restore app data through iCloud, a backup or the app's own synchronization.
 
-Windows releases include `Perenos-<version>-setup-x64.exe` and a portable ZIP. Portable settings live in `Data` beside the app. Existing settings, sessions and libraries migrate without overwriting newer files; custom download folders are not moved.
+## Privacy and trust
 
-## Privacy
+- No Perenos server, ads, subscription or hidden telemetry.
+- The open-source **ipatool**, built from a pinned checksum-verified snapshot, handles sign-in and Apple downloads.
+- Perenos does not store your password. The session key is protected by **Windows DPAPI** or stored in the **macOS Keychain**.
+- The first sign-in can take several minutes while ipatool prepares Apple's local authentication components.
+- IPAs can contain the purchaser's email — **do not publish your IPAs**.
 
-There is no Perenos server, ads or hidden telemetry. The open-source **ipatool**, built from a pinned checksum-verified snapshot, performs sign-in and Apple downloads. Perenos does not store your password. The session key is protected by **Windows DPAPI** or stored in the **macOS Keychain**.
-
-The first sign-in can take several minutes while ipatool prepares Apple's authentication components. IPAs can contain the purchaser's email, so do not publish them. See [SECURITY.md](SECURITY.md).
-
-Releases include `SHA256SUMS.txt` and Sigstore build provenance:
+Releases include `SHA256SUMS.txt` and Sigstore build provenance. Verify a download with:
 
 ```bash
 gh attestation verify <downloaded-file> -R kr0nsch/perenos-ios
 ```
 
-Sigstore proves build provenance, not a Windows Authenticode publisher signature.
+Sigstore proves build provenance, not a Windows Authenticode publisher signature. See [SECURITY.md](SECURITY.md).
 
-## Build from source
+<a id="build-from-source"></a>
+<details>
+<summary><b>For developers: build, tests and architecture</b></summary>
 
-Install **.NET 10 SDK**, **Go 1.26.5** and PowerShell. Inno Setup 6 is needed for the Windows installer.
+### Build from source
+
+Install **.NET 10 SDK**, **Go 1.26.5** and PowerShell. Inno Setup 6 is also needed for the Windows installer.
 
 ```powershell
 git clone https://github.com/kr0nsch/perenos-ios.git
 cd perenos-ios
 ./build/Get-Ipatool.ps1
-dotnet run --project src/Perenos
-```
-
-Run the demo with fictional devices and an account:
-
-```powershell
 dotnet run --project src/Perenos -- --demo
-dotnet run --project src/Perenos -- --demo-saved
 ```
 
-On macOS 15+ you also need Xcode Command Line Tools and PowerShell 7. CGO is enabled natively for Apple Keychain; the macOS ipatool is not built from Windows.
+On macOS 15+, you also need Xcode Command Line Tools and PowerShell 7. CGO is enabled natively for Apple Keychain; macOS ipatool is not built from Windows.
 
 ```bash
 brew install dotnet go
@@ -96,11 +128,9 @@ dotnet run --project src/Perenos -- --demo
 bash build/build-macos.sh 1.7.0 osx-arm64
 ```
 
-For Intel, replace `osx-arm64` with `osx-x64`. The output is `artifacts/release/Perenos-1.7.0-macos-<architecture>.dmg`. Without `MACOS_SIGN_IDENTITY`, the package is ad-hoc signed for development. Set a Developer ID and `MACOS_NOTARY_PROFILE` to enable notarization for public distribution.
+For Intel, replace `osx-arm64` with `osx-x64`. Without `MACOS_SIGN_IDENTITY`, the package is ad-hoc signed for development. Set a Developer ID and `MACOS_NOTARY_PROFILE` to enable notarization for public distribution.
 
-The solution is split into `Perenos.Core` (USB, Apple and IPA), `Perenos.Presentation` (shared MVVM, localization and demo) and `Perenos` (the Avalonia interface).
-
-## Verification
+### Verification
 
 ```bash
 dotnet test Perenos.sln
@@ -108,13 +138,17 @@ npm ci
 npm run test:site
 ```
 
-The project has Core, ViewModel/Platform and real Avalonia headless tests. `build/Demo-Check.ps1` also exercises Windows UI Automation: workflows, app selection, saving, installation and settings. Demo data is isolated from real settings and accounts.
+The project has Core, ViewModel/Platform and Avalonia headless tests. `build/Demo-Check.ps1` also exercises Windows UI through UI Automation, including the compact layout. Demo data is isolated from real settings and accounts.
 
-**Demo verification does not replace physical USB and Apple Account checks.** Earlier versions were verified on iPhone 16 Pro, iPhone 14 and iPhone 17. The new cross-platform version needs separate USB checks on Windows and macOS, and the signed DMG needs a first-launch check on a clean Mac user account. See [development priorities](docs/DEVELOPMENT.md).
+**Demo verification does not replace physical USB and Apple Account checks.** The cross-platform version needs separate USB checks on Windows and macOS, and the signed DMG needs a first-launch check on a clean Mac user account. See [development priorities](docs/DEVELOPMENT.md).
 
-## Contribute
+The solution is split into `Perenos.Core` (USB, Apple and IPA), `Perenos.Presentation` (shared MVVM, localization and demo) and `Perenos` (the Avalonia interface).
 
-[Report a bug](https://github.com/kr0nsch/perenos-ios/issues/new?template=bug_report.yml) · [Report compatibility](https://github.com/kr0nsch/perenos-ios/issues/new?template=compatibility_report.yml) · [Contributing guide](CONTRIBUTING.md) · [Changelog](CHANGELOG.md)
+</details>
+
+## Help and contribute
+
+[Report a bug](https://github.com/kr0nsch/perenos-ios/issues/new?template=bug_report.yml) · [Report compatibility](https://github.com/kr0nsch/perenos-ios/issues/new?template=compatibility_report.yml) · [Contributing guide](CONTRIBUTING.md) · [Changelog](CHANGELOG.md) · [Русский](README.md)
 
 Built with [.NET 10](https://dotnet.microsoft.com/), [Avalonia](https://avaloniaui.net/), [Netimobiledevice](https://github.com/artehe/Netimobiledevice) and [ipatool](https://github.com/majd/ipatool). Licenses: [MIT](LICENSE) and [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt).
 

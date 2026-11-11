@@ -152,6 +152,8 @@ jobs:
 
   publish:
     needs: [release-windows, release-macos]
+    # Mac packages are optional until signing is configured; Windows must always succeed.
+    if: ${{ always() && needs.release-windows.result == 'success' && needs.release-macos.result != 'failure' && needs.release-macos.result != 'cancelled' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7

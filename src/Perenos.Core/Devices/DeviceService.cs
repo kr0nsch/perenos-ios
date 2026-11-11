@@ -109,7 +109,7 @@ public sealed class DeviceService(string pairRecordsDirectory) : IDeviceService
 
     public Task InstallAsync(string udid, string ipaPath, IProgress<InstallProgress>? progress, CancellationToken cancellationToken = default) => RunAsync(async () =>
     {
-        var package = IpaPackage.Read(ipaPath);
+        var package = ReadPackage(ipaPath);
         using var lockdown = ConnectTrusted(udid);
 
         if (package.MinimumOsVersion is { } minimum && TryParseVersion(minimum, out var required)
@@ -124,12 +124,12 @@ public sealed class DeviceService(string pairRecordsDirectory) : IDeviceService
                 var handle = await afc.FileOpen(remotePath, cancellationToken, AfcFileOpenMode.WriteOnly).ConfigureAwait(false);
                 try
                 {
-                    await using var file = new FileStream(ipaPath, FileMode.Open, FileAccess.Read, FileShare.Read, UploadChunkSize, useAsync: true);
+                    await using var file = OpenPackage(ipaPath);
                     var total = Math.Max(1, file.Length);
                     var buffer = new byte[UploadChunkSize];
                     long sent = 0;
                     int read;
-                    while ((read = await file.ReadAsync(buffer, cancellationToken).ConfigureAwait(false)) > 0)
+                    while ((read = await ReadPackageChunkAsync(file, buffer, cancellationToken).ConfigureAwait(false)) > 0)
                     {
                         var chunk = read == buffer.Length ? buffer : buffer[..read];
                         await afc.FileWrite(handle, chunk, cancellationToken, chunk.Length).ConfigureAwait(false);
@@ -238,6 +238,46 @@ public sealed class DeviceService(string pairRecordsDirectory) : IDeviceService
         throw new DeviceOperationException(DeviceErrorKind.NotTrusted, "This PC is not trusted by the iPhone.");
     }
 
+    /// <summary>Local package IO is isolated here so it is never misreported as a device disconnect.</summary>
+    private static IpaPackage ReadPackage(string ipaPath)
+    {
+        try
+        {
+            return IpaPackage.Read(ipaPath);
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            throw LocalPackageFailure(ex);
+        }
+    }
+
+    private static FileStream OpenPackage(string ipaPath)
+    {
+        try
+        {
+            return new FileStream(ipaPath, FileMode.Open, FileAccess.Read, FileShare.Read, UploadChunkSize, useAsync: true);
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            throw LocalPackageFailure(ex);
+        }
+    }
+
+    private static async Task<int> ReadPackageChunkAsync(FileStream file, byte[] buffer, CancellationToken cancellationToken)
+    {
+        try
+        {
+            return await file.ReadAsync(buffer, cancellationToken).ConfigureAwait(false);
+        }
+        catch (IOException ex)
+        {
+            throw LocalPackageFailure(ex);
+        }
+    }
+
+    private static DeviceOperationException LocalPackageFailure(Exception ex) =>
+        new(DeviceErrorKind.InstallFailed, $"The package file could not be read: {ex.Message}", ex);
+
     private async Task TryRemoveAsync(LockdownServiceProvider lockdown, string remotePath)
     {
         try
@@ -266,7 +306,7 @@ public sealed class DeviceService(string pairRecordsDirectory) : IDeviceService
         }
     }
 
-    private static DeviceOperationException? Translate(Exception ex) => ex switch
+    internal static DeviceOperationException? Translate(Exception ex) => ex switch
     {
         OperationCanceledException or DeviceOperationException => null,
         NotPairedException => new(DeviceErrorKind.NotTrusted, "This PC is not trusted by the iPhone.", ex),

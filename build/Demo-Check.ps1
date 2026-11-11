@@ -19,6 +19,11 @@ $strings = @{}
 [xml]$resources = Get-Content (Join-Path $repo "src/Perenos.Presentation/Strings/Resources$(if ($Language -eq 'ru-RU') { '.ru' }).resx") -Encoding UTF8
 foreach ($item in $resources.root.data) { $strings[$item.name] = $item.value }
 function T([string]$key) { return $strings[$key] }
+function UseLanguage([string]$Culture) {
+    [xml]$items = Get-Content (Join-Path $repo "src/Perenos.Presentation/Strings/Resources$(if ($Culture -eq 'ru-RU') { '.ru' }).resx") -Encoding UTF8
+    $script:strings = @{}
+    foreach ($item in $items.root.data) { $script:strings[$item.name] = $item.value }
+}
 Add-Type -AssemblyName UIAutomationClient
 Add-Type -AssemblyName UIAutomationTypes
 Add-Type -AssemblyName System.Drawing
@@ -102,6 +107,20 @@ function ClickNavigation([string]$Text) {
     }
     FailureState 'navigation'
     throw "No navigation item matching: $Text"
+}
+function ClickMenuItem([string]$Text) {
+    $end = [DateTime]::UtcNow.AddSeconds(20)
+    do {
+        $items = @((Elements (Root) ([System.Windows.Automation.ControlType]::MenuItem)) | Where-Object { $_.Current.Name -eq $Text -and $_.Current.IsEnabled })
+        if ($items.Count) {
+            $items[0].GetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern).Invoke()
+            Write-Output "Clicked menu item: $Text"
+            return
+        }
+        Start-Sleep -Milliseconds 200
+    } while ([DateTime]::UtcNow -lt $end)
+    FailureState 'menu'
+    throw "No menu item matching: $Text"
 }
 function SetField([int]$Index, [string]$Text) {
     $end = [DateTime]::UtcNow.AddSeconds(20)
@@ -204,6 +223,10 @@ function SetCombo([int]$Index, [string]$Text) {
     $items = @((Elements $root ([System.Windows.Automation.ControlType]::ListItem)) | Where-Object { $_.Current.Name -eq $Text })
     if (-not $items.Count) { throw "No settings item: $Text" }
     $items[0].GetCurrentPattern([System.Windows.Automation.SelectionItemPattern]::Pattern).Select()
+    if ($Index -eq 1) {
+        $combo = $boxes[$Index].GetCurrentPattern([System.Windows.Automation.ExpandCollapsePattern]::Pattern)
+        if ($combo.Current.ExpandCollapseState -eq [System.Windows.Automation.ExpandCollapseState]::Expanded) { $combo.Collapse() }
+    }
     Start-Sleep -Milliseconds 400
 }
 try {
@@ -225,14 +248,17 @@ try {
     Capture "start-$Language-$Theme"
     if ($Mode -eq 'Full') {
         ClickButton (T 'Start_Now.Title')
+        Capture "devices-$Language-$Theme"
         ClickButton (T 'Footer_Continue')
         WaitText (T 'Apps_Title')
         Start-Sleep -Seconds 2
+        Capture "apps-all-$Language-$Theme"
         SetField 0 'Cloudy'
         SelectApp 'Cloudy'
         Capture "apps-$Language-$Theme"
         ClickButton (T 'Footer_Continue')
         ClickButton (T 'Footer_Continue')
+        Capture "install-sign-in-$Language-$Theme"
         SetField 0 'demo@example.com'
         SetField 1 'not-a-real-password'
         ClickButton (T 'Account_SignIn') -Last
@@ -249,6 +275,16 @@ try {
         ClickButton (T 'Footer_Continue')
         WaitText (T 'Restore_AppsTitle')
         Start-Sleep -Seconds 2
+        Capture "restore-all-$Language-$Theme"
+        ClickButton ([string]::Format((T 'Restore_FilterLabel'), (T 'Restore_FilterAll')))
+        ClickMenuItem (T 'Restore_FilterRussian')
+        ClickButton (T 'Apps_SortByName')
+        ClickMenuItem (T 'Apps_SortBySize')
+        Capture "restore-russian-$Language-$Theme"
+        ClickButton ([string]::Format((T 'Restore_FilterLabel'), (T 'Restore_FilterRussian')))
+        ClickMenuItem (T 'Restore_FilterAll')
+        ClickButton (T 'Apps_SortBySize')
+        ClickMenuItem (T 'Apps_SortByName')
         SetField 0 'Cloudy'
         SelectApp 'Cloudy'
         Capture "restore-$Language-$Theme"
@@ -257,6 +293,7 @@ try {
         FinishInstall
 
         ClickNavigation (T 'Nav_Library')
+        Capture "library-$Language-$Theme"
         ClickButton (T 'Later_Save.Title')
         ClickButton (T 'Footer_Continue')
         WaitText (T 'Apps_Title')
@@ -284,13 +321,14 @@ try {
     }
     if ($Mode -eq 'Settings') {
         if ($Language -ne 'ru-RU') { throw 'Settings mode checks a live Russian to English switch; use -Language ru-RU.' }
-        ClickButton (T 'Settings_Button')
+        ClickNavigation (T 'Settings_Button')
         SetCombo 1 (T 'Settings_ThemeDark')
         Capture "settings-$Language-Dark"
         SetCombo 0 'English'
+        UseLanguage 'en-US'
         WaitText 'What would you like to do?'
         Capture "library-en-US-Dark"
-        ClickButton 'Settings'
+        ClickNavigation 'Settings'
         SetCombo 1 'Light'
         $settings = SettingsRoot
         $done = @((Elements $settings ([System.Windows.Automation.ControlType]::Button)) | Where-Object { $_.Current.Name -eq 'Done' })

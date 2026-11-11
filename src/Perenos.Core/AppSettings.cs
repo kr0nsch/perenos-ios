@@ -54,14 +54,22 @@ public sealed class SettingsStore
 
     public AppSettings Current { get; }
 
+    /// <summary>Persists <see cref="Current"/>; expected IO failures are logged and skipped instead of crashing the caller.</summary>
     public void Save()
     {
         lock (_gate)
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(_path)!);
-            var temp = _path + ".tmp";
-            File.WriteAllText(temp, JsonSerializer.Serialize(Current, SettingsJsonContext.Default.AppSettings));
-            File.Move(temp, _path, overwrite: true);
+            try
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(_path)!);
+                var temp = _path + ".tmp";
+                File.WriteAllText(temp, JsonSerializer.Serialize(Current, SettingsJsonContext.Default.AppSettings));
+                File.Move(temp, _path, overwrite: true);
+            }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+            {
+                AppLog.Warn("Settings could not be saved; keeping the previous file.", ex);
+            }
         }
     }
 

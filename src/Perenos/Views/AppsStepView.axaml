@@ -18,7 +18,7 @@
       </StackPanel>
       <StackPanel Grid.Row="1" Margin="0,22,0,14" IsVisible="{Binding AppList.ShowList}">
         <TextBox PlaceholderText="{s:Text Apps_Search}" Text="{Binding AppList.SearchText}"/>
-        <Grid ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="9" Margin="0,10,0,0">
+        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="9" Margin="0,10,0,0">
           <Button Content="{Binding AppList.SortButtonText}">
             <Button.Flyout>
               <MenuFlyout>
@@ -27,7 +27,8 @@
               </MenuFlyout>
             </Button.Flyout>
           </Button>
-          <Button Grid.Column="1" Content="{Binding RestoreFilterText}" IsVisible="{Binding ShowRestoreFilter}">
+          <Button Grid.Column="1" HorizontalAlignment="Left" IsVisible="{Binding ShowRestoreFilter}" ToolTip.Tip="{Binding RestoreFilterText}">
+            <TextBlock Text="{Binding RestoreFilterText}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
             <Button.Flyout>
               <MenuFlyout>
                 <MenuItem Header="{Binding Restore.FilterAllText}" Command="{Binding Restore.SetFilterCommand}" CommandParameter="Purchases"/>
@@ -36,7 +37,7 @@
               </MenuFlyout>
             </Button.Flyout>
           </Button>
-          <Button Grid.Column="3" Content="{Binding AppList.SelectAllText}" Command="{Binding AppList.ToggleSelectAllCommand}" ToolTip.Tip="{Binding AppList.SelectAllHint}"/>
+          <Button Grid.Column="2" Content="{Binding AppList.SelectAllText}" Command="{Binding AppList.ToggleSelectAllCommand}" ToolTip.Tip="{Binding AppList.SelectAllHint}"/>
         </Grid>
       </StackPanel>
       <Border Grid.Row="2" Classes="soft" Padding="14,10" Margin="0,0,0,12" IsVisible="{Binding ShowStorefrontStatus}">

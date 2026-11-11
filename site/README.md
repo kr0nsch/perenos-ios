@@ -34,10 +34,11 @@ npm run test:site
 языками, JSON-LD, ссылки загрузки и работу без JavaScript. Скриншоты попадают в
 `artifacts/site-check`, JSON-отчёт — в `artifacts/site-test-results.json`.
 
-Ссылки загрузки по умолчанию ведут на Releases. Если GitHub API доступен, кнопки Windows
-получают прямые URL последнего релиза. Кнопки macOS Apple Silicon и Intel остаются с
-честной пометкой подготовки бета-версии, пока в релизе нет соответствующих DMG.
-Принимаются только HTTPS URL файлов из `github.com/kr0nsch/perenos-ios/releases/download/`.
+Ссылки загрузки по умолчанию ведут на Releases. Если GitHub API доступен, кнопки получают
+прямые URL подходящих файлов последнего релиза. Суффикс `-test.dmg` явно обозначает тестовую
+macOS-сборку без Developer ID и нотаризации; обычные имена DMG предпочитаются при наличии
+подписанного релиза. Принимаются только HTTPS URL файлов из
+`github.com/kr0nsch/perenos-ios/releases/download/`.
 
 ## Превью ссылки
 

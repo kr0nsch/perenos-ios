@@ -53,6 +53,52 @@ public class AppTests
     }
 
     [Fact]
+    public void SaveFailureKeepsPreviousFileAndDoesNotThrow()
+    {
+        var dir = TestPaths.TempDirectory();
+        try
+        {
+            var file = Path.Combine(dir, "settings.json");
+            var store = new SettingsStore(file);
+            store.Current.Language = "ru-RU";
+            store.Save();
+            var saved = File.ReadAllText(file);
+
+            // A directory where the temp file belongs makes every write fail deterministically.
+            Directory.CreateDirectory(file + ".tmp");
+            store.Current.Language = "en-US";
+            store.Save();
+
+            Assert.Equal(saved, File.ReadAllText(file));
+            Assert.Equal("en-US", store.Current.Language);
+        }
+        finally
+        {
+            Directory.Delete(dir, true);
+        }
+    }
+
+    [Fact]
+    public void SaveFailureWithoutPreviousFileLeavesNothing()
+    {
+        var dir = TestPaths.TempDirectory();
+        try
+        {
+            var file = Path.Combine(dir, "settings.json");
+            var store = new SettingsStore(file);
+            Directory.CreateDirectory(file + ".tmp");
+
+            store.Save();
+
+            Assert.False(File.Exists(file));
+        }
+        finally
+        {
+            Directory.Delete(dir, true);
+        }
+    }
+
+    [Fact]
     public void PortableMarkerKeepsDataNextToApp()
     {
         var dir = TestPaths.TempDirectory();

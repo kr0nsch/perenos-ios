@@ -105,7 +105,7 @@ public sealed partial class RestoreAppsViewModel(
             LoadedFromUdid = target.Udid;
             _ = LoadIconsAsync(target.Udid, apps.Where(app => app.Installed is not null).Select(app => app.Owned.BundleId).ToList(), token);
         }
-        catch (OperationCanceledException)
+        catch (OperationCanceledException) when (token.IsCancellationRequested)
         {
         }
         catch (IpatoolException ex) when (!token.IsCancellationRequested && ReferenceEquals(_loading, loading))
@@ -128,7 +128,7 @@ public sealed partial class RestoreAppsViewModel(
         catch (Exception ex) when (!token.IsCancellationRequested && ReferenceEquals(_loading, loading))
         {
             AppLog.Warn("Could not prepare the restoration list.", ex);
-            Error = Loc.Get(ex is HttpRequestException ? "Restore_Network" : "Restore_HistoryFailed");
+            Error = Loc.Get(ex is HttpRequestException or OperationCanceledException ? "Restore_Network" : "Restore_HistoryFailed");
         }
         finally
         {

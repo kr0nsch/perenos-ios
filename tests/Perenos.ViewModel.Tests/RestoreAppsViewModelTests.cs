@@ -117,6 +117,27 @@ public sealed class RestoreAppsViewModelTests
         Assert.Equal(1054372220, Assert.Single(vm.SelectedApps).AppStoreId);
     }
 
+    [Fact]
+    public async Task CatalogTimeoutShowsNetworkErrorAndAllowsRetry()
+    {
+        var store = new FakeStore { Owned = [new OwnedApp(1, "app.one", "Owned", "1.0", null)] };
+        var catalog = new FakeCatalog { Error = new TaskCanceledException("The catalog request timed out.") };
+        var vm = new RestoreAppsViewModel(new FakeDevices(), new RestorableAppScanner(store, catalog), new IconCache(), new TestDispatcher());
+
+        await vm.LoadAsync(Target());
+
+        Assert.Equal("Restore_Network", vm.Error);
+        Assert.False(vm.IsLoading);
+        Assert.False(vm.ShowEmpty);
+        Assert.Null(vm.LoadedFromUdid);
+
+        catalog.Error = null;
+        await vm.LoadAsync(Target());
+
+        Assert.Null(vm.Error);
+        Assert.Equal(1, vm.TotalCount);
+    }
+
     private static DeviceItemViewModel Target() => new("target", _ => Task.CompletedTask);
 
     private static InstalledApp App(long id, string name, string version) =>
@@ -163,6 +184,9 @@ public sealed class RestoreAppsViewModelTests
     {
         public IReadOnlySet<long> Available { get; init; } = new HashSet<long>();
 
-        public Task<IReadOnlySet<long>> GetAvailableAppIdsAsync(IEnumerable<long> appIds, string storefront, CancellationToken cancellationToken = default) => Task.FromResult(Available);
+        public Exception? Error { get; set; }
+
+        public Task<IReadOnlySet<long>> GetAvailableAppIdsAsync(IEnumerable<long> appIds, string storefront, CancellationToken cancellationToken = default) =>
+            Error is null ? Task.FromResult(Available) : Task.FromException<IReadOnlySet<long>>(Error);
     }
 }

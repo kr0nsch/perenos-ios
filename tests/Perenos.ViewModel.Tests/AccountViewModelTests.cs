@@ -167,6 +167,39 @@ public class AccountViewModelTests
         Assert.Null(account.Error);
     }
 
+    [Fact]
+    public async Task UnexpectedSignInErrorShowsGenericMessageAndAllowsASuccessfulRetry()
+    {
+        var attempts = 0;
+        var store = new FakeStore
+        {
+            Account = null,
+            LoginBehavior = () => ++attempts == 1
+                ? Task.FromException<LoginResult>(new IOException("temporary disk failure"))
+                : Task.FromResult(new LoginResult(LoginStatus.SignedIn, new IpatoolAccount("owner@example.com", "Owner"))),
+        };
+        var account = new AccountViewModel(store);
+        await account.RefreshAsync();
+        account.InputEmail = "owner@example.com";
+        account.InputPassword = "password";
+
+        await account.SignInCommand.ExecuteAsync(null);
+
+        Assert.True(account.IsSignedOut);
+        Assert.Equal(Loc.Get("Account_Error_Generic"), account.Error);
+        Assert.DoesNotContain("temporary disk failure", account.Error);
+        Assert.False(account.IsBusy);
+        Assert.True(account.SignInCommand.CanExecute(null));
+
+        await account.SignInCommand.ExecuteAsync(null);
+
+        Assert.Equal(2, store.LoginCalls);
+        Assert.True(account.IsSignedIn);
+        Assert.Equal("owner@example.com", account.Email);
+        Assert.Null(account.Error);
+        Assert.False(account.IsBusy);
+    }
+
     private static async Task<AccountViewModel> SignedInAsync(FakeStore store)
     {
         var account = new AccountViewModel(store);

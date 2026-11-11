@@ -27,17 +27,17 @@
           <ItemsControl.ItemTemplate>
             <DataTemplate DataType="vm:DeviceItemViewModel">
               <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14" MinHeight="86" Margin="0,2">
-                <Button Grid.ColumnSpan="3" Classes="quiet" HorizontalContentAlignment="Stretch" Padding="10"
+                <Button Grid.ColumnSpan="2" Classes="quiet" HorizontalContentAlignment="Stretch" Padding="10"
                         Command="{Binding $parent[ItemsControl].DataContext.ChooseDeviceCommand}" CommandParameter="{Binding}" IsEnabled="{Binding IsSelectable}" AutomationProperties.Name="{Binding Name}">
                   <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
                     <Border Classes="hero-icon" Width="44" Height="44" CornerRadius="14" VerticalAlignment="Center">
                       <PathIcon Classes="accent" Width="21" Height="21" Data="M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm1 3v14h8V5H8Z"/>
                     </Border>
                     <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="5">
-                      <StackPanel Orientation="Horizontal" Spacing="8">
+                      <WrapPanel ItemSpacing="8" LineSpacing="4">
                         <TextBlock Text="{Binding Name}" Classes="title"/>
                         <Border Classes="soft" Padding="6,1" IsVisible="{Binding HasRole}"><TextBlock Text="{Binding RoleText}" Classes="caption"/></Border>
-                      </StackPanel>
+                      </WrapPanel>
                       <TextBlock Text="{Binding Subtitle}" Classes="caption"/>
                       <TextBlock Text="{Binding StatusText}" Classes="caption" Foreground="{DynamicResource WarningBrush}" IsVisible="{Binding ShowStatusIcon}"/>
                     </StackPanel>

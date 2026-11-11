@@ -27,7 +27,7 @@ dotnet run --project src/Perenos -- --demo
 
 On an Intel Mac use `osx-x64`. CGO is enabled on macOS because ipatool's Apple
 integration requires it; it is not cross-compiled from Windows. Build a local DMG with
-`bash build/build-macos.sh 1.7.0 osx-arm64`. The script makes an ad-hoc signed package
+`bash build/build-macos.sh 1.7.1 osx-arm64`. The script makes an ad-hoc signed package
 for development unless `MACOS_SIGN_IDENTITY` and `MACOS_NOTARY_PROFILE` are set.
 A public release additionally requires a valid iPhone check on a physical Mac.
 
@@ -73,6 +73,8 @@ localization and download-link checks. Website-only changes do not need a new ap
 1. Update `CHANGELOG.md` and version references.
 2. Ensure all three .NET suites, the Windows release build, macOS CI and browser checks pass.
 3. Tag the commit: `git tag v1.2.3 && git push origin v1.2.3`.
-4. The release workflow builds Windows packages and publishes them with checksums and
-   Sigstore attestations. Signed, notarized Mac DMGs are added when the required Apple
-   secrets are configured and `vars.MACOS_SIGNING_ENABLED` is set to `true`; ad-hoc CI packages are never silently published as stable releases.
+4. The release workflow builds Windows and macOS packages and publishes them with checksums and
+   Sigstore attestations. Without Apple signing credentials, macOS packages are explicitly named
+   `-test.dmg` and described as unnotarized development builds. When the required secrets are configured
+   and `vars.MACOS_SIGNING_ENABLED` is `true`, regular filenames are reserved for Developer ID-signed,
+   notarized DMGs. A stable Mac release additionally requires a physical-device check.

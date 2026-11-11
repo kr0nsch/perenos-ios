@@ -35,7 +35,9 @@
 
 Для связи с iPhone на Windows установите [«Устройства Apple»](https://apps.microsoft.com/detail/9NP83LWLPZ9K) или iTunes.
 
-**На Mac:** приложение поддерживает macOS 15+ на Apple Silicon и Intel. Публичные DMG появляются в релизе только после подписи Developer ID и нотаризации Apple. Если DMG в релизе нет, доступны [сборка из исходников](#сборка-из-исходников) и development-пакеты в CI — они не заменяют подписанный релиз.
+**На Mac:** поддерживаются macOS 15+ на Apple Silicon и Intel. В релизе выберите `Perenos-<версия>-macos-arm64-test.dmg` для Apple Silicon или `Perenos-<версия>-macos-x64-test.dmg` для Intel.
+
+**Это тестовые DMG с ad-hoc подписью, без Developer ID и нотаризации Apple.** Gatekeeper может предупредить о неизвестном разработчике. Первый запуск на физическом Mac и работа с реальным iPhone ещё не проверены. Стабильные пакеты без суффикса `-test` появятся после настройки Developer ID, нотаризации и проверки на оборудовании. Также доступна [сборка из исходников](#сборка-из-исходников).
 
 ### 2. Подключите iPhone
 
@@ -101,7 +103,7 @@
 gh attestation verify <скачанный-файл> -R kr0nsch/perenos-ios
 ```
 
-Sigstore подтверждает происхождение файла, но не заменяет подпись издателя Windows Authenticode. Подробнее: [SECURITY.md](SECURITY.md).
+Sigstore подтверждает происхождение файла, но не заменяет подпись издателя Windows Authenticode или Apple Developer ID и нотаризацию. Подробнее: [SECURITY.md](SECURITY.md).
 
 <a id="сборка-из-исходников"></a>
 <details>
@@ -125,7 +127,7 @@ brew install dotnet go
 brew install --cask powershell
 pwsh build/Get-Ipatool.ps1 -RuntimeIdentifier osx-arm64
 dotnet run --project src/Perenos -- --demo
-bash build/build-macos.sh 1.7.0 osx-arm64
+bash build/build-macos.sh 1.7.1 osx-arm64
 ```
 
 Для Intel замените `osx-arm64` на `osx-x64`. Без `MACOS_SIGN_IDENTITY` создаётся ad-hoc пакет для разработки. Для публичного распространения задайте Developer ID и `MACOS_NOTARY_PROFILE`, чтобы включить нотаризацию.

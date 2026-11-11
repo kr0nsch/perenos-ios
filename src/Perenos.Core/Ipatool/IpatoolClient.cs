@@ -19,14 +19,20 @@ public sealed class IpatoolClient : IAppStoreClient
 
     private readonly string _executable;
     private readonly string _home;
-    private readonly Lazy<string> _passphrase;
+    private readonly Func<string> _passphraseFactory;
+    private string? _passphrase;
     private readonly SemaphoreSlim _gate = new(1, 1);
 
     public IpatoolClient(string executable, string home)
+        : this(executable, home, null)
+    {
+    }
+
+    internal IpatoolClient(string executable, string home, Func<string>? passphraseFactory)
     {
         _executable = executable;
         _home = home;
-        _passphrase = new Lazy<string>(() => KeychainPassphrase.GetOrCreate(home), LazyThreadSafetyMode.ExecutionAndPublication);
+        _passphraseFactory = passphraseFactory ?? (() => KeychainPassphrase.GetOrCreate(_home));
     }
 
     public bool IsAvailable => File.Exists(_executable);
@@ -261,7 +267,9 @@ public sealed class IpatoolClient : IAppStoreClient
             if (!interactive)
                 psi.ArgumentList.Add("--non-interactive");
             psi.ArgumentList.Add("--keychain-passphrase");
-            psi.ArgumentList.Add(_passphrase.Value);
+            // Resolved under _gate, so concurrent commands share one lookup; a failure is not
+            // cached and the next command retries.
+            psi.ArgumentList.Add(_passphrase ??= _passphraseFactory());
             ConfigureEnvironment(psi.Environment, _home);
 
             // Log the verb only: arguments can contain the Apple Account password.

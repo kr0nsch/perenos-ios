@@ -5,6 +5,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Headless;
 using Avalonia.Headless.XUnit;
 using Avalonia.Interactivity;
+using Avalonia.Media;
 using Avalonia.Styling;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
@@ -95,6 +96,183 @@ public sealed class AppBuilderTests : IDisposable
         Assert.True(navigation.IsVisible);
         Assert.Equal(Loc.Get("Nav_Workspace"), AutomationProperties.GetName(navigation));
         window.Close();
+    }
+
+    [AvaloniaFact]
+    public void RussianBrandTaglineStaysInsideSidebar()
+    {
+        var window = Track(CreateWindow("ru-RU"));
+        window.UpdateLayout();
+        var sidebar = window.FindControl<Border>("Sidebar")!;
+        var tagline = window.GetVisualDescendants().OfType<TextBlock>()
+            .Single(text => text.Text == Loc.Get("Shell_Tagline"));
+
+        Assert.True(sidebar.IsVisible);
+        var bottomRight = tagline.TranslatePoint(new Point(tagline.Bounds.Width, tagline.Bounds.Height), sidebar);
+        Assert.NotNull(bottomRight);
+        Assert.True(bottomRight.Value.X <= sidebar.Bounds.Width - sidebar.Padding.Right,
+            $"Tagline ends at {bottomRight.Value.X}, sidebar content ends at {sidebar.Bounds.Width - sidebar.Padding.Right}.");
+        Assert.True(bottomRight.Value.Y <= sidebar.Bounds.Height - sidebar.Padding.Bottom);
+        window.Close();
+    }
+
+    [AvaloniaFact]
+    public void CompactStartContentCanBeScrolledToRequirements()
+    {
+        var window = Track(CreateWindow("ru-RU"));
+        window.Width = 820;
+        window.Height = 640;
+        window.UpdateLayout();
+        var scroller = window.GetVisualDescendants().OfType<ScrollViewer>()
+            .Single(scroll => scroll.GetVisualDescendants().OfType<TextBlock>()
+                .Any(text => text.Text == Loc.Get("Shell_Requirements")));
+        var requirements = window.GetVisualDescendants().OfType<TextBlock>()
+            .Single(text => text.Text == Loc.Get("Shell_Requirements"));
+        var footer = window.GetVisualDescendants().OfType<TextBlock>()
+            .Single(text => text.Text == window.ViewModel.FooterHint);
+
+        scroller.Offset = new Vector(0, scroller.Extent.Height);
+        window.UpdateLayout();
+        var requirementBounds = BoundsIn(requirements, window);
+        var footerBounds = BoundsIn(footer, window);
+        Assert.True(requirementBounds.Bottom <= footerBounds.Top,
+            $"Requirements end at {requirementBounds.Bottom}, footer starts at {footerBounds.Top}.");
+        AssertVisibleTextWithinWindow(window);
+        window.Close();
+    }
+
+    [AvaloniaFact]
+    public async Task RussianDeviceAndAppListsFitCompactWindow()
+    {
+        var window = Track(CreateWindow("ru-RU"));
+        window.Width = 820;
+        window.Height = 640;
+        var vm = window.ViewModel;
+        vm.TransferNowCommand.Execute(null);
+        await Until(() => vm.Source?.IsReady == true);
+        window.UpdateLayout();
+        AssertVisibleTextWithinWindow(window);
+        var deviceProgress = window.GetVisualDescendants().OfType<ProgressBar>()
+            .Single(progress => progress.IsIndeterminate && progress.GetVisualAncestors().OfType<Button>().Any());
+        Assert.True(deviceProgress.Bounds.Width == 36,
+            $"Bounds={deviceProgress.Bounds.Width}; Width={deviceProgress.Width}; MinWidth={deviceProgress.MinWidth}");
+
+        await vm.PrimaryCommand.ExecuteAsync(null);
+        await Until(() => vm.Apps.LoadedFromUdid is not null);
+        window.UpdateLayout();
+        Assert.NotEmpty(vm.AppList.Visible);
+        AssertVisibleTextWithinWindow(window);
+        window.Close();
+    }
+
+    [AvaloniaFact]
+    public void RussianSettingsFitTheirWindow()
+    {
+        var window = Track(CreateWindow("ru-RU"));
+        var settings = new SettingsWindow(window.ViewModel);
+        settings.Show();
+        settings.UpdateLayout();
+        AssertVisibleTextWithinWindow(settings);
+        settings.Close();
+        window.Close();
+    }
+
+    [AvaloniaFact]
+    public async Task DisabledPrimaryActionTextRemainsReadableInBothThemes()
+    {
+        var window = Track(CreateWindow("ru-RU"));
+        var vm = window.ViewModel;
+        vm.TransferNowCommand.Execute(null);
+        await Until(() => vm.Source?.IsReady == true);
+        await vm.PrimaryCommand.ExecuteAsync(null);
+        await Until(() => vm.Apps.LoadedFromUdid is not null);
+        window.UpdateLayout();
+        var primary = window.GetVisualDescendants().OfType<Button>().Single(button => button.Classes.Contains("primary"));
+        var label = primary.GetVisualDescendants().OfType<TextBlock>().Single(text => text.Text == vm.PrimaryText);
+        var icon = primary.GetVisualDescendants().OfType<PathIcon>().Single(path => path.Classes.Contains("on-accent"));
+        AssertDisabledContrast(window, primary, label);
+        Assert.Equal(Assert.IsType<SolidColorBrush>(label.Foreground).Color,
+            Assert.IsType<SolidColorBrush>(icon.Foreground).Color);
+
+        await vm.Account.RefreshAsync();
+        var signIn = new SignInWindow(vm.Account);
+        signIn.Show();
+        var signInButton = signIn.GetVisualDescendants().OfType<Button>().Single(button => button.Classes.Contains("primary"));
+        await Until(() => !signInButton.IsEffectivelyEnabled);
+        var signInLabel = signIn.GetVisualDescendants().OfType<TextBlock>().Single(text => text.Text == vm.Account.SignInButtonText);
+        AssertDisabledContrast(signIn, signInButton, signInLabel);
+        signIn.Close();
+        window.Close();
+    }
+
+    private static void AssertDisabledContrast(Window window, Button button, TextBlock label)
+    {
+        Assert.False(button.IsEffectivelyEnabled);
+        foreach (var theme in new[] { ThemeVariant.Light, ThemeVariant.Dark })
+        {
+            Application.Current!.RequestedThemeVariant = theme;
+            window.UpdateLayout();
+            var foreground = Assert.IsType<SolidColorBrush>(label.Foreground).Color;
+            var background = Assert.IsType<SolidColorBrush>(button.Background).Color;
+            var surface = Assert.IsType<SolidColorBrush>(window.Background).Color;
+            var effectiveBackground = Blend(background, surface, button.Opacity);
+            var effectiveForeground = Blend(foreground, effectiveBackground, button.Opacity * label.Opacity);
+            var contrast = Contrast(effectiveForeground, effectiveBackground);
+
+            Assert.True(contrast >= 4.5, $"{theme} disabled primary contrast for '{label.Text}' is {contrast:F2}:1.");
+        }
+    }
+
+    private static Color Blend(Color foreground, Color background, double opacity) => Color.FromRgb(
+        (byte)Math.Round(foreground.R * opacity + background.R * (1 - opacity)),
+        (byte)Math.Round(foreground.G * opacity + background.G * (1 - opacity)),
+        (byte)Math.Round(foreground.B * opacity + background.B * (1 - opacity)));
+
+    private static double Contrast(Color first, Color second)
+    {
+        var firstLuminance = Luminance(first);
+        var secondLuminance = Luminance(second);
+        return (Math.Max(firstLuminance, secondLuminance) + 0.05) / (Math.Min(firstLuminance, secondLuminance) + 0.05);
+    }
+
+    private static double Luminance(Color color)
+    {
+        static double Channel(byte value)
+        {
+            var normalized = value / 255.0;
+            return normalized <= 0.04045 ? normalized / 12.92 : Math.Pow((normalized + 0.055) / 1.055, 2.4);
+        }
+
+        return 0.2126 * Channel(color.R) + 0.7152 * Channel(color.G) + 0.0722 * Channel(color.B);
+    }
+
+    private static Rect BoundsIn(Visual visual, Visual ancestor)
+    {
+        var origin = visual.TranslatePoint(default, ancestor);
+        Assert.NotNull(origin);
+        return new Rect(origin.Value, visual.Bounds.Size);
+    }
+
+    private static void AssertVisibleTextWithinWindow(Window window)
+    {
+        var viewport = new Rect(window.ClientSize);
+        var controls = window.GetVisualDescendants().OfType<Control>().Where(control =>
+            control.IsVisible && control.GetVisualAncestors().OfType<Visual>().All(ancestor => ancestor.IsVisible) &&
+            (control is TextBlock text && !string.IsNullOrWhiteSpace(text.Text) || control is Button or TextBox or ComboBox));
+        foreach (var control in controls)
+        {
+            var bounds = BoundsIn(control, window);
+            if (bounds.Width <= 0 || bounds.Height <= 0)
+                continue;
+            var description = control is TextBlock text ? text.Text : control.Name ?? control.GetType().Name;
+            Assert.True(bounds.Left >= -0.01 && bounds.Right <= viewport.Width + 0.01,
+                $"'{description}' has horizontal bounds {bounds}, window width is {viewport.Width}.");
+            var verticallyScrollable = control.GetVisualAncestors().OfType<ScrollViewer>()
+                .Any(scroll => scroll.VerticalScrollBarVisibility != Avalonia.Controls.Primitives.ScrollBarVisibility.Disabled);
+            if (!verticallyScrollable)
+                Assert.True(bounds.Top >= -0.01 && bounds.Bottom <= viewport.Height + 0.01,
+                    $"'{description}' has vertical bounds {bounds}, window height is {viewport.Height}.");
+        }
     }
 
     [AvaloniaFact]

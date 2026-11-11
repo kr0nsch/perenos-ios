@@ -146,6 +146,11 @@ public sealed partial class AccountViewModel(IAppStoreClient ipatool) : Observab
         {
             Error = ex.Kind == IpatoolErrorKind.Network ? Loc.Get("Account_Error_Network") : FriendlyError(ex.Message);
         }
+        catch (Exception ex)
+        {
+            AppLog.Warn("Sign-in failed unexpectedly.", ex);
+            Error = Loc.Get("Account_Error_Generic");
+        }
         finally
         {
             IsBusy = false;

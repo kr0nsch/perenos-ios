@@ -6,6 +6,34 @@ All notable changes to Perenos are listed here. The format follows
 
 ## [Unreleased]
 
+## [1.7.1] - 2026-11-11
+
+### Добавлено
+- Тестовые DMG для macOS 15+ на Apple Silicon и Intel публикуются с суффиксом `-test.dmg` и явным предупреждением об ad-hoc подписи и отсутствии нотаризации.
+
+### Исправлено
+- Длинные русские подписи, фильтры и пути больше не выходят за границы панелей. Улучшены компактное окно, индикаторы загрузки и читаемость неактивных кнопок в обеих темах.
+- Повторный запуск восстанавливает свёрнутое окно, а не отвечающий процесс активации больше не приводит к зависанию.
+- Таймаут App Store показывает ошибку сети с возможностью повтора вместо ложного пустого списка. Временная ошибка доступа к ключам больше не требует перезапуска приложения.
+- Неожиданные ошибки входа отображаются понятным сообщением. Локальные ошибки чтения IPA не принимаются за отключение iPhone, а ошибка записи настроек не приводит к падению.
+- Добавлены проверки границ и контраста интерфейса, сетевых таймаутов, повторной активации и восстановления после файловых ошибок. Обновлены снимки интерфейса и демонстрационные сценарии.
+
+### Ограничения проверки
+- Тестовые macOS-пакеты не имеют Developer ID и нотаризации Apple; Gatekeeper может предупредить о неизвестном разработчике. Запуск на физическом Mac и операции с реальным iPhone не проверялись.
+
+### Added
+- Test DMGs for macOS 15+ on Apple Silicon and Intel use the `-test.dmg` suffix and an explicit warning about ad-hoc signing and missing notarization.
+
+### Fixed
+- Long Russian labels, filters and paths no longer overflow their containers. Improved compact-window layout, loading indicators and disabled-button readability in both themes.
+- Launching a second instance restores the minimized window, and an unresponsive activation endpoint can no longer block it indefinitely.
+- App Store timeouts now show a retryable network error instead of a false empty state. Temporary keychain access errors no longer require an app restart.
+- Unexpected sign-in errors show a friendly message. Local IPA read errors are no longer misreported as an iPhone disconnect, and settings write failures no longer crash the UI.
+- Added layout, contrast, timeout, activation and file-error regression tests. Updated application screenshots and demo checks.
+
+### Verification limits
+- Test macOS packages do not have Developer ID or Apple notarization; Gatekeeper may warn about an unidentified developer. First launch on a physical Mac and operations with a real iPhone have not been verified.
+
 ## [1.7.0] - 2026-11-11
 
 ### Добавлено
@@ -120,6 +148,7 @@ All notable changes to Perenos are listed here. The format follows
 - On an iPhone 17 running iOS 27.2, retrieved 206 account purchases and installed Avito, VK, VK Video, Mail.ru Mail and Gazprombank's Digital Safe. Sber was already current. The latest queue installed 95 updates, found 18 apps current and encountered one device-response timeout.
 - Installation is confirmed, but first launch and operation without any Apple Account on the device have not been verified. Compatibility with every iPhone, iOS version and app is not guaranteed.
 
+[1.7.1]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.7.1
 [1.7.0]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.7.0
 [1.6.0]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.6.0
 [1.5.0]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.5.0

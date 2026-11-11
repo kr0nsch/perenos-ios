@@ -35,7 +35,9 @@ Choose a package from the [latest release](https://github.com/kr0nsch/perenos-io
 
 To connect an iPhone on Windows, install [Apple Devices](https://apps.microsoft.com/detail/9NP83LWLPZ9K) or iTunes.
 
-**On Mac:** Perenos supports macOS 15+ on Apple Silicon and Intel. Public DMGs appear in releases only after Developer ID signing and Apple notarization. If a release has no DMG, you can [build from source](#build-from-source) or use development packages from CI; those do not replace a signed release.
+**On Mac:** Perenos supports macOS 15+ on Apple Silicon and Intel. Choose `Perenos-<version>-macos-arm64-test.dmg` for Apple Silicon or `Perenos-<version>-macos-x64-test.dmg` for Intel.
+
+**These are ad-hoc signed test DMGs, without Developer ID or Apple notarization.** Gatekeeper may warn about an unidentified developer. First launch on a physical Mac and operations with a real iPhone have not been verified. Stable packages without the `-test` suffix will be available after Developer ID signing, notarization and hardware checks. You can also [build from source](#build-from-source).
 
 ### 2. Connect your iPhone
 
@@ -101,7 +103,7 @@ Releases include `SHA256SUMS.txt` and Sigstore build provenance. Verify a downlo
 gh attestation verify <downloaded-file> -R kr0nsch/perenos-ios
 ```
 
-Sigstore proves build provenance, not a Windows Authenticode publisher signature. See [SECURITY.md](SECURITY.md).
+Sigstore proves build provenance, not a Windows Authenticode or Apple Developer ID publisher signature, and not Apple notarization. See [SECURITY.md](SECURITY.md).
 
 <a id="build-from-source"></a>
 <details>
@@ -125,7 +127,7 @@ brew install dotnet go
 brew install --cask powershell
 pwsh build/Get-Ipatool.ps1 -RuntimeIdentifier osx-arm64
 dotnet run --project src/Perenos -- --demo
-bash build/build-macos.sh 1.7.0 osx-arm64
+bash build/build-macos.sh 1.7.1 osx-arm64
 ```
 
 For Intel, replace `osx-arm64` with `osx-x64`. Without `MACOS_SIGN_IDENTITY`, the package is ad-hoc signed for development. Set a Developer ID and `MACOS_NOTARY_PROFILE` to enable notarization for public distribution.

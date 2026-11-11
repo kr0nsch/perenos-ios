@@ -88,11 +88,11 @@ try {
       page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
       await page.route('https://api.github.com/repos/kr0nsch/perenos-ios/releases/latest', route => route.fulfill({
         status: 200, contentType: 'application/json', body: JSON.stringify({
-          tag_name: 'v1.7.0', draft: false, prerelease: false, assets: [
-            { name: 'Perenos-1.7.0-setup-x64.exe', size: 50 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.7.0/Perenos-1.7.0-setup-x64.exe' },
-            { name: 'Perenos-1.7.0-portable-x64.zip', size: 45 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.7.0/Perenos-1.7.0-portable-x64.zip' },
-            { name: 'Perenos-1.7.0-macos-arm64.dmg', size: 60 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.7.0/Perenos-1.7.0-macos-arm64.dmg' },
-            { name: 'Perenos-1.7.0-macos-x64.dmg', size: 61 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.7.0/Perenos-1.7.0-macos-x64.dmg' },
+          tag_name: 'v1.7.1', draft: false, prerelease: false, assets: [
+            { name: 'Perenos-1.7.1-setup-x64.exe', size: 50 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.7.1/Perenos-1.7.1-setup-x64.exe' },
+            { name: 'Perenos-1.7.1-portable-x64.zip', size: 45 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.7.1/Perenos-1.7.1-portable-x64.zip' },
+            { name: 'Perenos-1.7.1-macos-arm64-test.dmg', size: 60 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.7.1/Perenos-1.7.1-macos-arm64-test.dmg' },
+            { name: 'Perenos-1.7.1-macos-x64-test.dmg', size: 61 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.7.1/Perenos-1.7.1-macos-x64-test.dmg' },
           ],
         }),
       }));
@@ -123,12 +123,13 @@ try {
       await faq.locator('summary').click();
       assert.equal(await faq.getAttribute('open'), null);
       await page.waitForFunction(() => document.querySelector('[data-download="macos-arm64"]').href.includes('/releases/download/'));
-      assert.ok((await page.locator('[data-download="installer"]').getAttribute('href')).endsWith('Perenos-1.7.0-setup-x64.exe'));
-      assert.ok((await page.locator('[data-download="portable"]').getAttribute('href')).endsWith('Perenos-1.7.0-portable-x64.zip'));
-      assert.ok((await page.locator('[data-download="macos-arm64"]').getAttribute('href')).endsWith('Perenos-1.7.0-macos-arm64.dmg'));
-      assert.ok((await page.locator('[data-download="macos-x64"]').getAttribute('href')).endsWith('Perenos-1.7.0-macos-x64.dmg'));
+      assert.ok((await page.locator('[data-download="installer"]').getAttribute('href')).endsWith('Perenos-1.7.1-setup-x64.exe'));
+      assert.ok((await page.locator('[data-download="portable"]').getAttribute('href')).endsWith('Perenos-1.7.1-portable-x64.zip'));
+      assert.ok((await page.locator('[data-download="macos-arm64"]').getAttribute('href')).endsWith('Perenos-1.7.1-macos-arm64-test.dmg'));
+      assert.ok((await page.locator('[data-download="macos-x64"]').getAttribute('href')).endsWith('Perenos-1.7.1-macos-x64-test.dmg'));
       assert.equal(await page.locator('[data-download="macos-arm64"]').getAttribute('aria-disabled'), null);
-      assert.match(await page.locator('#release-label').textContent(), /1\.7\.0/);
+      assert.match(await page.locator('[data-download="macos-arm64"] [data-status]').textContent(), /без нотаризации|not notarized/);
+      assert.match(await page.locator('#release-label').textContent(), /1\.7\.1/);
       for (const image of await page.locator('img.theme-image').all()) {
         await image.scrollIntoViewIfNeeded();
         await image.evaluate(img => img.decode());
@@ -175,7 +176,7 @@ try {
     }
     const schemas = (await page.locator('script[type="application/ld+json"]').allTextContents()).map(text => JSON.parse(text));
     const software = schemas.find(schema => schema['@type'] === 'SoftwareApplication');
-    assert.equal(software.softwareVersion, '1.7.0');
+    assert.equal(software.softwareVersion, '1.7.1');
     assert.equal(software.offers.price, '0');
     const faqSchema = schemas.find(schema => schema['@type'] === 'FAQPage');
     assert.equal(faqSchema.mainEntity.length, await page.locator('.faq-items details').count());
@@ -196,6 +197,12 @@ try {
     assert.equal(await page.locator('#panel-now').isVisible(), true);
     assert.equal(await page.locator('#panel-restore').isVisible(), true);
     assert.equal(await page.locator('#panel-later').isVisible(), true);
+    for (const kind of ['macos-arm64', 'macos-x64']) {
+      const link = page.locator(`[data-download="${kind}"]`);
+      assert.ok((await link.getAttribute('href')).endsWith('/releases/latest'));
+      assert.equal(await link.getAttribute('aria-disabled'), null);
+      assert.match(await link.locator('[data-status]').textContent(), /Тестовая DMG|Test DMG/);
+    }
     assert.equal(await page.locator('#theme-toggle').isVisible(), false);
     assert.equal(await page.locator('.scenario-tabs').isVisible(), false);
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));

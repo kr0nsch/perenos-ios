@@ -21,7 +21,7 @@
     <Button Classes="primary" HorizontalAlignment="Stretch" Margin="0,12,0,0" Command="{Binding SignInCommand}">
       <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
         <ProgressBar Width="36" Height="4" IsIndeterminate="True" IsVisible="{Binding IsBusy}"/>
-        <TextBlock Text="{Binding SignInButtonText}" Foreground="{DynamicResource OnAccentBrush}"/>
+        <TextBlock Text="{Binding SignInButtonText}"/>
       </StackPanel>
     </Button>
     <Button Classes="link" Content="{s:Text SignIn_UseAnother}" Command="{Binding CancelCodeCommand}" HorizontalAlignment="Center" IsVisible="{Binding IsCodeRequired}"/>

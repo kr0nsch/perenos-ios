@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Version to build, e.g. 1.7.0 (creates a draft release)"
+        description: "Version to build, e.g. 1.7.1 (creates a draft release)"
         required: true
 
 permissions:
@@ -76,9 +76,8 @@ jobs:
           path: artifacts/release/*
 
   release-macos:
-    # Ad-hoc development packages are built in CI. A public release requires signing and notarization.
-    # Enable this variable only after configuring every Apple signing secret below.
-    if: ${{ vars.MACOS_SIGNING_ENABLED == 'true' }}
+    # Development DMGs are explicitly named -test.dmg. Only configured Developer ID
+    # credentials produce the regular signed and notarized release filenames.
     runs-on: macos-latest
     strategy:
       fail-fast: false
@@ -109,6 +108,7 @@ jobs:
           echo "value=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Import Developer ID and notarization credentials
+        if: ${{ vars.MACOS_SIGNING_ENABLED == 'true' }}
         env:
           MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
           MACOS_CERTIFICATE_PASSWORD: ${{ secrets.MACOS_CERTIFICATE_PASSWORD }}
@@ -134,10 +134,24 @@ jobs:
           rm -f "$CERT_PATH"
           # Keep the temporary keychain for codesign and notarytool until the job ends.
 
-      - name: Build, sign and notarize ${{ matrix.rid }}
+      - name: Build macOS package (${{ matrix.rid }})
         run: |
           bash build/build-macos.sh ${{ steps.version.outputs.value }} ${{ matrix.rid }}
           mv artifacts/release/SHA256SUMS.txt "artifacts/release/SHA256SUMS-${{ matrix.rid }}.txt"
+
+      - name: Mark development package and verify checksum
+        run: |
+          set -euo pipefail
+          if [[ "${{ vars.MACOS_SIGNING_ENABLED }}" != "true" ]]; then
+            ARCH="${{ matrix.rid }}"
+            ARCH="${ARCH#osx-}"
+            DMG="Perenos-${{ steps.version.outputs.value }}-macos-$ARCH.dmg"
+            TEST_DMG="Perenos-${{ steps.version.outputs.value }}-macos-$ARCH-test.dmg"
+            mv "artifacts/release/$DMG" "artifacts/release/$TEST_DMG"
+            sed -i '' "s/$DMG/$TEST_DMG/" "artifacts/release/SHA256SUMS-${{ matrix.rid }}.txt"
+          fi
+          cd artifacts/release
+          shasum -a 256 -c "SHA256SUMS-${{ matrix.rid }}.txt"
 
       - name: Sign macOS build provenance
         uses: actions/attest-build-provenance@v4
@@ -152,7 +166,7 @@ jobs:
 
   publish:
     needs: [release-windows, release-macos]
-    # Mac packages are optional until signing is configured; Windows must always succeed.
+    # Both Windows and the signed or explicitly marked test Mac packages must succeed.
     if: ${{ always() && needs.release-windows.result == 'success' && needs.release-macos.result != 'failure' && needs.release-macos.result != 'cancelled' }}
     runs-on: ubuntu-latest
     steps:
@@ -174,7 +188,7 @@ jobs:
         shell: pwsh
         run: |
           $version = "${{ needs.release-windows.outputs.version }}"
-          $lines = Get-Content CHANGELOG.md
+          $lines = Get-Content CHANGELOG.md -Encoding UTF8
           $start = ($lines | Select-String -Pattern "^## \[$([regex]::Escape($version))\]").LineNumber
           $notes = if ($start) {
             $rest = $lines[$start..($lines.Count - 1)]
@@ -187,27 +201,38 @@ jobs:
           $enDownloads = @(
             "- **Perenos-$version-setup-x64.exe** — Windows installer (recommended)",
             "- **Perenos-$version-portable-x64.zip** — portable Windows version")
-          if (Test-Path "artifacts/release/Perenos-$version-macos-arm64.dmg") {
-            $ruDownloads += "- **Perenos-$version-macos-arm64.dmg** — macOS на Apple Silicon, macOS 15+"
-            $enDownloads += "- **Perenos-$version-macos-arm64.dmg** — macOS on Apple Silicon, macOS 15+"
+          $signedMac = $false
+          foreach ($arch in @("arm64", "x64")) {
+            $platform = if ($arch -eq "arm64") { "Apple Silicon" } else { "Intel" }
+            if (Test-Path "artifacts/release/Perenos-$version-macos-$arch.dmg") {
+              $signedMac = $true
+              $ruDownloads += "- **Perenos-$version-macos-$arch.dmg** — macOS на $platform, macOS 15+, подписано и нотаризовано"
+              $enDownloads += "- **Perenos-$version-macos-$arch.dmg** — macOS on $platform, macOS 15+, signed and notarized"
+            }
+            if (Test-Path "artifacts/release/Perenos-$version-macos-$arch-test.dmg") {
+              $ruDownloads += "- **Perenos-$version-macos-$arch-test.dmg** — тестовый macOS на $platform, macOS 15+, без Developer ID и нотаризации"
+              $enDownloads += "- **Perenos-$version-macos-$arch-test.dmg** — test macOS on $platform, macOS 15+, ad-hoc signed and not notarized"
+            }
           }
-          if (Test-Path "artifacts/release/Perenos-$version-macos-x64.dmg") {
-            $ruDownloads += "- **Perenos-$version-macos-x64.dmg** — macOS на Intel, macOS 15+"
-            $enDownloads += "- **Perenos-$version-macos-x64.dmg** — macOS on Intel, macOS 15+"
-          }
-          $body = @("### Скачать") + $ruDownloads + @(
-            "",
-            "Windows 10 версии 2004+ или Windows 11; для iPhone нужны «Устройства Apple» или iTunes. Mac-пакеты, если они есть в этом релизе, подписаны Developer ID и нотаризованы Apple.",
-            "Файлы собраны GitHub Actions и имеют аттестацию происхождения Sigstore. Проверка: ``gh attestation verify <файл> -R ${{ github.repository }}``. Контрольные суммы — в ``SHA256SUMS.txt``.",
+          $ruMacNotes = if (Test-Path "artifacts/release/*-test.dmg") {
+            @("**Внимание для macOS:** файлы ``-test.dmg`` являются development-сборками с ad-hoc подписью, без Developer ID и нотаризации Apple. Gatekeeper может предупредить о неизвестном разработчике. Первый запуск на физическом Mac и операции с реальным iPhone не проверялись.")
+          } else { @() }
+          $enMacNotes = if (Test-Path "artifacts/release/*-test.dmg") {
+            @("**macOS warning:** ``-test.dmg`` files are ad-hoc signed development builds, without Developer ID or Apple notarization. Gatekeeper may warn about an unidentified developer. First launch on a physical Mac and operations with a real iPhone have not been verified.")
+          } else { @() }
+          $ruMacTrust = if ($signedMac) { @("Mac DMG без суффикса ``-test`` подписаны Developer ID и нотаризованы Apple.") } else { @() }
+          $enMacTrust = if ($signedMac) { @("Mac DMGs without the ``-test`` suffix are Developer ID-signed and notarized by Apple.") } else { @() }
+          $body = @("### Скачать") + $ruDownloads + @("") + $ruMacNotes + $ruMacTrust + @(
+            "Windows 10 версии 2004+ или Windows 11; для iPhone нужны «Устройства Apple» или iTunes.",
+            "Файлы собраны GitHub Actions и имеют аттестацию происхождения Sigstore. Проверка: ``gh attestation verify <файл> -R ${{ github.repository }}``. Контрольные суммы — в ``SHA256SUMS.txt``. Аттестация не заменяет подпись Apple или издателя Windows.",
             "SmartScreen может предупредить о неизвестном издателе, если сертификат Windows не настроен.",
             "",
             "---",
             "") + @($notes) + @(
             "",
-            "### Downloads") + $enDownloads + @(
-            "",
-            "Requires Windows 10 version 2004 or later, or Windows 11, and Apple Devices or iTunes. Any included Mac packages are Developer ID-signed and notarized by Apple.",
-            "Built by GitHub Actions with signed Sigstore build provenance. Verify with ``gh attestation verify <file> -R ${{ github.repository }}``. Checksums are in ``SHA256SUMS.txt``.",
+            "### Downloads") + $enDownloads + @("") + $enMacNotes + $enMacTrust + @(
+            "Requires Windows 10 version 2004 or later, or Windows 11, and Apple Devices or iTunes.",
+            "Built by GitHub Actions with signed Sigstore build provenance. Verify with ``gh attestation verify <file> -R ${{ github.repository }}``. Checksums are in ``SHA256SUMS.txt``. Attestation does not replace an Apple or Windows publisher signature.",
             "SmartScreen may warn about an unknown publisher if no Windows signing certificate is configured.")
           Set-Content -Path artifacts/release-notes.md -Value $body -Encoding utf8
 

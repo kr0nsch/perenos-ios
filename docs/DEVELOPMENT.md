@@ -16,9 +16,10 @@ cleanup.
 ## Verification requirements
 
 Run Core, ViewModel/Platform and Avalonia headless UI suites on Windows and macOS.
-CI also builds Windows x64/ARM64 and packages both macOS RIDs with an ad-hoc development signature. Release Mac packages
-must be Developer ID-signed and notarized. The Mac release job is skipped until its
-credentials are configured; it never silently turns an ad-hoc build into a stable release.
+CI also builds Windows x64/ARM64 and packages both macOS RIDs with an ad-hoc development signature.
+Releases include those packages only with an explicit `-test.dmg` suffix and warnings about
+missing Developer ID and notarization. Stable Mac packages require configured Developer ID
+and notarization credentials and use the regular filenames without `-test`.
 
 Demo checks must cover transfer, purchase restoration, saving to the library,
 installing from the library, theme changes and live language changes. Screenshots
@@ -39,8 +40,8 @@ Do not attach purchased IPAs, credentials, full UDIDs or private keys.
 - Sign Windows binaries when an Authenticode certificate is available. Sigstore
   attestation proves build provenance, not the publisher's Windows identity.
 - Keep website screenshots, two languages and platform requirements synchronized
-  with the current app. Mac downloads appear only when matching DMGs exist in the
-  latest release.
+  with the current app. Mac downloads appear only when matching signed DMGs or
+  explicitly labeled `-test.dmg` development packages exist in the latest release.
 
 See [CONTRIBUTING.md](../CONTRIBUTING.md) for local builds and
 [docs/MEDIA.md](MEDIA.md) for screenshot requirements.

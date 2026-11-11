@@ -82,7 +82,12 @@
     <Setter Property="Foreground" Value="{DynamicResource OnAccentBrush}"/>
   </Style>
   <Style Selector="Button.primary:disabled">
-    <Setter Property="Opacity" Value="0.42"/>
+    <Setter Property="Background" Value="{DynamicResource SubtleBrush}"/>
+    <Setter Property="Foreground" Value="{DynamicResource SecondaryTextBrush}"/>
+    <Setter Property="Opacity" Value="1"/>
+  </Style>
+  <Style Selector="Button.primary:disabled TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource SecondaryTextBrush}"/>
   </Style>
   <Style Selector="Button.danger">
     <Setter Property="Background" Value="{DynamicResource DangerBrush}"/>
@@ -166,6 +171,9 @@
     <Setter Property="Background" Value="{DynamicResource SubtleBrush}"/>
     <Setter Property="MinHeight" Value="5"/>
   </Style>
+  <Style Selector="ProgressBar:horizontal">
+    <Setter Property="MinWidth" Value="0"/>
+  </Style>
   <Style Selector="ListBox">
     <Setter Property="Background" Value="Transparent"/>
     <Setter Property="Padding" Value="0"/>
@@ -204,6 +212,9 @@
   </Style>
   <Style Selector="PathIcon.on-accent">
     <Setter Property="Foreground" Value="{DynamicResource OnAccentBrush}"/>
+  </Style>
+  <Style Selector="Button.primary:disabled PathIcon.on-accent">
+    <Setter Property="Foreground" Value="{DynamicResource SecondaryTextBrush}"/>
   </Style>
   <Style Selector="Image.app-icon">
     <Setter Property="Width" Value="44"/>

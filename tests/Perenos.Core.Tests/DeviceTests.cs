@@ -1,3 +1,4 @@
+using System.Net.Sockets;
 using System.Text;
 using Perenos.Core.Devices;
 using Netimobiledevice.Plist;
@@ -145,6 +146,64 @@ public class DeviceTests
         Assert.True(DeviceService.TryParseVersion(text, out var version));
         Assert.Equal(Version.Parse(expected), version);
     }
+
+    [Fact]
+    public async Task MissingIpaFailsAsInstallErrorNotDisconnect()
+    {
+        var dir = TestPaths.TempDirectory();
+        try
+        {
+            var service = new DeviceService(dir);
+
+            var ex = await Assert.ThrowsAsync<DeviceOperationException>(() =>
+                service.InstallAsync("00000000-0000000000000000", Path.Combine(dir, "gone.ipa"), null));
+
+            Assert.Equal(DeviceErrorKind.InstallFailed, ex.Kind);
+        }
+        finally
+        {
+            Directory.Delete(dir, true);
+        }
+    }
+
+    [Fact]
+    public async Task CorruptIpaFailsAsInstallErrorNotDisconnect()
+    {
+        var dir = TestPaths.TempDirectory();
+        try
+        {
+            var ipa = Path.Combine(dir, "broken.ipa");
+            File.WriteAllText(ipa, "this is not a zip");
+            var service = new DeviceService(dir);
+
+            var ex = await Assert.ThrowsAsync<DeviceOperationException>(() =>
+                service.InstallAsync("00000000-0000000000000000", ipa, null));
+
+            Assert.Equal(DeviceErrorKind.InstallFailed, ex.Kind);
+        }
+        finally
+        {
+            Directory.Delete(dir, true);
+        }
+    }
+
+    [Fact]
+    public void DeviceIoErrorsStillMeanDisconnected()
+    {
+        Assert.Equal(DeviceErrorKind.Disconnected, DeviceService.Translate(new IOException("socket lost"))!.Kind);
+        Assert.Equal(DeviceErrorKind.Disconnected, DeviceService.Translate(new SocketException())!.Kind);
+    }
+
+    [Fact]
+    public void CancellationAndDomainErrorsAreNotTranslated()
+    {
+        Assert.Null(DeviceService.Translate(new OperationCanceledException()));
+        Assert.Null(DeviceService.Translate(new DeviceOperationException(DeviceErrorKind.NotTrusted, "x")));
+    }
+
+    [Fact]
+    public void BadPackageDataMeansInstallFailed() =>
+        Assert.Equal(DeviceErrorKind.InstallFailed, DeviceService.Translate(new InvalidDataException("bad zip"))!.Kind);
 
     [Fact]
     public void RedactsUdids() => Assert.Equal("0000…ABCD", DeviceWatcher.Redact("00008030-000A1B2C3D4EABCD"));

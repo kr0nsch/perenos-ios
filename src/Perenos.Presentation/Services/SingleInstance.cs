@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
+using Perenos.Core;
 
 namespace Perenos.Services;
 
@@ -52,7 +53,8 @@ public sealed class SingleInstance : IDisposable
 
     public bool ActivateOther()
     {
-        for (var attempt = 0; attempt < 30; attempt++)
+        var deadline = DateTime.UtcNow.AddSeconds(3);
+        for (var attempt = 0; attempt < 30 && DateTime.UtcNow < deadline; attempt++)
         {
             try
             {
@@ -62,6 +64,8 @@ public sealed class SingleInstance : IDisposable
                 using var client = new TcpClient();
                 if (!client.ConnectAsync(IPAddress.Loopback, port).Wait(TimeSpan.FromSeconds(1)))
                     return false;
+                client.ReceiveTimeout = 1000;
+                client.SendTimeout = 1000;
                 using var writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
                 writer.WriteLine(token);
                 return client.GetStream().ReadByte() == 1;
@@ -85,7 +89,15 @@ public sealed class SingleInstance : IDisposable
                 var received = await reader.ReadLineAsync(_cts.Token);
                 if (!CryptographicOperations.FixedTimeEquals(Encoding.UTF8.GetBytes(received ?? ""), Encoding.UTF8.GetBytes(_token)))
                     continue;
-                activate();
+                try
+                {
+                    activate();
+                }
+                catch (Exception ex)
+                {
+                    AppLog.Warn("Could not activate the existing application window.", ex);
+                    continue;
+                }
                 client.GetStream().WriteByte(1);
             }
             catch (OperationCanceledException)

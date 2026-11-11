@@ -87,11 +87,12 @@
       const patterns = {
         installer: /^Perenos-\d+\.\d+\.\d+-setup-x64\.exe$/,
         portable: /^Perenos-\d+\.\d+\.\d+-portable-x64\.zip$/,
-        'macos-arm64': /^Perenos-\d+\.\d+\.\d+-macos-arm64\.dmg$/,
-        'macos-x64': /^Perenos-\d+\.\d+\.\d+-macos-x64\.dmg$/,
+        'macos-arm64': /^Perenos-\d+\.\d+\.\d+-macos-arm64(?:-test)?\.dmg$/,
+        'macos-x64': /^Perenos-\d+\.\d+\.\d+-macos-x64(?:-test)?\.dmg$/,
       };
       for (const [kind, pattern] of Object.entries(patterns)) {
-        const asset = release.assets.find(item => pattern.test(item.name));
+        const asset = release.assets.find(item => pattern.test(item.name) && !item.name.endsWith('-test.dmg'))
+          ?? release.assets.find(item => pattern.test(item.name));
         if (!asset || typeof asset.browser_download_url !== 'string') continue;
         const url = new URL(asset.browser_download_url);
         if (url.origin !== 'https://github.com' || !url.pathname.startsWith('/kr0nsch/perenos-ios/releases/download/') || url.username || url.password) continue;
@@ -99,15 +100,18 @@
         link.href = url.href;
         link.removeAttribute('aria-disabled');
         if (kind.startsWith('macos-')) {
+          const testPackage = asset.name.endsWith('-test.dmg');
           const size = Number(asset.size);
           const sizeText = Number.isFinite(size) && size > 0 ? ` · ${Math.round(size / 1048576)} MB` : '';
-          link.querySelector('[data-status]').textContent = `macOS 15+ · DMG${sizeText}`;
+          link.querySelector('[data-status]').textContent = testPackage
+            ? (english ? `Test DMG · not notarized${sizeText}` : `Тестовая DMG · без нотаризации${sizeText}`)
+            : `macOS 15+ · DMG${sizeText}`;
         }
       }
       document.querySelector('#release-label').textContent = english
         ? `Version ${release.tag_name.slice(1)} · Windows and macOS`
         : `Версия ${release.tag_name.slice(1)} · Windows и macOS`;
-    } catch { /* Static links and honest Mac beta labels remain available. */ }
+    } catch { /* Static links and explicit Mac test labels remain available. */ }
     finally { clearTimeout(timeout); }
   }
 

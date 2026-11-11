@@ -50,12 +50,19 @@ dotnet build src/Perenos/Perenos.csproj -c Release
 рабочем столе могут мешать друг другу.
 
 Файлы попадают в `artifacts/avalonia-review` (или выбранный `-OutDir` внутри `artifacts`).
-Для сайта нужны `apps`, `restore`, `saved` на обоих языках и в обеих темах. После визуальной
-проверки скопируйте их в `docs/screenshots/avalonia`:
+Для сайта нужны `apps`, `restore`, `saved` на обоих языках и в обеих темах. Полный сценарий
+также сохраняет контрольные кадры `devices`, `apps-all`, `install-sign-in`, `restore-all`,
+`restore-russian` и `library`: они нужны для проверки компоновки, а не для публикации.
+После визуальной проверки обновите существующие снимки в `docs/screenshots/avalonia`:
 
 ```powershell
 New-Item -ItemType Directory -Force docs/screenshots/avalonia
-Copy-Item artifacts/avalonia-review/*-Light.png, artifacts/avalonia-review/*-Dark.png `
+Copy-Item artifacts/avalonia-review/start-*.png,
+  artifacts/avalonia-review/apps-ru-RU-*.png, artifacts/avalonia-review/apps-en-US-*.png,
+  artifacts/avalonia-review/install-ru-RU-*.png, artifacts/avalonia-review/install-en-US-*.png,
+  artifacts/avalonia-review/restore-ru-RU-*.png, artifacts/avalonia-review/restore-en-US-*.png,
+  artifacts/avalonia-review/saved-*.png, artifacts/avalonia-review/settings-ru-RU-Dark.png,
+  artifacts/avalonia-review/library-en-US-*.png `
   -Destination docs/screenshots/avalonia
 ```
 

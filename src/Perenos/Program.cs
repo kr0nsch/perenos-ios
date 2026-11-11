@@ -20,7 +20,7 @@ public static class Program
             instance = new SingleInstance(paths.DataDirectory);
             if (!instance.IsFirst)
                 return instance.ActivateOther() ? 0 : 1;
-            instance.Start(() => App.Instance?.BringToFront());
+            instance.Start(() => Avalonia.Threading.Dispatcher.UIThread.Post(() => App.Instance?.BringToFront()));
 
             return BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
         }

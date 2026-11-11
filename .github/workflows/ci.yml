@@ -94,7 +94,7 @@ jobs:
       - name: Build and package macOS app (${{ matrix.rid }})
         run: |
           command -v pwsh >/dev/null || brew install --cask powershell
-          bash build/build-macos.sh 0.0.0-ci ${{ matrix.rid }}
+          bash build/build-macos.sh 0.0.0 ${{ matrix.rid }}
 
       - name: Upload development package for manual device checks
         if: github.event_name == 'workflow_dispatch'

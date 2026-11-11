@@ -45,7 +45,7 @@
 
   <PropertyGroup>
     <IpatoolRid Condition="'$(RuntimeIdentifier)' != ''">$(RuntimeIdentifier)</IpatoolRid>
-    <IpatoolRid Condition="'$(IpatoolRid)' == ''">win-x64</IpatoolRid>
+    <IpatoolRid Condition="'$(IpatoolRid)' == ''">$([System.Runtime.InteropServices.RuntimeInformation]::RuntimeIdentifier)</IpatoolRid>
     <IpatoolFileName Condition="$(IpatoolRid.StartsWith('win-'))">ipatool.exe</IpatoolFileName>
     <IpatoolFileName Condition="'$(IpatoolFileName)' == ''">ipatool</IpatoolFileName>
     <IpatoolPath Condition="'$(IpatoolPath)' == ''">$(MSBuildThisFileDirectory)..\..\artifacts\tools\$(IpatoolRid)\$(IpatoolFileName)</IpatoolPath>

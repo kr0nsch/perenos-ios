@@ -55,7 +55,7 @@ def build(output: Path) -> None:
     for name in ("apps", "restore", "saved"):
         for language, suffix in (("ru-RU", ""), ("en-US", "-en")):
             for theme in ("light", "dark"):
-                source = ROOT / "docs" / "screenshots" / "avalonia" / f"{name}-{language}-{theme}.png"
+                source = ROOT / "docs" / "screenshots" / "avalonia" / f"{name}-{language}-{theme.capitalize()}.png"
                 if not source.is_file():
                     raise FileNotFoundError(f"Missing current Avalonia screenshot: {source}")
                 shutil.copy2(source, assets / f"{name}{suffix}-{theme}.png")

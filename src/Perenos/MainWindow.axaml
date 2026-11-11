@@ -1,0 +1,140 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Perenos.ViewModels"
+        xmlns:views="using:Perenos.Views"
+        xmlns:s="using:Perenos.Services"
+        xmlns:c="using:Perenos.Converters"
+        x:Class="Perenos.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Width="1180" Height="800" MinWidth="820" MinHeight="640"
+        WindowStartupLocation="CenterScreen"
+        Icon="avares://Perenos/Assets/Perenos.ico"
+        TransparencyLevelHint="None"
+        Title="{s:Text App_Name}">
+  <Window.Resources>
+    <c:EnumEqualsConverter x:Key="EnumEquals"/>
+    <c:InverseBoolConverter x:Key="Not"/>
+  </Window.Resources>
+  <Grid ColumnDefinitions="232,*">
+    <Border x:Name="Sidebar" Background="{DynamicResource SidebarBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,1,0" Padding="20,24">
+      <Grid RowDefinitions="Auto,*,Auto">
+        <StackPanel Spacing="26">
+          <StackPanel Orientation="Horizontal" Spacing="11" Margin="6,0">
+            <Image Source="avares://Perenos/Assets/AppIcon.png" Width="36" Height="36"/>
+            <StackPanel VerticalAlignment="Center">
+              <TextBlock Text="{s:Text App_Name}" FontSize="19" FontWeight="SemiBold"/>
+              <TextBlock Text="{s:Text Shell_Tagline}" Classes="caption"/>
+            </StackPanel>
+          </StackPanel>
+          <StackPanel>
+            <TextBlock Text="{s:Text Nav_Workspace}" Classes="caption" Margin="14,0,14,8"/>
+            <Button Classes="nav" Command="{Binding TransferNowCommand}" IsEnabled="{Binding CanNavigate}"
+                    Classes.active="{Binding NavigationSection, Converter={StaticResource EnumEquals}, ConverterParameter=Now}">
+              <StackPanel Orientation="Horizontal" Spacing="12">
+                <PathIcon Width="19" Height="19" Data="M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm1 3v14h8V5H8Z"/>
+                <TextBlock Text="{s:Text Nav_Transfer}" VerticalAlignment="Center"/>
+              </StackPanel>
+            </Button>
+            <Button Classes="nav" Command="{Binding RestoreAppsCommand}" IsEnabled="{Binding CanNavigate}"
+                    Classes.active="{Binding NavigationSection, Converter={StaticResource EnumEquals}, ConverterParameter=Restore}">
+              <StackPanel Orientation="Horizontal" Spacing="12">
+                <PathIcon Width="19" Height="19" Data="M12 3a9 9 0 1 0 8.49 6H18.4A7 7 0 1 1 12 5c1.93 0 3.68.78 4.95 2.05L14 10h7V3l-2.35 2.35A8.96 8.96 0 0 0 12 3Z"/>
+                <TextBlock Text="{s:Text Nav_Restore}" VerticalAlignment="Center"/>
+              </StackPanel>
+            </Button>
+            <Button Classes="nav" Command="{Binding TransferLaterCommand}" IsEnabled="{Binding CanNavigate}"
+                    Classes.active="{Binding NavigationSection, Converter={StaticResource EnumEquals}, ConverterParameter=Library}">
+              <StackPanel Orientation="Horizontal" Spacing="12">
+                <PathIcon Width="19" Height="19" Data="M4 3h6l2 3h8a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm0 5v11h16V8H4Z"/>
+                <TextBlock Text="{s:Text Nav_Library}" VerticalAlignment="Center"/>
+              </StackPanel>
+            </Button>
+          </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Spacing="12">
+          <Border Classes="soft" Padding="14">
+            <StackPanel Spacing="6">
+              <TextBlock Text="{s:Text Shell_Private}" Classes="title"/>
+              <TextBlock Text="{s:Text Shell_PrivateHint}" Classes="caption"/>
+            </StackPanel>
+          </Border>
+          <Button Classes="quiet" HorizontalContentAlignment="Left" Click="ShowSettings">
+            <StackPanel Orientation="Horizontal" Spacing="12">
+              <PathIcon Width="18" Height="18" Data="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm9 4a7 7 0 0 0-.1-1l2-1.6-2-3.5-2.5 1a8 8 0 0 0-1.8-1L16.2 3h-4l-.4 2.9a8 8 0 0 0-1.8 1l-2.5-1-2 3.5 2 1.6a7 7 0 0 0 0 2l-2 1.6 2 3.5 2.5-1a8 8 0 0 0 1.8 1l.4 2.9h4l.4-2.9a8 8 0 0 0 1.8-1l2.5 1 2-3.5-2-1.6a7 7 0 0 0 .1-1Z"/>
+              <TextBlock Text="{s:Text Settings_Button}" VerticalAlignment="Center"/>
+            </StackPanel>
+          </Button>
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <Grid Grid.Column="1" RowDefinitions="Auto,*">
+      <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1" MinHeight="72" Padding="28,12">
+        <Grid ColumnDefinitions="Auto,*,Auto">
+          <Button x:Name="MobileNavigation" Classes="quiet" Padding="8" Margin="-8,0,8,0" IsVisible="False" VerticalAlignment="Center">
+            <PathIcon Width="21" Height="21" Data="M3 6h18v2H3V6Zm0 5h18v2H3v-2Zm0 5h18v2H3v-2Z"/>
+            <Button.Flyout>
+              <MenuFlyout>
+                <MenuItem Header="{s:Text Nav_Transfer}" Command="{Binding TransferNowCommand}" IsEnabled="{Binding CanNavigate}"/>
+                <MenuItem Header="{s:Text Nav_Restore}" Command="{Binding RestoreAppsCommand}" IsEnabled="{Binding CanNavigate}"/>
+                <MenuItem Header="{s:Text Nav_Library}" Command="{Binding TransferLaterCommand}" IsEnabled="{Binding CanNavigate}"/>
+                <MenuItem Header="{s:Text Settings_Button}" Click="ShowSettings"/>
+              </MenuFlyout>
+            </Button.Flyout>
+          </Button>
+          <StackPanel Grid.Column="1" VerticalAlignment="Center">
+            <TextBlock Text="{Binding NavigationTitle, Mode=OneWay}" FontWeight="SemiBold" FontSize="15"/>
+            <ProgressBar Value="{Binding StepProgress}" Maximum="100" Height="3" MinHeight="3" Margin="0,7,0,0" IsVisible="{Binding ShowStepProgress}"/>
+          </StackPanel>
+          <Button Grid.Column="2" Classes="quiet" Margin="16,-6,-8,-6" IsEnabled="{Binding Account.IsIdle}">
+            <StackPanel Orientation="Horizontal" Spacing="9">
+              <Ellipse Width="8" Height="8" Fill="{DynamicResource SuccessBrush}" IsVisible="{Binding Account.IsSignedIn}" VerticalAlignment="Center"/>
+              <TextBlock Text="{Binding Account.TitleBarText}" MaxWidth="220" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+              <PathIcon Width="13" Height="13" Data="m7 10 5 5 5-5H7Z"/>
+            </StackPanel>
+            <Button.Flyout>
+              <MenuFlyout>
+                <MenuItem Header="{s:Text Account_SignIn}" IsVisible="{Binding Account.IsSignedIn, Converter={StaticResource Not}}" Click="ShowSignIn"/>
+                <MenuItem Header="{Binding Account.SignedInText}" IsEnabled="False" IsVisible="{Binding Account.IsSignedIn}"/>
+                <MenuItem Header="{s:Text Account_SignOut}" IsVisible="{Binding Account.IsSignedIn}" Command="{Binding Account.SignOutCommand}"/>
+              </MenuFlyout>
+            </Button.Flyout>
+          </Button>
+        </Grid>
+      </Border>
+
+      <Grid Grid.Row="1" RowDefinitions="*,Auto">
+        <Grid Margin="0">
+          <Border Classes="card" Background="{DynamicResource WarningSoftBrush}" Padding="16" Margin="28,16,28,0" VerticalAlignment="Top" IsVisible="{Binding IsToolMissing}">
+            <TextBlock Text="{s:Text ToolMissing}" Classes="body"/>
+          </Border>
+          <views:StartView IsVisible="{Binding IsStartStep}"/>
+          <views:LaterView IsVisible="{Binding IsLaterStep}"/>
+          <views:DeviceStepView IsVisible="{Binding IsDeviceStep}"/>
+          <views:AppsStepView IsVisible="{Binding IsAppsStep}"/>
+          <views:InstallStepView IsVisible="{Binding IsInstallStep}"/>
+        </Grid>
+        <Border Grid.Row="1" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Padding="28,15">
+          <Grid ColumnDefinitions="Auto,*,Auto" MinHeight="44">
+            <Button Classes="quiet" HorizontalAlignment="Left" Command="{Binding BackCommand}" IsVisible="{Binding ShowBack}" Padding="10,8">
+              <StackPanel Orientation="Horizontal" Spacing="7">
+                <PathIcon Width="17" Height="17" Data="m15 18-6-6 6-6 1.4 1.4L11.8 12l4.6 4.6L15 18Z"/>
+                <TextBlock Text="{Binding BackText}" VerticalAlignment="Center"/>
+              </StackPanel>
+            </Button>
+            <TextBlock Grid.Column="1" Text="{Binding FooterHint}" Classes="caption" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Margin="16,0" MaxWidth="340" IsVisible="{Binding HasFooterHint}"/>
+            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10">
+              <Button Content="{Binding SecondaryText}" Command="{Binding SecondaryCommand}" IsVisible="{Binding ShowSecondary}"/>
+              <Button Classes="primary" Classes.danger="{Binding Install.IsRunning}" Command="{Binding PrimaryCommand}" IsVisible="{Binding ShowPrimary}" IsEnabled="{Binding IsPrimaryEnabled}">
+                <StackPanel Orientation="Horizontal" Spacing="9">
+                  <TextBlock Text="{Binding PrimaryText}" VerticalAlignment="Center"/>
+                  <PathIcon Classes="on-accent" Width="16" Height="16" Data="m9 18 6-6-6-6-1.4 1.4 4.6 4.6-4.6 4.6L9 18Z" IsVisible="{Binding PrimaryShowsForward}"/>
+                </StackPanel>
+              </Button>
+            </StackPanel>
+          </Grid>
+        </Border>
+      </Grid>
+    </Grid>
+  </Grid>
+</Window>

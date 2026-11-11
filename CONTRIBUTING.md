@@ -2,70 +2,77 @@
 
 Thanks for helping improve Perenos (Перенос)!
 
-## Getting started
+## Getting started on Windows
 
-1. On Windows, clone `https://github.com/kr0nsch/perenos-ios.git` and open the repository folder.
-2. Install the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) and
-   [Go 1.26.5](https://go.dev/dl/go1.26.5.windows-amd64.zip).
-3. Run `./build/Get-Ipatool.ps1` once to build the checksum-verified ipatool source snapshot.
-4. Build and run: `dotnet run --project src/Perenos -p:Platform=x64`.
-5. Run both suites: `dotnet test tests/Perenos.Core.Tests` and
-   `dotnet test tests/Perenos.ViewModel.Tests`.
+1. Clone `https://github.com/kr0nsch/perenos-ios.git`.
+2. Install the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) and Go 1.26.5.
+3. Run `./build/Get-Ipatool.ps1` once to build the checksum-verified ipatool snapshot.
+4. Run `dotnet run --project src/Perenos` or `dotnet run --project src/Perenos -- --demo`.
+5. Run all suites: `dotnet test Perenos.sln`, including real Avalonia headless UI tests.
 
-Use `--demo` to work on the UI without iPhones or an Apple Account:
+The app uses **Avalonia 12 and .NET 10**, not Windows App SDK. `Perenos.Core` contains
+USB/App Store logic, `Perenos.Presentation` contains shared MVVM and localization,
+and `src/Perenos` contains the cross-platform Avalonia UI.
 
-```powershell
-dotnet run --project src/Perenos -p:Platform=x64 -- --demo
+## Getting started on macOS
+
+Use macOS 15 or newer with Xcode Command Line Tools, .NET 10 SDK, Go 1.26.5 and PowerShell 7:
+
+```bash
+brew install dotnet go
+brew install --cask powershell
+bash build/Get-Ipatool.ps1 -RuntimeIdentifier osx-arm64
+dotnet run --project src/Perenos -- --demo
 ```
 
-See [development priorities](docs/DEVELOPMENT.md) for completed reliability fixes and
-the remaining product work. View-model tests compile the real view-model source with
-headless UI adapters; the Windows app build checks the production WinUI integration.
-
-Projects, namespaces and test projects all use the `Perenos` name. Settings,
-encrypted sessions, pair records and the default app library migrate automatically
-from earlier versions. Custom download folders are never moved.
+On an Intel Mac use `osx-x64`. CGO is enabled on macOS because ipatool's Apple
+integration requires it; it is not cross-compiled from Windows. Build a local DMG with
+`bash build/build-macos.sh 1.7.0 osx-arm64`. The script makes an ad-hoc signed package
+for development unless `MACOS_SIGN_IDENTITY` and `MACOS_NOTARY_PROFILE` are set.
+A public release additionally requires a valid iPhone check on a physical Mac.
 
 ## Guidelines
 
-- Keep the flow simple: four steps, one primary button per screen.
-- Every user-visible string goes into `src/Perenos/Strings/en-US/Resources.resw` **and**
-  `ru-RU/Resources.resw`. A unit test checks that both files have the same keys and placeholders.
-- Keep `README.md` (Russian, the main page) and `README.en.md` (English) in sync.
-  `README.ru.md` is a compatibility link for existing bookmarks.
+- Keep the flow simple: a visible task, a clear current step and one primary action.
+- Every user-visible string belongs in `src/Perenos.Presentation/Strings/Resources.resx`
+  **and** `Resources.ru.resx`. Tests check resource parity and Avalonia template keys.
+- Keep `README.md` (Russian), `README.en.md` (English) and the two website pages in sync.
+  `README.ru.md` is a compatibility link for bookmarks.
 - Never log or persist passwords, verification codes or passphrases.
-- Device and App Store code lives in `Perenos.Core` behind `IDeviceService`,
-  `IDeviceWatcher` and `IAppStoreClient`, so it can be tested with fakes.
-- Run the tests before opening a pull request. If you change USB code, please say which
-  iPhone models and iOS versions you tried.
+- Device and App Store operations stay in `Perenos.Core` behind interfaces. UI-specific
+  code belongs in `src/Perenos`, not in the shared view models.
+- Do not change the old DPAPI entropy or legacy migration identifiers during cleanup.
+- Run tests before opening a pull request. If you change USB code, report which physical
+  iPhone, computer, OS and iOS versions you used.
 
 ## Help without writing code
 
 - [Report a successful transfer](https://github.com/kr0nsch/perenos-ios/issues/new?template=compatibility_report.yml)
-  with your device models, iOS versions and Perenos version. Please never attach `.ipa`
-  files, account details or full device identifiers.
+  with device models, OS versions and Perenos version. Never attach IPAs, account details
+  or full device identifiers.
 - [Report a bug](https://github.com/kr0nsch/perenos-ios/issues/new?template=bug_report.yml)
-  with steps to reproduce and a diagnostic log you have checked for personal information.
+  with reproduction steps and a log you have checked for personal information.
 - [Suggest an improvement](https://github.com/kr0nsch/perenos-ios/issues/new?template=feature_request.yml)
-  by describing the task you want to complete and what currently gets in the way.
-- Improve instructions, translations or accessibility. For a new language, include every
-  resource key and preserve format placeholders such as `{0}`.
+  by describing the task and the obstacle.
+- Improve instructions, translations or accessibility. Include every resource key and
+  preserve numeric placeholders such as `{0}`.
 
 ## Screenshots, demos and website
 
-Use the [media capture guide](docs/MEDIA.md) to refresh both languages and themes
-from the real app in demo mode. Keep personal accounts and device identifiers out
-of screenshots. The GIF generator records its source frames and timing, so the
-published tours can be reproduced.
+Use [docs/MEDIA.md](MEDIA.md) for media requirements. All screenshots must come from
+the current Avalonia demo, without real account information or device identifiers.
+Keep the same fictional data and both themes where possible.
 
-The [project website](site/README.md) is built from this repository with
-`python site/build.py`. Its GitHub Pages workflow validates pull requests and
-publishes changes merged into `main`. Website-only changes need the static build
-and browser checks of both themes, mobile layout, keyboard navigation and download
-links. They do not require a new application release.
+The [project website](site/README.md) has Russian and English pages. It is built with
+`python site/build.py`; the Pages workflow validates pull requests and deploys `main`.
+Run `npm ci && npm run test:site` for browser, responsive-layout, keyboard, theme,
+localization and download-link checks. Website-only changes do not need a new app release.
 
 ## Releasing
 
-1. Update `CHANGELOG.md`.
-2. Tag the commit: `git tag v1.2.3 && git push origin v1.2.3`.
-3. The release workflow builds the installer and portable ZIP, and publishes them with checksums.
+1. Update `CHANGELOG.md` and version references.
+2. Ensure all three .NET suites, the Windows release build, macOS CI and browser checks pass.
+3. Tag the commit: `git tag v1.2.3 && git push origin v1.2.3`.
+4. The release workflow builds Windows packages and publishes them with checksums and
+   Sigstore attestations. Signed, notarized Mac DMGs are added when the required Apple
+   secrets are configured and `vars.MACOS_SIGNING_ENABLED` is set to `true`; ad-hoc CI packages are never silently published as stable releases.

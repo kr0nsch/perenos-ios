@@ -1,0 +1,59 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Perenos.ViewModels"
+        xmlns:s="using:Perenos.Services"
+        x:Class="Perenos.Views.SettingsWindow" x:DataType="vm:MainViewModel"
+        Width="600" Height="760" MinWidth="480" MinHeight="600"
+        WindowStartupLocation="CenterOwner"
+        Icon="avares://Perenos/Assets/Perenos.ico"
+        TransparencyLevelHint="None"
+        Title="{s:Text Settings_Title}">
+  <Grid RowDefinitions="*,Auto">
+    <ScrollViewer Padding="28">
+      <StackPanel>
+        <TextBlock Text="{s:Text Settings_Title}" Classes="h1"/>
+        <TextBlock Text="{s:Text Settings_General}" Classes="eyebrow" Margin="0,28,0,10"/>
+        <Border Classes="card" Padding="18">
+          <StackPanel Spacing="18">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="20">
+              <TextBlock Text="{s:Text Settings_Language}" Classes="body" VerticalAlignment="Center"/>
+              <ComboBox x:Name="LanguageBox" Grid.Column="1" MinWidth="180" SelectionChanged="LanguageChanged"/>
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="20">
+              <TextBlock Text="{s:Text Settings_Appearance}" Classes="body" VerticalAlignment="Center"/>
+              <ComboBox x:Name="ThemeBox" Grid.Column="1" MinWidth="180" SelectionChanged="ThemeChanged"/>
+            </Grid>
+          </StackPanel>
+        </Border>
+        <TextBlock Text="{s:Text Settings_Downloads}" Classes="eyebrow" Margin="0,26,0,10"/>
+        <Border Classes="card" Padding="18">
+          <StackPanel Spacing="16">
+            <StackPanel Spacing="5"><TextBlock Text="{s:Text Settings_Folder}" Classes="title"/><TextBlock Text="{Binding Services.DownloadDirectory}" Classes="caption"/></StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <Button Content="{s:Text Settings_Open}" Click="OpenFolder"/>
+              <Button Content="{s:Text Settings_Change}" Command="{Binding ChangeFolderCommand}"/>
+            </StackPanel>
+            <Border Classes="separator"/>
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16"><TextBlock Text="{s:Text Options_Keep}" Classes="body" VerticalAlignment="Center"/><ToggleSwitch Grid.Column="1" IsChecked="{Binding Install.KeepDownloads}"/></Grid>
+          </StackPanel>
+        </Border>
+        <TextBlock Text="{s:Text Settings_About}" Classes="eyebrow" Margin="0,26,0,10"/>
+        <Border Classes="card" Padding="18">
+          <StackPanel Spacing="14">
+            <Grid ColumnDefinitions="*,Auto"><TextBlock Text="{s:Text Settings_Version}" Classes="body"/><TextBlock Grid.Column="1" Text="{Binding Services.AppVersion}" Classes="body muted"/></Grid>
+            <Border Classes="separator"/>
+            <Grid ColumnDefinitions="*,Auto"><TextBlock Text="{s:Text Settings_Source}" Classes="body"/><Button Grid.Column="1" Classes="link" Content="GitHub" Click="OpenGitHub"/></Grid>
+            <Border Classes="separator"/>
+            <Grid ColumnDefinitions="*,Auto"><TextBlock Text="{s:Text Settings_Licenses}" Classes="body"/><Button Grid.Column="1" Classes="link" Content="{s:Text Settings_View}" Click="OpenLicenses"/></Grid>
+            <Border Classes="separator"/>
+            <Grid ColumnDefinitions="*,Auto"><TextBlock Text="{s:Text Settings_Logs}" Classes="body"/><Button Grid.Column="1" Classes="link" Content="{s:Text Settings_OpenLogs}" Click="OpenLogs"/></Grid>
+          </StackPanel>
+        </Border>
+        <TextBlock Text="{s:Text Settings_Disclaimer}" Classes="caption" Margin="0,18,0,0"/>
+      </StackPanel>
+    </ScrollViewer>
+    <Border Grid.Row="1" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Padding="20">
+      <Button Content="{s:Text Settings_Dialog.CloseButtonText}" HorizontalAlignment="Right" MinWidth="110" Click="CloseWindow"/>
+    </Border>
+  </Grid>
+</Window>

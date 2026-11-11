@@ -38,11 +38,68 @@ jobs:
       - name: Test
         run: dotnet test tests/Perenos.Core.Tests/Perenos.Core.Tests.csproj -c Release --logger "console;verbosity=normal"
 
-      - name: Test view models
+      - name: Test view models and platform services
         run: dotnet test tests/Perenos.ViewModel.Tests/Perenos.ViewModel.Tests.csproj -c Release --logger "console;verbosity=normal"
 
+      - name: Test Avalonia UI
+        run: dotnet test tests/Perenos.Ui.Tests/Perenos.Ui.Tests.csproj -c Release --logger "console;verbosity=normal"
+
       - name: Build app (x64)
-        run: dotnet build src/Perenos/Perenos.csproj -c Release -p:Platform=x64
+        run: dotnet build src/Perenos/Perenos.csproj -c Release -r win-x64
 
       - name: Build app (ARM64)
-        run: dotnet build src/Perenos/Perenos.csproj -c Release -p:Platform=ARM64
+        run: dotnet build src/Perenos/Perenos.csproj -c Release -r win-arm64
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install website test tools
+        run: npm ci
+
+      - name: Check website
+        run: npm run test:site
+
+  macos:
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        rid: [osx-arm64, osx-x64]
+    env:
+      DOTNET_NOLOGO: "1"
+      DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26.5"
+          cache: false
+
+      - name: Test cross-platform core
+        run: dotnet test tests/Perenos.Core.Tests/Perenos.Core.Tests.csproj -c Release --logger "console;verbosity=normal"
+
+      - name: Test view models and platform services
+        run: dotnet test tests/Perenos.ViewModel.Tests/Perenos.ViewModel.Tests.csproj -c Release --logger "console;verbosity=normal"
+
+      - name: Test Avalonia UI
+        run: dotnet test tests/Perenos.Ui.Tests/Perenos.Ui.Tests.csproj -c Release --logger "console;verbosity=normal"
+
+      - name: Build and package macOS app (${{ matrix.rid }})
+        run: |
+          command -v pwsh >/dev/null || brew install --cask powershell
+          bash build/build-macos.sh 0.0.0-ci ${{ matrix.rid }}
+
+      - name: Upload development package for manual device checks
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v7
+        with:
+          name: Perenos-ci-${{ matrix.rid }}
+          path: artifacts/release/*.dmg
+          retention-days: 3

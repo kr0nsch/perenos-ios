@@ -6,7 +6,8 @@ Its binary releases include the third-party components listed below. Each is the
 property of its respective owners and is used under the license shown.
 
 ------------------------------------------------------------------------------
-ipatool 2.8.0+e0e2908 (bundled as tools\ipatool.exe, built from unmodified upstream source)
+ipatool 2.8.0+e0e2908 (tools\ipatool.exe on Windows and tools/ipatool on macOS,
+built from unmodified upstream source; native CGO is enabled on macOS)
 https://github.com/majd/ipatool/tree/e0e2908dc866651cbd6ad86edd954119c003c46b
 https://github.com/majd/ipatool
 ------------------------------------------------------------------------------
@@ -169,21 +170,33 @@ The .NET runtime includes further third-party components; their notices are publ
 https://github.com/dotnet/runtime/blob/main/THIRD-PARTY-NOTICES.TXT
 
 ------------------------------------------------------------------------------
-Windows App SDK (WinUI 3)
-https://github.com/microsoft/WindowsAppSDK
+Avalonia 12.1.5 (Avalonia, Avalonia.Desktop, Avalonia.Themes.Fluent and
+Avalonia.Fonts.Inter)
+https://github.com/AvaloniaUI/Avalonia
 ------------------------------------------------------------------------------
 
-Redistributed under the Microsoft Software License Terms for the Windows App SDK:
-https://www.nuget.org/packages/Microsoft.WindowsAppSDK/2.5.1/License
-Third-party notices: https://github.com/microsoft/WindowsAppSDK/blob/main/NOTICE.txt
+MIT License, copyright (c) AvaloniaUI OÜ. The complete notice is included in
+Licenses/Avalonia-MIT.txt.
 
-------------------------------------------------------------------------------
-Microsoft Edge WebView2 SDK (dependency of WinUI 3)
-https://developer.microsoft.com/microsoft-edge/webview2/
-------------------------------------------------------------------------------
+SkiaSharp and HarfBuzzSharp
+https://github.com/mono/SkiaSharp
+MIT License; the complete notice is included in Licenses/SkiaSharp-MIT.txt.
 
-Redistributed under the WebView2 SDK license:
-https://www.nuget.org/packages/Microsoft.Web.WebView2/1.0.3719.77/License
+Skia (native graphics library)
+https://github.com/google/skia
+BSD 3-Clause License; the complete notice is included in Licenses/Skia-BSD.txt.
+
+HarfBuzz (native text shaping library)
+https://github.com/harfbuzz/harfbuzz
+Old MIT License; the complete notice is included in Licenses/HarfBuzz-MIT.txt.
+
+ANGLE (Windows native graphics libraries)
+https://github.com/google/angle
+BSD 3-Clause License; the complete notice is included in Licenses/ANGLE-BSD.txt.
+
+Inter font (Avalonia.Fonts.Inter)
+https://github.com/rsms/inter
+SIL Open Font License 1.1; the complete notice is included in Licenses/Inter-OFL.txt.
 
 
 ------------------------------------------------------------------------------

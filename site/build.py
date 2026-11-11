@@ -1,4 +1,4 @@
-"""Package the Perenos landing page for GitHub Pages using only Python's stdlib."""
+"""Package the bilingual Perenos website for GitHub Pages using Python's stdlib."""
 from __future__ import annotations
 
 import argparse
@@ -45,23 +45,20 @@ def build(output: Path) -> None:
     if output.exists():
         shutil.rmtree(output)
     output.mkdir(parents=True)
-    assets = output / "assets"
-    assets.mkdir(exist_ok=True)
-    for name in ("index.html", "styles.css", "app.js"):
+    (output / "en").mkdir()
+    shutil.copy2(SITE / "index.html", output / "index.html")
+    shutil.copy2(SITE / "en.html", output / "en" / "index.html")
+    for name in ("styles.css", "app.js"):
         shutil.copy2(SITE / name, output / name)
-    image_sources = (
-        ("apps", "2-choose-apps.png"),
-        ("saved", "later-4-saved.png"),
-        ("unavailable", "unavailable-filter.png"),
-        ("restore", "restore-purchases.png"),
-        ("target", "3-target.png"),
-        ("save-done", "save-3-done.png"),
-    )
-    for theme in ("light", "dark"):
-        for name, source in image_sources:
-            shutil.copy2(ROOT / "docs" / "screenshots" / f"ru-{theme}" / source, assets / f"{name}-{theme}.png")
-        for name in ("demo", "later"):
-            shutil.copy2(ROOT / "docs" / "media" / f"{name}-ru-{theme}.gif", assets / f"{name}-{theme}.gif")
+    assets = output / "assets"
+    assets.mkdir()
+    for name in ("apps", "restore", "saved"):
+        for language, suffix in (("ru-RU", ""), ("en-US", "-en")):
+            for theme in ("light", "dark"):
+                source = ROOT / "docs" / "screenshots" / "avalonia" / f"{name}-{language}-{theme}.png"
+                if not source.is_file():
+                    raise FileNotFoundError(f"Missing current Avalonia screenshot: {source}")
+                shutil.copy2(source, assets / f"{name}{suffix}-{theme}.png")
     fonts = assets / "fonts"
     fonts.mkdir()
     for source in sorted((SITE / "fonts").iterdir()):
@@ -69,25 +66,29 @@ def build(output: Path) -> None:
             shutil.copy2(source, fonts / source.name)
     shutil.copy2(ROOT / "assets" / "logo.png", assets / "logo.png")
     shutil.copy2(SITE / "social-card.svg", assets / "social-card.svg")
-    social_card = SITE / "social-card.png"
-    if not social_card.is_file():
-        social_card = ROOT / "docs" / "screenshots" / "ru-light" / "2-choose-apps.png"
-    shutil.copy2(social_card, assets / "social.png")
+    shutil.copy2(SITE / "social-card.png", assets / "social.png")
     (output / ".nojekyll").write_text("", encoding="utf-8")
     (output / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {CANONICAL}sitemap.xml\n", encoding="utf-8")
     (output / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
-        f"<url><loc>{CANONICAL}</loc></url></urlset>\n", encoding="utf-8")
-    references = LocalReferences()
-    references.feed((output / "index.html").read_text(encoding="utf-8"))
-    missing = [path for path in references.paths if not (output / path).is_file()]
-    missing_anchors = references.anchors - references.ids
-    if missing or missing_anchors:
-        raise ValueError(f"Broken references: {missing}; anchors: {sorted(missing_anchors)}")
+        f"<url><loc>{CANONICAL}</loc></url><url><loc>{CANONICAL}en/</loc></url></urlset>\n", encoding="utf-8")
+    for relative in (Path("index.html"), Path("en/index.html")):
+        references = LocalReferences()
+        references.feed((output / relative).read_text(encoding="utf-8"))
+        missing = []
+        for path in references.paths:
+            candidate = output / relative.parent / path
+            if candidate.is_dir():
+                candidate = candidate / "index.html"
+            if not candidate.is_file():
+                missing.append(path)
+        missing_anchors = references.anchors - references.ids
+        if missing or missing_anchors:
+            raise ValueError(f"Broken references in {relative}: {missing}; anchors: {sorted(missing_anchors)}")
+        print(f"Validated {relative}: {len(references.paths)} local references, {len(references.anchors)} anchors")
     total = sum(path.stat().st_size for path in output.rglob("*") if path.is_file())
-    print(f"GitHub Pages files: {output}")
-    print(f"Validated {len(references.paths)} local references and {len(references.anchors)} anchors; {total / 1048576:.1f} MiB including on-demand GIFs")
+    print(f"GitHub Pages files: {output} ({total / 1048576:.1f} MiB)")
 
 
 if __name__ == "__main__":

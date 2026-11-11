@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Perenos.ViewModels"
+             xmlns:s="using:Perenos.Services"
+             x:Class="Perenos.Views.SignInPanel" x:DataType="vm:AccountViewModel">
+  <StackPanel>
+    <Border Classes="card" Padding="18">
+      <StackPanel Spacing="14">
+        <TextBlock Text="{s:Text SignIn_EmailLabel}" Classes="title"/>
+        <TextBox PlaceholderText="{s:Text SignIn_Email}" Text="{Binding InputEmail}" IsEnabled="{Binding IsIdle}" KeyDown="SubmitOnEnter" AutomationProperties.Name="{s:Text SignIn_EmailLabel}"/>
+        <TextBlock Text="{s:Text SignIn_PasswordLabel}" Classes="title"/>
+        <TextBox PlaceholderText="{s:Text SignIn_Password}" PasswordChar="●" Text="{Binding InputPassword}" IsEnabled="{Binding IsIdle}" KeyDown="SubmitOnEnter" AutomationProperties.Name="{s:Text SignIn_PasswordLabel}"/>
+        <StackPanel Spacing="10" IsVisible="{Binding IsCodeRequired}">
+          <TextBlock Text="{s:Text SignIn_CodeLabel}" Classes="title"/>
+          <TextBox PlaceholderText="{s:Text SignIn_Code}" Text="{Binding InputCode}" MaxLength="8" IsEnabled="{Binding IsIdle}" KeyDown="SubmitOnEnter" AutomationProperties.Name="{s:Text SignIn_CodeLabel}"/>
+          <TextBlock Text="{s:Text SignIn_CodeHint}" Classes="caption"/>
+        </StackPanel>
+      </StackPanel>
+    </Border>
+    <TextBlock Text="{Binding Error}" Classes="caption" Foreground="{DynamicResource DangerBrush}" Margin="4,10" IsVisible="{Binding HasError}"/>
+    <Button Classes="primary" HorizontalAlignment="Stretch" Margin="0,12,0,0" Command="{Binding SignInCommand}">
+      <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
+        <ProgressBar Width="36" Height="4" IsIndeterminate="True" IsVisible="{Binding IsBusy}"/>
+        <TextBlock Text="{Binding SignInButtonText}" Foreground="{DynamicResource OnAccentBrush}"/>
+      </StackPanel>
+    </Button>
+    <Button Classes="link" Content="{s:Text SignIn_UseAnother}" Command="{Binding CancelCodeCommand}" HorizontalAlignment="Center" IsVisible="{Binding IsCodeRequired}"/>
+    <TextBlock Text="{s:Text SignIn_FirstTime}" Classes="caption" TextAlignment="Center" Margin="0,8" IsVisible="{Binding IsBusy}"/>
+    <TextBlock Text="{s:Text SignIn_Privacy}" Classes="caption" Margin="0,14,0,0"/>
+  </StackPanel>
+</UserControl>

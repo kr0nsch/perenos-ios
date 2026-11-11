@@ -1,0 +1,49 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ResourceDictionary.ThemeDictionaries>
+    <ResourceDictionary x:Key="Light">
+      <Color x:Key="AccentColor">#6750E8</Color>
+      <SolidColorBrush x:Key="AccentBrush" Color="#6750E8"/>
+      <SolidColorBrush x:Key="OnAccentBrush" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="AccentHoverBrush" Color="#563ED6"/>
+      <SolidColorBrush x:Key="AccentSoftBrush" Color="#EEEAFB"/>
+      <SolidColorBrush x:Key="BackgroundBrush" Color="#F7F8FC"/>
+      <SolidColorBrush x:Key="SidebarBrush" Color="#F0F1F7"/>
+      <SolidColorBrush x:Key="CardBrush" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="CardHoverBrush" Color="#FAF9FE"/>
+      <SolidColorBrush x:Key="TextBrush" Color="#20212A"/>
+      <SolidColorBrush x:Key="SecondaryTextBrush" Color="#6C6D7A"/>
+      <SolidColorBrush x:Key="BorderBrush" Color="#E5E6ED"/>
+      <SolidColorBrush x:Key="SubtleBrush" Color="#F0F0F5"/>
+      <SolidColorBrush x:Key="SuccessBrush" Color="#16805C"/>
+      <SolidColorBrush x:Key="SuccessSoftBrush" Color="#E2F5ED"/>
+      <SolidColorBrush x:Key="WarningBrush" Color="#AD6712"/>
+      <SolidColorBrush x:Key="WarningSoftBrush" Color="#FFF0D9"/>
+      <SolidColorBrush x:Key="DangerBrush" Color="#C44355"/>
+      <SolidColorBrush x:Key="IconBrush" Color="#777385"/>
+      <SolidColorBrush x:Key="OverlayBrush" Color="#190B1526"/>
+    </ResourceDictionary>
+    <ResourceDictionary x:Key="Dark">
+      <Color x:Key="AccentColor">#B8A5FF</Color>
+      <SolidColorBrush x:Key="AccentBrush" Color="#B8A5FF"/>
+      <SolidColorBrush x:Key="OnAccentBrush" Color="#201532"/>
+      <SolidColorBrush x:Key="AccentHoverBrush" Color="#CCBCFF"/>
+      <SolidColorBrush x:Key="AccentSoftBrush" Color="#30284B"/>
+      <SolidColorBrush x:Key="BackgroundBrush" Color="#14151B"/>
+      <SolidColorBrush x:Key="SidebarBrush" Color="#1A1B23"/>
+      <SolidColorBrush x:Key="CardBrush" Color="#20212A"/>
+      <SolidColorBrush x:Key="CardHoverBrush" Color="#282738"/>
+      <SolidColorBrush x:Key="TextBrush" Color="#F1F0F7"/>
+      <SolidColorBrush x:Key="SecondaryTextBrush" Color="#ADACBC"/>
+      <SolidColorBrush x:Key="BorderBrush" Color="#353642"/>
+      <SolidColorBrush x:Key="SubtleBrush" Color="#30313D"/>
+      <SolidColorBrush x:Key="SuccessBrush" Color="#64D8A8"/>
+      <SolidColorBrush x:Key="SuccessSoftBrush" Color="#1B3C31"/>
+      <SolidColorBrush x:Key="WarningBrush" Color="#F6BB68"/>
+      <SolidColorBrush x:Key="WarningSoftBrush" Color="#40311E"/>
+      <SolidColorBrush x:Key="DangerBrush" Color="#FF9AA9"/>
+      <SolidColorBrush x:Key="IconBrush" Color="#B6ACC9"/>
+      <SolidColorBrush x:Key="OverlayBrush" Color="#66000000"/>
+    </ResourceDictionary>
+  </ResourceDictionary.ThemeDictionaries>
+</ResourceDictionary>

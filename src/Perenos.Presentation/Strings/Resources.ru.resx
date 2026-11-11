@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="App_Name" xml:space="preserve"><value>Перенос</value></data>
+  <data name="Source_Title" xml:space="preserve"><value>Подключите iPhone с вашими приложениями</value></data>
+  <data name="Source_Subtitle" xml:space="preserve"><value>Используйте USB-кабель. Разблокируйте iPhone и нажмите «Доверять», если он спросит, доверять ли этому компьютеру.</value></data>
+  <data name="Target_Title" xml:space="preserve"><value>Подключите iPhone, на который нужно установить</value></data>
+  <data name="Target_Subtitle" xml:space="preserve"><value>Первый iPhone можно отключить или оставить подключённым. Выберите, куда установить приложения.</value></data>
+  <data name="Target_SameDevice" xml:space="preserve"><value>Выберите другой iPhone, а не тот, с которого берутся приложения.</value></data>
+  <data name="Service_Title" xml:space="preserve"><value>Нужно приложение «Устройства Apple»</value></data>
+  <data name="Service_Body" xml:space="preserve"><value>Установите бесплатное приложение «Устройства Apple» из Microsoft Store, чтобы Windows могла работать с iPhone, затем переподключите iPhone.</value></data>
+  <data name="Service_Get" xml:space="preserve"><value>Установить</value></data>
+  <data name="Device_Retry" xml:space="preserve"><value>Повторить</value></data>
+  <data name="Devices_Searching" xml:space="preserve"><value>Поиск подключённого iPhone…</value></data>
+  <data name="Devices_Help" xml:space="preserve"><value>iPhone не появляется?</value></data>
+  <data name="Help_Title" xml:space="preserve"><value>Если iPhone нет в списке</value></data>
+  <data name="Help_Cable" xml:space="preserve"><value>• Используйте кабель с передачей данных, подключённый прямо к компьютеру.</value></data>
+  <data name="Help_Unlock" xml:space="preserve"><value>• Разблокируйте iPhone и оставьте его на экране «Домой».</value></data>
+  <data name="Help_Trust" xml:space="preserve"><value>• На вопрос «Доверять этому компьютеру?» нажмите «Доверять» и введите код-пароль.</value></data>
+  <data name="Help_AppleDevices" xml:space="preserve"><value>• Убедитесь, что установлено приложение «Устройства Apple» (или iTunes).</value></data>
+  <data name="Device_IosVersion" xml:space="preserve"><value>iOS {0}</value></data>
+  <data name="Device_FreeSpace" xml:space="preserve"><value>свободно {0}</value></data>
+  <data name="Device_Status_Connecting" xml:space="preserve"><value>Подключение…</value></data>
+  <data name="Device_Status_TapTrust" xml:space="preserve"><value>Нажмите «Доверять» на iPhone</value></data>
+  <data name="Device_Status_Unlock" xml:space="preserve"><value>Разблокируйте iPhone</value></data>
+  <data name="Device_Status_Denied" xml:space="preserve"><value>Компьютеру не доверяют</value></data>
+  <data name="Device_Status_Error" xml:space="preserve"><value>Не удалось подключиться</value></data>
+  <data name="Device_Status_Reconnect" xml:space="preserve"><value>Переподключите iPhone</value></data>
+  <data name="Device_Role_Source" xml:space="preserve"><value>Источник</value></data>
+  <data name="Apps_Title" xml:space="preserve"><value>Выберите приложения</value></data>
+  <data name="Apps_Subtitle" xml:space="preserve"><value>Приложения из App Store на «{0}». Отметьте те, которые нужно установить на другой iPhone.</value></data>
+  <data name="Apps_Search" xml:space="preserve"><value>Поиск</value></data>
+  <data name="Apps_SortByName" xml:space="preserve"><value>По имени</value></data>
+  <data name="Apps_SortBySize" xml:space="preserve"><value>Сначала большие</value></data>
+  <data name="Apps_TryAgain" xml:space="preserve"><value>Повторить</value></data>
+  <data name="Apps_NoMatches" xml:space="preserve"><value>Ничего не найдено</value></data>
+  <data name="Apps_SelectAll" xml:space="preserve"><value>Выбрать видимые</value></data>
+  <data name="Apps_SelectVisibleHint" xml:space="preserve"><value>Только приложения в текущем фильтре и поисковой выдаче</value></data>
+  <data name="Apps_DeselectAll" xml:space="preserve"><value>Снять выбор</value></data>
+  <data name="Apps_NoneSelected" xml:space="preserve"><value>Выберите хотя бы одно приложение</value></data>
+  <data name="Apps_SelectedCount_One" xml:space="preserve"><value>Выбрано {0} приложение</value></data>
+  <data name="Apps_SelectedCount_Few" xml:space="preserve"><value>Выбрано {0} приложения</value></data>
+  <data name="Apps_SelectedCount_Many" xml:space="preserve"><value>Выбрано {0} приложений</value></data>
+  <data name="Apps_Count_One" xml:space="preserve"><value>{0} приложение</value></data>
+  <data name="Apps_Count_Few" xml:space="preserve"><value>{0} приложения</value></data>
+  <data name="Apps_Count_Many" xml:space="preserve"><value>{0} приложений</value></data>
+  <data name="Apps_NotFromStore_One" xml:space="preserve"><value>{0} приложение не показано: оно установлено не из App Store.</value></data>
+  <data name="Apps_NotFromStore_Few" xml:space="preserve"><value>{0} приложения не показаны: они установлены не из App Store.</value></data>
+  <data name="Apps_NotFromStore_Many" xml:space="preserve"><value>{0} приложений не показаны: они установлены не из App Store.</value></data>
+  <data name="Apps_Error_Disconnected" xml:space="preserve"><value>iPhone отключился. Подключите его снова и повторите.</value></data>
+  <data name="Apps_Error_Generic" xml:space="preserve"><value>Не удалось прочитать список приложений: {0}</value></data>
+  <data name="App_Version" xml:space="preserve"><value>Версия {0}</value></data>
+  <data name="Unit_KB" xml:space="preserve"><value>КБ</value></data>
+  <data name="Unit_MB" xml:space="preserve"><value>МБ</value></data>
+  <data name="Unit_GB" xml:space="preserve"><value>ГБ</value></data>
+  <data name="Unit_TB" xml:space="preserve"><value>ТБ</value></data>
+  <data name="Account_SignIn" xml:space="preserve"><value>Войти</value></data>
+  <data name="Account_SignOut" xml:space="preserve"><value>Выйти</value></data>
+  <data name="Account_Verify" xml:space="preserve"><value>Подтвердить</value></data>
+  <data name="Account_Error_Code" xml:space="preserve"><value>Код не подошёл. Введите последний полученный код и попробуйте снова.</value></data>
+  <data name="Account_Error_Network" xml:space="preserve"><value>Не удалось связаться с Apple. Проверьте подключение к интернету.</value></data>
+  <data name="Account_Error_SignOut" xml:space="preserve"><value>Не удалось выйти. Вход в Apple Account на этом компьютере сохранён. Проверьте подключение и повторите выход.</value></data>
+  <data name="Account_SignOutRetry" xml:space="preserve"><value>Повторить выход</value></data>
+  <data name="Account_Error_Generic" xml:space="preserve"><value>Не удалось войти. Попробуйте ещё раз.</value></data>
+  <data name="Account_Error_Password" xml:space="preserve"><value>Неверно введены Apple Account или пароль.</value></data>
+  <data name="Account_Error_Disabled" xml:space="preserve"><value>Этот Apple Account заблокирован или отключён. Разблокируйте его на iforgot.apple.com.</value></data>
+  <data name="Account_Error_Apple" xml:space="preserve"><value>Ответ Apple: {0}.</value></data>
+  <data name="Account_Error_Expired" xml:space="preserve"><value>Сеанс Apple Account истёк. Чтобы продолжить, введите пароль ещё раз.</value></data>
+  <data name="SignIn_DialogTitle" xml:space="preserve"><value>Вход в App Store</value></data>
+  <data name="SignIn_EmailLabel" xml:space="preserve"><value>Apple Account</value></data>
+  <data name="SignIn_Email" xml:space="preserve"><value>name@example.com</value></data>
+  <data name="SignIn_PasswordLabel" xml:space="preserve"><value>Пароль</value></data>
+  <data name="SignIn_Password" xml:space="preserve"><value>Обязательно</value></data>
+  <data name="SignIn_CodeLabel" xml:space="preserve"><value>Код</value></data>
+  <data name="SignIn_Code" xml:space="preserve"><value>6 цифр</value></data>
+  <data name="SignIn_CodeHint" xml:space="preserve"><value>Введите код проверки, показанный на других ваших устройствах Apple или отправленный на доверенный номер.</value></data>
+  <data name="SignIn_UseAnother" xml:space="preserve"><value>Отмена</value></data>
+  <data name="SignIn_FirstTime" xml:space="preserve"><value>Первый вход может занять около минуты.</value></data>
+  <data name="SignIn_Privacy" xml:space="preserve"><value>Приложения скачиваются у Apple с вашим собственным Apple Account. Пароль передаётся только в Apple через открытый ipatool, «Перенос» его не сохраняет.</value></data>
+  <data name="SignIn_Email.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Apple Account</value></data>
+  <data name="SignIn_Password.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Пароль</value></data>
+  <data name="SignIn_Code.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Код проверки</value></data>
+  <data name="Apps_Search.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Поиск приложений</value></data>
+  <data name="Options_FreeToggle.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Получать бесплатные приложения</value></data>
+  <data name="Options_KeepToggle.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Сохранять скачанные файлы</value></data>
+  <data name="Settings_LanguageBox.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Язык</value></data>
+  <data name="Install_Title_SignIn" xml:space="preserve"><value>Войдите в App Store</value></data>
+  <data name="Install_Subtitle_SignIn" xml:space="preserve"><value>Приложения скачиваются у Apple, поэтому войдите с Apple Account, которым они были получены.</value></data>
+  <data name="Install_Title_Ready" xml:space="preserve"><value>Всё готово к установке</value></data>
+  <data name="Install_Subtitle_Ready" xml:space="preserve"><value>{0} будут скачаны из App Store и установлены на «{1}».</value></data>
+  <data name="Install_Title_Running" xml:space="preserve"><value>Установка приложений</value></data>
+  <data name="Install_Subtitle_Running" xml:space="preserve"><value>Готово {0} из {1}. Не отключайте «{2}» и держите его разблокированным.</value></data>
+  <data name="Install_Title_Done" xml:space="preserve"><value>Готово</value></data>
+  <data name="Install_Subtitle_Done" xml:space="preserve"><value>{0} установлены на «{1}». Они уже на экране «Домой».</value></data>
+  <data name="Install_Title_Problems" xml:space="preserve"><value>Завершено с ошибками</value></data>
+  <data name="Install_Title_Stopped" xml:space="preserve"><value>Установка остановлена</value></data>
+  <data name="Install_Subtitle_Problems" xml:space="preserve"><value>Установлено: {0}, не установлено: {1}. Причины указаны ниже.</value></data>
+  <data name="Install_TargetMissing" xml:space="preserve"><value>Подключите iPhone, на который нужно установить приложения.</value></data>
+  <data name="Summary_From" xml:space="preserve"><value>Откуда</value></data>
+  <data name="Summary_To" xml:space="preserve"><value>Куда</value></data>
+  <data name="Summary_Apps" xml:space="preserve"><value>Приложения</value></data>
+  <data name="Summary_Account" xml:space="preserve"><value>Apple Account</value></data>
+  <data name="Summary_SignOut" xml:space="preserve"><value>Выйти</value></data>
+  <data name="Options_Header" xml:space="preserve"><value>ПАРАМЕТРЫ</value></data>
+  <data name="Options_Version" xml:space="preserve"><value>Версия</value></data>
+  <data name="Options_VersionLatest" xml:space="preserve"><value>Последняя</value></data>
+  <data name="Options_VersionSame" xml:space="preserve"><value>Как на исходном</value></data>
+  <data name="Options_Free" xml:space="preserve"><value>Получать бесплатные приложения</value></data>
+  <data name="Options_FreeHint" xml:space="preserve"><value>Добавляет их в ваш Apple Account — так же, как кнопка «Загрузить» в App Store.</value></data>
+  <data name="Options_Keep" xml:space="preserve"><value>Сохранять скачанные файлы</value></data>
+  <data name="Options_KeepHint" xml:space="preserve"><value>Файлы .ipa останутся на компьютере для повторной установки.</value></data>
+  <data name="Transfer_Waiting" xml:space="preserve"><value>В очереди</value></data>
+  <data name="Transfer_Downloading" xml:space="preserve"><value>Загрузка…</value></data>
+  <data name="Transfer_DownloadingPercent" xml:space="preserve"><value>Загрузка… {0}%</value></data>
+  <data name="Transfer_DownloadingBytes" xml:space="preserve"><value>Загрузка… {0}</value></data>
+  <data name="Transfer_Preparing" xml:space="preserve"><value>Подготовка…</value></data>
+  <data name="Transfer_ReadyToInstall" xml:space="preserve"><value>Скачано, ожидает установки</value></data>
+  <data name="Transfer_Uploading" xml:space="preserve"><value>Копирование на iPhone… {0}%</value></data>
+  <data name="Transfer_Installing" xml:space="preserve"><value>Установка…</value></data>
+  <data name="Transfer_Completed" xml:space="preserve"><value>Установлено</value></data>
+  <data name="Transfer_NotStarted" xml:space="preserve"><value>Не установлено</value></data>
+  <data name="Failure_NotSignedIn" xml:space="preserve"><value>Войдите в App Store заново</value></data>
+  <data name="Failure_NotPurchased" xml:space="preserve"><value>Нет в покупках этого Apple Account</value></data>
+  <data name="Failure_PaidApp" xml:space="preserve"><value>Платное приложение, не купленное этим Apple Account</value></data>
+  <data name="Failure_NotAvailable" xml:space="preserve"><value>Больше не доступно в App Store</value></data>
+  <data name="Failure_Network" xml:space="preserve"><value>Проблема с сетью, повторите</value></data>
+  <data name="Failure_OsTooOld" xml:space="preserve"><value>Требуется более новая версия iOS</value></data>
+  <data name="Failure_NotEnoughSpace" xml:space="preserve"><value>Недостаточно места на iPhone</value></data>
+  <data name="Failure_DeviceDisconnected" xml:space="preserve"><value>iPhone был отключён</value></data>
+  <data name="Failure_NotTrusted" xml:space="preserve"><value>iPhone не доверяет этому компьютеру</value></data>
+  <data name="Failure_DeviceLocked" xml:space="preserve"><value>Разблокируйте iPhone и повторите</value></data>
+  <data name="Failure_InstallFailed" xml:space="preserve"><value>iPhone отказался устанавливать</value></data>
+  <data name="Failure_Unknown" xml:space="preserve"><value>Что-то пошло не так</value></data>
+  <data name="Footer_Continue" xml:space="preserve"><value>Продолжить</value></data>
+  <data name="Footer_Install" xml:space="preserve"><value>Установить</value></data>
+  <data name="Footer_Stop" xml:space="preserve"><value>Остановить</value></data>
+  <data name="Footer_Done" xml:space="preserve"><value>Готово</value></data>
+  <data name="Footer_Retry" xml:space="preserve"><value>Повторить</value></data>
+  <data name="Footer_Back" xml:space="preserve"><value>Назад</value></data>
+  <data name="Footer_BackText" xml:space="preserve"><value>Назад</value></data>
+  <data name="TitleBar_Account.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Apple Account</value></data>
+  <data name="TitleBar_Settings.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Настройки</value></data>
+  <data name="TitleBar_Settings.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve"><value>Настройки</value></data>
+  <data name="ToolMissing" xml:space="preserve"><value>Не найден нужный компонент (ipatool), поэтому скачивание невозможно. Переустановите «Перенос».</value></data>
+  <data name="Close_Title" xml:space="preserve"><value>Остановить установку?</value></data>
+  <data name="Close_Body" xml:space="preserve"><value>Приложения ещё устанавливаются. Если выйти сейчас, оставшиеся приложения не будут установлены.</value></data>
+  <data name="Close_Quit" xml:space="preserve"><value>Остановить и выйти</value></data>
+  <data name="Close_Continue" xml:space="preserve"><value>Продолжить установку</value></data>
+  <data name="Error_Title" xml:space="preserve"><value>Что-то пошло не так</value></data>
+  <data name="Error_Body" xml:space="preserve"><value>В «Переносе» произошла ошибка: {0}
+
+Подробности сохранены в журнал диагностики.</value></data>
+  <data name="Common_OK" xml:space="preserve"><value>ОК</value></data>
+  <data name="Common_Cancel" xml:space="preserve"><value>Отмена</value></data>
+  <data name="Settings_Dialog.Title" xml:space="preserve"><value>Настройки</value></data>
+  <data name="Settings_Dialog.CloseButtonText" xml:space="preserve"><value>Готово</value></data>
+  <data name="Settings_General" xml:space="preserve"><value>ОСНОВНЫЕ</value></data>
+  <data name="Settings_Language" xml:space="preserve"><value>Язык</value></data>
+  <data name="Settings_LanguageSystem" xml:space="preserve"><value>Как в системе</value></data>
+  <data name="Settings_Appearance" xml:space="preserve"><value>Оформление</value></data>
+  <data name="Settings_ThemeSystem" xml:space="preserve"><value>Авто</value></data>
+  <data name="Settings_ThemeLight" xml:space="preserve"><value>Светлое</value></data>
+  <data name="Settings_ThemeDark" xml:space="preserve"><value>Тёмное</value></data>
+  <data name="Settings_RestartHint" xml:space="preserve"><value>Перезапустите «Перенос», чтобы сменить язык.</value></data>
+  <data name="Settings_Restart" xml:space="preserve"><value>Перезапустить</value></data>
+  <data name="Settings_Downloads" xml:space="preserve"><value>ЗАГРУЗКИ</value></data>
+  <data name="Settings_Folder" xml:space="preserve"><value>Папка</value></data>
+  <data name="Settings_Open" xml:space="preserve"><value>Открыть</value></data>
+  <data name="Settings_Change" xml:space="preserve"><value>Изменить…</value></data>
+  <data name="Settings_About" xml:space="preserve"><value>О ПРОГРАММЕ</value></data>
+  <data name="Settings_Version" xml:space="preserve"><value>Версия</value></data>
+  <data name="Settings_Source" xml:space="preserve"><value>Исходный код</value></data>
+  <data name="Settings_Licenses" xml:space="preserve"><value>Лицензии open source</value></data>
+  <data name="Settings_View" xml:space="preserve"><value>Показать</value></data>
+  <data name="Settings_Logs" xml:space="preserve"><value>Журналы диагностики</value></data>
+  <data name="Settings_OpenLogs" xml:space="preserve"><value>Показать</value></data>
+  <data name="Settings_Disclaimer" xml:space="preserve"><value>«Перенос» — бесплатная программа с открытым исходным кодом. Она не связана с Apple Inc. и не одобрена ею. iPhone и App Store — товарные знаки Apple Inc.</value></data>
+  <data name="Apps_LoadingText" xml:space="preserve"><value>Читаем список приложений с iPhone…</value></data>
+  <data name="Apps_EmptyText" xml:space="preserve"><value>На этом iPhone не найдено приложений из App Store.</value></data>
+  <data name="Now_Footnote" xml:space="preserve"><value>Установить можно только приложения, доступные вашему Apple Account в App Store. Держите iPhone разблокированным и подключённым.</value></data>
+  <data name="Start_Title" xml:space="preserve"><value>Что нужно сделать?</value></data>
+  <data name="Start_Subtitle" xml:space="preserve"><value>Выберите задачу — программа подскажет следующий шаг.</value></data>
+  <data name="Start_Now.Title" xml:space="preserve"><value>Перенести на новый iPhone</value></data>
+  <data name="Start_NowSubtitle" xml:space="preserve"><value>Выберите приложения на старом iPhone и установите их на новый.</value></data>
+  <data name="Start_Later.Title" xml:space="preserve"><value>Библиотека на компьютере</value></data>
+  <data name="Start_LaterSubtitle" xml:space="preserve"><value>Сохранённые IPA для установки на iPhone в удобное время.</value></data>
+  <data name="Start_SavedCount_One" xml:space="preserve"><value>Сохранено {0} приложение</value></data>
+  <data name="Start_SavedCount_Few" xml:space="preserve"><value>Сохранено {0} приложения</value></data>
+  <data name="Start_SavedCount_Many" xml:space="preserve"><value>Сохранено {0} приложений</value></data>
+  <data name="Start_Footer" xml:space="preserve"><value>Переносятся приложения из App Store, без их данных.</value></data>
+  <data name="Choice_ToolMissing" xml:space="preserve"><value>Не хватает компонента — переустановите «Перенос».</value></data>
+  <data name="Later_Title" xml:space="preserve"><value>Библиотека приложений</value></data>
+  <data name="Later_Subtitle" xml:space="preserve"><value>Установите сохранённые приложения или добавьте новые с другого iPhone.</value></data>
+  <data name="Later_Save.Title" xml:space="preserve"><value>Добавить приложения с iPhone</value></data>
+  <data name="Later_SaveSubtitle" xml:space="preserve"><value>Скачайте свои приложения из App Store и сохраните на этом компьютере.</value></data>
+  <data name="Later_Install.Title" xml:space="preserve"><value>Установить сохранённые на iPhone</value></data>
+  <data name="Later_SaveFirst" xml:space="preserve"><value>Сначала сохраните приложения</value></data>
+  <data name="Later_FolderMissing" xml:space="preserve"><value>Папка недоступна</value></data>
+  <data name="Later_Folder" xml:space="preserve"><value>Папка:</value></data>
+  <data name="Later_ChangeFolder" xml:space="preserve"><value>Изменить…</value></data>
+  <data name="Folder_Downloads" xml:space="preserve"><value>Загрузки</value></data>
+  <data name="Old_Title" xml:space="preserve"><value>Подключите старый iPhone</value></data>
+  <data name="New_Title" xml:space="preserve"><value>Подключите новый iPhone</value></data>
+  <data name="New_Subtitle" xml:space="preserve"><value>Подключите по USB и нажмите «Доверять». Повторный вход на компьютере не нужен, но iPhone может запросить аккаунт покупателя.</value></data>
+  <data name="Apps_SubtitleSave" xml:space="preserve"><value>Приложения из App Store на «{0}». Отметьте, что сохранить.</value></data>
+  <data name="Apps_AlreadySaved" xml:space="preserve"><value>Уже сохранено</value></data>
+  <data name="Storefront_Checking" xml:space="preserve"><value>Проверяем доступность приложений текущего Apple Account в российском App Store…</value></data>
+  <data name="Storefront_SignIn" xml:space="preserve"><value>Войдите в Apple Account в верхней панели, чтобы найти приложения, недоступные в российском App Store.</value></data>
+  <data name="Storefront_NoOwned" xml:space="preserve"><value>На iPhone не найдено приложений, полученных с текущим Apple Account.</value></data>
+  <data name="Storefront_AllAvailable" xml:space="preserve"><value>Все приложения текущего Apple Account доступны в российском App Store.</value></data>
+  <data name="Storefront_CheckFailed" xml:space="preserve"><value>Не удалось проверить доступность в российском App Store.</value></data>
+  <data name="Storefront_Unavailable" xml:space="preserve"><value>Сейчас недоступно в российском App Store</value></data>
+  <data name="Storefront_UnavailableCount_One" xml:space="preserve"><value>{0} приложение сейчас недоступно в российском App Store</value></data>
+  <data name="Storefront_UnavailableCount_Few" xml:space="preserve"><value>{0} приложения сейчас недоступны в российском App Store</value></data>
+  <data name="Storefront_UnavailableCount_Many" xml:space="preserve"><value>{0} приложений сейчас недоступны в российском App Store</value></data>
+  <data name="Storefront_ShowUnavailable" xml:space="preserve"><value>Только недоступные</value></data>
+  <data name="Storefront_ShowAll" xml:space="preserve"><value>Показать все</value></data>
+  <data name="Saved_Subtitle" xml:space="preserve"><value>Сохранены на этом компьютере. Отметьте, что установить на «{0}».</value></data>
+  <data name="Saved_Loading" xml:space="preserve"><value>Проверяем, что уже есть на iPhone…</value></data>
+  <data name="Saved_Empty" xml:space="preserve"><value>В папке «{0}» нет сохранённых приложений.</value></data>
+  <data name="Saved_NothingCompatible" xml:space="preserve"><value>Ничего не подходит для этого iPhone</value></data>
+  <data name="Saved_NotEnoughSpace" xml:space="preserve"><value>Нужно {0}, на iPhone свободно {1}</value></data>
+  <data name="Saved_NeedsIos" xml:space="preserve"><value>Нужна iOS {0} или новее</value></data>
+  <data name="Saved_IPadOnly" xml:space="preserve"><value>Только для iPad</value></data>
+  <data name="Saved_IncompatibleHeader" xml:space="preserve"><value>НЕ ПОДХОДЯТ ДЛЯ ЭТОГО IPHONE</value></data>
+  <data name="Saved_OlderVersion" xml:space="preserve"><value>Версия {0}: для {1} нужна iOS {2}</value></data>
+  <data name="Saved_AlreadyInstalled" xml:space="preserve"><value>Уже на iPhone</value></data>
+  <data name="Saved_Updates" xml:space="preserve"><value>Обновит {0} → {1}</value></data>
+  <data name="Saved_UpdateIos" xml:space="preserve"><value>Обновите iPhone: Настройки › Основные › Обновление ПО.</value></data>
+  <data name="Saved_Unreadable" xml:space="preserve"><value>Не удалось открыть файлов: {0}</value></data>
+  <data name="Save_Title_Ready" xml:space="preserve"><value>Всё готово к сохранению</value></data>
+  <data name="Save_Subtitle_Ready" xml:space="preserve"><value>{0} будут скачаны из App Store на этот компьютер.</value></data>
+  <data name="Save_Subtitle_SignIn" xml:space="preserve"><value>Приложения скачиваются у Apple, поэтому войдите с Apple Account, которым они были получены.</value></data>
+  <data name="Save_Title_Running" xml:space="preserve"><value>Сохранение приложений</value></data>
+  <data name="Save_Subtitle_Running" xml:space="preserve"><value>Старый iPhone можно отключить.</value></data>
+  <data name="Save_Title_Done" xml:space="preserve"><value>Приложения сохранены</value></data>
+  <data name="Save_Subtitle_Done" xml:space="preserve"><value>{0} сохранены на этом компьютере.</value></data>
+  <data name="Save_Title_Problems" xml:space="preserve"><value>Не все приложения сохранены</value></data>
+  <data name="Save_Subtitle_Problems" xml:space="preserve"><value>Сохранено: {0}, не сохранено: {1}. Причины указаны ниже.</value></data>
+  <data name="Save_Title_Stopped" xml:space="preserve"><value>Сохранение остановлено</value></data>
+  <data name="Save_Footnote" xml:space="preserve"><value>Сохранить можно только приложения, доступные вашему Apple Account в App Store.</value></data>
+  <data name="Footer_Save" xml:space="preserve"><value>Сохранить</value></data>
+  <data name="Summary_Folder" xml:space="preserve"><value>Папка</value></data>
+  <data name="Summary_ThisPc" xml:space="preserve"><value>Этот компьютер</value></data>
+  <data name="Summary_Accounts_One" xml:space="preserve"><value>{0} аккаунт</value></data>
+  <data name="Summary_Accounts_Few" xml:space="preserve"><value>{0} аккаунта</value></data>
+  <data name="Summary_Accounts_Many" xml:space="preserve"><value>{0} аккаунтов</value></data>
+  <data name="InstallSaved_Subtitle_Ready" xml:space="preserve"><value>{0} будут установлены на «{1}» с этого компьютера.</value></data>
+  <data name="InstallSaved_Footnote" xml:space="preserve"><value>Приложения откроются, если на iPhone в App Store выполнен вход с {0}.</value></data>
+  <data name="InstallSaved_AccountCard" xml:space="preserve"><value>Если приложение попросит войти, войдите в App Store на iPhone с {0}. Это нужно один раз.</value></data>
+  <data name="InstallSaved_TheirAccount" xml:space="preserve"><value>тем Apple Account, с которым они сохранены</value></data>
+  <data name="SaveDone_Header" xml:space="preserve"><value>КОГДА ПОЯВИТСЯ НОВЫЙ IPHONE</value></data>
+  <data name="SaveDone_Step1" xml:space="preserve"><value>Войдите на нём в App Store с {0}.</value></data>
+  <data name="SaveDone_YourAccount" xml:space="preserve"><value>вашим Apple Account</value></data>
+  <data name="SaveDone_Step2" xml:space="preserve"><value>Подключите его и откройте «Перенос».</value></data>
+  <data name="SaveDone_Step3" xml:space="preserve"><value>Выберите «Библиотека на компьютере» → «Установить сохранённые на iPhone».</value></data>
+  <data name="SaveDone_Footnote" xml:space="preserve"><value>Не удаляйте папку «{0}».</value></data>
+  <data name="Transfer_Saved" xml:space="preserve"><value>Сохранено</value></data>
+  <data name="Failure_FileMissing" xml:space="preserve"><value>Файл не найден</value></data>
+  <data name="Failure_FileDamaged" xml:space="preserve"><value>Файл повреждён</value></data>
+  <data name="Start_Restore.Title" xml:space="preserve"><value>Обновить или восстановить на этом iPhone</value></data>
+  <data name="Start_RestoreSubtitle" xml:space="preserve"><value>Свои покупки и приложения, которых сейчас нет в российском App Store.</value></data>
+  <data name="Restore_DeviceTitle" xml:space="preserve"><value>Подключите ваш iPhone</value></data>
+  <data name="Restore_DeviceSubtitle" xml:space="preserve"><value>Используйте USB-кабель, разблокируйте iPhone и подтвердите доверие компьютеру. Для скачивания понадобится ваш Apple Account.</value></data>
+  <data name="Restore_AppsTitle" xml:space="preserve"><value>Ваши покупки</value></data>
+  <data name="Restore_AppsSubtitle" xml:space="preserve"><value>Выберите, что установить на «{0}». Лицензию и доступную версию проверяет Apple.</value></data>
+  <data name="Restore_SignInTitle" xml:space="preserve"><value>Войдите, чтобы увидеть покупки</value></data>
+  <data name="Restore_SignInSubtitle" xml:space="preserve"><value>Используйте Apple Account, которому принадлежат приложения. Восстановить можно только то, что Apple ещё выдаёт вашему аккаунту.</value></data>
+  <data name="Restore_Loading" xml:space="preserve"><value>Читаем историю покупок и проверяем российский App Store…</value></data>
+  <data name="Restore_Empty" xml:space="preserve"><value>Покупки текущего аккаунта не найдены.</value></data>
+  <data name="Restore_HistoryFailed" xml:space="preserve"><value>Apple не выдала историю покупок. Попробуйте позже. Список установленных приложений не используется вместо полной истории.</value></data>
+  <data name="Restore_Network" xml:space="preserve"><value>Не удалось загрузить покупки. Проверьте подключение к интернету и повторите попытку.</value></data>
+  <data name="Restore_Update" xml:space="preserve"><value>Обновить до последней версии, доступной у Apple</value></data>
+  <data name="Restore_Reinstall" xml:space="preserve"><value>Нет на этом iPhone — установить из покупок</value></data>
+  <data name="Restore_InstallFootnote" xml:space="preserve"><value>Скачиваются только ваши покупки с серверов Apple, в последних доступных аккаунту версиях. Новые приложения не приобретаются.</value></data>
+  <data name="Summary_Purchases" xml:space="preserve"><value>Покупки вашего Apple Account</value></data>
+  <data name="Restore_FilterRussian" xml:space="preserve"><value>Российские сервисы</value></data>
+  <data name="Restore_FilterAll" xml:space="preserve"><value>Все покупки</value></data>
+  <data name="Restore_FilterUnavailable" xml:space="preserve"><value>Недоступные в РФ</value></data>
+  <data name="Restore_FilterLabel" xml:space="preserve"><value>Фильтр: {0}</value></data>
+  <data name="Restore_CatalogCandidate" xml:space="preserve"><value>Из каталога — лицензия проверяется при установке</value></data>
+  <data name="Settings_Button" xml:space="preserve"><value>Настройки</value></data>
+  <data name="Steps_Progress" xml:space="preserve"><value>Шаг {0} из {1} · {2}</value></data>
+  <data name="Step_OldIPhone" xml:space="preserve"><value>Старый iPhone</value></data>
+  <data name="Step_YourIPhone" xml:space="preserve"><value>Ваш iPhone</value></data>
+  <data name="Step_NewIPhone" xml:space="preserve"><value>Новый iPhone</value></data>
+  <data name="Step_Apps" xml:space="preserve"><value>Приложения</value></data>
+  <data name="Step_Save" xml:space="preserve"><value>Сохранение</value></data>
+  <data name="Step_Install" xml:space="preserve"><value>Установка</value></data>
+  <data name="Shell_Tagline" xml:space="preserve"><value>Ваши приложения — на вашем iPhone</value></data>
+  <data name="Shell_Eyebrow" xml:space="preserve"><value>ВАШ IPHONE, ВАШИ ПРИЛОЖЕНИЯ</value></data>
+  <data name="Nav_Workspace" xml:space="preserve"><value>РАБОЧАЯ ОБЛАСТЬ</value></data>
+  <data name="Nav_Transfer" xml:space="preserve"><value>Новый iPhone</value></data>
+  <data name="Nav_Restore" xml:space="preserve"><value>Восстановление</value></data>
+  <data name="Nav_Library" xml:space="preserve"><value>Библиотека</value></data>
+  <data name="Nav_Home" xml:space="preserve"><value>Главная</value></data>
+  <data name="Shell_Private" xml:space="preserve"><value>Приватно по умолчанию</value></data>
+  <data name="Shell_PrivateHint" xml:space="preserve"><value>Без своего сервера, рекламы и слежки. Файлы остаются на компьютере.</value></data>
+  <data name="Shell_Requirements" xml:space="preserve"><value>Подключение по USB · Без джейлбрейка · Бесплатно и открыто</value></data>
+  <data name="Settings_Title" xml:space="preserve"><value>Настройки</value></data>
+  <data name="Service_MacTitle" xml:space="preserve"><value>Не удаётся подключиться к iPhone</value></data>
+  <data name="Service_MacBody" xml:space="preserve"><value>Разблокируйте iPhone, подключите его напрямую по USB и разрешите доступ этому Mac в Finder. Нажмите «Доверять» на iPhone и подключите его снова.</value></data>
+  <data name="Service_MacHelp" xml:space="preserve"><value>• Если macOS запросит доступ к аксессуарам, разрешите его и держите iPhone разблокированным.</value></data>
+</root>

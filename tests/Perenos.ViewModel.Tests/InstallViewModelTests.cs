@@ -7,8 +7,6 @@ using Perenos.Core.Tests;
 using Perenos.Core.Transfer;
 using Perenos.Services;
 using Perenos.ViewModels;
-using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml.Media;
 
 namespace Perenos.ViewModel.Tests;
 
@@ -30,7 +28,7 @@ public sealed class InstallViewModelTests : IDisposable
     [InlineData(Flow.Restore)]
     public async Task StopDuringIconLoadingPreventsTransferAndKeepsAllAppsRetryable(Flow flow)
     {
-        var icon = new TaskCompletionSource<ImageSource?>();
+        var icon = new TaskCompletionSource<byte[]?>();
         _icons.Load = _ => icon.Task;
         var vm = CreateViewModel();
         var apps = new[] { App("a"), App("b"), App("c") };
@@ -52,7 +50,7 @@ public sealed class InstallViewModelTests : IDisposable
     [Fact]
     public async Task StopDoesNotWaitForAnUnfinishedIconRead()
     {
-        var icon = new TaskCompletionSource<ImageSource?>();
+        var icon = new TaskCompletionSource<byte[]?>();
         _icons.Load = _ => icon.Task;
         var vm = CreateViewModel();
         var run = vm.StartSaveAsync([App("a")]);
@@ -77,7 +75,7 @@ public sealed class InstallViewModelTests : IDisposable
     {
         var vm = CreateViewModel();
         await vm.StartSaveAsync([App("previous")]);
-        var icon = new TaskCompletionSource<ImageSource?>();
+        var icon = new TaskCompletionSource<byte[]?>();
         _icons.Load = _ => icon.Task;
 
         var run = vm.StartSaveAsync([App("a"), App("b")]);
@@ -93,7 +91,7 @@ public sealed class InstallViewModelTests : IDisposable
     [Fact]
     public async Task RetryAfterStoppingIconLoadingUsesAFreshTokenAndTransfersEveryApp()
     {
-        var icon = new TaskCompletionSource<ImageSource?>();
+        var icon = new TaskCompletionSource<byte[]?>();
         _icons.Load = _ => icon.Task;
         var vm = CreateViewModel();
         var run = vm.StartAsync([App("a"), App("b")], Target());
@@ -115,7 +113,7 @@ public sealed class InstallViewModelTests : IDisposable
     public async Task QueuedProgressFromAnOldRunCannotChangeANewRun()
     {
         var queued = new Queue<Action>();
-        var dispatcher = new DispatcherQueue
+        var dispatcher = new TestDispatcher
         {
             Handler = callback =>
             {
@@ -128,7 +126,7 @@ public sealed class InstallViewModelTests : IDisposable
         Assert.NotEmpty(queued);
 
         vm.Reset();
-        var icon = new TaskCompletionSource<ImageSource?>();
+        var icon = new TaskCompletionSource<byte[]?>();
         _icons.Load = _ => icon.Task;
         var currentRun = vm.StartSaveAsync([App("a")]);
         while (queued.Count > 0)
@@ -160,8 +158,8 @@ public sealed class InstallViewModelTests : IDisposable
         Assert.Equal(Flow.Restore, vm.Flow);
     }
 
-    private InstallViewModel CreateViewModel(DispatcherQueue? dispatcher = null) => new(
-        new AppServices(_folder, new TransferRunner(_store, _devices)), _icons, dispatcher ?? new DispatcherQueue());
+    private InstallViewModel CreateViewModel(TestDispatcher? dispatcher = null) => new(
+        new AppServices(_folder, new TransferRunner(_store, _devices)), _icons, dispatcher ?? new TestDispatcher());
 
     private Task Start(InstallViewModel vm, IReadOnlyList<InstalledApp> apps, Flow flow) => flow switch
     {

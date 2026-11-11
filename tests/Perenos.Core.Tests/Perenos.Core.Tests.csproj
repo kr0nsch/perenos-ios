@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net10.0-windows</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
@@ -14,11 +14,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Perenos.Core\Perenos.Core.csproj" />
+    <ProjectReference Include="..\..\src\Perenos.Presentation\Perenos.Presentation.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Using Include="Xunit" />
-    <Compile Include="..\..\src\Perenos\Services\ActivationForwarder.cs" Link="ActivationForwarder.cs" />
   </ItemGroup>
 
 </Project>

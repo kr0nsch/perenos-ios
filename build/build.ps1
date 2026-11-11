@@ -2,15 +2,15 @@
 .SYNOPSIS
   Builds Perenos release artifacts: a portable ZIP and an installer per architecture.
 .EXAMPLE
-  ./build/build.ps1 -Version 1.6.0
-  ./build/build.ps1 -Version 1.6.0 -RuntimeIdentifier win-x64, win-arm64
+  ./build/build.ps1 -Version 1.7.0
+  ./build/build.ps1 -Version 1.7.0 -RuntimeIdentifier win-x64, win-arm64
 .NOTES
   Outputs go to artifacts\release together with SHA256SUMS.txt.
   Requires the .NET 10 SDK, Go 1.26.5 and Inno Setup 6 (ISCC.exe) for the installer.
 #>
 [CmdletBinding()]
 param(
-    [string] $Version = '1.6.0',
+    [string] $Version = '1.7.0',
     [ValidateSet('win-x64', 'win-arm64')]
     [string[]] $RuntimeIdentifier = @('win-x64'),
     [switch] $SkipTests,
@@ -81,11 +81,11 @@ if (-not $SkipTests) {
     Write-Host "Running tests..." -ForegroundColor Cyan
     Invoke-Checked { dotnet test (Join-Path $root 'tests\Perenos.Core.Tests\Perenos.Core.Tests.csproj') -c Release }
     Invoke-Checked { dotnet test (Join-Path $root 'tests\Perenos.ViewModel.Tests\Perenos.ViewModel.Tests.csproj') -c Release }
+    Invoke-Checked { dotnet test (Join-Path $root 'tests\Perenos.Ui.Tests\Perenos.Ui.Tests.csproj') -c Release }
 }
 
 foreach ($rid in $RuntimeIdentifier) {
     $arch = $rid.Split('-')[1]
-    $platform = if ($arch -eq 'arm64') { 'ARM64' } else { 'x64' }
     $publish = Join-Path $artifacts "publish\$rid"
 
     & (Join-Path $PSScriptRoot 'Get-Ipatool.ps1') -RuntimeIdentifier $rid
@@ -93,7 +93,7 @@ foreach ($rid in $RuntimeIdentifier) {
     Write-Host "Publishing $rid..." -ForegroundColor Cyan
     Remove-BuildDirectory $publish
     Invoke-Checked {
-        dotnet publish (Join-Path $root 'src\Perenos\Perenos.csproj') -c Release -r $rid -p:Platform=$platform `
+        dotnet publish (Join-Path $root 'src\Perenos\Perenos.csproj') -c Release -r $rid `
             -p:Version=$Version -p:ContinuousIntegrationBuild=true -o $publish
     }
     if (-not (Test-Path (Join-Path $publish 'tools\ipatool.exe'))) { throw "ipatool.exe is missing from the $rid build." }

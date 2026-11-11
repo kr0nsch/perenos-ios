@@ -1,0 +1,107 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Perenos.ViewModels"
+             xmlns:s="using:Perenos.Services"
+             xmlns:c="using:Perenos.Converters"
+             xmlns:views="using:Perenos.Views"
+             xmlns:primitives="using:Avalonia.Controls.Primitives"
+             x:Class="Perenos.Views.AppsStepView" x:DataType="vm:MainViewModel">
+  <UserControl.Resources>
+    <c:PngConverter x:Key="Png"/>
+    <c:InverseBoolConverter x:Key="Not"/>
+  </UserControl.Resources>
+  <Grid Margin="36,28,36,20">
+    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" IsVisible="{Binding ShowRestoreContent}">
+      <StackPanel>
+        <TextBlock Text="{Binding AppsTitle}" Classes="h2"/>
+        <TextBlock Text="{Binding AppsSubtitle}" Classes="body muted" Margin="0,8,0,0"/>
+      </StackPanel>
+      <StackPanel Grid.Row="1" Margin="0,22,0,14" IsVisible="{Binding AppList.ShowList}">
+        <TextBox PlaceholderText="{s:Text Apps_Search}" Text="{Binding AppList.SearchText}"/>
+        <Grid ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="9" Margin="0,10,0,0">
+          <Button Content="{Binding AppList.SortButtonText}">
+            <Button.Flyout>
+              <MenuFlyout>
+                <MenuItem Header="{Binding AppList.SortByNameText}" Command="{Binding AppList.SetSortModeCommand}" CommandParameter="Name"/>
+                <MenuItem Header="{Binding AppList.SortBySizeText}" Command="{Binding AppList.SetSortModeCommand}" CommandParameter="SizeDescending"/>
+              </MenuFlyout>
+            </Button.Flyout>
+          </Button>
+          <Button Grid.Column="1" Content="{Binding RestoreFilterText}" IsVisible="{Binding ShowRestoreFilter}">
+            <Button.Flyout>
+              <MenuFlyout>
+                <MenuItem Header="{Binding Restore.FilterAllText}" Command="{Binding Restore.SetFilterCommand}" CommandParameter="Purchases"/>
+                <MenuItem Header="{Binding Restore.FilterUnavailableText}" Command="{Binding Restore.SetFilterCommand}" CommandParameter="Unavailable"/>
+                <MenuItem Header="{Binding Restore.FilterRussianText}" Command="{Binding Restore.SetFilterCommand}" CommandParameter="RussianServices"/>
+              </MenuFlyout>
+            </Button.Flyout>
+          </Button>
+          <Button Grid.Column="3" Content="{Binding AppList.SelectAllText}" Command="{Binding AppList.ToggleSelectAllCommand}" ToolTip.Tip="{Binding AppList.SelectAllHint}"/>
+        </Grid>
+      </StackPanel>
+      <Border Grid.Row="2" Classes="soft" Padding="14,10" Margin="0,0,0,12" IsVisible="{Binding ShowStorefrontStatus}">
+        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+          <ProgressBar Width="36" Height="4" IsIndeterminate="True" IsVisible="{Binding Apps.IsStorefrontScanning}" VerticalAlignment="Center"/>
+          <TextBlock Grid.Column="1" Text="{Binding Apps.StorefrontStatus}" Classes="caption" VerticalAlignment="Center"/>
+          <Button Grid.Column="2" Classes="link" Content="{Binding Apps.UnavailableFilterText}" Command="{Binding Apps.ToggleUnavailableFilterCommand}" IsVisible="{Binding Apps.HasUnavailableApps}"/>
+        </Grid>
+      </Border>
+      <Border Grid.Row="3" Classes="card" Padding="8" IsVisible="{Binding AppList.ShowList}">
+        <Grid RowDefinitions="*,Auto">
+          <ListBox ItemsSource="{Binding AppList.Visible}">
+            <ListBox.ItemTemplate>
+              <DataTemplate DataType="vm:AppItemViewModel">
+                <StackPanel>
+                  <TextBlock Text="{Binding SectionHeader}" Classes="eyebrow" Margin="12,16,12,6" IsVisible="{Binding ShowSectionHeader}"/>
+                  <primitives:ToggleButton x:Name="AppToggle" Classes="app-row" IsChecked="{Binding IsSelected, Mode=TwoWay}" IsEnabled="{Binding IsSelectable}" AutomationProperties.Name="{Binding Name}">
+                    <Grid ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="13">
+                      <Border Width="24" Height="24" CornerRadius="12" BorderThickness="1.5" BorderBrush="{DynamicResource AccentBrush}" VerticalAlignment="Center">
+                        <Border CornerRadius="12" Background="{DynamicResource AccentBrush}" IsVisible="{Binding IsChecked, ElementName=AppToggle}">
+                          <PathIcon Width="14" Height="14" Data="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17Z" Foreground="#FFFFFF"/>
+                        </Border>
+                      </Border>
+                      <Border Grid.Column="1" Classes="app-icon" Width="44" Height="44" VerticalAlignment="Center">
+                        <Grid>
+                          <TextBlock Text="{Binding Initial}" FontSize="18" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="{Binding ShowInitial}"/>
+                          <Image Source="{Binding Icon, Converter={StaticResource Png}}" Stretch="UniformToFill" IsVisible="{Binding HasIcon}"/>
+                        </Grid>
+                      </Border>
+                      <StackPanel Grid.Column="2" VerticalAlignment="Center" Spacing="3">
+                        <TextBlock Text="{Binding Name}" Classes="title"/>
+                        <TextBlock Text="{Binding Detail}" Classes="caption"/>
+                        <TextBlock Text="{Binding Caption}" Classes="caption" Foreground="{DynamicResource AccentBrush}" IsVisible="{Binding HasCaption}"/>
+                        <TextBlock Text="{Binding AvailabilityText}" Classes="caption" Foreground="{DynamicResource WarningBrush}" IsVisible="{Binding HasAvailability}"/>
+                      </StackPanel>
+                      <TextBlock Grid.Column="3" Text="{Binding SizeText}" Classes="caption" VerticalAlignment="Center" Margin="8,0"/>
+                    </Grid>
+                  </primitives:ToggleButton>
+                  <Border Classes="separator" Margin="76,0,10,0" IsVisible="{Binding ShowSeparator}"/>
+                </StackPanel>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+          <TextBlock Grid.Row="1" Text="{s:Text Apps_NoMatches}" Classes="body muted" Margin="20,26" HorizontalAlignment="Center" IsVisible="{Binding AppList.ShowNoMatches}"/>
+        </Grid>
+      </Border>
+      <StackPanel Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="16" IsVisible="{Binding AppList.IsLoading}">
+        <ProgressBar Width="80" Height="4" IsIndeterminate="True"/>
+        <TextBlock Text="{Binding AppList.LoadingText}" Classes="body muted"/>
+      </StackPanel>
+      <StackPanel Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="14" MaxWidth="500" IsVisible="{Binding AppList.HasError}">
+        <TextBlock Text="{Binding AppList.Error}" Classes="body" TextAlignment="Center"/>
+        <Button Content="{s:Text Apps_TryAgain}" Command="{Binding RetryAppsCommand}"/>
+      </StackPanel>
+      <StackPanel Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="500" IsVisible="{Binding AppList.ShowEmpty}">
+        <TextBlock Text="{Binding AppList.EmptyText}" Classes="body muted" TextAlignment="Center"/>
+      </StackPanel>
+      <TextBlock Grid.Row="4" Text="{Binding AppList.Footnote}" Classes="caption" Margin="8,12,8,0" HorizontalAlignment="Center" TextAlignment="Center" IsVisible="{Binding AppList.HasFootnote}" ToolTip.Tip="{Binding AppList.FootnoteDetail}"/>
+    </Grid>
+    <ScrollViewer IsVisible="{Binding ShowRestoreSignIn}">
+      <StackPanel MaxWidth="520" HorizontalAlignment="Center" Margin="0,24">
+        <TextBlock Text="{s:Text Restore_SignInTitle}" Classes="h2"/>
+        <TextBlock Text="{s:Text Restore_SignInSubtitle}" Classes="body muted" Margin="0,10,0,22"/>
+        <views:SignInPanel DataContext="{Binding Account}"/>
+      </StackPanel>
+    </ScrollViewer>
+  </Grid>
+</UserControl>

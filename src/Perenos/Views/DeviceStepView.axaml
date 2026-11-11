@@ -1,0 +1,77 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Perenos.ViewModels"
+             xmlns:s="using:Perenos.Services"
+             xmlns:c="using:Perenos.Converters"
+             x:Class="Perenos.Views.DeviceStepView" x:DataType="vm:MainViewModel">
+  <UserControl.Resources><c:InverseBoolConverter x:Key="Not"/></UserControl.Resources>
+  <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <StackPanel MaxWidth="740" Margin="44,40,44,32" HorizontalAlignment="Center">
+      <Border Classes="hero-icon">
+        <PathIcon Classes="accent" Width="29" Height="29" Data="M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm1 3v14h8V5H8Z"/>
+      </Border>
+      <TextBlock Text="{Binding DeviceStepTitle}" Classes="h1" Margin="0,20,0,0"/>
+      <TextBlock Text="{Binding DeviceStepSubtitle}" Classes="body muted" Margin="0,10,0,0" MaxWidth="600"/>
+      <Border Classes="card" Background="{DynamicResource WarningSoftBrush}" Padding="18" Margin="0,26,0,0" IsVisible="{Binding Devices.IsServiceMissing}">
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+          <StackPanel Spacing="5">
+            <TextBlock Text="{Binding ServiceTitle}" Classes="title"/>
+            <TextBlock Text="{Binding ServiceBody}" Classes="caption"/>
+          </StackPanel>
+          <Button Grid.Column="1" Content="{s:Text Service_Get}" VerticalAlignment="Center" IsVisible="{Binding ShowGetAppleDevices}" Click="GetAppleDevices"/>
+        </Grid>
+      </Border>
+      <Border Classes="card" Padding="10" Margin="0,20,0,0">
+        <Grid>
+        <ItemsControl ItemsSource="{Binding Devices.Devices}" IsVisible="{Binding Devices.HasDevices}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="vm:DeviceItemViewModel">
+              <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14" MinHeight="86" Margin="0,2">
+                <Button Grid.ColumnSpan="3" Classes="quiet" HorizontalContentAlignment="Stretch" Padding="10"
+                        Command="{Binding $parent[ItemsControl].DataContext.ChooseDeviceCommand}" CommandParameter="{Binding}" IsEnabled="{Binding IsSelectable}" AutomationProperties.Name="{Binding Name}">
+                  <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                    <Border Classes="hero-icon" Width="44" Height="44" CornerRadius="14" VerticalAlignment="Center">
+                      <PathIcon Classes="accent" Width="21" Height="21" Data="M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm1 3v14h8V5H8Z"/>
+                    </Border>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="5">
+                      <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="{Binding Name}" Classes="title"/>
+                        <Border Classes="soft" Padding="6,1" IsVisible="{Binding HasRole}"><TextBlock Text="{Binding RoleText}" Classes="caption"/></Border>
+                      </StackPanel>
+                      <TextBlock Text="{Binding Subtitle}" Classes="caption"/>
+                      <TextBlock Text="{Binding StatusText}" Classes="caption" Foreground="{DynamicResource WarningBrush}" IsVisible="{Binding ShowStatusIcon}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                      <ProgressBar Width="36" Height="4" IsIndeterminate="True" IsVisible="{Binding IsBusy}"/>
+                      <PathIcon Width="20" Height="20" Data="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17Z" Foreground="{DynamicResource SuccessBrush}" IsVisible="{Binding IsChosen}"/>
+                    </StackPanel>
+                  </Grid>
+                </Button>
+                <Button Grid.Column="2" Content="{s:Text Device_Retry}" Command="{Binding RetryCommand}" IsVisible="{Binding CanRetry}" VerticalAlignment="Center" Margin="8"/>
+              </Grid>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <StackPanel IsVisible="{Binding Devices.IsEmpty}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="24,34" Spacing="18">
+          <ProgressBar Width="80" Height="4" IsIndeterminate="True" HorizontalAlignment="Center"/>
+          <TextBlock Text="{s:Text Devices_Searching}" Classes="body muted" HorizontalAlignment="Center"/>
+        </StackPanel>
+        </Grid>
+      </Border>
+      <Button Classes="link" Margin="-6,12,0,0" HorizontalAlignment="Left">
+        <TextBlock Text="{s:Text Devices_Help}"/>
+        <Button.Flyout>
+          <Flyout Placement="BottomEdgeAlignedLeft">
+            <StackPanel Width="380" Spacing="12">
+              <TextBlock Text="{s:Text Help_Title}" Classes="title"/>
+              <TextBlock Text="{s:Text Help_Cable}" Classes="caption"/>
+              <TextBlock Text="{s:Text Help_Unlock}" Classes="caption"/>
+              <TextBlock Text="{s:Text Help_Trust}" Classes="caption"/>
+              <TextBlock Text="{Binding ServiceHelp}" Classes="caption"/>
+            </StackPanel>
+          </Flyout>
+        </Button.Flyout>
+      </Button>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

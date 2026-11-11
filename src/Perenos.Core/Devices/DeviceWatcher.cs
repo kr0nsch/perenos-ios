@@ -4,9 +4,8 @@ using Netimobiledevice.Usbmuxd;
 namespace Perenos.Core.Devices;
 
 /// <summary>
-/// Polls the Apple Mobile Device service (installed with the Apple Devices app or iTunes) for
-/// iPhones connected over USB. Polling survives service restarts, unlike a single long-lived
-/// subscription socket.
+/// Polls usbmuxd for iPhones connected over USB. Windows uses Apple Devices or iTunes;
+/// macOS provides the service. Polling survives service restarts, unlike a long-lived socket.
 /// </summary>
 public sealed class DeviceWatcher : IDeviceWatcher
 {

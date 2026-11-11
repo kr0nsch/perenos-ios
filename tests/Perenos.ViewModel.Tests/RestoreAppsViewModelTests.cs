@@ -4,7 +4,6 @@ using Perenos.Core.Ipatool;
 using Perenos.Core.Storefront;
 using Perenos.Services;
 using Perenos.ViewModels;
-using Microsoft.UI.Dispatching;
 
 namespace Perenos.ViewModel.Tests;
 
@@ -23,7 +22,7 @@ public sealed class RestoreAppsViewModelTests
             ],
         };
         var devices = new FakeDevices { Installed = [App(2, "Installed", "2.0")] };
-        var vm = new RestoreAppsViewModel(devices, new RestorableAppScanner(store, new FakeCatalog { Available = new HashSet<long> { 1 } }), new IconCache(), new DispatcherQueue());
+        var vm = new RestoreAppsViewModel(devices, new RestorableAppScanner(store, new FakeCatalog { Available = new HashSet<long> { 1 } }), new IconCache(), new TestDispatcher());
 
         await vm.LoadAsync(Target());
 
@@ -42,7 +41,7 @@ public sealed class RestoreAppsViewModelTests
     {
         var store = new FakeStore { Error = new IpatoolException(IpatoolErrorKind.Unknown, "purchase history returned HTTP 401") };
         var devices = new FakeDevices { Installed = [App(2, "Installed", "2.0")] };
-        var vm = new RestoreAppsViewModel(devices, new RestorableAppScanner(store, new FakeCatalog()), new IconCache(), new DispatcherQueue());
+        var vm = new RestoreAppsViewModel(devices, new RestorableAppScanner(store, new FakeCatalog()), new IconCache(), new TestDispatcher());
 
         await vm.LoadAsync(Target());
 
@@ -56,7 +55,7 @@ public sealed class RestoreAppsViewModelTests
     public async Task ExpiredSessionCanBeRetriedAfterSignIn()
     {
         var store = new FakeStore { Error = new IpatoolException(IpatoolErrorKind.SessionExpired, "expired") };
-        var vm = new RestoreAppsViewModel(new FakeDevices(), new RestorableAppScanner(store, new FakeCatalog()), new IconCache(), new DispatcherQueue());
+        var vm = new RestoreAppsViewModel(new FakeDevices(), new RestorableAppScanner(store, new FakeCatalog()), new IconCache(), new TestDispatcher());
 
         await vm.LoadAsync(Target());
         Assert.True(vm.NeedsSignIn);
@@ -88,7 +87,7 @@ public sealed class RestoreAppsViewModelTests
             new Perenos.Core.Catalog.RussianServiceApp(1054372220, "", "ВК Музыка", "ВК Музыка", "VK Музыка", "music", null),
         };
         var devices = new FakeDevices { Installed = [App(2, "Installed", "2.0")] };
-        var vm = new RestoreAppsViewModel(devices, new RestorableAppScanner(store, new FakeCatalog { Available = new HashSet<long> { 1 } }, services), new IconCache(), new DispatcherQueue());
+        var vm = new RestoreAppsViewModel(devices, new RestorableAppScanner(store, new FakeCatalog { Available = new HashSet<long> { 1 } }, services), new IconCache(), new TestDispatcher());
         await vm.LoadAsync(Target());
 
         Assert.Equal(4, vm.TotalCount);

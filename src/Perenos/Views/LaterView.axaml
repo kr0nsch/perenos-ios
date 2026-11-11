@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Perenos.ViewModels"
+             xmlns:s="using:Perenos.Services"
+             x:Class="Perenos.Views.LaterView" x:DataType="vm:MainViewModel">
+  <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <StackPanel MaxWidth="760" Margin="44,42,44,32" HorizontalAlignment="Center">
+      <TextBlock Text="{s:Text Nav_Library}" Classes="eyebrow"/>
+      <TextBlock Text="{s:Text Later_Title}" Classes="h1" Margin="0,12,0,0"/>
+      <TextBlock Text="{s:Text Later_Subtitle}" Classes="body muted" Margin="0,12,0,0"/>
+      <StackPanel Margin="0,32,0,0" Spacing="14">
+        <Button Classes="choice" Command="{Binding SaveAppsCommand}" IsEnabled="{Binding CanDownload}">
+          <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="18">
+            <Border Classes="hero-icon" Width="48" Height="48" CornerRadius="14">
+              <PathIcon Classes="accent" Width="23" Height="23" Data="M11 3h2v10.17l3.59-3.58L18 11l-6 6-6-6 1.41-1.41L11 13.17V3ZM5 15v5h14v-5h2v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5h2Z"/>
+            </Border>
+            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="5">
+              <TextBlock Text="{s:Text Later_Save.Title}" Classes="title" FontSize="16"/>
+              <TextBlock Text="{Binding SaveSubtitle}" Classes="caption" FontSize="13"/>
+            </StackPanel>
+            <PathIcon Grid.Column="2" Width="20" Height="20" Data="m9 18 6-6-6-6-1.4 1.4 4.6 4.6-4.6 4.6L9 18Z"/>
+          </Grid>
+        </Button>
+        <Button Classes="choice" Command="{Binding InstallSavedAppsCommand}" IsEnabled="{Binding CanInstallSaved}">
+          <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="18">
+            <Border Classes="hero-icon" Width="48" Height="48" CornerRadius="14">
+              <PathIcon Classes="accent" Width="23" Height="23" Data="m13 3 6 6-6 6v-4H7a3 3 0 0 0-3 3v7H2v-7a5 5 0 0 1 5-5h6V3Zm-3-2v2H6a3 3 0 0 0-3 3v3H1V6a5 5 0 0 1 5-5h4Z"/>
+            </Border>
+            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="5">
+              <TextBlock Text="{s:Text Later_Install.Title}" Classes="title" FontSize="16"/>
+              <TextBlock Text="{Binding InstallSavedSubtitle}" Classes="caption" FontSize="13"/>
+            </StackPanel>
+            <PathIcon Grid.Column="2" Width="20" Height="20" Data="m9 18 6-6-6-6-1.4 1.4 4.6 4.6-4.6 4.6L9 18Z"/>
+          </Grid>
+        </Button>
+      </StackPanel>
+      <Border Classes="soft" Margin="0,20,0,0" Padding="14,10">
+        <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="8">
+          <TextBlock Text="{s:Text Later_Folder}" Classes="caption" VerticalAlignment="Center"/>
+          <Button Grid.Column="1" Classes="link" HorizontalContentAlignment="Left" Command="{Binding OpenFolderCommand}" ToolTip.Tip="{Binding Library.Folder}">
+            <TextBlock Text="{Binding FolderDisplay}" Classes="caption" TextTrimming="CharacterEllipsis"/>
+          </Button>
+          <Button Grid.Column="2" Classes="link" Content="{s:Text Settings_Open}" Command="{Binding OpenFolderCommand}"/>
+          <Button Grid.Column="3" Classes="link" Content="{s:Text Later_ChangeFolder}" Command="{Binding ChangeFolderCommand}"/>
+        </Grid>
+      </Border>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

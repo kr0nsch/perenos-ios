@@ -4,7 +4,6 @@ using Perenos.Core.Ipatool;
 using Perenos.Core.Storefront;
 using Perenos.Services;
 using Perenos.ViewModels;
-using Microsoft.UI.Dispatching;
 
 namespace Perenos.ViewModel.Tests;
 
@@ -89,7 +88,7 @@ public sealed class AppsViewModelTests
     }
 
     private static AppsViewModel Create(FakeStore store, FakeCatalog catalog) =>
-        new(new FakeDevices(), new UnavailableAppScanner(store, catalog), new IconCache(), new DispatcherQueue());
+        new(new FakeDevices(), new UnavailableAppScanner(store, catalog), new IconCache(), new TestDispatcher());
 
     private static DeviceItemViewModel Source() => new("source", _ => Task.CompletedTask);
 

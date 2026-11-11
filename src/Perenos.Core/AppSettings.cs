@@ -33,7 +33,7 @@ public sealed class AppSettings
 
     public ThemePreference Theme { get; set; } = ThemePreference.System;
 
-    /// <summary>Empty for the Windows display language, otherwise a BCP-47 tag such as "ru-RU".</summary>
+    /// <summary>Empty for the system display language, otherwise a BCP-47 tag such as "ru-RU".</summary>
     public string Language { get; set; } = "";
 }
 

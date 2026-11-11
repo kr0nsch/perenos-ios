@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net10.0-windows</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
@@ -15,16 +15,17 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Perenos.Core\Perenos.Core.csproj" />
-    <!-- Exercise the production view models without starting WinUI or requiring an iPhone. -->
-    <Compile Include="..\..\src\Perenos\ViewModels\InstallViewModel.cs" Link="Production\InstallViewModel.cs" />
-    <Compile Include="..\..\src\Perenos\ViewModels\AccountViewModel.cs" Link="Production\AccountViewModel.cs" />
-    <Compile Include="..\..\src\Perenos\ViewModels\AppListViewModel.cs" Link="Production\AppListViewModel.cs" />
-    <Compile Include="..\..\src\Perenos\ViewModels\AppsViewModel.cs" Link="Production\AppsViewModel.cs" />
-    <Compile Include="..\..\src\Perenos\ViewModels\RestoreAppsViewModel.cs" Link="Production\RestoreAppsViewModel.cs" />
-    <Compile Include="..\..\src\Perenos\ViewModels\AppItemViewModel.cs" Link="Production\AppItemViewModel.cs" />
-    <Compile Include="..\..\src\Perenos\ViewModels\TransferItemViewModel.cs" Link="Production\TransferItemViewModel.cs" />
-    <Compile Include="..\..\src\Perenos\ViewModels\DeviceItemViewModel.cs" Link="Production\DeviceItemViewModel.cs" />
-    <Compile Include="..\..\src\Perenos\Services\Format.cs" Link="Production\Format.cs" />
+    <Compile Include="..\..\src\Perenos.Presentation\ViewModels\InstallViewModel.cs" Link="Production\InstallViewModel.cs" />
+    <Compile Include="..\..\src\Perenos.Presentation\ViewModels\AccountViewModel.cs" Link="Production\AccountViewModel.cs" />
+    <Compile Include="..\..\src\Perenos.Presentation\ViewModels\AppListViewModel.cs" Link="Production\AppListViewModel.cs" />
+    <Compile Include="..\..\src\Perenos.Presentation\ViewModels\AppsViewModel.cs" Link="Production\AppsViewModel.cs" />
+    <Compile Include="..\..\src\Perenos.Presentation\ViewModels\RestoreAppsViewModel.cs" Link="Production\RestoreAppsViewModel.cs" />
+    <Compile Include="..\..\src\Perenos.Presentation\ViewModels\AppItemViewModel.cs" Link="Production\AppItemViewModel.cs" />
+    <Compile Include="..\..\src\Perenos.Presentation\ViewModels\TransferItemViewModel.cs" Link="Production\TransferItemViewModel.cs" />
+    <Compile Include="..\..\src\Perenos.Presentation\ViewModels\DeviceItemViewModel.cs" Link="Production\DeviceItemViewModel.cs" />
+    <Compile Include="..\..\src\Perenos.Presentation\Services\Format.cs" Link="Production\Format.cs" />
+    <Compile Include="..\..\src\Perenos.Presentation\Services\IUiDispatcher.cs" Link="Production\IUiDispatcher.cs" />
+    <Compile Include="..\..\src\Perenos.Presentation\Services\SingleInstance.cs" Link="Production\SingleInstance.cs" />
     <Compile Include="..\Perenos.Core.Tests\TestIpa.cs" Link="TestIpa.cs" />
     <Using Include="Xunit" />
   </ItemGroup>

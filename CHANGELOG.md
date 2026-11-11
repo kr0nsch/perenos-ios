@@ -4,6 +4,38 @@ All notable changes to Perenos are listed here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Добавлено
+- Единый интерфейс на **Avalonia 12 / .NET 10** для Windows и macOS: общие сценарии, MVVM, русская и английская локализация, светлая и тёмная темы.
+- Сборка `.app` и DMG для Apple Silicon и Intel на macOS 15+, нативный ipatool с CGO, защита сессии в macOS Keychain, необязательные подпись Developer ID и нотаризация.
+- Отдельная библиотека `Perenos.Presentation`, headless-тесты Avalonia, изолированные данные деморежима и повторяемый UI-прогон `build/Demo-Check.ps1`.
+- Новый двуязычный сайт с адаптивным дизайном, локальными шрифтами, кадрами текущего интерфейса и ссылками на Mac-пакеты только при их наличии в релизе.
+
+### Исправлено
+- Строка приложения использует один стандартный `ToggleButton`: выбор не переключается дважды и имеет видимую галочку, которая не перекрыта иконкой.
+- Целевой iPhone сбрасывается при переходе от восстановления к установке сохранённых приложений.
+- Динамические строки и культура форматирования обновляются при смене языка без перезапуска. Демо запоминает установки до конца запуска и не затрагивает настройки пользователя.
+
+### Ограничения проверки
+- Новая кроссплатформенная версия проверяется в деморежиме и headless-тестах. Реальные USB и Apple Account на Windows и macOS, а также первый запуск подписанного DMG требуют отдельной проверки на оборудовании.
+- Публичные Mac DMG выпускаются только при настроенных Developer ID и параметрах нотаризации; ad-hoc пакеты CI не выдаются за стабильный релиз.
+
+### Added
+- Shared **Avalonia 12 / .NET 10** interface for Windows and macOS, with common workflows, MVVM, English and Russian localization, and light/dark themes.
+- `.app` and DMG packaging for Apple Silicon and Intel on macOS 15+, native ipatool with CGO, macOS Keychain session protection, and optional Developer ID signing and notarization.
+- A separate `Perenos.Presentation` library, Avalonia headless tests, isolated demo data and the repeatable `build/Demo-Check.ps1` UI test runner.
+- A redesigned bilingual website with responsive layouts, local fonts, current screenshots and Mac download links only when matching release assets exist.
+
+### Fixed
+- A single standard `ToggleButton` per app row prevents double toggling and shows a visible checkmark that is not covered by the icon.
+- The target iPhone is reset when switching from restoration to installation of saved apps.
+- Computed text and formatting culture update live when the language changes. Demo installations persist for the session and never alter real user settings.
+
+### Verification limits
+- The new cross-platform version is verified through demo workflows and headless tests. Physical USB and Apple Account checks on Windows and macOS, and the first launch of a signed DMG, require separate hardware verification.
+- Public Mac DMGs require Developer ID and notarization credentials; ad-hoc CI packages are not silently published as stable releases.
+
 ## [1.6.0] - 2026-11-10
 
 ### Добавлено

@@ -4,7 +4,7 @@ namespace Perenos.Core.Tests;
 
 public class IpatoolClientTests
 {
-    [Fact]
+    [WindowsFact]
     public void PrivateHomeSplitsDriveAndPath()
     {
         var environment = new Dictionary<string, string?> { ["XDG_STATE_HOME"] = @"C:\state", ["XDG_DATA_HOME"] = @"C:\data" };
@@ -17,7 +17,7 @@ public class IpatoolClientTests
         Assert.False(environment.ContainsKey("XDG_DATA_HOME"));
     }
 
-    [Fact]
+    [WindowsFact]
     public void PrivateHomeSupportsUncPaths()
     {
         var environment = new Dictionary<string, string?>();
@@ -42,7 +42,7 @@ public class IpatoolClientTests
     /// Runs the real bundled ipatool against an empty private home: it must report "not signed
     /// in" and must not touch any other ipatool session on this machine.
     /// </summary>
-    [Fact]
+    [WindowsFact]
     public async Task RealIpatoolReportsSignedOutForFreshHome()
     {
         var exe = TestPaths.Ipatool();

@@ -1,0 +1,18 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Perenos.ViewModels"
+        xmlns:views="using:Perenos.Views"
+        xmlns:s="using:Perenos.Services"
+        x:Class="Perenos.Views.SignInWindow" x:DataType="vm:AccountViewModel"
+        Width="520" Height="720" MinWidth="440" MinHeight="620"
+        WindowStartupLocation="CenterOwner" CanResize="True"
+        Icon="avares://Perenos/Assets/Perenos.ico"
+        TransparencyLevelHint="None"
+        Title="{s:Text SignIn_DialogTitle}">
+  <ScrollViewer Padding="28">
+    <StackPanel>
+      <TextBlock Text="{s:Text SignIn_DialogTitle}" Classes="h2" Margin="0,0,0,24"/>
+      <views:SignInPanel DataContext="{Binding}"/>
+    </StackPanel>
+  </ScrollViewer>
+</Window>

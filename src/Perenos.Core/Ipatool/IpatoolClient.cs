@@ -9,8 +9,8 @@ namespace Perenos.Core.Ipatool;
 /// App Store and download app packages that the signed-in Apple Account is licensed for.
 /// </summary>
 /// <remarks>
-/// ipatool keeps its session under %HOMEDRIVE%%HOMEPATH%\.ipatool on Windows, so every process
-/// gets a private home folder. Only one ipatool process runs at a time because they share the
+/// ipatool keeps its session under the user's home folder, so every process gets a private
+/// home. Only one ipatool process runs at a time because they share the
 /// cookie jar and keychain files.
 /// </remarks>
 public sealed class IpatoolClient : IAppStoreClient
@@ -205,16 +205,15 @@ public sealed class IpatoolClient : IAppStoreClient
     internal static void ConfigureEnvironment(IDictionary<string, string?> environment, string home)
     {
         var full = Path.GetFullPath(home);
-        var root = Path.GetPathRoot(full) ?? "";
-        if (root.Length >= 2 && root[1] == ':')
+        if (OperatingSystem.IsWindows())
         {
-            environment["HOMEDRIVE"] = full[..2];
-            environment["HOMEPATH"] = full[2..];
+            var root = Path.GetPathRoot(full) ?? "";
+            environment["HOMEDRIVE"] = root.Length >= 2 && root[1] == ':' ? full[..2] : "";
+            environment["HOMEPATH"] = root.Length >= 2 && root[1] == ':' ? full[2..] : full;
         }
         else
         {
-            environment["HOMEDRIVE"] = "";
-            environment["HOMEPATH"] = full;
+            environment["HOME"] = full;
         }
 
         // These would redirect (and migrate) ipatool's state away from our private folder.

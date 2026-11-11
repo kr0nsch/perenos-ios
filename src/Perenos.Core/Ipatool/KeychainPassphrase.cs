@@ -1,19 +1,27 @@
+using System.Runtime.Versioning;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace Perenos.Core.Ipatool;
 
-/// <summary>
-/// ipatool encrypts its saved session with a passphrase. Perenos generates a random one per
-/// Windows user and keeps it encrypted with DPAPI, so people never have to invent or type it.
-/// </summary>
+/// <summary>Stores the generated session passphrase with the operating system's user secret store.</summary>
 internal static class KeychainPassphrase
 {
     private const string KeyFileName = "keychain.key";
-    // Persistent encryption contract: changing the product name must not invalidate sessions.
+    // Persistent Windows encryption contract: renaming the product must not invalidate sessions.
     private static readonly byte[] Entropy = "AppBridge.ipatool.keychain.v1"u8.ToArray();
 
     public static string GetOrCreate(string ipatoolHome)
+    {
+        if (OperatingSystem.IsMacOS())
+            return GetOrCreateMac(ipatoolHome);
+        if (OperatingSystem.IsWindows())
+            return GetOrCreateWindows(ipatoolHome);
+        throw new PlatformNotSupportedException("This build supports Windows and macOS.");
+    }
+
+    [SupportedOSPlatform("windows")]
+    private static string GetOrCreateWindows(string ipatoolHome)
     {
         var keyFile = Path.Combine(ipatoolHome, KeyFileName);
         if (File.Exists(keyFile))
@@ -25,17 +33,23 @@ internal static class KeychainPassphrase
             }
             catch (CryptographicException ex)
             {
-                // Typical for a portable copy moved to another PC or Windows account.
                 AppLog.Warn("The saved Apple Account session belongs to another Windows user or PC; a new sign-in is required.", ex);
             }
         }
 
-        // A session encrypted with an unknown passphrase can never be opened again.
         DeleteSavedAccount(ipatoolHome);
-
         var passphrase = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
         Directory.CreateDirectory(ipatoolHome);
         File.WriteAllBytes(keyFile, ProtectedData.Protect(Encoding.UTF8.GetBytes(passphrase), Entropy, DataProtectionScope.CurrentUser));
+        return passphrase;
+    }
+
+    private static string GetOrCreateMac(string ipatoolHome)
+    {
+        if (MacKeychain.Read() is { Length: > 0 } existing)
+            return existing;
+        var passphrase = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
+        MacKeychain.Write(passphrase);
         return passphrase;
     }
 

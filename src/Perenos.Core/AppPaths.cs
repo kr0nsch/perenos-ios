@@ -3,8 +3,7 @@ using System.Runtime.InteropServices;
 namespace Perenos.Core;
 
 /// <summary>
-/// Resolves where Perenos keeps its data. An installed copy uses %LOCALAPPDATA%\Perenos;
-/// a portable copy keeps everything in a Data folder beside the executable.
+/// Resolves platform-specific application data, with a portable Data folder override.
 /// </summary>
 public sealed class AppPaths
 {
@@ -50,7 +49,7 @@ public sealed class AppPaths
 
     public string SettingsFile => Path.Combine(DataDirectory, "settings.json");
 
-    public string IpatoolExecutable => Path.Combine(AppDirectory, "tools", "ipatool.exe");
+    public string IpatoolExecutable => Path.Combine(AppDirectory, "tools", OperatingSystem.IsWindows() ? "ipatool.exe" : "ipatool");
 
     public IReadOnlyList<string> MigrationWarnings => _migrationWarnings;
 
@@ -59,13 +58,21 @@ public sealed class AppPaths
         appDirectory ??= AppContext.BaseDirectory;
         appDirectory = Path.GetFullPath(appDirectory);
 
+        if (Environment.GetEnvironmentVariable("PERENOS_DEMO") == "1")
+        {
+            var demoData = Path.Combine(Path.GetTempPath(), $"PerenosDemo-{Environment.ProcessId}");
+            return new AppPaths(appDirectory, true, demoData, Path.Combine(demoData, "Downloads"));
+        }
+
         if (File.Exists(Path.Combine(appDirectory, PortableMarkerFileName)))
         {
             var data = Path.Combine(appDirectory, "Data");
             return new AppPaths(appDirectory, true, data, Path.Combine(data, "Downloads"));
         }
 
-        var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        var localAppData = OperatingSystem.IsMacOS()
+            ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Library", "Application Support")
+            : Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
         var downloads = GetDownloadsFolder();
         return new AppPaths(
             appDirectory,
@@ -160,12 +167,12 @@ public sealed class AppPaths
     private static bool SamePath(string first, string second) =>
         string.Equals(Path.GetFullPath(first).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar),
             Path.GetFullPath(second).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar),
-            StringComparison.OrdinalIgnoreCase);
+            OperatingSystem.IsWindows() ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal);
 
     private static string GetDownloadsFolder()
     {
         var downloads = new Guid("374DE290-123F-4565-9164-39C4925E467B");
-        if (SHGetKnownFolderPath(downloads, 0, IntPtr.Zero, out var pathPtr) == 0)
+        if (OperatingSystem.IsWindows() && SHGetKnownFolderPath(downloads, 0, IntPtr.Zero, out var pathPtr) == 0)
         {
             try
             {

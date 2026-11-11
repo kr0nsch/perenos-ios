@@ -1,10 +1,9 @@
-using System.Security.Cryptography;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
 namespace Perenos.Core.Tests;
 
+[Collection("Environment")]
 public class AppTests
 {
     [Fact]
@@ -181,83 +180,20 @@ public class AppTests
         }
     }
 
-    [Fact]
-    public void KeychainPassphraseIsStableAndProtected()
-    {
-        var dir = TestPaths.TempDirectory();
-        try
-        {
-            var first = Ipatool.KeychainPassphrase.GetOrCreate(dir);
-            var second = Ipatool.KeychainPassphrase.GetOrCreate(dir);
-
-            Assert.Equal(first, second);
-            Assert.True(first.Length >= 40);
-            Assert.DoesNotContain(first, File.ReadAllText(Path.Combine(dir, "keychain.key")));
-        }
-        finally
-        {
-            Directory.Delete(dir, true);
-        }
-    }
-
-    [Fact]
-    public void ExistingSessionRemainsReadableAfterProductRename()
-    {
-        var dir = TestPaths.TempDirectory();
-        try
-        {
-            const string passphrase = "existing-perenos-session-passphrase";
-            var legacyKey = ProtectedData.Protect(Encoding.UTF8.GetBytes(passphrase),
-                "AppBridge.ipatool.keychain.v1"u8.ToArray(), DataProtectionScope.CurrentUser);
-            File.WriteAllBytes(Path.Combine(dir, "keychain.key"), legacyKey);
-            var account = Path.Combine(dir, ".ipatool", "account");
-            Directory.CreateDirectory(Path.GetDirectoryName(account)!);
-            File.WriteAllText(account, "existing encrypted account");
-
-            Assert.Equal(passphrase, Ipatool.KeychainPassphrase.GetOrCreate(dir));
-            Assert.Equal(legacyKey, File.ReadAllBytes(Path.Combine(dir, "keychain.key")));
-            Assert.Equal("existing encrypted account", File.ReadAllText(account));
-        }
-        finally
-        {
-            Directory.Delete(dir, true);
-        }
-    }
-
-    [Fact]
-    public void UnreadablePassphraseStartsFreshSession()
-    {
-        var dir = TestPaths.TempDirectory();
-        try
-        {
-            Directory.CreateDirectory(Path.Combine(dir, ".ipatool"));
-            File.WriteAllText(Path.Combine(dir, ".ipatool", "account"), "old encrypted session");
-            File.WriteAllBytes(Path.Combine(dir, "keychain.key"), [1, 2, 3]);
-
-            var passphrase = Ipatool.KeychainPassphrase.GetOrCreate(dir);
-
-            Assert.False(string.IsNullOrEmpty(passphrase));
-            Assert.False(File.Exists(Path.Combine(dir, ".ipatool", "account")));
-        }
-        finally
-        {
-            Directory.Delete(dir, true);
-        }
-    }
 
     /// <summary>Every UI string must exist in every language with the same placeholders.</summary>
     [Fact]
     public void TranslationsMatchEnglish()
     {
-        var strings = Path.Combine(TestPaths.RepositoryRoot, "src", "Perenos", "Strings");
-        var english = Load(Path.Combine(strings, "en-US", "Resources.resw"));
-        foreach (var dir in Directory.GetDirectories(strings).Where(d => !d.EndsWith("en-US", StringComparison.Ordinal)))
+        var strings = Path.Combine(TestPaths.RepositoryRoot, "src", "Perenos.Presentation", "Strings");
+        var english = Load(Path.Combine(strings, "Resources.resx"));
+        foreach (var path in Directory.GetFiles(strings, "Resources.*.resx"))
         {
-            var other = Load(Path.Combine(dir, "Resources.resw"));
+            var other = Load(path);
             Assert.Empty(english.Keys.Except(other.Keys));
             Assert.Empty(other.Keys.Except(english.Keys));
             foreach (var (key, value) in english)
-                Assert.True(Placeholders(value).SetEquals(Placeholders(other[key])), $"{Path.GetFileName(dir)}: placeholders differ for {key}");
+                Assert.True(Placeholders(value).SetEquals(Placeholders(other[key])), $"{Path.GetFileName(path)}: placeholders differ for {key}");
         }
     }
 

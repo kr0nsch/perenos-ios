@@ -1,0 +1,98 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Perenos.ViewModels"
+             xmlns:s="using:Perenos.Services"
+             xmlns:c="using:Perenos.Converters"
+             xmlns:views="using:Perenos.Views"
+             x:Class="Perenos.Views.InstallStepView" x:DataType="vm:MainViewModel">
+  <UserControl.Resources><c:PngConverter x:Key="Png"/></UserControl.Resources>
+  <Grid Margin="36,26,36,20" RowDefinitions="Auto,*">
+    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
+      <Border Classes="hero-icon" Width="48" Height="48" CornerRadius="15">
+        <Grid>
+          <PathIcon Classes="accent" Width="23" Height="23" Data="M11 3h2v10.17l3.59-3.58L18 11l-6 6-6-6 1.41-1.41L11 13.17V3ZM5 15v5h14v-5h2v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5h2Z" IsVisible="{Binding InstallGlyphIsNormal}"/>
+          <TextBlock Text="✓" Foreground="{DynamicResource SuccessBrush}" FontSize="27" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="{Binding InstallGlyphIsSuccess}"/>
+          <TextBlock Text="!" Foreground="{DynamicResource WarningBrush}" FontSize="27" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="{Binding InstallGlyphIsWarning}"/>
+        </Grid>
+      </Border>
+      <StackPanel Grid.Column="1" Spacing="7" VerticalAlignment="Center">
+        <TextBlock Text="{Binding InstallTitle}" Classes="h2"/>
+        <TextBlock Text="{Binding InstallSubtitle}" Classes="body muted"/>
+        <ProgressBar Value="{Binding Install.OverallProgress}" Maximum="1" Height="5" Margin="0,5,0,0" IsVisible="{Binding Install.IsRunning}"/>
+      </StackPanel>
+    </Grid>
+    <ScrollViewer Grid.Row="1" Margin="0,22,0,0" IsVisible="{Binding Install.ShowItems, Converter={x:Static c:InverseBoolConverter.Instance}}">
+      <StackPanel MaxWidth="660" HorizontalAlignment="Center">
+        <views:SignInPanel DataContext="{Binding Account}" IsVisible="{Binding $parent[ScrollViewer].DataContext.ShowSignInPanel}"/>
+        <StackPanel IsVisible="{Binding ShowInstallSummary}">
+          <Border Classes="card" Padding="18,6">
+            <StackPanel>
+              <Grid ColumnDefinitions="Auto,*" MinHeight="46" ColumnSpacing="18"><TextBlock Text="{s:Text Summary_From}" Classes="body" VerticalAlignment="Center"/><TextBlock Grid.Column="1" Text="{Binding SummaryFrom}" Classes="body muted" HorizontalAlignment="Right" VerticalAlignment="Center"/></Grid>
+              <Border Classes="separator"/>
+              <Grid ColumnDefinitions="Auto,*" MinHeight="46" ColumnSpacing="18" IsVisible="{Binding ShowSummaryTo}"><TextBlock Text="{s:Text Summary_To}" Classes="body" VerticalAlignment="Center"/><TextBlock Grid.Column="1" Text="{Binding SummaryTo}" Classes="body muted" HorizontalAlignment="Right" VerticalAlignment="Center"/></Grid>
+              <Grid ColumnDefinitions="Auto,*" MinHeight="46" ColumnSpacing="18" IsVisible="{Binding ShowSummaryFolder}"><TextBlock Text="{s:Text Summary_Folder}" Classes="body" VerticalAlignment="Center"/><Button Grid.Column="1" Classes="link" Content="{Binding FolderDisplay}" Command="{Binding OpenFolderCommand}" HorizontalAlignment="Right"/></Grid>
+              <Border Classes="separator"/>
+              <Grid ColumnDefinitions="Auto,*" MinHeight="46" ColumnSpacing="18"><TextBlock Text="{s:Text Summary_Apps}" Classes="body" VerticalAlignment="Center"/><TextBlock Grid.Column="1" Text="{Binding SummaryApps}" Classes="body muted" HorizontalAlignment="Right" VerticalAlignment="Center"/></Grid>
+              <Border Classes="separator"/>
+              <Grid ColumnDefinitions="Auto,*,Auto" MinHeight="46" ColumnSpacing="18"><TextBlock Text="{s:Text Summary_Account}" Classes="body" VerticalAlignment="Center"/><TextBlock Grid.Column="1" Text="{Binding SummaryAccount}" Classes="body muted" HorizontalAlignment="Right" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/><Button Grid.Column="2" Classes="link" Content="{s:Text Summary_SignOut}" Command="{Binding Account.SignOutCommand}" IsVisible="{Binding ShowSignOut}"/></Grid>
+            </StackPanel>
+          </Border>
+          <TextBlock Text="{s:Text Options_Header}" Classes="eyebrow" Margin="6,22,6,8" IsVisible="{Binding ShowOptions}"/>
+          <Border Classes="card" Padding="18,6" IsVisible="{Binding ShowOptions}">
+            <StackPanel>
+              <Grid ColumnDefinitions="*,Auto" MinHeight="54" ColumnSpacing="16" IsVisible="{Binding ShowVersionOption}">
+                <TextBlock Text="{s:Text Options_Version}" Classes="body" VerticalAlignment="Center"/>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                  <RadioButton Content="{s:Text Options_VersionLatest}" GroupName="Version" IsChecked="{Binding Install.UseLatestVersion}"/>
+                  <RadioButton Content="{s:Text Options_VersionSame}" GroupName="Version" IsChecked="{Binding Install.UseSourceVersion}"/>
+                </StackPanel>
+              </Grid>
+              <Border Classes="separator" IsVisible="{Binding ShowFreeOption}"/>
+              <Grid ColumnDefinitions="*,Auto" MinHeight="62" ColumnSpacing="16" IsVisible="{Binding ShowFreeOption}">
+                <StackPanel VerticalAlignment="Center" Margin="0,9"><TextBlock Text="{s:Text Options_Free}" Classes="body"/><TextBlock Text="{s:Text Options_FreeHint}" Classes="caption"/></StackPanel>
+                <ToggleSwitch Grid.Column="1" IsChecked="{Binding Install.AcquireFreeLicenses}" VerticalAlignment="Center"/>
+              </Grid>
+              <Border Classes="separator" IsVisible="{Binding ShowKeepOption}"/>
+              <Grid ColumnDefinitions="*,Auto" MinHeight="62" ColumnSpacing="16" IsVisible="{Binding ShowKeepOption}">
+                <StackPanel VerticalAlignment="Center" Margin="0,9"><TextBlock Text="{s:Text Options_Keep}" Classes="body"/><TextBlock Text="{s:Text Options_KeepHint}" Classes="caption"/></StackPanel>
+                <ToggleSwitch Grid.Column="1" IsChecked="{Binding Install.KeepDownloads}" VerticalAlignment="Center"/>
+              </Grid>
+            </StackPanel>
+          </Border>
+          <TextBlock Text="{Binding InstallFootnote}" Classes="caption" Margin="6,12,6,4"/>
+        </StackPanel>
+      </StackPanel>
+    </ScrollViewer>
+    <Grid Grid.Row="1" Margin="0,22,0,0" RowDefinitions="Auto,*" IsVisible="{Binding Install.ShowItems}">
+      <StackPanel Margin="0,0,0,14">
+        <Border Classes="soft" Padding="16" IsVisible="{Binding ShowSaveDoneCard}">
+          <StackPanel Spacing="10"><TextBlock Text="{s:Text SaveDone_Header}" Classes="eyebrow"/><TextBlock Text="{Binding SaveDoneStep1}" Classes="body"/><TextBlock Text="{s:Text SaveDone_Step2}" Classes="body"/><TextBlock Text="{s:Text SaveDone_Step3}" Classes="body"/><TextBlock Text="{Binding SaveDoneFootnote}" Classes="caption"/></StackPanel>
+        </Border>
+        <Border Classes="soft" Padding="16" IsVisible="{Binding ShowAccountCard}"><TextBlock Text="{Binding AccountCardText}" Classes="caption"/></Border>
+      </StackPanel>
+      <Border Grid.Row="1" Classes="card" Padding="8">
+        <ListBox ItemsSource="{Binding Install.Items}">
+          <ListBox.ItemTemplate>
+            <DataTemplate DataType="vm:TransferItemViewModel">
+              <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="13" Margin="6,9">
+                <Border Classes="app-icon" Width="42" Height="42">
+                  <Grid><TextBlock Text="{Binding Initial}" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="{Binding ShowInitial}"/><Image Source="{Binding Icon, Converter={StaticResource Png}}" Stretch="UniformToFill" IsVisible="{Binding HasIcon}"/></Grid>
+                </Border>
+                <StackPanel Grid.Column="1" Spacing="3" VerticalAlignment="Center">
+                  <TextBlock Text="{Binding Name}" Classes="title"/>
+                  <TextBlock Text="{Binding StatusText}" Classes="caption" ToolTip.Tip="{Binding Detail}"/>
+                  <ProgressBar Value="{Binding ProgressValue}" Maximum="100" Height="4" Margin="0,5,0,0" IsIndeterminate="{Binding IsIndeterminate}" IsVisible="{Binding ShowProgress}"/>
+                </StackPanel>
+                <Grid Grid.Column="2" Width="26" VerticalAlignment="Center">
+                  <TextBlock Text="✓" Foreground="{DynamicResource SuccessBrush}" FontSize="23" FontWeight="SemiBold" IsVisible="{Binding IsCompleted}"/>
+                  <TextBlock Text="!" Foreground="{DynamicResource DangerBrush}" FontSize="23" FontWeight="SemiBold" IsVisible="{Binding IsFailed}"/>
+                  <Ellipse Width="14" Height="14" Stroke="{DynamicResource BorderBrush}" StrokeThickness="2" IsVisible="{Binding IsWaiting}"/>
+                </Grid>
+              </Grid>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </Border>
+    </Grid>
+  </Grid>
+</UserControl>

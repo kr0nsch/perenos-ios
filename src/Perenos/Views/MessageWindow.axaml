@@ -1,0 +1,17 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:s="using:Perenos.Services"
+        x:Class="Perenos.Views.MessageWindow"
+        Width="460" SizeToContent="Height" CanResize="False"
+        WindowStartupLocation="CenterOwner"
+        Icon="avares://Perenos/Assets/Perenos.ico"
+        TransparencyLevelHint="None">
+  <StackPanel Margin="26" Spacing="20">
+    <TextBlock x:Name="Heading" Classes="h2"/>
+    <TextBlock x:Name="Body" Classes="body muted"/>
+    <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
+      <Button x:Name="ContinueButton" Content="{s:Text Common_Cancel}" Click="Cancel"/>
+      <Button x:Name="ConfirmButton" Classes="danger" Click="Confirm"/>
+    </StackPanel>
+  </StackPanel>
+</Window>

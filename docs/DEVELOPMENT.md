@@ -1,43 +1,46 @@
 # Development priorities
 
-## Reliability fixes in 1.1.1
+## Current architecture
 
-The three issues from the source review are fixed and covered by regression tests:
+Perenos uses .NET 10 and Avalonia 12 for one Windows and macOS application.
+`Perenos.Core` owns USB, App Store and package operations. `Perenos.Presentation`
+contains the shared MVVM models, demo backend, localization and platform-neutral
+services. `src/Perenos` contains only the Avalonia shell, views and native UI adapters.
 
-- **Stop during preparation.** Cancellation applies while icons load and while apps
-  transfer. Unfinished apps remain available for retry with a fresh cancellation token.
-  Source: [InstallViewModel](../src/Perenos/ViewModels/InstallViewModel.cs).
-- **Unsuccessful sign-out.** A failed revoke retains the signed-in account and displays
-  a localized error with a retry action. Successful sign-out clears account details
-  and form secrets; account operations cannot overlap.
-  Source: [AccountViewModel](../src/Perenos/ViewModels/AccountViewModel.cs).
-- **Activation forwarding.** A second launch waits for a bounded period, observes
-  forwarding failures and releases the event handle even if the target stalls.
-  Source: [ActivationForwarder](../src/Perenos/Services/ActivationForwarder.cs).
+The Windows session protection contract remains unchanged: the old DPAPI entropy is
+retained so the Perenos rename does not invalidate existing sessions. macOS uses the
+login Keychain instead. A custom folder selected by the user is never moved during
+migration. Do not replace `LegacyProductFolderName` or the DPAPI entropy as part of
+cleanup.
 
-[View-model tests](../tests/Perenos.ViewModel.Tests) compile the production view
-models with deterministic headless UI adapters. [Core tests](../tests/Perenos.Core.Tests)
-cover activation forwarding, saved-app storage and the transfer pipeline. Both suites
-run in CI and before release packaging. These tests do not replace real-device USB
-checks or visual checks of WinUI screens.
+## Verification requirements
 
-## Product evidence and distribution
+Run Core, ViewModel/Platform and Avalonia headless UI suites on Windows and macOS.
+CI also builds Windows x64/ARM64 and packages both macOS RIDs with an ad-hoc development signature. Release Mac packages
+must be Developer ID-signed and notarized. The Mac release job is skipped until its
+credentials are configured; it never silently turns an ad-hoc build into a stable release.
 
-### Expand real-device evidence
+Demo checks must cover transfer, purchase restoration, saving to the library,
+installing from the library, theme changes and live language changes. Screenshots
+used by the website must come from the current Avalonia demo, not the old WinUI UI.
 
-Publish a short recording of a real transfer, labeled separately from the
-existing simulated demos. For each confirmed report, record source and target
-models, both iOS versions, Perenos version, app versions, chosen flow, and
-outcome. Include failures and known limits so the compatibility matrix helps
-users decide whether to try their own devices. Share no account credentials,
-verification codes, full device identifiers, or purchased IPA files.
+A successful CI package does not prove USB or Apple Account compatibility. Before a
+public macOS release, verify on a physical Mac and iPhone: discovery, trust, app list,
+purchase history, downloading, installation, cancellation, Keychain session restore,
+and first launch on a clean Mac user account. Record the macOS, iPhone and iOS versions.
+Do not attach purchased IPAs, credentials, full UDIDs or private keys.
 
-### Validate and publish native ARM64 packages
+## Next reliability work
 
-[CI](../.github/workflows/ci.yml) builds the ARM64 app, and the
-[build script](../build/build.ps1) accepts `win-arm64`; the current
-[release workflow](../.github/workflows/release.yml) uses the default x64-only
-packaging. Before adding ARM64 release artifacts, validate the bundled ipatool,
-USB communication, installation, portable storage, and installer on a Windows
-ARM64 PC. Then publish architecture-specific downloads, checksums, and
-provenance attestations, and update the download instructions.
+- Expand real-device compatibility reports, including failures and account-region limits.
+- Validate the Windows ARM64 package on physical hardware before publishing it.
+- Keep the Windows installer migration isolated in tests; do not run migration checks
+  against a user's real installation or data.
+- Sign Windows binaries when an Authenticode certificate is available. Sigstore
+  attestation proves build provenance, not the publisher's Windows identity.
+- Keep website screenshots, two languages and platform requirements synchronized
+  with the current app. Mac downloads appear only when matching DMGs exist in the
+  latest release.
+
+See [CONTRIBUTING.md](../CONTRIBUTING.md) for local builds and
+[docs/MEDIA.md](MEDIA.md) for screenshot requirements.

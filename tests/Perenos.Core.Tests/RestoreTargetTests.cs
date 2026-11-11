@@ -35,7 +35,28 @@ public sealed class RestoreTargetTests
             Environment.SetEnvironmentVariable("PERENOS_DEMO", demo);
             Environment.SetEnvironmentVariable("PERENOS_DEMO_SAVED", saved);
             if (services.Paths.DataDirectory.StartsWith(Path.GetTempPath(), StringComparison.Ordinal))
-                Directory.Delete(services.Paths.DataDirectory, recursive: true);
+                await DeleteDemoDirectoryAsync(services.Paths.DataDirectory);
+        }
+    }
+
+    private static async Task DeleteDemoDirectoryAsync(string directory)
+    {
+        // Parallel tests share AppLog, so Windows can briefly keep the daily log open.
+        for (var attempt = 0; attempt < 20; attempt++)
+        {
+            try
+            {
+                Directory.Delete(directory, recursive: true);
+                return;
+            }
+            catch (DirectoryNotFoundException)
+            {
+                return;
+            }
+            catch (IOException) when (attempt < 19)
+            {
+                await Task.Delay(50);
+            }
         }
     }
 

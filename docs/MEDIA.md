@@ -130,10 +130,12 @@ Remove-Job $recordJob
 
 ```bash
 python build/New-DemoTimeline.py --recordings-dir artifacts/recordings-1.7.2 --shots-dir artifacts/shots-1.7.2
-python build/generate-demo-media.py --recordings-dir artifacts/recordings-1.7.2 --languages ru en --themes light --flows demo restore save --width 960 --fps 8
+python build/generate-demo-media.py --recordings-dir artifacts/recordings-1.7.2 --languages ru en --themes light dark --flows demo restore save --width 960 --fps 8
 ```
 
-Для пересборки одной серии добавьте `--variants ru-light` (или `en-light`).
+Для обработки только одной серии исходников добавьте `--variants ru-light` (или `en-light`).
+Существующие временные шкалы и папки `restore`/`save` не перезаписываются: для новой сборки
+используйте новый каталог записи. Для сайта нужны все 12 GIF из команды выше.
 
 `New-DemoTimeline.py` не редактирует исходные PNG. Для `restore` и `save` он создаёт
 отдельные папки с жёсткими ссылками или копиями кадров и собственной `timeline.json`.

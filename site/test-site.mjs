@@ -221,6 +221,7 @@ try {
     assert.equal(await page.locator('#demo-animation').isVisible(), false);
     await page.locator('#motion-toggle').click();
     assert.equal(await page.locator('#motion-toggle').getAttribute('aria-pressed'), 'true');
+    await page.locator('#demo-animation').evaluate(img => img.decode());
     assert.equal(await page.locator('#demo-animation').isVisible(), true);
     await page.locator('#motion-toggle').click();
     assert.equal(await page.locator('#motion-toggle').getAttribute('aria-pressed'), 'false');

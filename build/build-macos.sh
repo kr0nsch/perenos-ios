@@ -78,7 +78,8 @@ for RID in "${RIDS[@]}"; do
   else
     codesign "${SIGN_ARGS[@]}" "$APP"
   fi
-  codesign --verify --deep --strict --verbose=2 "$APP"
+  # Native binaries are signed above; --deep also expects signatures on managed DLLs.
+  codesign --verify --strict --verbose=2 "$APP"
   plutil -lint "$APP/Contents/Info.plist"
 
   if [[ -n "$NOTARY_PROFILE" ]]; then

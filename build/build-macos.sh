@@ -41,7 +41,7 @@ for RID in "${RIDS[@]}"; do
 
   pwsh -NoProfile -File "$ROOT/build/Get-Ipatool.ps1" -RuntimeIdentifier "$RID"
   dotnet publish "$ROOT/src/Perenos/Perenos.csproj" -c Release -r "$RID" \
-    -p:Version="$VERSION" -p:ContinuousIntegrationBuild=true -p:UseAppHost=true \
+    -p:Version="$VERSION" -p:ContinuousIntegrationBuild=true -p:UseAppHost=true -p:PublishSingleFile=true \
     --self-contained true -o "$PUBLISH"
 
   APP="$WORK/Perenos.app"
@@ -78,8 +78,7 @@ for RID in "${RIDS[@]}"; do
   else
     codesign "${SIGN_ARGS[@]}" "$APP"
   fi
-  # Managed DLLs are sealed with the bundle rather than signed as native nested code.
-  codesign --verify --verbose=2 "$APP"
+  codesign --verify --deep --strict --verbose=2 "$APP"
   plutil -lint "$APP/Contents/Info.plist"
 
   if [[ -n "$NOTARY_PROFILE" ]]; then

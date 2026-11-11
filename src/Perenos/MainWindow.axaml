@@ -71,7 +71,7 @@
     <Grid Grid.Column="1" RowDefinitions="Auto,*">
       <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1" MinHeight="72" Padding="28,12">
         <Grid ColumnDefinitions="Auto,*,Auto">
-          <Button x:Name="MobileNavigation" Classes="quiet" Padding="8" Margin="-8,0,8,0" IsVisible="False" VerticalAlignment="Center">
+          <Button x:Name="MobileNavigation" Classes="quiet" Padding="8" Margin="-8,0,8,0" IsVisible="False" VerticalAlignment="Center" AutomationProperties.Name="{s:Text Nav_Workspace}">
             <PathIcon Width="21" Height="21" Data="M3 6h18v2H3V6Zm0 5h18v2H3v-2Zm0 5h18v2H3v-2Z"/>
             <Button.Flyout>
               <MenuFlyout>

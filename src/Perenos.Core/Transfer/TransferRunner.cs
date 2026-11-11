@@ -203,8 +203,7 @@ public sealed class TransferRunner(IAppStoreClient ipatool, IDeviceService devic
 
     private static string SafeFilePart(string value)
     {
-        var invalid = Path.GetInvalidFileNameChars();
-        return string.Concat(value.Select(c => invalid.Contains(c) || char.IsControl(c) ? '_' : c)).Trim(' ', '.');
+        return string.Concat(value.Select(c => char.IsControl(c) || c is '<' or '>' or ':' or '"' or '/' or '\\' or '|' or '?' or '*' ? '_' : c)).Trim(' ', '.');
     }
 
     private async Task<string> DownloadAsync(InstalledApp app, TransferOptions options, Action<TransferUpdate> report, CancellationToken token)

@@ -1,4 +1,5 @@
 using Avalonia;
+using Avalonia.Automation;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Headless;
@@ -61,6 +62,42 @@ public sealed class AppBuilderTests : IDisposable
     }
 
     [AvaloniaFact]
+    public async Task PrimaryActionTextUsesOnAccentForeground()
+    {
+        var window = Track(CreateWindow("en-US"));
+        var vm = window.ViewModel;
+        vm.TransferNowCommand.Execute(null);
+        await Until(() => vm.Source?.IsReady == true);
+        await vm.PrimaryCommand.ExecuteAsync(null);
+        await Until(() => vm.Apps.LoadedFromUdid is not null);
+        var app = vm.AppList.Visible.First();
+        app.IsSelected = true;
+        await Until(() => vm.IsPrimaryEnabled);
+        window.UpdateLayout();
+
+        var primary = window.GetVisualDescendants().OfType<Button>().Single(button => button.Classes.Contains("primary"));
+        var label = primary.GetVisualDescendants().OfType<TextBlock>().Single(text => text.Text == vm.PrimaryText);
+        var icon = primary.GetVisualDescendants().OfType<PathIcon>().Single(path => path.Classes.Contains("on-accent"));
+        var expected = Assert.IsType<Avalonia.Media.SolidColorBrush>(icon.Foreground);
+        var actual = Assert.IsType<Avalonia.Media.SolidColorBrush>(label.Foreground);
+        Assert.Equal(expected.Color, actual.Color);
+        window.Close();
+    }
+
+    [AvaloniaFact]
+    public void CompactNavigationHasAccessibleName()
+    {
+        var window = Track(CreateWindow("en-US", 820));
+        window.UpdateLayout();
+
+        Assert.False(window.FindControl<Border>("Sidebar")!.IsVisible);
+        var navigation = window.FindControl<Button>("MobileNavigation")!;
+        Assert.True(navigation.IsVisible);
+        Assert.Equal(Loc.Get("Nav_Workspace"), AutomationProperties.GetName(navigation));
+        window.Close();
+    }
+
+    [AvaloniaFact]
     public async Task SettingsUpdateComputedTextAndTheme()
     {
         var window = Track(CreateWindow("ru-RU"));
@@ -68,6 +105,8 @@ public sealed class AppBuilderTests : IDisposable
         Assert.Contains("Выберите", vm.NowSubtitle);
         var settings = new SettingsWindow(vm);
         settings.Show();
+        var keepDownloads = settings.GetVisualDescendants().OfType<ToggleSwitch>().Single();
+        Assert.Equal(Loc.Get("Options_Keep"), AutomationProperties.GetName(keepDownloads));
         settings.FindControl<ComboBox>("ThemeBox")!.SelectedIndex = (int)ThemePreference.Dark;
         settings.FindControl<ComboBox>("LanguageBox")!.SelectedIndex = 1;
         await Until(() => vm.NowSubtitle.StartsWith("Choose apps", StringComparison.Ordinal));
@@ -88,12 +127,14 @@ public sealed class AppBuilderTests : IDisposable
         return window;
     }
 
-    private static MainWindow CreateWindow(string language)
+    private static MainWindow CreateWindow(string language, double? width = null)
     {
         if (App.Instance?.MainWindow is { } existing)
         {
             existing.ViewModel.Services.Settings.Current.Language = language;
             Loc.ApplyLanguage(language);
+            if (width.HasValue)
+                existing.Width = width.Value;
             existing.Show();
             return existing;
         }
@@ -103,6 +144,8 @@ public sealed class AppBuilderTests : IDisposable
         var services = AppServices.Create();
         Loc.ApplyLanguage(language);
         var window = new MainWindow(services);
+        if (width.HasValue)
+            window.Width = width.Value;
         services.Watcher.Start();
         window.Show();
         return window;

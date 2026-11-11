@@ -39,6 +39,9 @@ dotnet build src/Perenos/Perenos.csproj -c Release
 
 # Полный перенос, восстановление, сохранение и установка из библиотеки
 ./build/Demo-Check.ps1 -Mode Full -Language en-US -Theme Dark
+
+# Тот же сценарий при минимальном размере окна и компактной навигации
+./build/Demo-Check.ps1 -Mode Full -Language en-US -Theme Light -Width 820 -Height 640
 ```
 
 Допустимые языки: `ru-RU`, `en-US`; темы: `Light`, `Dark`. Для четырёх сопоставимых серий

@@ -50,12 +50,12 @@
               <Border Classes="separator" IsVisible="{Binding ShowFreeOption}"/>
               <Grid ColumnDefinitions="*,Auto" MinHeight="62" ColumnSpacing="16" IsVisible="{Binding ShowFreeOption}">
                 <StackPanel VerticalAlignment="Center" Margin="0,9"><TextBlock Text="{s:Text Options_Free}" Classes="body"/><TextBlock Text="{s:Text Options_FreeHint}" Classes="caption"/></StackPanel>
-                <ToggleSwitch Grid.Column="1" IsChecked="{Binding Install.AcquireFreeLicenses}" VerticalAlignment="Center"/>
+                <ToggleSwitch Grid.Column="1" IsChecked="{Binding Install.AcquireFreeLicenses}" VerticalAlignment="Center" AutomationProperties.Name="{s:Text Options_Free}"/>
               </Grid>
               <Border Classes="separator" IsVisible="{Binding ShowKeepOption}"/>
               <Grid ColumnDefinitions="*,Auto" MinHeight="62" ColumnSpacing="16" IsVisible="{Binding ShowKeepOption}">
                 <StackPanel VerticalAlignment="Center" Margin="0,9"><TextBlock Text="{s:Text Options_Keep}" Classes="body"/><TextBlock Text="{s:Text Options_KeepHint}" Classes="caption"/></StackPanel>
-                <ToggleSwitch Grid.Column="1" IsChecked="{Binding Install.KeepDownloads}" VerticalAlignment="Center"/>
+                <ToggleSwitch Grid.Column="1" IsChecked="{Binding Install.KeepDownloads}" VerticalAlignment="Center" AutomationProperties.Name="{s:Text Options_Keep}"/>
               </Grid>
             </StackPanel>
           </Border>

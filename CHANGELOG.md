@@ -16,6 +16,8 @@ All notable changes to Perenos are listed here. The format follows
 - Строка приложения использует один стандартный `ToggleButton`: выбор не переключается дважды и имеет видимую галочку, которая не перекрыта иконкой.
 - Целевой iPhone сбрасывается при переходе от восстановления к установке сохранённых приложений.
 - Динамические строки и культура форматирования обновляются при смене языка без перезапуска. Демо запоминает установки до конца запуска и не затрагивает настройки пользователя.
+- Основные кнопки, активная навигация и ссылки используют контрастный цвет текста; компактное меню и переключатели имеют доступные имена.
+- Имена сохраняемых IPA одинаково очищаются на Windows и macOS, включая символы `:` и `?`.
 
 ### Ограничения проверки
 - Новая кроссплатформенная версия проверяется в деморежиме и headless-тестах. Реальные USB и Apple Account на Windows и macOS, а также первый запуск подписанного DMG требуют отдельной проверки на оборудовании.
@@ -31,6 +33,8 @@ All notable changes to Perenos are listed here. The format follows
 - A single standard `ToggleButton` per app row prevents double toggling and shows a visible checkmark that is not covered by the icon.
 - The target iPhone is reset when switching from restoration to installation of saved apps.
 - Computed text and formatting culture update live when the language changes. Demo installations persist for the session and never alter real user settings.
+- Primary actions, active navigation and links use contrasting text colors; compact navigation and toggle switches have accessible names.
+- Saved IPA filenames are sanitized consistently on Windows and macOS, including `:` and `?` characters.
 
 ### Verification limits
 - The new cross-platform version is verified through demo workflows and headless tests. Physical USB and Apple Account checks on Windows and macOS, and the first launch of a signed DMG, require separate hardware verification.

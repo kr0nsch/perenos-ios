@@ -34,7 +34,7 @@
               <Button Content="{s:Text Settings_Change}" Command="{Binding ChangeFolderCommand}"/>
             </StackPanel>
             <Border Classes="separator"/>
-            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16"><TextBlock Text="{s:Text Options_Keep}" Classes="body" VerticalAlignment="Center"/><ToggleSwitch Grid.Column="1" IsChecked="{Binding Install.KeepDownloads}"/></Grid>
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16"><TextBlock Text="{s:Text Options_Keep}" Classes="body" VerticalAlignment="Center"/><ToggleSwitch Grid.Column="1" IsChecked="{Binding Install.KeepDownloads}" AutomationProperties.Name="{s:Text Options_Keep}"/></Grid>
           </StackPanel>
         </Border>
         <TextBlock Text="{s:Text Settings_About}" Classes="eyebrow" Margin="0,26,0,10"/>

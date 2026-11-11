@@ -7,7 +7,9 @@ param(
     [ValidateSet('Light', 'Dark')]
     [string] $Theme = 'Light',
     [string] $OutDir = 'artifacts/avalonia-review',
-    [string] $ExePath = ''
+    [string] $ExePath = '',
+    [int] $Width = 0,
+    [int] $Height = 0
 )
 $ErrorActionPreference = 'Stop'
 $repo = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
@@ -27,6 +29,7 @@ public static class PerenosDemoCapture {
   [StructLayout(LayoutKind.Sequential)] public struct RECT { public int Left, Top, Right, Bottom; }
   [DllImport("user32.dll")] public static extern bool GetWindowRect(IntPtr hWnd, out RECT rect);
   [DllImport("user32.dll")] public static extern bool PrintWindow(IntPtr hWnd, IntPtr hdc, uint flags);
+  [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
 }
 '@
 $script:demo = $null
@@ -75,6 +78,30 @@ function ClickButton([string]$Text, [switch]$Last, [int]$TimeoutSeconds = 20) {
     } while ([DateTime]::UtcNow -lt $end)
     FailureState 'click'
     throw "No enabled button matching: $Text"
+}
+function ClickNavigation([string]$Text) {
+    $buttons = @((Elements (Root) ([System.Windows.Automation.ControlType]::Button)) | Where-Object { $_.Current.Name -eq $Text -and $_.Current.IsEnabled })
+    if ($buttons.Count) {
+        $buttons[0].GetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern).Invoke()
+        Write-Output "Clicked navigation: $Text"
+        return
+    }
+    $navigation = @((Elements (Root) ([System.Windows.Automation.ControlType]::Button)) | Where-Object { $_.Current.Name -eq (T 'Nav_Workspace') -and $_.Current.IsEnabled })
+    if ($navigation.Count) {
+        $navigation[0].GetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern).Invoke()
+        $end = [DateTime]::UtcNow.AddSeconds(20)
+        do {
+            $items = @((Elements (Root) ([System.Windows.Automation.ControlType]::MenuItem)) | Where-Object { $_.Current.Name -eq $Text -and $_.Current.IsEnabled })
+            if ($items.Count) {
+                $items[0].GetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern).Invoke()
+                Write-Output "Clicked compact navigation: $Text"
+                return
+            }
+            Start-Sleep -Milliseconds 200
+        } while ([DateTime]::UtcNow -lt $end)
+    }
+    FailureState 'navigation'
+    throw "No navigation item matching: $Text"
 }
 function SetField([int]$Index, [string]$Text) {
     $end = [DateTime]::UtcNow.AddSeconds(20)
@@ -150,6 +177,14 @@ function FinishInstall {
 }
 function SettingsRoot {
     for ($attempt = 0; $attempt -lt 25; $attempt++) {
+        $handle = [PerenosDemoCapture]::GetForegroundWindow()
+        if ($handle -ne 0 -and $handle -ne $script:demo.MainWindowHandle) {
+            $dialog = [System.Windows.Automation.AutomationElement]::FromHandle($handle)
+            if ($dialog.Current.ProcessId -eq $script:demo.Id -and $dialog.Current.ControlType -eq [System.Windows.Automation.ControlType]::Window) {
+                $dialogBoxes = Elements $dialog ([System.Windows.Automation.ControlType]::ComboBox)
+                if ($dialogBoxes.Count -ge 2) { return $dialog }
+            }
+        }
         $root = Root
         $boxes = Elements $root ([System.Windows.Automation.ControlType]::ComboBox)
         if ($boxes.Count -ge 2) {
@@ -181,6 +216,11 @@ try {
         $script:demo.Refresh()
     } while ($script:demo.MainWindowHandle -eq 0 -and [DateTime]::UtcNow -lt $end)
     $null = Root
+    if ($Width -gt 0 -and $Height -gt 0) {
+        $transform = (Root).GetCurrentPattern([System.Windows.Automation.TransformPattern]::Pattern)
+        $transform.Resize($Width, $Height)
+        Start-Sleep -Milliseconds 500
+    }
     Start-Sleep -Seconds 6
     Capture "start-$Language-$Theme"
     if ($Mode -eq 'Full') {
@@ -205,7 +245,7 @@ try {
         Capture "install-$Language-$Theme"
         FinishInstall
 
-        ClickButton (T 'Nav_Restore')
+        ClickNavigation (T 'Nav_Restore')
         ClickButton (T 'Footer_Continue')
         WaitText (T 'Restore_AppsTitle')
         Start-Sleep -Seconds 2
@@ -216,7 +256,7 @@ try {
         ClickButton (T 'Footer_Install')
         FinishInstall
 
-        ClickButton (T 'Nav_Library')
+        ClickNavigation (T 'Nav_Library')
         ClickButton (T 'Later_Save.Title')
         ClickButton (T 'Footer_Continue')
         WaitText (T 'Apps_Title')

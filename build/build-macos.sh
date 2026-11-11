@@ -50,6 +50,12 @@ for RID in "${RIDS[@]}"; do
   cp "$ROOT/build/macos/Info.plist" "$APP/Contents/Info.plist"
   plutil -replace CFBundleShortVersionString -string "$VERSION" "$APP/Contents/Info.plist"
   plutil -replace CFBundleVersion -string "$VERSION" "$APP/Contents/Info.plist"
+  for resource in LICENSE.txt THIRD-PARTY-NOTICES.txt Licenses; do
+    if [[ -e "$APP/Contents/MacOS/$resource" ]]; then
+      mv "$APP/Contents/MacOS/$resource" "$APP/Contents/Resources/$resource"
+      ln -s "../Resources/$resource" "$APP/Contents/MacOS/$resource"
+    fi
+  done
   test -x "$APP/Contents/MacOS/Perenos"
   test -x "$APP/Contents/MacOS/tools/ipatool"
 

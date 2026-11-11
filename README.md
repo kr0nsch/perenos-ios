@@ -1,12 +1,7 @@
-<p align="center"><img src="assets/logo.png" width="76" alt="Логотип Переноса"></p>
+<p align="center"><img src="assets/logo.png" width="72" alt="Логотип Переноса"></p>
 <h1 align="center">Перенос</h1>
-<p align="center"><b>Привычные приложения на новом iPhone — без джейлбрейка.</b><br>
-Бесплатная программа для Windows и macOS с открытым исходным кодом.</p>
-
-<p align="center">
-Переносите приложения <b>с iPhone на iPhone через компьютер</b>, устанавливайте IPA<br>
-и восстанавливайте <b>свои покупки App Store, недоступные в РФ</b>: VK Музыку, Авито и другие.
-</p>
+<p align="center"><b>Привычные приложения — на вашем новом iPhone.</b></p>
+<p align="center">Перенос приложений между iPhone через компьютер и восстановление покупок App Store, недоступных в РФ.<br>Бесплатно, без джейлбрейка, с открытым кодом для Windows и macOS.</p>
 
 <p align="center">
   <a href="https://github.com/kr0nsch/perenos-ios/releases/latest"><b>Скачать для Windows</b></a> ·
@@ -20,6 +15,9 @@
   <img src="https://img.shields.io/badge/Windows%2010%2B%20%C2%B7%20macOS%2015%2B-Avalonia-7053d9" alt="Windows 10+, macOS 15+, Avalonia">
   <a href="LICENSE"><img src="https://img.shields.io/badge/MIT-open%20source-27765e" alt="Открытый код по лицензии MIT"></a>
 </p>
+
+<p align="center"><img src="docs/media/demo-ru-light.gif" alt="Реальная демонстрация выбора и установки приложений в Переносе" width="960"></p>
+<p align="center"><sub>Не презентация, а запись приложения версии 1.7.2. Устройства, аккаунт и приложения вымышленные. <a href="docs/media/full-ru-light.mp4">Полное видео без остановки</a>.</sub></p>
 
 > [!IMPORTANT]
 > «Перенос» скачивает **оригинальные приложения с серверов Apple**, а не копии с файлообменников. Нужны приложения, которые уже принадлежат вашему Apple Account. Программа не обходит FairPlay, не открывает чужие или платные покупки и не меняет регион или аккаунт на iPhone.
@@ -53,13 +51,8 @@
 
 Для скачивания или обновления приложений войдите в Apple Account покупателя **на компьютере**. Менять аккаунт на iPhone не нужно.
 
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/avalonia/restore-ru-RU-Dark.png">
-    <img src="docs/screenshots/avalonia/restore-ru-RU-Light.png" width="1000" alt="Восстановление VK Музыки и других своих покупок App Store в программе Перенос">
-  </picture><br>
-  <sub>Актуальный интерфейс в деморежиме. Аккаунт, устройства и приложения на снимке вымышленные.</sub>
-</p>
+<p align="center"><img src="docs/media/restore-ru-light.gif" alt="Восстановление покупок App Store в Переносе" width="960"></p>
+<p align="center"><sub>Реальная запись восстановления в приложении версии 1.7.2. Аккаунт, устройства и приложения вымышленные.</sub></p>
 
 ## Как восстановить VK Музыку, Авито и другие покупки
 
@@ -88,6 +81,15 @@
 | Проверяет версии и совместимость пакетов | Не гарантирует запуск любого IPA или восстановление любой покупки |
 
 Данные приложений восстанавливайте через iCloud, резервную копию или синхронизацию внутри приложения.
+
+## Проверить самостоятельно
+
+| Что можно проверить | Где посмотреть |
+|---|---|
+| Исходный код и лицензия | [Репозиторий](https://github.com/kr0nsch/perenos-ios) и [MIT](LICENSE) |
+| Автотесты и сборка | [168 тестов и упаковка для Windows и macOS в CI](https://github.com/kr0nsch/perenos-ios/actions/workflows/ci.yml) |
+| Происхождение установщиков | `SHA256SUMS.txt` и Sigstore-аттестации в [релизах](https://github.com/kr0nsch/perenos-ios/releases) |
+| Подлинность демонстраций | [Записи реального окна и проверяемые исходные кадры](docs/MEDIA.md), а не отредактированные изображения |
 
 ## Приватность и доверие
 
@@ -127,7 +129,7 @@ brew install dotnet go
 brew install --cask powershell
 pwsh build/Get-Ipatool.ps1 -RuntimeIdentifier osx-arm64
 dotnet run --project src/Perenos -- --demo
-bash build/build-macos.sh 1.7.1 osx-arm64
+bash build/build-macos.sh 1.7.2 osx-arm64
 ```
 
 Для Intel замените `osx-arm64` на `osx-x64`. Без `MACOS_SIGN_IDENTITY` создаётся ad-hoc пакет для разработки. Для публичного распространения задайте Developer ID и `MACOS_NOTARY_PROFILE`, чтобы включить нотаризацию.

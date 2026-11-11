@@ -4,39 +4,80 @@
   const english = root.lang === 'en';
   const assetPrefix = document.querySelector('meta[name="asset-prefix"]')?.content || '';
   const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
+  const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
   const themeButton = document.querySelector('#theme-toggle');
   const demoImage = document.querySelector('#demo-image');
+  const demoPicture = document.querySelector('#demo-picture');
+  const demoAnimation = document.querySelector('#demo-animation');
+  const motionToggle = document.querySelector('#motion-toggle');
+  const motionIcon = document.querySelector('#motion-icon');
+  const fullVideo = document.querySelector('#full-video');
   const tabs = Array.from(document.querySelectorAll('[data-scenario]'));
   const scenarios = english ? {
-    now: { image: 'apps', caption: 'Choosing apps', alt: 'Choosing apps in Perenos' },
-    restore: { image: 'restore', caption: 'Apple Account purchases', alt: 'Restoring purchases in Perenos' },
-    later: { image: 'saved', caption: 'Your library', alt: 'Saving apps in the library' },
+    now: { image: 'apps', animation: 'demo', caption: 'Choosing apps', alt: 'Choosing apps in Perenos', animationAlt: 'Animated app selection and installation in Perenos' },
+    restore: { image: 'restore', animation: 'restore', caption: 'Apple Account purchases', alt: 'Restoring purchases in Perenos', animationAlt: 'Animated restoration of App Store purchases in Perenos' },
+    later: { image: 'saved', animation: 'save', caption: 'Your library', alt: 'Saving apps in the library', animationAlt: 'Animated installation of saved apps in Perenos' },
   } : {
-    now: { image: 'apps', caption: 'Выбор приложений', alt: 'Выбор приложений в Переносе' },
-    restore: { image: 'restore', caption: 'Покупки Apple Account', alt: 'Восстановление покупок в Переносе' },
-    later: { image: 'saved', caption: 'Ваша библиотека', alt: 'Сохранение приложений в библиотеку' },
+    now: { image: 'apps', animation: 'demo', caption: 'Выбор приложений', alt: 'Выбор приложений в Переносе', animationAlt: 'Анимация выбора и установки приложений в Переносе' },
+    restore: { image: 'restore', animation: 'restore', caption: 'Покупки Apple Account', alt: 'Восстановление покупок в Переносе', animationAlt: 'Анимация восстановления покупок App Store в Переносе' },
+    later: { image: 'saved', animation: 'save', caption: 'Ваша библиотека', alt: 'Сохранение приложений в библиотеку', animationAlt: 'Анимация установки сохранённых приложений в Переносе' },
   };
   let selected = 'now';
   let explicitTheme;
+  let motionEnabled = !motionPreference.matches;
+  let motionTouched = false;
   try { explicitTheme = localStorage.getItem('perenos-site-theme'); } catch { /* Storage is optional. */ }
   if (explicitTheme !== 'light' && explicitTheme !== 'dark') explicitTheme = null;
+  try {
+    const savedMotion = localStorage.getItem('perenos-site-motion');
+    if (savedMotion === 'true' || savedMotion === 'false') {
+      motionEnabled = savedMotion === 'true';
+      motionTouched = true;
+    }
+  } catch { /* Motion follows the system when storage is unavailable. */ }
   const activeTheme = () => explicitTheme || (systemTheme.matches ? 'dark' : 'light');
+  const onMediaChange = (query, listener) => {
+    if (typeof query.addEventListener === 'function') query.addEventListener('change', listener);
+    else query.addListener(listener);
+  };
 
   function applyTheme() {
     const theme = activeTheme();
     root.dataset.theme = theme;
-    document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#171821' : '#f6f5f1';
+    document.querySelectorAll('meta[name="theme-color"]').forEach(meta => {
+      meta.content = theme === 'dark' ? '#101923' : '#eaf1f8';
+    });
     document.querySelectorAll('.theme-image').forEach(img => {
       const src = `${assetPrefix}assets/${img.dataset.asset}${english ? '-en' : ''}-${theme}.png`;
       img.src = src;
       img.closest('picture')?.querySelector('source')?.setAttribute('srcset', src);
     });
+    if (fullVideo) fullVideo.poster = `${assetPrefix}assets/apps${english ? '-en' : ''}-${theme}.png`;
     const dark = theme === 'dark';
     const label = dark
       ? (english ? 'Switch to light theme' : 'Включить светлую тему')
       : (english ? 'Switch to dark theme' : 'Включить тёмную тему');
     themeButton.setAttribute('aria-label', label);
     themeButton.title = label;
+  }
+
+  function updateMotion() {
+    const animate = motionTouched ? motionEnabled : !motionPreference.matches;
+    const scenario = scenarios[selected];
+    demoAnimation.hidden = !animate;
+    demoPicture.hidden = animate;
+    motionToggle.setAttribute('aria-pressed', String(animate));
+    motionToggle.querySelector('span').textContent = animate
+      ? (english ? 'Hide animation' : 'Скрыть анимацию')
+      : (english ? 'Enable animation' : 'Включить анимацию');
+    motionIcon.setAttribute('href', animate ? '#pause' : '#play');
+    demoAnimation.alt = scenario.animationAlt;
+    if (animate) {
+      const src = `${assetPrefix}assets/${scenario.animation}${english ? '-en' : ''}${activeTheme() === 'dark' ? '-dark' : ''}.gif`;
+      if (demoAnimation.getAttribute('src') !== src) demoAnimation.src = src;
+    } else {
+      demoAnimation.removeAttribute('src');
+    }
   }
 
   function selectScenario(tab, moveFocus = false) {
@@ -53,6 +94,7 @@
     demoImage.alt = scenario.alt;
     document.querySelector('#demo-caption').textContent = scenario.caption;
     applyTheme();
+    updateMotion();
     if (moveFocus) tab.focus();
   }
 
@@ -61,7 +103,31 @@
     try { localStorage.setItem('perenos-site-theme', explicitTheme); } catch { /* The visit still works. */ }
     applyTheme();
   });
-  systemTheme.addEventListener('change', () => { if (!explicitTheme) applyTheme(); });
+  onMediaChange(systemTheme, () => {
+    if (!explicitTheme) {
+      applyTheme();
+      updateMotion();
+    }
+  });
+  motionToggle.addEventListener('click', () => {
+    motionEnabled = !motionEnabled;
+    motionTouched = true;
+    try { localStorage.setItem('perenos-site-motion', String(motionEnabled)); } catch { /* The selection still works. */ }
+    updateMotion();
+  });
+  onMediaChange(motionPreference, () => {
+    if (!motionTouched) {
+      motionEnabled = !motionPreference.matches;
+      updateMotion();
+    }
+  });
+  demoAnimation.addEventListener('error', () => {
+    motionEnabled = false;
+    updateMotion();
+  });
+  document.querySelector('.full-demo').addEventListener('toggle', event => {
+    if (!event.target.open) fullVideo.pause();
+  });
   tabs.forEach((tab, index) => {
     tab.addEventListener('click', () => selectScenario(tab));
     tab.addEventListener('keydown', event => {
@@ -117,6 +183,8 @@
 
   applyTheme();
   themeButton.hidden = false;
+  motionToggle.hidden = false;
   root.classList.add('enhanced');
+  updateMotion();
   updateDownloads();
 })();

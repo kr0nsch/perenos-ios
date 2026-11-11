@@ -1,10 +1,10 @@
 ; Perenos installer (Inno Setup 6). Built by build\build.ps1:
-;   ISCC /DAppVersion=1.7.1 /DSourceDir=..\artifacts\publish\win-x64 /DArch=x64 Perenos.iss
+;   ISCC /DAppVersion=1.7.2 /DSourceDir=..\artifacts\publish\win-x64 /DArch=x64 Perenos.iss
 ; Installs per user by default (no administrator rights needed); the first page offers
 ; installing for all users instead.
 
 #ifndef AppVersion
-  #define AppVersion "1.7.1"
+  #define AppVersion "1.7.2"
 #endif
 #ifndef Arch
   #define Arch "x64"

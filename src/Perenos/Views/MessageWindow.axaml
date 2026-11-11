@@ -5,8 +5,8 @@
         Width="460" SizeToContent="Height" CanResize="False"
         WindowStartupLocation="CenterOwner"
         Icon="avares://Perenos/Assets/Perenos.ico"
-        TransparencyLevelHint="None">
-  <StackPanel Margin="26" Spacing="20">
+        TransparencyLevelHint="AcrylicBlur, Blur">
+  <StackPanel Margin="26" Spacing="20" Background="{DynamicResource CanvasBrush}">
     <TextBlock x:Name="Heading" Classes="h2"/>
     <TextBlock x:Name="Body" Classes="body muted"/>
     <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">

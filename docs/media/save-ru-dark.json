@@ -1,0 +1,67 @@
+{
+  "schema_version": 2,
+  "version": "1.7.2",
+  "file": "save-ru-dark.gif",
+  "width": 960,
+  "height": 676,
+  "frames": 74,
+  "fps": 8,
+  "duration_ms": 9260,
+  "bytes": 415089,
+  "sha256": "ddf84d16aa43a48c2d9053b053743b28e5d8b09594d22ddc1c78b013a354d6a6",
+  "cursor": "none",
+  "encoding": {
+    "scaling": "lanczos",
+    "max_colors": 256,
+    "palette_stats": "diff",
+    "dither": "sierra2_4a"
+  },
+  "source": {
+    "recording": "ru-dark/save",
+    "format": "lossless PNG",
+    "capture_method": "PrintWindow(PW_RENDERFULLCONTENT)",
+    "cursor_captured": false,
+    "width": 1182,
+    "height": 832,
+    "frames": 398,
+    "first_timestamp_ms": 1794413534635,
+    "last_timestamp_ms": 1794413573260,
+    "capture_json_sha256": "3438fb2ad6698bf1daa5991054d8b766ec0744ea1e6563e2162d2fd030b7cabe",
+    "frames_csv_sha256": "de21697dcd7f4eda72c3d9b25fcedac5f17613cf9b7f282a42a0680e36b000c9",
+    "window_txt_sha256": "6b50b5e4a1fe87772a659fe19fed16a4794e94fe1f9689445a5d21f412302bc1",
+    "timeline_sha256": "a985bef444edd659d318fb641d1c04cc62d9927f96256abe7e7d51bec37b3438",
+    "raw_frames_sha256": "aa0484eefce9993f36c6da966d2c210a9241f931e654836ce4ac8b13f390989a",
+    "raw_frames_hash_format": "SHA-256 of UTF-8 index,timestamp_ms,png_sha256\\n entries in frame order"
+  },
+  "segments": [
+    {
+      "start_ms": 1794413564021,
+      "end_ms": 1794413573260,
+      "output_duration_ms": 9239
+    }
+  ],
+  "sampled_frames_sha256": "7ea421f0ff5b7fc6870a56c89e0be42cb9c3b9d8df55d7fe3d7c2bf5de253416",
+  "stills": [
+    {
+      "file": "ru-dark/save-1-apps.png",
+      "requested_timestamp_ms": 1794413565493,
+      "source_frame": "f00316.png",
+      "source_timestamp_ms": 1794413565402,
+      "sha256": "621e80cae3b10c69c3e7d2727d9a10c0918738fa2b0b2fe05151fdc866ea2928"
+    },
+    {
+      "file": "ru-dark/save-2-ready.png",
+      "requested_timestamp_ms": 1794413565979,
+      "source_frame": "f00321.png",
+      "source_timestamp_ms": 1794413565882,
+      "sha256": "31a4e319aba76bd573ac89b9be5ad9e630acc66913a1ea26ddac2671f7bd3920"
+    },
+    {
+      "file": "ru-dark/save-3-done.png",
+      "requested_timestamp_ms": 1794413569340,
+      "source_frame": "f00356.png",
+      "source_timestamp_ms": 1794413569273,
+      "sha256": "7196b3b07b70a3faf6a323c0313b89f23655b965a66ea4b49aee1c7c2b8e7cbe"
+    }
+  ]
+}

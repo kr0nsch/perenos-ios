@@ -11,7 +11,7 @@
     <c:InverseBoolConverter x:Key="Not"/>
   </UserControl.Resources>
   <Grid Margin="36,28,36,20">
-    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" IsVisible="{Binding ShowRestoreContent}">
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,*" IsVisible="{Binding ShowRestoreContent}">
       <StackPanel>
         <TextBlock Text="{Binding AppsTitle}" Classes="h2"/>
         <TextBlock Text="{Binding AppsSubtitle}" Classes="body muted" Margin="0,8,0,0"/>
@@ -48,8 +48,8 @@
         </Grid>
       </Border>
       <Border Grid.Row="3" Classes="card" Padding="8" IsVisible="{Binding AppList.ShowList}">
-        <Grid RowDefinitions="*,Auto">
-          <ListBox ItemsSource="{Binding AppList.Visible}">
+        <Grid RowDefinitions="Auto,Auto">
+          <ListBox x:Name="AppListBox" ItemsSource="{Binding AppList.Visible}" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <ListBox.ItemTemplate>
               <DataTemplate DataType="vm:AppItemViewModel">
                 <StackPanel>
@@ -70,7 +70,7 @@
                       <StackPanel Grid.Column="2" VerticalAlignment="Center" Spacing="3">
                         <TextBlock Text="{Binding Name}" Classes="title"/>
                         <TextBlock Text="{Binding Detail}" Classes="caption"/>
-                        <TextBlock Text="{Binding Caption}" Classes="caption" Foreground="{DynamicResource AccentBrush}" IsVisible="{Binding HasCaption}"/>
+                        <TextBlock Text="{Binding Caption}" Classes="caption" Foreground="{DynamicResource AccentTextBrush}" IsVisible="{Binding HasCaption}"/>
                         <TextBlock Text="{Binding AvailabilityText}" Classes="caption" Foreground="{DynamicResource WarningBrush}" IsVisible="{Binding HasAvailability}"/>
                       </StackPanel>
                       <TextBlock Grid.Column="3" Text="{Binding SizeText}" Classes="caption" VerticalAlignment="Center" Margin="8,0"/>

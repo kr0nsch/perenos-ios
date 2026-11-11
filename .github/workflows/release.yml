@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Version to build, e.g. 1.7.1 (creates a draft release)"
+        description: "Version to build, e.g. 1.7.2 (creates a draft release)"
         required: true
 
 permissions:

@@ -291,8 +291,8 @@ Details were saved to the diagnostic log.</value></data>
   <data name="Step_Save" xml:space="preserve"><value>Save</value></data>
   <data name="Step_Install" xml:space="preserve"><value>Install</value></data>
   <data name="Shell_Tagline" xml:space="preserve"><value>Your apps, on your iPhone</value></data>
-  <data name="Shell_Eyebrow" xml:space="preserve"><value>YOUR IPHONE, YOUR APPS</value></data>
-  <data name="Nav_Workspace" xml:space="preserve"><value>WORKSPACE</value></data>
+  <data name="Shell_Eyebrow" xml:space="preserve"><value>Your iPhone, your apps</value></data>
+  <data name="Nav_Workspace" xml:space="preserve"><value>Workspace</value></data>
   <data name="Nav_Transfer" xml:space="preserve"><value>New iPhone</value></data>
   <data name="Nav_Restore" xml:space="preserve"><value>Restore apps</value></data>
   <data name="Nav_Library" xml:space="preserve"><value>Library</value></data>

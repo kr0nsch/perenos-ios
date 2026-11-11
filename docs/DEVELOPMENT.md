@@ -6,6 +6,8 @@ Perenos uses .NET 10 and Avalonia 12 for one Windows and macOS application.
 `Perenos.Core` owns USB, App Store and package operations. `Perenos.Presentation`
 contains the shared MVVM models, demo backend, localization and platform-neutral
 services. `src/Perenos` contains only the Avalonia shell, views and native UI adapters.
+The interface uses Apple-inspired translucent panels and accessible light/dark palettes.
+`AcrylicBlur` falls back to `Blur`; layouts remain usable without native transparency effects.
 
 The Windows session protection contract remains unchanged: the old DPAPI entropy is
 retained so the Perenos rename does not invalidate existing sessions. macOS uses the

@@ -59,6 +59,19 @@ def build(output: Path) -> None:
                 if not source.is_file():
                     raise FileNotFoundError(f"Missing current Avalonia screenshot: {source}")
                 shutil.copy2(source, assets / f"{name}{suffix}-{theme}.png")
+    for flow in ("demo", "restore", "save"):
+        for theme in ("light", "dark"):
+            for language, suffix in (("ru-RU", ""), ("en-US", "-en")):
+                source = ROOT / "docs" / "media" / f"{flow}-{language.split('-')[0]}-{theme}.gif"
+                if not source.is_file():
+                    raise FileNotFoundError(f"Missing current demo animation: {source}")
+                theme_suffix = "-" + theme if theme == "dark" else ""
+                shutil.copy2(source, assets / f"{flow}{suffix}{theme_suffix}.gif")
+    for language, suffix in (("ru-RU", ""), ("en-US", "-en")):
+        source = ROOT / "docs" / "media" / f"full-{language.split('-')[0]}-light.mp4"
+        if not source.is_file():
+            raise FileNotFoundError(f"Missing current demo video: {source}")
+        shutil.copy2(source, assets / f"full{suffix}.mp4")
     fonts = assets / "fonts"
     fonts.mkdir()
     for source in sorted((SITE / "fonts").iterdir()):

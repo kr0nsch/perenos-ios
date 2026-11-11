@@ -1,0 +1,67 @@
+{
+  "schema_version": 2,
+  "version": "1.7.2",
+  "file": "save-en-dark.gif",
+  "width": 960,
+  "height": 676,
+  "frames": 74,
+  "fps": 8,
+  "duration_ms": 9260,
+  "bytes": 393922,
+  "sha256": "d80c82f9bed27af4f32e5c58eb6fba78d36db81e66436055921567ea6a67552e",
+  "cursor": "none",
+  "encoding": {
+    "scaling": "lanczos",
+    "max_colors": 256,
+    "palette_stats": "diff",
+    "dither": "sierra2_4a"
+  },
+  "source": {
+    "recording": "en-dark/save",
+    "format": "lossless PNG",
+    "capture_method": "PrintWindow(PW_RENDERFULLCONTENT)",
+    "cursor_captured": false,
+    "width": 1182,
+    "height": 832,
+    "frames": 400,
+    "first_timestamp_ms": 1794413615723,
+    "last_timestamp_ms": 1794413654444,
+    "capture_json_sha256": "3fc4dfe87733be3b0023e74552429660b7b151a2799572b378b64986143d08e6",
+    "frames_csv_sha256": "521cd04a26dccb1cb2816caeefecffeb02948c3244a7531305ced6a33e8f7584",
+    "window_txt_sha256": "6b50b5e4a1fe87772a659fe19fed16a4794e94fe1f9689445a5d21f412302bc1",
+    "timeline_sha256": "dc2c18c4e68700832fa87f8b88ad5fe1d8fde0d13009a116067a1225dfe56d7a",
+    "raw_frames_sha256": "44326fec5caae7bb2c999b227c1662650c44f2ade5614537354599bf648e2f46",
+    "raw_frames_hash_format": "SHA-256 of UTF-8 index,timestamp_ms,png_sha256\\n entries in frame order"
+  },
+  "segments": [
+    {
+      "start_ms": 1794413645276,
+      "end_ms": 1794413654444,
+      "output_duration_ms": 9168
+    }
+  ],
+  "sampled_frames_sha256": "f7b0cae8a4ed0b4511b1d8db9f71c636e10608eb6d78ed0cb4eae8078822ed54",
+  "stills": [
+    {
+      "file": "en-dark/save-1-apps.png",
+      "requested_timestamp_ms": 1794413646744,
+      "source_frame": "f00318.png",
+      "source_timestamp_ms": 1794413646672,
+      "sha256": "8e45f13157106f013874af0e59ccefa7a890bd20d1ceac15076668deb4cb02a0"
+    },
+    {
+      "file": "en-dark/save-2-ready.png",
+      "requested_timestamp_ms": 1794413647232,
+      "source_frame": "f00323.png",
+      "source_timestamp_ms": 1794413647156,
+      "sha256": "b862c649b1d6ce05f3d2d6ae3d4a77ca59af1cc964b6e1f1207afc0d870c43dd"
+    },
+    {
+      "file": "en-dark/save-3-done.png",
+      "requested_timestamp_ms": 1794413650577,
+      "source_frame": "f00358.png",
+      "source_timestamp_ms": 1794413650518,
+      "sha256": "ec61776b9b8aa5ea124a24ff241055cb31537a0b90f63b563dcf1ecb1be3f75e"
+    }
+  ]
+}

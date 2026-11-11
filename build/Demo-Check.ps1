@@ -9,7 +9,9 @@ param(
     [string] $OutDir = 'artifacts/avalonia-review',
     [string] $ExePath = '',
     [int] $Width = 0,
-    [int] $Height = 0
+    [int] $Height = 0,
+    [ValidateRange(0, 2147483647)]
+    [int] $ProcessId = 0
 )
 $ErrorActionPreference = 'Stop'
 $repo = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
@@ -38,8 +40,10 @@ public static class PerenosDemoCapture {
 }
 '@
 $script:demo = $null
-$rootDir = [IO.Path]::GetFullPath((Join-Path $repo $OutDir))
-if (-not $rootDir.StartsWith([IO.Path]::GetFullPath((Join-Path $repo 'artifacts')), [StringComparison]::OrdinalIgnoreCase)) { throw 'OutDir must be inside artifacts.' }
+$rootDir = if ([IO.Path]::IsPathRooted($OutDir)) { [IO.Path]::GetFullPath($OutDir) } else { [IO.Path]::GetFullPath((Join-Path $repo $OutDir)) }
+$artifactsRoot = [IO.Path]::GetFullPath((Join-Path $repo 'artifacts'))
+$artifactsPrefix = $artifactsRoot.TrimEnd('\', '/') + [IO.Path]::DirectorySeparatorChar
+if (-not $rootDir.StartsWith($artifactsPrefix, [StringComparison]::OrdinalIgnoreCase) -and -not $rootDir.Equals($artifactsRoot, [StringComparison]::OrdinalIgnoreCase)) { throw 'OutDir must be inside artifacts.' }
 [IO.Directory]::CreateDirectory($rootDir) | Out-Null
 function Root {
     $script:demo.Refresh()
@@ -232,7 +236,16 @@ function SetCombo([int]$Index, [string]$Text) {
 try {
     $env:PERENOS_LANGUAGE = $Language
     $env:PERENOS_THEME = $Theme
-    $script:demo = Start-Process -FilePath $exe -ArgumentList '--demo' -PassThru
+    $script:ownsDemo = $ProcessId -eq 0
+    if ($script:ownsDemo) {
+        $script:demo = Start-Process -FilePath $exe -ArgumentList '--demo' -PassThru
+    } else {
+        $script:demo = Get-Process -Id $ProcessId
+        $processInfo = Get-CimInstance Win32_Process -Filter "ProcessId=$ProcessId"
+        if (-not $processInfo -or [IO.Path]::GetFullPath([string]$processInfo.ExecutablePath) -ne $exe) { throw 'The existing process does not match the requested demo executable.' }
+        if ([string]$processInfo.CommandLine -notmatch '(?:^|\s|\")--demo(?:-saved)?(?:\s|\"|$)') { throw 'The existing process must use demo mode.' }
+        if (-not (Test-Path -LiteralPath (Join-Path (Split-Path -Parent $exe) 'portable.txt'))) { throw 'The existing demo must be an isolated portable copy.' }
+    }
     $end = [DateTime]::UtcNow.AddSeconds(20)
     do {
         Start-Sleep -Milliseconds 200
@@ -257,6 +270,8 @@ try {
         SelectApp 'Cloudy'
         Capture "apps-$Language-$Theme"
         ClickButton (T 'Footer_Continue')
+        WaitText (T 'Target_Title')
+        Capture "target-$Language-$Theme"
         ClickButton (T 'Footer_Continue')
         Capture "install-sign-in-$Language-$Theme"
         SetField 0 'demo@example.com'
@@ -266,7 +281,10 @@ try {
         SetField 2 '123456'
         ClickButton (T 'Account_Verify') -Last
         WaitText 'demo@example.com'
+        Capture "install-options-$Language-$Theme"
         ClickButton (T 'Footer_Install')
+        WaitText (T 'Install_Title_Running')
+        Capture "installing-$Language-$Theme"
         WaitText (T 'Install_Title_Done') 40
         Capture "install-$Language-$Theme"
         FinishInstall
@@ -289,7 +307,10 @@ try {
         SelectApp 'Cloudy'
         Capture "restore-$Language-$Theme"
         ClickButton (T 'Footer_Continue')
+        Capture "restore-install-$Language-$Theme"
         ClickButton (T 'Footer_Install')
+        WaitText (T 'Install_Title_Done') 40
+        Capture "restore-done-$Language-$Theme"
         FinishInstall
 
         ClickNavigation (T 'Nav_Library')
@@ -299,7 +320,9 @@ try {
         WaitText (T 'Apps_Title')
         SetField 0 'Bloom'
         SelectApp 'Bloom Journal'
+        Capture "save-apps-$Language-$Theme"
         ClickButton (T 'Footer_Continue')
+        Capture "save-ready-$Language-$Theme"
         ClickButton (T 'Footer_Save')
         WaitText (T 'Save_Title_Done') 40
         Capture "saved-$Language-$Theme"
@@ -321,30 +344,32 @@ try {
     }
     if ($Mode -eq 'Settings') {
         if ($Language -ne 'ru-RU') { throw 'Settings mode checks a live Russian to English switch; use -Language ru-RU.' }
+        $currentTitles = @((Elements (Root) ([System.Windows.Automation.ControlType]::Text)) | ForEach-Object { $_.Current.Name })
+        $titleKey = if ($currentTitles -contains (T 'Later_Title')) { 'Later_Title' } else { 'Start_Title' }
         ClickNavigation (T 'Settings_Button')
         SetCombo 1 (T 'Settings_ThemeDark')
         Capture "settings-$Language-Dark"
         SetCombo 0 'English'
         UseLanguage 'en-US'
-        WaitText 'What would you like to do?'
+        WaitText (T $titleKey)
         Capture "library-en-US-Dark"
         ClickNavigation 'Settings'
         SetCombo 1 'Light'
         $settings = SettingsRoot
         $done = @((Elements $settings ([System.Windows.Automation.ControlType]::Button)) | Where-Object { $_.Current.Name -eq 'Done' })
         $done[0].GetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern).Invoke()
-        WaitText 'What would you like to do?'
+        WaitText (T $titleKey)
         Capture "library-en-US-Light"
     }
     Write-Output "PASS: $Mode demo, $Language, $Theme"
     $script:completed = $true
 }
 finally {
-    if ($script:demo -and -not $script:demo.HasExited) {
+    if ($script:ownsDemo -and $script:demo -and -not $script:demo.HasExited) {
         $script:demo.CloseMainWindow() | Out-Null
         if (-not $script:demo.WaitForExit(3000)) { Stop-Process -Id $script:demo.Id -Force }
     }
-    if ($script:completed) {
+    if ($script:completed -and $script:ownsDemo) {
         $demoData = Join-Path $env:TEMP "PerenosDemo-$($script:demo.Id)"
         if (Test-Path -LiteralPath $demoData) { Remove-Item -LiteralPath $demoData -Recurse -Force }
     }

@@ -2,47 +2,103 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <ResourceDictionary.ThemeDictionaries>
     <ResourceDictionary x:Key="Light">
-      <Color x:Key="AccentColor">#6750E8</Color>
-      <SolidColorBrush x:Key="AccentBrush" Color="#6750E8"/>
+      <Color x:Key="AccentColor">#1677D2</Color>
+      <Color x:Key="CanvasStartColor">#E3F0FA</Color>
+      <Color x:Key="CanvasEndColor">#F5F7FA</Color>
+      <SolidColorBrush x:Key="AccentBrush" Color="#1677D2"/>
+      <LinearGradientBrush x:Key="CanvasBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="{DynamicResource CanvasStartColor}" Offset="0"/>
+        <GradientStop Color="{DynamicResource CanvasEndColor}" Offset="1"/>
+      </LinearGradientBrush>
+      <SolidColorBrush x:Key="AccentTextBrush" Color="#005CB9"/>
       <SolidColorBrush x:Key="OnAccentBrush" Color="#FFFFFF"/>
-      <SolidColorBrush x:Key="AccentHoverBrush" Color="#563ED6"/>
-      <SolidColorBrush x:Key="AccentSoftBrush" Color="#EEEAFB"/>
-      <SolidColorBrush x:Key="BackgroundBrush" Color="#F7F8FC"/>
-      <SolidColorBrush x:Key="SidebarBrush" Color="#F0F1F7"/>
-      <SolidColorBrush x:Key="CardBrush" Color="#FFFFFF"/>
-      <SolidColorBrush x:Key="CardHoverBrush" Color="#FAF9FE"/>
-      <SolidColorBrush x:Key="TextBrush" Color="#20212A"/>
-      <SolidColorBrush x:Key="SecondaryTextBrush" Color="#6C6D7A"/>
-      <SolidColorBrush x:Key="BorderBrush" Color="#E5E6ED"/>
-      <SolidColorBrush x:Key="SubtleBrush" Color="#F0F0F5"/>
-      <SolidColorBrush x:Key="SuccessBrush" Color="#16805C"/>
-      <SolidColorBrush x:Key="SuccessSoftBrush" Color="#E2F5ED"/>
-      <SolidColorBrush x:Key="WarningBrush" Color="#AD6712"/>
-      <SolidColorBrush x:Key="WarningSoftBrush" Color="#FFF0D9"/>
-      <SolidColorBrush x:Key="DangerBrush" Color="#C44355"/>
-      <SolidColorBrush x:Key="IconBrush" Color="#777385"/>
+      <SolidColorBrush x:Key="AccentHoverBrush" Color="#0069D8"/>
+      <SolidColorBrush x:Key="ToggleSwitchFillOn" Color="#1677D2"/>
+      <SolidColorBrush x:Key="ToggleSwitchStrokeOn" Color="#1677D2"/>
+      <SolidColorBrush x:Key="ToggleSwitchFillOnPointerOver" Color="#0069D8"/>
+      <SolidColorBrush x:Key="ToggleSwitchStrokeOnPointerOver" Color="#0069D8"/>
+      <SolidColorBrush x:Key="ToggleSwitchFillOnPressed" Color="#0069D8"/>
+      <SolidColorBrush x:Key="ToggleSwitchStrokeOnPressed" Color="#0069D8"/>
+      <SolidColorBrush x:Key="ToggleSwitchStrokeOff" Color="{DynamicResource InputBorderBrush.Color}"/>
+      <SolidColorBrush x:Key="ToggleSwitchKnobFillOn" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFill" Color="{DynamicResource AccentBrush.Color}"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStroke" Color="{DynamicResource AccentBrush.Color}"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphFill" Color="{DynamicResource OnAccentBrush.Color}"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphStroke" Color="{DynamicResource OnAccentBrush.Color}"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFillPointerOver" Color="{DynamicResource AccentHoverBrush.Color}"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokePointerOver" Color="{DynamicResource AccentHoverBrush.Color}"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphFillPointerOver" Color="{DynamicResource OnAccentBrush.Color}"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphStrokePointerOver" Color="{DynamicResource OnAccentBrush.Color}"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphFillDisabled" Color="{DynamicResource SecondaryTextBrush.Color}"/>
+      <SolidColorBrush x:Key="AccentSoftBrush" Color="#DDEBFF"/>
+      <SolidColorBrush x:Key="BackgroundBrush" Color="#EAF1F8"/>
+      <SolidColorBrush x:Key="SidebarBrush" Color="#F4F7FB"/>
+      <SolidColorBrush x:Key="CardBrush" Color="#F2FCFDFE"/>
+      <SolidColorBrush x:Key="CardHoverBrush" Color="#E8F1FA"/>
+      <SolidColorBrush x:Key="GlassBrush" Color="#B8FFFFFF"/>
+      <SolidColorBrush x:Key="GlassStrongBrush" Color="#DBFFFFFF"/>
+      <SolidColorBrush x:Key="GlassBorderBrush" Color="#70FFFFFF"/>
+      <SolidColorBrush x:Key="TextBrush" Color="#162337"/>
+      <SolidColorBrush x:Key="SecondaryTextBrush" Color="#53657A"/>
+      <SolidColorBrush x:Key="BorderBrush" Color="#D2DFEC"/>
+      <SolidColorBrush x:Key="InputBorderBrush" Color="#758CA6"/>
+      <SolidColorBrush x:Key="SubtleBrush" Color="#99E7EEF7"/>
+      <SolidColorBrush x:Key="SuccessBrush" Color="#167A61"/>
+      <SolidColorBrush x:Key="SuccessSoftBrush" Color="#DDF2E9"/>
+      <SolidColorBrush x:Key="WarningBrush" Color="#986114"/>
+      <SolidColorBrush x:Key="WarningSoftBrush" Color="#FFF1D7"/>
+      <SolidColorBrush x:Key="DangerBrush" Color="#C33E54"/>
+      <SolidColorBrush x:Key="IconBrush" Color="#60758D"/>
       <SolidColorBrush x:Key="OverlayBrush" Color="#190B1526"/>
     </ResourceDictionary>
     <ResourceDictionary x:Key="Dark">
-      <Color x:Key="AccentColor">#B8A5FF</Color>
-      <SolidColorBrush x:Key="AccentBrush" Color="#B8A5FF"/>
-      <SolidColorBrush x:Key="OnAccentBrush" Color="#201532"/>
-      <SolidColorBrush x:Key="AccentHoverBrush" Color="#CCBCFF"/>
-      <SolidColorBrush x:Key="AccentSoftBrush" Color="#30284B"/>
-      <SolidColorBrush x:Key="BackgroundBrush" Color="#14151B"/>
-      <SolidColorBrush x:Key="SidebarBrush" Color="#1A1B23"/>
-      <SolidColorBrush x:Key="CardBrush" Color="#20212A"/>
-      <SolidColorBrush x:Key="CardHoverBrush" Color="#282738"/>
-      <SolidColorBrush x:Key="TextBrush" Color="#F1F0F7"/>
-      <SolidColorBrush x:Key="SecondaryTextBrush" Color="#ADACBC"/>
-      <SolidColorBrush x:Key="BorderBrush" Color="#353642"/>
-      <SolidColorBrush x:Key="SubtleBrush" Color="#30313D"/>
-      <SolidColorBrush x:Key="SuccessBrush" Color="#64D8A8"/>
-      <SolidColorBrush x:Key="SuccessSoftBrush" Color="#1B3C31"/>
-      <SolidColorBrush x:Key="WarningBrush" Color="#F6BB68"/>
-      <SolidColorBrush x:Key="WarningSoftBrush" Color="#40311E"/>
-      <SolidColorBrush x:Key="DangerBrush" Color="#FF9AA9"/>
-      <SolidColorBrush x:Key="IconBrush" Color="#B6ACC9"/>
+      <Color x:Key="AccentColor">#1677D2</Color>
+      <Color x:Key="CanvasStartColor">#0D1828</Color>
+      <Color x:Key="CanvasEndColor">#172538</Color>
+      <SolidColorBrush x:Key="AccentBrush" Color="#1677D2"/>
+      <LinearGradientBrush x:Key="CanvasBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="{DynamicResource CanvasStartColor}" Offset="0"/>
+        <GradientStop Color="{DynamicResource CanvasEndColor}" Offset="1"/>
+      </LinearGradientBrush>
+      <SolidColorBrush x:Key="AccentTextBrush" Color="#64D2FF"/>
+      <SolidColorBrush x:Key="OnAccentBrush" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="AccentHoverBrush" Color="#0069D8"/>
+      <SolidColorBrush x:Key="ToggleSwitchFillOn" Color="#1677D2"/>
+      <SolidColorBrush x:Key="ToggleSwitchStrokeOn" Color="#1677D2"/>
+      <SolidColorBrush x:Key="ToggleSwitchFillOnPointerOver" Color="#0069D8"/>
+      <SolidColorBrush x:Key="ToggleSwitchStrokeOnPointerOver" Color="#0069D8"/>
+      <SolidColorBrush x:Key="ToggleSwitchFillOnPressed" Color="#0069D8"/>
+      <SolidColorBrush x:Key="ToggleSwitchStrokeOnPressed" Color="#0069D8"/>
+      <SolidColorBrush x:Key="ToggleSwitchStrokeOff" Color="{DynamicResource InputBorderBrush.Color}"/>
+      <SolidColorBrush x:Key="ToggleSwitchKnobFillOn" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFill" Color="{DynamicResource AccentBrush.Color}"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStroke" Color="{DynamicResource AccentBrush.Color}"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphFill" Color="{DynamicResource OnAccentBrush.Color}"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphStroke" Color="{DynamicResource OnAccentBrush.Color}"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFillPointerOver" Color="{DynamicResource AccentHoverBrush.Color}"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokePointerOver" Color="{DynamicResource AccentHoverBrush.Color}"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphFillPointerOver" Color="{DynamicResource OnAccentBrush.Color}"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphStrokePointerOver" Color="{DynamicResource OnAccentBrush.Color}"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphFillDisabled" Color="{DynamicResource SecondaryTextBrush.Color}"/>
+      <SolidColorBrush x:Key="AccentSoftBrush" Color="#253D59"/>
+      <SolidColorBrush x:Key="BackgroundBrush" Color="#101923"/>
+      <SolidColorBrush x:Key="SidebarBrush" Color="#152334"/>
+      <SolidColorBrush x:Key="CardBrush" Color="#E6172634"/>
+      <SolidColorBrush x:Key="CardHoverBrush" Color="#233B52"/>
+      <SolidColorBrush x:Key="GlassBrush" Color="#331D2B3F"/>
+      <SolidColorBrush x:Key="GlassStrongBrush" Color="#8C1C2A3D"/>
+      <SolidColorBrush x:Key="GlassBorderBrush" Color="#33FFFFFF"/>
+      <SolidColorBrush x:Key="TextBrush" Color="#EEF5FA"/>
+      <SolidColorBrush x:Key="SecondaryTextBrush" Color="#AABACB"/>
+      <SolidColorBrush x:Key="BorderBrush" Color="#34485D"/>
+      <SolidColorBrush x:Key="InputBorderBrush" Color="#5B718C"/>
+      <SolidColorBrush x:Key="SubtleBrush" Color="#80203347"/>
+      <SolidColorBrush x:Key="SuccessBrush" Color="#64DAB0"/>
+      <SolidColorBrush x:Key="SuccessSoftBrush" Color="#193D33"/>
+      <SolidColorBrush x:Key="WarningBrush" Color="#FFC570"/>
+      <SolidColorBrush x:Key="WarningSoftBrush" Color="#3D301D"/>
+      <SolidColorBrush x:Key="DangerBrush" Color="#FF9CAF"/>
+      <SolidColorBrush x:Key="IconBrush" Color="#AABACB"/>
       <SolidColorBrush x:Key="OverlayBrush" Color="#66000000"/>
     </ResourceDictionary>
   </ResourceDictionary.ThemeDictionaries>

@@ -1,12 +1,7 @@
-<p align="center"><img src="assets/logo.png" width="76" alt="Perenos logo"></p>
+<p align="center"><img src="assets/logo.png" width="72" alt="Perenos logo"></p>
 <h1 align="center">Perenos</h1>
-<p align="center"><b>Your favorite apps on a new iPhone — no jailbreak.</b><br>
-Free, open-source software for Windows and macOS.</p>
-
-<p align="center">
-Transfer apps <b>between iPhones through your computer</b>, install original IPAs<br>
-and restore <b>your own App Store purchases unavailable in Russia</b>, including VK Music and Avito.
-</p>
+<p align="center"><b>Your familiar apps, on your new iPhone.</b></p>
+<p align="center">Transfer apps between iPhones and restore App Store purchases unavailable in Russia.<br>Free, open-source software for Windows and macOS, without jailbreak.</p>
 
 <p align="center">
   <a href="https://github.com/kr0nsch/perenos-ios/releases/latest"><b>Download for Windows</b></a> ·
@@ -20,6 +15,9 @@ and restore <b>your own App Store purchases unavailable in Russia</b>, including
   <img src="https://img.shields.io/badge/Windows%2010%2B%20%C2%B7%20macOS%2015%2B-Avalonia-7053d9" alt="Windows 10+, macOS 15+, Avalonia">
   <a href="LICENSE"><img src="https://img.shields.io/badge/MIT-open%20source-27765e" alt="MIT open-source license"></a>
 </p>
+
+<p align="center"><img src="docs/media/demo-en-light.gif" alt="Real app selection and installation in Perenos" width="960"></p>
+<p align="center"><sub>A recording of Perenos 1.7.2, not a mock-up. Devices, account and apps are fictional. <a href="docs/media/full-en-light.mp4">Watch the full video</a>.</sub></p>
 
 > [!IMPORTANT]
 > Perenos downloads **original apps from Apple's servers**, not copies from file-sharing sites. Apps must already belong to your Apple Account. Perenos does not bypass FairPlay, unlock other people's paid purchases, or change the region or account on your iPhone.
@@ -53,13 +51,8 @@ Connect the phone over USB, unlock it and tap **Trust**. You can connect the old
 
 To download or update apps, sign in to the purchaser's Apple Account **on the computer**. You do not need to change the account on the iPhone.
 
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/avalonia/restore-en-US-Dark.png">
-    <img src="docs/screenshots/avalonia/restore-en-US-Light.png" width="1000" alt="Restoring VK Music and other App Store purchases with Perenos">
-  </picture><br>
-  <sub>The current interface in demo mode. Accounts, devices and apps shown are fictional.</sub>
-</p>
+<p align="center"><img src="docs/media/restore-en-light.gif" alt="Restoring App Store purchases in Perenos" width="960"></p>
+<p align="center"><sub>A real restoration workflow recorded in Perenos 1.7.2. Accounts, devices and apps are fictional.</sub></p>
 
 ## Restore VK Music, Avito and other purchases
 
@@ -88,6 +81,15 @@ Perenos reads package metadata, shows version and size, and checks iOS compatibi
 | Checks package versions and compatibility | Does not guarantee that every IPA launches or every purchase can be restored |
 
 Restore app data through iCloud, a backup or the app's own synchronization.
+
+## Verify it yourself
+
+| What to verify | Where to look |
+|---|---|
+| Source code and license | [Repository](https://github.com/kr0nsch/perenos-ios) and [MIT](LICENSE) |
+| Tests and builds | [168 tests and Windows/macOS packages in CI](https://github.com/kr0nsch/perenos-ios/actions/workflows/ci.yml) |
+| Package provenance | `SHA256SUMS.txt` and Sigstore attestations in [releases](https://github.com/kr0nsch/perenos-ios/releases) |
+| Demo authenticity | [Real window captures and verifiable source frames](docs/MEDIA.md), not edited mock-ups |
 
 ## Privacy and trust
 
@@ -127,7 +129,7 @@ brew install dotnet go
 brew install --cask powershell
 pwsh build/Get-Ipatool.ps1 -RuntimeIdentifier osx-arm64
 dotnet run --project src/Perenos -- --demo
-bash build/build-macos.sh 1.7.1 osx-arm64
+bash build/build-macos.sh 1.7.2 osx-arm64
 ```
 
 For Intel, replace `osx-arm64` with `osx-x64`. Without `MACOS_SIGN_IDENTITY`, the package is ad-hoc signed for development. Set a Developer ID and `MACOS_NOTARY_PROFILE` to enable notarization for public distribution.

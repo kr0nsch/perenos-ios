@@ -52,7 +52,28 @@ async function checkLayout(page, width, theme) {
   assert.equal(await page.locator('html').getAttribute('data-theme'), theme);
   assert.equal(await page.locator('#hero-title').isVisible(), true);
   await page.evaluate(() => document.fonts.ready);
-  await page.locator('.hero-visual img').evaluate(img => img.decode());
+  await page.locator('#demo-image').evaluate(img => img.decode());
+  const reducedMotion = await page.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches);
+  if (reducedMotion) {
+    assert.equal(await page.locator('#demo-image').isVisible(), true);
+    assert.equal(await page.locator('#demo-animation').isVisible(), false);
+  } else {
+    await page.locator('#motion-toggle').click();
+    assert.equal(await page.locator('#demo-image').isVisible(), true);
+    assert.equal(await page.locator('#demo-animation').isVisible(), false);
+    await page.locator('#motion-toggle').click();
+    await page.waitForFunction(() => {
+      const image = document.querySelector('#demo-animation');
+      return image.complete && image.naturalWidth > 0;
+    });
+    assert.equal(await page.locator('#demo-animation').isVisible(), true);
+    assert.equal(await page.locator('#demo-image').isVisible(), false);
+    const animationUrl = await page.locator('#demo-animation').getAttribute('src');
+    assert.ok(animationUrl.endsWith(theme === 'dark' ? '-dark.gif' : '.gif'), `Unexpected animation theme: ${animationUrl}`);
+  }
+  assert.equal(await page.locator('#full-video').evaluate(video => video.autoplay), false);
+  assert.equal(await page.locator('#full-video').getAttribute('preload'), 'none');
+  assert.equal(await page.locator('#full-video').evaluate(video => video.paused), true);
 }
 
 async function capture(page, name, selector) {
@@ -78,7 +99,7 @@ try {
   if (!executablePath) throw new Error('Microsoft Edge was not found');
   browser = await chromium.launch({ executablePath, headless: true });
 
-  for (const [width, height] of [[375, 812], [390, 844], [768, 1024], [1024, 768], [1440, 900]]) {
+  for (const [width, height] of [[320, 740], [375, 812], [390, 844], [768, 1024], [1024, 768], [1440, 900]]) {
     for (const theme of ['light', 'dark']) {
       const context = await browser.newContext({ viewport: { width, height }, colorScheme: theme });
       const page = await context.newPage();
@@ -88,11 +109,11 @@ try {
       page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
       await page.route('https://api.github.com/repos/kr0nsch/perenos-ios/releases/latest', route => route.fulfill({
         status: 200, contentType: 'application/json', body: JSON.stringify({
-          tag_name: 'v1.7.1', draft: false, prerelease: false, assets: [
-            { name: 'Perenos-1.7.1-setup-x64.exe', size: 50 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.7.1/Perenos-1.7.1-setup-x64.exe' },
-            { name: 'Perenos-1.7.1-portable-x64.zip', size: 45 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.7.1/Perenos-1.7.1-portable-x64.zip' },
-            { name: 'Perenos-1.7.1-macos-arm64-test.dmg', size: 60 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.7.1/Perenos-1.7.1-macos-arm64-test.dmg' },
-            { name: 'Perenos-1.7.1-macos-x64-test.dmg', size: 61 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.7.1/Perenos-1.7.1-macos-x64-test.dmg' },
+          tag_name: 'v1.7.2', draft: false, prerelease: false, assets: [
+            { name: 'Perenos-1.7.2-setup-x64.exe', size: 50 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.7.2/Perenos-1.7.2-setup-x64.exe' },
+            { name: 'Perenos-1.7.2-portable-x64.zip', size: 45 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.7.2/Perenos-1.7.2-portable-x64.zip' },
+            { name: 'Perenos-1.7.2-macos-arm64-test.dmg', size: 60 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.7.2/Perenos-1.7.2-macos-arm64-test.dmg' },
+            { name: 'Perenos-1.7.2-macos-x64-test.dmg', size: 61 * 1048576, browser_download_url: 'https://github.com/kr0nsch/perenos-ios/releases/download/v1.7.2/Perenos-1.7.2-macos-x64-test.dmg' },
           ],
         }),
       }));
@@ -123,14 +144,14 @@ try {
       await faq.locator('summary').click();
       assert.equal(await faq.getAttribute('open'), null);
       await page.waitForFunction(() => document.querySelector('[data-download="macos-arm64"]').href.includes('/releases/download/'));
-      assert.ok((await page.locator('[data-download="installer"]').getAttribute('href')).endsWith('Perenos-1.7.1-setup-x64.exe'));
-      assert.ok((await page.locator('[data-download="portable"]').getAttribute('href')).endsWith('Perenos-1.7.1-portable-x64.zip'));
-      assert.ok((await page.locator('[data-download="macos-arm64"]').getAttribute('href')).endsWith('Perenos-1.7.1-macos-arm64-test.dmg'));
-      assert.ok((await page.locator('[data-download="macos-x64"]').getAttribute('href')).endsWith('Perenos-1.7.1-macos-x64-test.dmg'));
+      assert.ok((await page.locator('[data-download="installer"]').getAttribute('href')).endsWith('Perenos-1.7.2-setup-x64.exe'));
+      assert.ok((await page.locator('[data-download="portable"]').getAttribute('href')).endsWith('Perenos-1.7.2-portable-x64.zip'));
+      assert.ok((await page.locator('[data-download="macos-arm64"]').getAttribute('href')).endsWith('Perenos-1.7.2-macos-arm64-test.dmg'));
+      assert.ok((await page.locator('[data-download="macos-x64"]').getAttribute('href')).endsWith('Perenos-1.7.2-macos-x64-test.dmg'));
       assert.equal(await page.locator('[data-download="macos-arm64"]').getAttribute('aria-disabled'), null);
       assert.match(await page.locator('[data-download="macos-arm64"] [data-status]').textContent(), /без нотаризации|not notarized/);
-      assert.match(await page.locator('#release-label').textContent(), /1\.7\.1/);
-      for (const image of await page.locator('img.theme-image').all()) {
+      assert.match(await page.locator('#release-label').textContent(), /1\.7\.2/);
+      for (const image of await page.locator('img.theme-image:visible').all()) {
         await image.scrollIntoViewIfNeeded();
         await image.evaluate(img => img.decode());
         assert.ok(await image.evaluate(img => img.naturalWidth > 0));
@@ -138,7 +159,7 @@ try {
       await checkLayout(page, width, toggled);
       if (width === 1440) {
         await capture(page, `desktop-${toggled}-hero`);
-        await capture(page, `desktop-${toggled}-showcase`, '.showcase');
+        await capture(page, `desktop-${toggled}-showcase`, '#demo');
         await capture(page, `desktop-${toggled}-restore`, '#restore');
         await capture(page, `desktop-${toggled}-download`, '#download');
       }
@@ -169,14 +190,14 @@ try {
     await page.locator('#tab-restore').click();
     assert.ok((await page.locator('#demo-image').getAttribute('src')).endsWith(expectedLang === 'en' ? 'restore-en-light.png' : 'restore-light.png'));
     assert.match(await page.locator('#demo-caption').textContent(), expectedLang === 'en' ? /Apple Account purchases/ : /Покупки Apple Account/);
-    for (const image of await page.locator('img.theme-image').all()) {
+    for (const image of await page.locator('img.theme-image:visible').all()) {
       await image.scrollIntoViewIfNeeded();
       await image.evaluate(img => img.decode());
       assert.ok(await image.evaluate(img => img.naturalWidth > 0));
     }
     const schemas = (await page.locator('script[type="application/ld+json"]').allTextContents()).map(text => JSON.parse(text));
     const software = schemas.find(schema => schema['@type'] === 'SoftwareApplication');
-    assert.equal(software.softwareVersion, '1.7.1');
+    assert.equal(software.softwareVersion, '1.7.2');
     assert.equal(software.offers.price, '0');
     const faqSchema = schemas.find(schema => schema['@type'] === 'FAQPage');
     assert.equal(faqSchema.mainEntity.length, await page.locator('.faq-items details').count());
@@ -188,6 +209,48 @@ try {
     if (expectedLang === 'en') await capture(page, 'desktop-en-hero');
     await context.close();
     console.log(`PASS language ${expectedLang} and localized images`);
+  }
+
+  for (const theme of ['light', 'dark']) {
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 }, colorScheme: theme, reducedMotion: 'reduce' });
+    const page = await context.newPage();
+    await page.goto(PAGE);
+    await page.locator('#motion-toggle').waitFor({ state: 'visible' });
+    assert.equal(await page.locator('#motion-toggle').getAttribute('aria-pressed'), 'false');
+    assert.equal(await page.locator('#demo-image').isVisible(), true);
+    assert.equal(await page.locator('#demo-animation').isVisible(), false);
+    await page.locator('#motion-toggle').click();
+    assert.equal(await page.locator('#motion-toggle').getAttribute('aria-pressed'), 'true');
+    assert.equal(await page.locator('#demo-animation').isVisible(), true);
+    await page.locator('#motion-toggle').click();
+    assert.equal(await page.locator('#motion-toggle').getAttribute('aria-pressed'), 'false');
+    assert.equal(await page.locator('#demo-image').isVisible(), true);
+    assert.equal(await page.locator('#demo-animation').isVisible(), false);
+    await context.close();
+    console.log(`PASS reduced-motion ${theme}`);
+  }
+
+  {
+    const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, colorScheme: 'light' });
+    const page = await context.newPage();
+    await page.goto(PAGE);
+    await page.waitForFunction(() => document.querySelector('#demo-animation')?.getAttribute('src')?.endsWith('demo.gif'));
+    await page.emulateMedia({ colorScheme: 'dark' });
+    await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark'
+      && document.querySelector('#demo-animation')?.getAttribute('src')?.endsWith('demo-dark.gif'));
+    const browserColor = await page.locator('meta[name="theme-color"][media="(prefers-color-scheme: dark)"]').getAttribute('content');
+    assert.equal(browserColor, '#101923');
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.waitForFunction(() => document.querySelector('#motion-toggle').getAttribute('aria-pressed') === 'false'
+      && !document.querySelector('#demo-picture').hidden);
+    assert.equal(await page.locator('#motion-toggle').getAttribute('aria-pressed'), 'false');
+    assert.equal(await page.locator('#demo-image').isVisible(), true);
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.waitForFunction(() => document.querySelector('#motion-toggle').getAttribute('aria-pressed') === 'true'
+      && document.querySelector('#demo-animation')?.getAttribute('src')?.endsWith('demo-dark.gif'));
+    assert.equal(await page.locator('#motion-toggle').getAttribute('aria-pressed'), 'true');
+    await context.close();
+    console.log('PASS live system theme and motion preferences');
   }
 
   for (const theme of ['light', 'dark']) {

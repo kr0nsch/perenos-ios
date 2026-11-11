@@ -49,21 +49,22 @@ dotnet build src/Perenos/Perenos.csproj -c Release
 Тесты запускайте последовательно: несколько независимых UI Automation-прогонов на одном
 рабочем столе могут мешать друг другу.
 
-Файлы попадают в `artifacts/avalonia-review` (или выбранный `-OutDir` внутри `artifacts`).
-Для сайта нужны `apps`, `restore`, `saved` на обоих языках и в обеих темах. Полный сценарий
-также сохраняет контрольные кадры `devices`, `apps-all`, `install-sign-in`, `restore-all`,
-`restore-russian` и `library`: они нужны для проверки компоновки, а не для публикации.
-После визуальной проверки обновите существующие снимки в `docs/screenshots/avalonia`:
+Файлы попадают в `artifacts/avalonia-review` (или выбранный `-OutDir` внутри `artifacts`;
+путь может быть относительным или абсолютным). Для сайта нужны `apps`, `restore`, `saved` на обоих
+языках и в обеих темах. Полный сценарий также сохраняет контрольные кадры `devices`, `target`,
+`apps-all`, `install-sign-in`, `install-options`, `installing`, `restore-all`, `restore-russian`,
+`restore-install`, `restore-done`, `save-apps`, `save-ready` и `library`: они нужны для проверки
+компоновки и точных временных меток. После визуальной проверки обновите существующие снимки
+в `docs/screenshots/avalonia`:
 
 ```powershell
 New-Item -ItemType Directory -Force docs/screenshots/avalonia
-Copy-Item artifacts/avalonia-review/start-*.png,
-  artifacts/avalonia-review/apps-ru-RU-*.png, artifacts/avalonia-review/apps-en-US-*.png,
-  artifacts/avalonia-review/install-ru-RU-*.png, artifacts/avalonia-review/install-en-US-*.png,
-  artifacts/avalonia-review/restore-ru-RU-*.png, artifacts/avalonia-review/restore-en-US-*.png,
-  artifacts/avalonia-review/saved-*.png, artifacts/avalonia-review/settings-ru-RU-Dark.png,
-  artifacts/avalonia-review/library-en-US-*.png `
-  -Destination docs/screenshots/avalonia
+foreach ($variant in 'ru-light', 'ru-dark', 'en-light', 'en-dark') {
+  $source = "artifacts/avalonia-review/$variant"
+  Copy-Item "$source/start-*.png", "$source/apps-*.png", "$source/install-*.png",
+    "$source/restore-*.png", "$source/saved-*.png" -Destination docs/screenshots/avalonia
+}
+Copy-Item artifacts/avalonia-review/settings/*.png -Destination docs/screenshots/avalonia
 ```
 
 Это заменяет только сгенерированные кадры с теми же именами. Сборка сайта не принимает
@@ -79,25 +80,77 @@ Copy-Item artifacts/avalonia-review/start-*.png,
 библиотеки влияют на следующие списки. `--demo-saved` дополнительно создаёт 11 сохранённых
 файлов, один из которых несовместим с демонстрационной iOS.
 
-## Если нужна видеозапись
+## Запись реальных анимаций
 
-Для отдельной Windows-записи без курсора можно использовать
-[`Record-DemoWindow.ps1`](../build/Record-DemoWindow.ps1). Она работает только с явно
-изолированной portable-копией `Perenos.exe`, запущенной с `--demo` или `--demo-saved`, и
-файлом `portable.txt` рядом с ней. Скрипт проверяет PID и не запускает, не закрывает и не
-управляет приложением.
+Для записи без курсора используйте [`Record-DemoWindow.ps1`](../build/Record-DemoWindow.ps1).
+Она работает только с явно изолированной portable-копией `Perenos.exe`, запущенной с `--demo`
+или `--demo-saved`, и файлом `portable.txt` рядом с ней. Скрипт проверяет PID и не запускает,
+не закрывает и не управляет приложением.
+
+`Demo-Check.ps1 -ProcessId` может управлять уже запущенным демо: он проверяет путь к
+исполняемому файлу, флаг деморежима и portable-маркер. Чужой процесс при этом не закрывается.
+Запускайте запись и сценарий с одним PID, а после сценария остановите запись файлом `stop`:
 
 ```powershell
-./build/Record-DemoWindow.ps1 -ProcessId 1234 `
-  -OutDir artifacts/recordings/ru-light/demo -IntervalMs 90 -MaxSeconds 600
+$env:PERENOS_LANGUAGE = 'ru-RU'
+$env:PERENOS_THEME = 'Light'
+$demo = Start-Process <путь-к-portable-Perenos.exe> -ArgumentList '--demo' -PassThru
+$recorder = (Resolve-Path ./build/Record-DemoWindow.ps1).Path
+$recordDir = 'artifacts/recordings-1.7.2/ru-light/demo'
+$recordJob = Start-Job {
+  & $using:recorder -ProcessId $using:demo.Id -OutDir $using:recordDir -IntervalMs 90 -MaxSeconds 240
+}
+$deadline = [DateTime]::UtcNow.AddSeconds(20)
+while (-not (Test-Path "$recordDir/f00000.png")) {
+  if ($recordJob.State -notin 'NotStarted', 'Running' -or [DateTime]::UtcNow -gt $deadline) {
+    Receive-Job $recordJob
+    throw 'Запись не началась.'
+  }
+  Start-Sleep -Milliseconds 200
+}
+./build/Demo-Check.ps1 -Mode Full -Language ru-RU -Theme Light `
+  -ProcessId $demo.Id -ExePath <путь-к-portable-Perenos.exe> -OutDir artifacts/shots-1.7.2/ru-light
+New-Item -ItemType File -Path "$recordDir/stop" -Force
+Wait-Job $recordJob -Timeout 30
+Receive-Job $recordJob
+Remove-Job $recordJob
 ```
 
-Для остановки создайте файл `stop` в папке записи. Проверьте `"status": "complete"` в
-`capture.json`. Не завершайте процессы по имени: у пользователя может работать другая копия.
+Дождитесь `"status": "complete"` в `capture.json`, затем закройте только это демо и удалите
+его временную папку. Не завершайте процессы по имени: у пользователя может работать другая копия.
+Диалоги Avalonia могут быть отдельными нативными окнами, поэтому для них нужен снимок экранной
+области, а не только `PrintWindow` владельца. Не показывайте личные данные и другие окна.
 
-Диалоги Avalonia могут быть отдельными нативными окнами. Для них в `Demo-Check.ps1` делается
-снимок экранной области, а не только `PrintWindow` владельца. Это не отменяет требования не
-показывать личные данные и другие окна во время съёмки.
+## Сборка GIF и видео
+
+Сначала создайте временные шкалы по меткам снимков `Demo-Check`, затем соберите GIF только
+из записанных кадров. Выбор целевого iPhone, готовность, установка и завершение привязаны к
+фактическим состояниям интерфейса, а не к предполагаемой длительности операций. Версия берётся
+из `Directory.Build.props`.
+
+```bash
+python build/New-DemoTimeline.py --recordings-dir artifacts/recordings-1.7.2 --shots-dir artifacts/shots-1.7.2
+python build/generate-demo-media.py --recordings-dir artifacts/recordings-1.7.2 --languages ru en --themes light --flows demo restore save --width 960 --fps 8
+```
+
+Для пересборки одной серии добавьте `--variants ru-light` (или `en-light`).
+
+`New-DemoTimeline.py` не редактирует исходные PNG. Для `restore` и `save` он создаёт
+отдельные папки с жёсткими ссылками или копиями кадров и собственной `timeline.json`.
+`generate-demo-media.py` проверяет завершённую запись, размеры, версии и хеши всех кадров.
+Полученные `docs/media/*.json` содержат версию, длительность, размеры и хеши источника.
+Не дорисовывайте интерфейс, не добавляйте курсор или вымышленные состояния.
+
+Для полного MP4 можно использовать исходную последовательность PNG без повторного рендера UI:
+
+```bash
+ffmpeg -framerate 12 -i artifacts/recordings-1.7.2/ru-light/demo/f%05d.png -vf scale=960:-2 -c:v libx264 -crf 24 -pix_fmt yuv420p -movflags +faststart docs/media/full-ru-light.mp4
+```
+
+Повторите команды для `en-light`, чтобы получить английские материалы. `site/build.py` копирует
+GIF и MP4 в публикуемые assets и не принимает отсутствующие файлы. Анимация на сайте имеет
+кнопку паузы, а `prefers-reduced-motion` по умолчанию показывает статичный кадр. Без JavaScript
+остаются обычные изображения и текст. Полное видео запускается только пользователем.
 
 ## Публикация
 
@@ -106,6 +159,7 @@ Copy-Item artifacts/avalonia-review/start-*.png,
 английские изображения из `*-en-US-*` с суффиксом `-en`.
 
 Браузерные проверки `npm run test:site` обязательны: они проверяют мобильную вёрстку,
-контрастные темы, локальные изображения, переключение языков, клавиатурную навигацию и
-работу без JavaScript. Headless-тесты Avalonia на macOS проверяют логику и компоновку,
-но не заменяют запуск DMG и проверку USB на настоящем Mac и iPhone.
+контрастные темы, локальные изображения, переключение языков, клавиатурную навигацию,
+паузу анимации и reduced motion, а также работу без JavaScript. Headless-тесты Avalonia на
+macOS проверяют логику и компоновку, но не заменяют запуск DMG и проверку USB на настоящем
+Mac и iPhone.

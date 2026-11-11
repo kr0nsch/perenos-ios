@@ -10,6 +10,7 @@ using Avalonia.Styling;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
 using Perenos.Core;
+using Perenos.Core.Devices;
 using Perenos.Services;
 using Perenos.ViewModels;
 using Perenos.Views;
@@ -79,9 +80,38 @@ public sealed class AppBuilderTests : IDisposable
         var primary = window.GetVisualDescendants().OfType<Button>().Single(button => button.Classes.Contains("primary"));
         var label = primary.GetVisualDescendants().OfType<TextBlock>().Single(text => text.Text == vm.PrimaryText);
         var icon = primary.GetVisualDescendants().OfType<PathIcon>().Single(path => path.Classes.Contains("on-accent"));
-        var expected = Assert.IsType<Avalonia.Media.SolidColorBrush>(icon.Foreground);
-        var actual = Assert.IsType<Avalonia.Media.SolidColorBrush>(label.Foreground);
-        Assert.Equal(expected.Color, actual.Color);
+        foreach (var theme in new[] { ThemeVariant.Light, ThemeVariant.Dark })
+        {
+            Application.Current!.RequestedThemeVariant = theme;
+            window.UpdateLayout();
+            var background = Assert.IsType<SolidColorBrush>(primary.Background).Color;
+            var foreground = Assert.IsType<SolidColorBrush>(label.Foreground).Color;
+            Assert.Equal(Assert.IsType<SolidColorBrush>(icon.Foreground).Color, foreground);
+            Assert.True(Contrast(background, foreground) >= 4.5,
+                $"{theme} primary action contrast is {Contrast(background, foreground):F2}:1.");
+        }
+        window.Close();
+    }
+
+    [AvaloniaFact]
+    public void InstallSubtitleTracksItemsAddedWhileRunning()
+    {
+        var window = Track(CreateWindow("en-US"));
+        var vm = window.ViewModel;
+        vm.TransferNowCommand.Execute(null);
+        vm.Step = WizardStep.Install;
+        vm.Install.State = InstallState.Running;
+        window.UpdateLayout();
+        var subtitle = window.GetVisualDescendants().OfType<TextBlock>()
+            .Single(text => text.Text == vm.InstallSubtitle);
+        Assert.Contains("0 of 0", subtitle.Text);
+
+        var app = new InstalledApp("demo.cloudy", "Cloudy", "1.0", null, 100, null, null, null, null);
+        vm.Install.Items.Add(new TransferItemViewModel(app, null));
+        window.UpdateLayout();
+
+        Assert.Contains("0 of 1", vm.InstallSubtitle);
+        Assert.Equal(vm.InstallSubtitle, subtitle.Text);
         window.Close();
     }
 
@@ -99,20 +129,18 @@ public sealed class AppBuilderTests : IDisposable
     }
 
     [AvaloniaFact]
-    public void RussianBrandTaglineStaysInsideSidebar()
+    public void SidebarKeepsBrandConciseWithoutTheLongTagline()
     {
         var window = Track(CreateWindow("ru-RU"));
         window.UpdateLayout();
         var sidebar = window.FindControl<Border>("Sidebar")!;
-        var tagline = window.GetVisualDescendants().OfType<TextBlock>()
-            .Single(text => text.Text == Loc.Get("Shell_Tagline"));
-
         Assert.True(sidebar.IsVisible);
-        var bottomRight = tagline.TranslatePoint(new Point(tagline.Bounds.Width, tagline.Bounds.Height), sidebar);
-        Assert.NotNull(bottomRight);
-        Assert.True(bottomRight.Value.X <= sidebar.Bounds.Width - sidebar.Padding.Right,
-            $"Tagline ends at {bottomRight.Value.X}, sidebar content ends at {sidebar.Bounds.Width - sidebar.Padding.Right}.");
-        Assert.True(bottomRight.Value.Y <= sidebar.Bounds.Height - sidebar.Padding.Bottom);
+        Assert.DoesNotContain(sidebar.GetVisualDescendants().OfType<TextBlock>(), text => text.Text == Loc.Get("Shell_Tagline"));
+        var brand = sidebar.GetVisualDescendants().OfType<TextBlock>()
+            .Single(text => text.Text == Loc.Get("App_Name"));
+        var right = brand.TranslatePoint(new Point(brand.Bounds.Width, 0), sidebar);
+        Assert.NotNull(right);
+        Assert.True(right.Value.X <= sidebar.Bounds.Width - sidebar.Padding.Right);
         window.Close();
     }
 

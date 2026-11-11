@@ -27,7 +27,7 @@ dotnet run --project src/Perenos -- --demo
 
 On an Intel Mac use `osx-x64`. CGO is enabled on macOS because ipatool's Apple
 integration requires it; it is not cross-compiled from Windows. Build a local DMG with
-`bash build/build-macos.sh 1.7.1 osx-arm64`. The script makes an ad-hoc signed package
+`bash build/build-macos.sh 1.7.2 osx-arm64`. The script makes an ad-hoc signed package
 for development unless `MACOS_SIGN_IDENTITY` and `MACOS_NOTARY_PROFILE` are set.
 A public release additionally requires a valid iPhone check on a physical Mac.
 

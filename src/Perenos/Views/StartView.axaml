@@ -4,11 +4,11 @@
              xmlns:s="using:Perenos.Services"
              x:Class="Perenos.Views.StartView" x:DataType="vm:MainViewModel">
   <ScrollViewer VerticalScrollBarVisibility="Auto">
-    <StackPanel MaxWidth="760" Margin="44,42,44,32" HorizontalAlignment="Center">
-      <TextBlock Text="{s:Text Shell_Eyebrow}" Classes="eyebrow"/>
-      <TextBlock Text="{s:Text Start_Title}" Classes="h1" Margin="0,12,0,0"/>
-      <TextBlock Text="{s:Text Start_Subtitle}" Classes="body muted" Margin="0,12,0,0" MaxWidth="580"/>
-      <StackPanel Margin="0,32,0,0" Spacing="14">
+    <StackPanel MaxWidth="960" Margin="36,32,36,28" HorizontalAlignment="Stretch">
+      <TextBlock Text="{s:Text Shell_Eyebrow}" Classes="kicker"/>
+      <TextBlock Text="{s:Text Start_Title}" Classes="h1" Margin="0,10,0,0"/>
+      <TextBlock Text="{s:Text Start_Subtitle}" Classes="body muted" Margin="0,12,0,0" MaxWidth="680"/>
+      <StackPanel Margin="0,28,0,0" Spacing="12">
         <Button Classes="choice" Command="{Binding TransferNowCommand}" IsEnabled="{Binding CanDownload}">
           <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="18">
             <Border Classes="hero-icon" Width="48" Height="48" CornerRadius="14">

@@ -6,9 +6,9 @@
         Width="600" Height="760" MinWidth="480" MinHeight="600"
         WindowStartupLocation="CenterOwner"
         Icon="avares://Perenos/Assets/Perenos.ico"
-        TransparencyLevelHint="None"
+        TransparencyLevelHint="AcrylicBlur, Blur"
         Title="{s:Text Settings_Title}">
-  <Grid RowDefinitions="*,Auto">
+  <Grid RowDefinitions="*,Auto" Background="{DynamicResource CanvasBrush}">
     <ScrollViewer Padding="28">
       <StackPanel>
         <TextBlock Text="{s:Text Settings_Title}" Classes="h1"/>

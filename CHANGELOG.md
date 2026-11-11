@@ -6,6 +6,36 @@ All notable changes to Perenos are listed here. The format follows
 
 ## [Unreleased]
 
+## [1.7.2] - 2026-11-11
+
+### Изменено
+- Интерфейс приложения переработан в стиле **Apple Liquid Glass**: полупрозрачные панели, мягкая глубина, тонкие границы, системная типографика и согласованная палитра в светлой и тёмной темах.
+- Упрощены навигация, карточки сценариев, списки приложений, верхняя и нижняя панели. Короткий список больше не оставляет большую пустую карточку, а компактное меню и диалоги используют ту же стилистику.
+- Сайт и README обновлены: реальные анимированные демонстрации приложения, понятная загрузка на разных платформах, отдельный раздел для проверки кода, тестов и происхождения пакетов.
+- Анимации имеют паузу и статичный fallback, поддерживают `prefers-reduced-motion` и не требуют JavaScript для просмотра содержимого. Полное видео запускается только по действию пользователя.
+
+### Исправлено
+- Улучшены читаемость неактивных кнопок и состояний загрузки, контраст основных действий, единый цвет переключателей и radio-кнопок, адаптивная высота списка приложений.
+- Счётчик установки сразу показывает правильное число приложений. На сайте исправлены мобильная навигация и обновление активной анимации при смене системной темы.
+- Демонстрации и снимки создаются из реальных кадров текущего приложения с проверкой их хешей; устаревший интерфейс в материалах не используется.
+
+### Ограничения проверки
+- macOS по-прежнему распространяется как тестовые `-test.dmg` с ad-hoc подписью, без Developer ID и нотаризации. Запуск на физическом Mac и работа с реальным iPhone не проверялись.
+
+### Changed
+- Reworked the app in the **Apple Liquid Glass** style: translucent panels, subtle depth, thin borders, system typography and a consistent light/dark palette.
+- Simplified navigation, scenario cards, app lists and window chrome. Short lists no longer leave a large empty card, and compact navigation and dialogs share the same visual language.
+- Redesigned the website and README with real app demonstrations, clear platform downloads and a dedicated section for verifying the code, tests and package provenance.
+- Animations include a pause control and static fallback, honor `prefers-reduced-motion` and do not require JavaScript for content. Full video starts only on user request.
+
+### Fixed
+- Improved disabled-button and loading-state readability, primary-action contrast, toggle and radio-button colors, and adaptive app-list height.
+- The installation counter now shows the correct app count immediately. Fixed mobile navigation and active animation updates when the website's system theme changes.
+- Demo recordings and screenshots are created from verified frames of the current app; no outdated interface is presented in the materials.
+
+### Verification limits
+- macOS is still distributed as test `-test.dmg` packages with ad-hoc signing, without Developer ID or notarization. First launch on a physical Mac and operations with a real iPhone have not been verified.
+
 ## [1.7.1] - 2026-11-11
 
 ### Добавлено
@@ -148,6 +178,7 @@ All notable changes to Perenos are listed here. The format follows
 - On an iPhone 17 running iOS 27.2, retrieved 206 account purchases and installed Avito, VK, VK Video, Mail.ru Mail and Gazprombank's Digital Safe. Sber was already current. The latest queue installed 95 updates, found 18 apps current and encountered one device-response timeout.
 - Installation is confirmed, but first launch and operation without any Apple Account on the device have not been verified. Compatibility with every iPhone, iOS version and app is not guaranteed.
 
+[1.7.2]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.7.2
 [1.7.1]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.7.1
 [1.7.0]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.7.0
 [1.6.0]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.6.0

@@ -7,9 +7,9 @@
         Width="520" Height="720" MinWidth="440" MinHeight="620"
         WindowStartupLocation="CenterOwner" CanResize="True"
         Icon="avares://Perenos/Assets/Perenos.ico"
-        TransparencyLevelHint="None"
+        TransparencyLevelHint="AcrylicBlur, Blur"
         Title="{s:Text SignIn_DialogTitle}">
-  <ScrollViewer Padding="28">
+  <ScrollViewer Padding="28" Background="{DynamicResource CanvasBrush}">
     <StackPanel>
       <TextBlock Text="{s:Text SignIn_DialogTitle}" Classes="h2" Margin="0,0,0,24"/>
       <views:SignInPanel DataContext="{Binding}"/>

@@ -291,8 +291,8 @@
   <data name="Step_Save" xml:space="preserve"><value>Сохранение</value></data>
   <data name="Step_Install" xml:space="preserve"><value>Установка</value></data>
   <data name="Shell_Tagline" xml:space="preserve"><value>Ваши приложения — на вашем iPhone</value></data>
-  <data name="Shell_Eyebrow" xml:space="preserve"><value>ВАШ IPHONE, ВАШИ ПРИЛОЖЕНИЯ</value></data>
-  <data name="Nav_Workspace" xml:space="preserve"><value>РАБОЧАЯ ОБЛАСТЬ</value></data>
+  <data name="Shell_Eyebrow" xml:space="preserve"><value>Ваш iPhone, ваши приложения</value></data>
+  <data name="Nav_Workspace" xml:space="preserve"><value>Рабочая область</value></data>
   <data name="Nav_Transfer" xml:space="preserve"><value>Новый iPhone</value></data>
   <data name="Nav_Restore" xml:space="preserve"><value>Восстановление</value></data>
   <data name="Nav_Library" xml:space="preserve"><value>Библиотека</value></data>

@@ -73,6 +73,7 @@ public sealed partial class MainViewModel : ObservableObject
         Library.PropertyChanged += OnChildChanged;
         Account.PropertyChanged += OnChildChanged;
         Install.PropertyChanged += OnChildChanged;
+        Install.Items.CollectionChanged += (_, _) => RefreshAll();
         _ = Library.RefreshAsync();
     }
 

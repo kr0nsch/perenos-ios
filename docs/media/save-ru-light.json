@@ -1,0 +1,67 @@
+{
+  "schema_version": 2,
+  "version": "1.7.2",
+  "file": "save-ru-light.gif",
+  "width": 960,
+  "height": 676,
+  "frames": 159,
+  "fps": 8,
+  "duration_ms": 19880,
+  "bytes": 529934,
+  "sha256": "25dfd1a453679fb9f16eb59af510249caf10edd78cf10814363c59babb1cca69",
+  "cursor": "none",
+  "encoding": {
+    "scaling": "lanczos",
+    "max_colors": 256,
+    "palette_stats": "diff",
+    "dither": "sierra2_4a"
+  },
+  "source": {
+    "recording": "ru-light/save",
+    "format": "lossless PNG",
+    "capture_method": "PrintWindow(PW_RENDERFULLCONTENT)",
+    "cursor_captured": false,
+    "width": 1182,
+    "height": 832,
+    "frames": 516,
+    "first_timestamp_ms": 1794413483016,
+    "last_timestamp_ms": 1794413532815,
+    "capture_json_sha256": "bde99082a58b369bb7a78aee8b0ed39e5713c9c9d8b2b16933c4a0191fdcac00",
+    "frames_csv_sha256": "2ee5a64b986d68a79334daeee8e90078a4aee2b81874e0da02c0d9011be19dfb",
+    "window_txt_sha256": "6b50b5e4a1fe87772a659fe19fed16a4794e94fe1f9689445a5d21f412302bc1",
+    "timeline_sha256": "a59e7c95220828028f3e5faab5cc56f135f1ba1753a8c7c884de5ac56bec77b7",
+    "raw_frames_sha256": "c2cb99758a428928d43f91f5341a0b40a6e373f431f57c006b1c25a04a9e6a3b",
+    "raw_frames_hash_format": "SHA-256 of UTF-8 index,timestamp_ms,png_sha256\\n entries in frame order"
+  },
+  "segments": [
+    {
+      "start_ms": 1794413513058,
+      "end_ms": 1794413532815,
+      "output_duration_ms": 19757
+    }
+  ],
+  "sampled_frames_sha256": "5ceee25a337fda398ce8175f5c0f3cb90fdb97d1066b7d110ea039fff88e91dc",
+  "stills": [
+    {
+      "file": "ru-light/save-1-apps.png",
+      "requested_timestamp_ms": 1794413514485,
+      "source_frame": "f00323.png",
+      "source_timestamp_ms": 1794413514423,
+      "sha256": "ff078e736c5228584634fb62f5f3394ed22725902b4ff9f647fd67563a82d48a"
+    },
+    {
+      "file": "ru-light/save-2-ready.png",
+      "requested_timestamp_ms": 1794413514969,
+      "source_frame": "f00328.png",
+      "source_timestamp_ms": 1794413514903,
+      "sha256": "316114de8ad828579c681aa56030730c71e234850439fdd141e2c859bee1ccd5"
+    },
+    {
+      "file": "ru-light/save-3-done.png",
+      "requested_timestamp_ms": 1794413518313,
+      "source_frame": "f00363.png",
+      "source_timestamp_ms": 1794413518259,
+      "sha256": "c457c6015e6b46de1792b77a2829ab9657cba1cff158498e8dc43406bcbca02d"
+    }
+  ]
+}

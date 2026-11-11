@@ -2,9 +2,9 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
-VERSION="${1:-1.7.1}"
+VERSION="${1:-1.7.2}"
 if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-  echo "Version must look like 1.7.1" >&2
+  echo "Version must look like 1.7.2" >&2
   exit 2
 fi
 if [[ "$(uname -s)" != "Darwin" ]]; then

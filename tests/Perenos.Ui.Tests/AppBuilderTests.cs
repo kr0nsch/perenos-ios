@@ -228,10 +228,17 @@ public sealed class AppBuilderTests : IDisposable
         await Until(() => vm.Source?.IsReady == true);
         window.UpdateLayout();
         AssertVisibleTextWithinWindow(window);
-        var deviceProgress = window.GetVisualDescendants().OfType<ProgressBar>()
-            .Single(progress => progress.IsIndeterminate && progress.GetVisualAncestors().OfType<Button>().Any());
-        Assert.True(deviceProgress.Bounds.Width == 36,
-            $"Bounds={deviceProgress.Bounds.Width}; Width={deviceProgress.Width}; MinWidth={deviceProgress.MinWidth}");
+        var deviceProgressBars = window.GetVisualDescendants().OfType<ProgressBar>()
+            .Where(progress => progress.IsIndeterminate && progress.GetVisualAncestors().OfType<Button>().Any())
+            .ToList();
+        Assert.NotEmpty(deviceProgressBars);
+        Assert.Contains(deviceProgressBars, progress => progress.Bounds.Width == 36);
+        Assert.All(deviceProgressBars, progress =>
+        {
+            Assert.Equal(36, progress.Width);
+            Assert.True((!progress.IsVisible && progress.Bounds.Width == 0) || progress.Bounds.Width == 36,
+                $"Bounds={progress.Bounds.Width}; Width={progress.Width}; MinWidth={progress.MinWidth}");
+        });
 
         await vm.PrimaryCommand.ExecuteAsync(null);
         await Until(() => vm.Apps.LoadedFromUdid is not null);

@@ -35,7 +35,10 @@ public sealed class DeviceService(string pairRecordsDirectory) : IDeviceService
         {
             var usage = TryGet(() => lockdown.GetValue("com.apple.disk_usage", null)) as DictionaryNode;
             capacity = GetLong(usage, "TotalDataCapacity") ?? GetLong(usage, "TotalDiskCapacity");
-            free = GetLong(usage, "TotalDataAvailable");
+            // TotalDataAvailable counts purgeable caches iOS may never free, so it overstates the
+            // space apps can actually use; AmountDataAvailable is the real free space (older iOS
+            // versions only report TotalDataAvailable).
+            free = GetLong(usage, "AmountDataAvailable") ?? GetLong(usage, "TotalDataAvailable");
         }
 
         return new DeviceInfo(

@@ -9,7 +9,7 @@
     <c:EnumEqualsConverter x:Key="ToneIs"/>
   </UserControl.Resources>
   <ScrollViewer VerticalScrollBarVisibility="Auto">
-    <StackPanel MaxWidth="600" Margin="24,24,24,32" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <StackPanel MaxWidth="640" Margin="24,24,24,32" HorizontalAlignment="Center" VerticalAlignment="Center">
       <Grid Width="112" Height="112" HorizontalAlignment="Center" Margin="0,0,0,10">
         <Border Classes="hero-tile blue" IsVisible="{Binding DeviceStepTone, Converter={StaticResource ToneIs}, ConverterParameter=Blue}">
           <PathIcon Width="34" Height="34" Foreground="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -47,7 +47,7 @@
             <ItemsControl.ItemTemplate>
               <DataTemplate DataType="vm:DeviceItemViewModel">
                 <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14" MinHeight="68" Margin="0,2">
-                  <Button Grid.ColumnSpan="2" Classes="quiet" HorizontalContentAlignment="Stretch" Padding="12,10"
+                  <Button Grid.ColumnSpan="2" Classes="quiet" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" Padding="12,10"
                           Command="{Binding $parent[ItemsControl].DataContext.ChooseDeviceCommand}" CommandParameter="{Binding}" IsEnabled="{Binding IsSelectable}" AutomationProperties.Name="{Binding Name}">
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
                       <Border Classes="device-tile">
@@ -61,7 +61,7 @@
                             <TextBlock Text="{Binding RoleText}" Classes="caption" FontSize="11"/>
                           </Border>
                         </WrapPanel>
-                        <TextBlock Text="{Binding Subtitle}" Classes="caption"/>
+                        <TextBlock Text="{Binding Subtitle}" Classes="caption" ToolTip.Tip="{s:Text Device_FreeSpaceHint}"/>
                         <TextBlock Text="{Binding StatusText}" Classes="caption" Foreground="{DynamicResource WarningBrush}" IsVisible="{Binding ShowStatusIcon}"/>
                       </StackPanel>
                       <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">

@@ -4,13 +4,26 @@
         x:Class="Perenos.Views.MessageWindow"
         Width="460" SizeToContent="Height" CanResize="False"
         WindowStartupLocation="CenterOwner"
-        Icon="avares://Perenos/Assets/Perenos.ico">
-  <StackPanel Margin="26" Spacing="20" Background="{DynamicResource BackgroundBrush}">
-    <TextBlock x:Name="Heading" Classes="h2"/>
-    <TextBlock x:Name="Body" Classes="body muted"/>
-    <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
-      <Button x:Name="ContinueButton" Content="{s:Text Common_Cancel}" Click="Cancel"/>
-      <Button x:Name="ConfirmButton" Classes="danger" Click="Confirm"/>
+        Icon="avares://Perenos/Assets/Perenos.ico"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaTitleBarHeightHint="44"
+        WindowDecorations="BorderOnly">
+  <Grid RowDefinitions="Auto,Auto" Background="{DynamicResource BackgroundBrush}">
+    <Rectangle Grid.RowSpan="2" IsHitTestVisible="False" Fill="{DynamicResource BackgroundGlowBrush}"/>
+    <Grid x:Name="DialogTitleBar" Grid.Row="0" Height="44" Background="Transparent" PointerPressed="DragTitleBar">
+      <Grid ColumnDefinitions="*,Auto">
+        <Button Grid.Column="1" Classes="caption caption-close" Click="Cancel" AutomationProperties.Name="{s:Text Window_Close}">
+          <PathIcon Width="12" Height="12" Data="m6.4 5 5.6 5.6L17.6 5 19 6.4 13.4 12 19 17.6 17.6 19 12 13.4 6.4 19 5 17.6 10.6 12 5 6.4 6.4 5Z"/>
+        </Button>
+      </Grid>
+    </Grid>
+    <StackPanel Grid.Row="1" Margin="26,4,26,26" Spacing="16">
+      <TextBlock x:Name="Heading" Classes="h2" TextAlignment="Center" HorizontalAlignment="Center"/>
+      <TextBlock x:Name="Body" Classes="body muted" TextAlignment="Center"/>
+      <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center" Margin="0,6,0,0">
+        <Button x:Name="ContinueButton" Classes="secondary" Content="{s:Text Common_Cancel}" Click="Cancel"/>
+        <Button x:Name="ConfirmButton" Classes="danger primary" MinWidth="140" Click="Confirm"/>
+      </StackPanel>
     </StackPanel>
-  </StackPanel>
+  </Grid>
 </Window>

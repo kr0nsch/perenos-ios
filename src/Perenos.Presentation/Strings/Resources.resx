@@ -307,4 +307,6 @@ Details were saved to the diagnostic log.</value></data>
   <data name="Window_Minimize" xml:space="preserve"><value>Minimize</value></data>
   <data name="Window_Maximize" xml:space="preserve"><value>Maximize</value></data>
   <data name="Window_Close" xml:space="preserve"><value>Close</value></data>
+  <data name="Account_SignInButton" xml:space="preserve"><value>Sign in to Apple Account</value></data>
+  <data name="Device_FreeSpaceHint" xml:space="preserve"><value>Free right now, excluding iOS purgeable caches. iPhone Settings may show a larger available amount.</value></data>
 </root>

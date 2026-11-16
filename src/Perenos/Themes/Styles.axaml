@@ -103,6 +103,27 @@
   <Style Selector="Button:pointerover /template/ ContentPresenter">
     <Setter Property="Background" Value="{DynamicResource CardHoverBrush}"/>
   </Style>
+  <Style Selector="Button /template/ ContentPresenter">
+    <Setter Property="Transitions">
+      <Transitions>
+        <BrushTransition Property="Background" Duration="0:0:0.16"/>
+      </Transitions>
+    </Setter>
+  </Style>
+  <Style Selector="ToggleButton /template/ ContentPresenter">
+    <Setter Property="Transitions">
+      <Transitions>
+        <BrushTransition Property="Background" Duration="0:0:0.16"/>
+      </Transitions>
+    </Setter>
+  </Style>
+  <Style Selector="ListBoxItem /template/ ContentPresenter">
+    <Setter Property="Transitions">
+      <Transitions>
+        <BrushTransition Property="Background" Duration="0:0:0.16"/>
+      </Transitions>
+    </Setter>
+  </Style>
   <Style Selector="Button:disabled">
     <Setter Property="Foreground" Value="{DynamicResource SecondaryTextBrush}"/>
   </Style>

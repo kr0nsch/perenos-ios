@@ -6,7 +6,7 @@
              xmlns:views="using:Perenos.Views"
              x:Class="Perenos.Views.InstallStepView" x:DataType="vm:MainViewModel">
   <UserControl.Resources><c:PngConverter x:Key="Png"/></UserControl.Resources>
-  <Grid Margin="24,20,24,12" RowDefinitions="Auto,*" MaxWidth="680" HorizontalAlignment="Center">
+  <Grid Margin="24,20,24,12" RowDefinitions="Auto,*" MaxWidth="640" HorizontalAlignment="Center">
     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
       <Border Classes="hero-icon" Width="48" Height="48" CornerRadius="15">
         <Grid>
@@ -22,7 +22,7 @@
       </StackPanel>
     </Grid>
     <ScrollViewer Grid.Row="1" Margin="0,22,0,0" IsVisible="{Binding Install.ShowItems, Converter={x:Static c:InverseBoolConverter.Instance}}">
-      <StackPanel MaxWidth="660" HorizontalAlignment="Center">
+      <StackPanel MaxWidth="640" HorizontalAlignment="Center">
         <views:SignInPanel DataContext="{Binding Account}" IsVisible="{Binding $parent[ScrollViewer].DataContext.ShowSignInPanel}"/>
         <StackPanel IsVisible="{Binding ShowInstallSummary}">
           <Border Classes="card" Padding="18,6">

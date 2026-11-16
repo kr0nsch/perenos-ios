@@ -7,11 +7,25 @@
         Width="520" Height="720" MinWidth="440" MinHeight="620"
         WindowStartupLocation="CenterOwner" CanResize="True"
         Icon="avares://Perenos/Assets/Perenos.ico"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaTitleBarHeightHint="44"
+        WindowDecorations="BorderOnly"
         Title="{s:Text SignIn_DialogTitle}">
-  <ScrollViewer Padding="28" Background="{DynamicResource BackgroundBrush}">
-    <StackPanel>
-      <TextBlock Text="{s:Text SignIn_DialogTitle}" Classes="h2" Margin="0,0,0,24"/>
-      <views:SignInPanel DataContext="{Binding}"/>
-    </StackPanel>
-  </ScrollViewer>
+  <Grid RowDefinitions="Auto,*" Background="{DynamicResource BackgroundBrush}">
+    <Rectangle Grid.RowSpan="2" IsHitTestVisible="False" Fill="{DynamicResource BackgroundGlowBrush}"/>
+    <Grid x:Name="DialogTitleBar" Grid.Row="0" Height="44" Background="Transparent" PointerPressed="DragTitleBar">
+      <Grid ColumnDefinitions="Auto,*,Auto">
+        <TextBlock Text="{s:Text SignIn_DialogTitle}" FontSize="13" FontWeight="SemiBold" Margin="14,0" VerticalAlignment="Center"/>
+        <Button Grid.Column="2" Classes="caption caption-close" Click="CloseWindow" AutomationProperties.Name="{s:Text Window_Close}">
+          <PathIcon Width="12" Height="12" Data="m6.4 5 5.6 5.6L17.6 5 19 6.4 13.4 12 19 17.6 17.6 19 12 13.4 6.4 19 5 17.6 10.6 12 5 6.4 6.4 5Z"/>
+        </Button>
+      </Grid>
+    </Grid>
+    <ScrollViewer Grid.Row="1" Padding="28,8,28,28">
+      <StackPanel MaxWidth="460" HorizontalAlignment="Center">
+        <TextBlock Text="{s:Text SignIn_DialogTitle}" Classes="h1" TextAlignment="Center" HorizontalAlignment="Center" Margin="0,8,0,24"/>
+        <views:SignInPanel DataContext="{Binding}"/>
+      </StackPanel>
+    </ScrollViewer>
+  </Grid>
 </Window>

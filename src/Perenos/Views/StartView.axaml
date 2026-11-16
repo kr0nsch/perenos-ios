@@ -6,7 +6,7 @@
              x:Class="Perenos.Views.StartView" x:DataType="vm:MainViewModel">
   <UserControl.Resources><c:InverseBoolConverter x:Key="Not"/></UserControl.Resources>
   <ScrollViewer VerticalScrollBarVisibility="Auto">
-    <StackPanel MaxWidth="560" Margin="24,24,24,32" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <StackPanel MaxWidth="640" Margin="24,24,24,32" HorizontalAlignment="Center" VerticalAlignment="Center">
       <Grid Width="112" Height="112" HorizontalAlignment="Center" Margin="0,0,0,10">
         <Border Classes="hero-tile blue">
           <PathIcon Width="34" Height="34" Foreground="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -67,6 +67,17 @@
           </Button>
         </StackPanel>
       </Border>
+      <StackPanel Margin="0,18,0,0" HorizontalAlignment="Center" Spacing="10">
+        <Button Classes="secondary" Content="{s:Text Account_SignInButton}" Click="ShowSignIn"
+                IsEnabled="{Binding Account.IsIdle}" HorizontalAlignment="Center"
+                IsVisible="{Binding Account.IsSignedIn, Converter={StaticResource Not}}"
+                AutomationProperties.Name="{s:Text Account_SignInButton}"/>
+        <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center" IsVisible="{Binding Account.IsSignedIn}">
+          <PathIcon Width="14" Height="14" VerticalAlignment="Center" Data="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"/>
+          <TextBlock Text="{Binding Account.SignedInText}" Classes="caption" VerticalAlignment="Center"/>
+          <Button Classes="link" Content="{s:Text Account_SignOut}" Command="{Binding Account.SignOutCommand}" Padding="5,2" FontSize="12" VerticalAlignment="Center"/>
+        </StackPanel>
+      </StackPanel>
       <TextBlock Text="{s:Text Shell_Requirements}" Classes="caption" TextAlignment="Center" Margin="0,14,0,0"/>
     </StackPanel>
   </ScrollViewer>

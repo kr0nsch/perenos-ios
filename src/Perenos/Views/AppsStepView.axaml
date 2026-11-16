@@ -11,10 +11,10 @@
     <c:InverseBoolConverter x:Key="Not"/>
   </UserControl.Resources>
   <Grid Margin="24,4,24,8">
-    <Grid MaxWidth="680" HorizontalAlignment="Center" RowDefinitions="Auto,Auto,Auto,*,Auto" IsVisible="{Binding ShowRestoreContent}">
+    <Grid MaxWidth="640" HorizontalAlignment="Center" RowDefinitions="Auto,Auto,Auto,*,Auto" IsVisible="{Binding ShowRestoreContent}">
       <StackPanel>
-        <TextBlock Text="{Binding AppsTitle}" Classes="h1"/>
-        <TextBlock Text="{Binding AppsSubtitle}" Classes="body muted" Margin="0,8,0,0"/>
+        <TextBlock Text="{Binding AppsTitle}" Classes="h1" TextAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock Text="{Binding AppsSubtitle}" Classes="body muted" Margin="0,8,0,0" TextAlignment="Center" HorizontalAlignment="Center"/>
       </StackPanel>
       <StackPanel Grid.Row="1" Margin="0,22,0,12" IsVisible="{Binding AppList.ShowList}">
         <TextBox PlaceholderText="{s:Text Apps_Search}" Text="{Binding AppList.SearchText}"/>

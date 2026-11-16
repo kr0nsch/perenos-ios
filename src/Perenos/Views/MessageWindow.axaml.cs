@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Perenos.Services;
@@ -17,6 +18,17 @@ public sealed partial class MessageWindow : Window
         Body.Text = body;
         ConfirmButton.Content = confirm;
         ContinueButton.Content = cancel;
+        if (OperatingSystem.IsMacOS())
+        {
+            ExtendClientAreaToDecorationsHint = false;
+            DialogTitleBar.IsVisible = false;
+        }
+    }
+
+    private void DragTitleBar(object? sender, PointerPressedEventArgs e)
+    {
+        if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+            BeginMoveDrag(e);
     }
 
     public static Task<bool> ConfirmAsync(Window owner) =>

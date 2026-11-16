@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Perenos.Core;
@@ -24,6 +25,17 @@ public sealed partial class SettingsWindow : Window
         ThemeBox.ItemsSource = new[] { Loc.Get("Settings_ThemeSystem"), Loc.Get("Settings_ThemeLight"), Loc.Get("Settings_ThemeDark") };
         ThemeBox.SelectedIndex = (int)viewModel.Services.Settings.Current.Theme;
         _loading = false;
+        if (OperatingSystem.IsMacOS())
+        {
+            ExtendClientAreaToDecorationsHint = false;
+            DialogTitleBar.IsVisible = false;
+        }
+    }
+
+    private void DragTitleBar(object? sender, PointerPressedEventArgs e)
+    {
+        if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+            BeginMoveDrag(e);
     }
 
     private void LanguageChanged(object? sender, SelectionChangedEventArgs e)

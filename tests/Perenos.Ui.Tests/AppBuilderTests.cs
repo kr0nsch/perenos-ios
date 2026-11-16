@@ -117,19 +117,35 @@ public sealed class AppBuilderTests : IDisposable
     }
 
     [AvaloniaFact]
-    public void TitleBarKeepsAccountAndSettingsAtCompactWidth()
+    public void TitleBarKeepsSettingsAndCaptionsAtCompactWidth()
     {
         var window = Track(CreateWindow("en-US", 820));
         window.UpdateLayout();
 
         var titleBar = window.FindControl<Grid>("TitleBar")!;
         Assert.True(titleBar.IsVisible);
-        var account = window.FindControl<Button>("AccountButton")!;
-        Assert.True(account.IsVisible);
         var settings = window.GetVisualDescendants().OfType<Button>()
             .Single(button => AutomationProperties.GetName(button) == Loc.Get("Settings_Button"));
         Assert.True(settings.IsVisible);
+        var close = window.GetVisualDescendants().OfType<Button>()
+            .Single(button => AutomationProperties.GetName(button) == Loc.Get("Window_Close"));
+        Assert.True(close.IsVisible);
         AssertVisibleTextWithinWindow(window);
+        window.Close();
+    }
+
+    [AvaloniaFact]
+    public void StartScreenOffersCenteredSignInWhenSignedOut()
+    {
+        var window = Track(CreateWindow("ru-RU"));
+        window.UpdateLayout();
+
+        var signIn = window.GetVisualDescendants().OfType<Button>()
+            .Single(button => AutomationProperties.GetName(button) == Loc.Get("Account_SignInButton"));
+        Assert.True(signIn.IsVisible);
+        var center = signIn.TranslatePoint(new Point(signIn.Bounds.Width / 2, 0), window);
+        Assert.NotNull(center);
+        Assert.True(Math.Abs(center.Value.X - window.Bounds.Width / 2) < 40, "Sign-in button is not centered.");
         window.Close();
     }
 

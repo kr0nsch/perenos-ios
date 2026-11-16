@@ -6,12 +6,23 @@
         Width="600" Height="760" MinWidth="480" MinHeight="600"
         WindowStartupLocation="CenterOwner"
         Icon="avares://Perenos/Assets/Perenos.ico"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaTitleBarHeightHint="44"
+        WindowDecorations="BorderOnly"
         Title="{s:Text Settings_Title}">
-  <Grid RowDefinitions="*,Auto" Background="{DynamicResource BackgroundBrush}">
-    <ScrollViewer Padding="28">
-      <StackPanel>
-        <TextBlock Text="{s:Text Settings_Title}" Classes="h1"/>
-        <TextBlock Text="{s:Text Settings_General}" Classes="eyebrow" Margin="0,28,0,10"/>
+  <Grid RowDefinitions="Auto,*,Auto" Background="{DynamicResource BackgroundBrush}">
+    <Rectangle Grid.RowSpan="3" IsHitTestVisible="False" Fill="{DynamicResource BackgroundGlowBrush}"/>
+    <Grid x:Name="DialogTitleBar" Grid.Row="0" Height="44" Background="Transparent" PointerPressed="DragTitleBar">
+      <Grid ColumnDefinitions="Auto,*,Auto">
+        <TextBlock Text="{s:Text Settings_Title}" FontSize="13" FontWeight="SemiBold" Margin="14,0" VerticalAlignment="Center"/>
+        <Button Grid.Column="2" Classes="caption caption-close" Click="CloseWindow" AutomationProperties.Name="{s:Text Window_Close}">
+          <PathIcon Width="12" Height="12" Data="m6.4 5 5.6 5.6L17.6 5 19 6.4 13.4 12 19 17.6 17.6 19 12 13.4 6.4 19 5 17.6 10.6 12 5 6.4 6.4 5Z"/>
+        </Button>
+      </Grid>
+    </Grid>
+    <ScrollViewer Grid.Row="1" Padding="28,8,28,20">
+      <StackPanel MaxWidth="520" HorizontalAlignment="Center">
+        <TextBlock Text="{s:Text Settings_General}" Classes="eyebrow" Margin="0,12,0,10"/>
         <Border Classes="card" Padding="18">
           <StackPanel Spacing="18">
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="20">
@@ -51,8 +62,8 @@
         <TextBlock Text="{s:Text Settings_Disclaimer}" Classes="caption" Margin="0,18,0,0"/>
       </StackPanel>
     </ScrollViewer>
-    <Border Grid.Row="1" BorderBrush="{DynamicResource SeparatorBrush}" BorderThickness="0,1,0,0" Padding="20">
-      <Button Classes="secondary" Content="{s:Text Settings_Dialog.CloseButtonText}" HorizontalAlignment="Right" MinWidth="110" Click="CloseWindow"/>
+    <Border Grid.Row="2" BorderBrush="{DynamicResource SeparatorBrush}" BorderThickness="0,1,0,0" Padding="20">
+      <Button Classes="secondary" Content="{s:Text Settings_Dialog.CloseButtonText}" HorizontalAlignment="Center" MinWidth="140" Click="CloseWindow"/>
     </Border>
   </Grid>
 </Window>

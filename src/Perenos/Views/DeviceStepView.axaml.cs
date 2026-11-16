@@ -51,12 +51,13 @@ public sealed partial class DeviceStepView : UserControl
         if (ring is null)
             return;
         var fraction = phase / 2.2;
-        var scale = 0.35 + 0.65 * fraction;
+        var eased = 1 - (1 - fraction) * (1 - fraction);
+        var scale = 0.35 + 0.65 * eased;
         if (ring.RenderTransform is ScaleTransform transform)
         {
             transform.ScaleX = scale;
             transform.ScaleY = scale;
         }
-        ring.Opacity = 0.7 * (1 - fraction);
+        ring.Opacity = 0.7 * (1 - eased);
     }
 }

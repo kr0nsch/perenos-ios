@@ -307,4 +307,6 @@
   <data name="Window_Minimize" xml:space="preserve"><value>Свернуть</value></data>
   <data name="Window_Maximize" xml:space="preserve"><value>Развернуть</value></data>
   <data name="Window_Close" xml:space="preserve"><value>Закрыть</value></data>
+  <data name="Account_SignInButton" xml:space="preserve"><value>Войти в Apple Account</value></data>
+  <data name="Device_FreeSpaceHint" xml:space="preserve"><value>Свободно сейчас, без очищаемых кэшей iOS. В «Настройках» iPhone доступный объём может быть больше.</value></data>
 </root>

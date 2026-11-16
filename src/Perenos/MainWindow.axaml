@@ -26,24 +26,8 @@
           <TextBlock Text="{s:Text App_Name}" FontSize="13" FontWeight="SemiBold" VerticalAlignment="Center"/>
         </StackPanel>
         <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="4" Margin="0,0,10,0" VerticalAlignment="Center">
-          <Button x:Name="AccountButton" Classes="quiet account" IsEnabled="{Binding Account.IsIdle}" AutomationProperties.Name="{Binding Account.TitleBarText}">
-            <StackPanel Orientation="Horizontal" Spacing="8">
-              <PathIcon Width="14" Height="14" Data="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"/>
-              <TextBlock Text="{Binding Account.TitleBarText}" FontSize="13" MaxWidth="180" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
-            </StackPanel>
-            <Button.Flyout>
-              <MenuFlyout>
-                <MenuItem Header="{s:Text Account_SignIn}" IsVisible="{Binding Account.IsSignedIn, Converter={StaticResource Not}}" Click="ShowSignIn"/>
-                <MenuItem Header="{Binding Account.SignedInText}" IsEnabled="False" IsVisible="{Binding Account.IsSignedIn}"/>
-                <MenuItem Header="{s:Text Account_SignOut}" IsVisible="{Binding Account.IsSignedIn}" Command="{Binding Account.SignOutCommand}"/>
-              </MenuFlyout>
-            </Button.Flyout>
-          </Button>
-          <Button Classes="quiet" Click="ShowSettings" AutomationProperties.Name="{s:Text Settings_Button}">
-            <StackPanel Orientation="Horizontal" Spacing="7">
-              <PathIcon Width="15" Height="15" Data="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm9 4a7 7 0 0 0-.1-1l2-1.6-2-3.5-2.5 1a8 8 0 0 0-1.8-1L16.2 3h-4l-.4 2.9a8 8 0 0 0-1.8 1l-2.5-1-2 3.5 2 1.6a7 7 0 0 0 0 2l-2 1.6 2 3.5 2.5-1a8 8 0 0 0 1.8 1l.4 2.9h4l.4-2.9a8 8 0 0 0 1.8-1l2.5 1 2-3.5-2-1.6a7 7 0 0 0 .1-1Z"/>
-              <TextBlock Text="{s:Text Settings_Button}" FontSize="13" VerticalAlignment="Center"/>
-            </StackPanel>
+          <Button Classes="quiet" Click="ShowSettings" AutomationProperties.Name="{s:Text Settings_Button}" Padding="10" MinWidth="0">
+            <PathIcon Width="17" Height="17" Data="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
           </Button>
         </StackPanel>
         <StackPanel x:Name="CaptionButtons" Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Stretch">
@@ -78,11 +62,11 @@
     </Border>
 
     <Grid Grid.Row="3">
-      <views:StartView IsVisible="{Binding IsStartStep}"/>
-      <views:LaterView IsVisible="{Binding IsLaterStep}"/>
-      <views:DeviceStepView IsVisible="{Binding IsDeviceStep}"/>
-      <views:AppsStepView IsVisible="{Binding IsAppsStep}"/>
-      <views:InstallStepView IsVisible="{Binding IsInstallStep}"/>
+      <views:StartView x:Name="StartStep" IsVisible="{Binding IsStartStep}"/>
+      <views:LaterView x:Name="LaterStep" IsVisible="{Binding IsLaterStep}"/>
+      <views:DeviceStepView x:Name="DeviceStep" IsVisible="{Binding IsDeviceStep}"/>
+      <views:AppsStepView x:Name="AppsStep" IsVisible="{Binding IsAppsStep}"/>
+      <views:InstallStepView x:Name="InstallStep" IsVisible="{Binding IsInstallStep}"/>
     </Grid>
 
     <Grid Grid.Row="4" Margin="24,8,24,20" RowDefinitions="Auto,Auto">

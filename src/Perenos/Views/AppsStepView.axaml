@@ -10,16 +10,16 @@
     <c:PngConverter x:Key="Png"/>
     <c:InverseBoolConverter x:Key="Not"/>
   </UserControl.Resources>
-  <Grid Margin="36,28,36,20">
-    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,*" IsVisible="{Binding ShowRestoreContent}">
+  <Grid Margin="24,4,24,8">
+    <Grid MaxWidth="680" HorizontalAlignment="Center" RowDefinitions="Auto,Auto,Auto,*,Auto" IsVisible="{Binding ShowRestoreContent}">
       <StackPanel>
-        <TextBlock Text="{Binding AppsTitle}" Classes="h2"/>
+        <TextBlock Text="{Binding AppsTitle}" Classes="h1"/>
         <TextBlock Text="{Binding AppsSubtitle}" Classes="body muted" Margin="0,8,0,0"/>
       </StackPanel>
-      <StackPanel Grid.Row="1" Margin="0,22,0,14" IsVisible="{Binding AppList.ShowList}">
+      <StackPanel Grid.Row="1" Margin="0,22,0,12" IsVisible="{Binding AppList.ShowList}">
         <TextBox PlaceholderText="{s:Text Apps_Search}" Text="{Binding AppList.SearchText}"/>
-        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="9" Margin="0,10,0,0">
-          <Button Content="{Binding AppList.SortButtonText}">
+        <Grid ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="8" Margin="0,10,0,0">
+          <Button Content="{Binding AppList.SortButtonText}" AutomationProperties.Name="{Binding AppList.SortButtonText}" ToolTip.Tip="{Binding AppList.SortButtonText}">
             <Button.Flyout>
               <MenuFlyout>
                 <MenuItem Header="{Binding AppList.SortByNameText}" Command="{Binding AppList.SetSortModeCommand}" CommandParameter="Name"/>
@@ -27,7 +27,7 @@
               </MenuFlyout>
             </Button.Flyout>
           </Button>
-          <Button Grid.Column="1" HorizontalAlignment="Left" IsVisible="{Binding ShowRestoreFilter}" ToolTip.Tip="{Binding RestoreFilterText}">
+          <Button Grid.Column="1" IsVisible="{Binding ShowRestoreFilter}" AutomationProperties.Name="{Binding RestoreFilterText}" ToolTip.Tip="{Binding RestoreFilterText}">
             <TextBlock Text="{Binding RestoreFilterText}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
             <Button.Flyout>
               <MenuFlyout>
@@ -37,17 +37,17 @@
               </MenuFlyout>
             </Button.Flyout>
           </Button>
-          <Button Grid.Column="2" Content="{Binding AppList.SelectAllText}" Command="{Binding AppList.ToggleSelectAllCommand}" ToolTip.Tip="{Binding AppList.SelectAllHint}"/>
+          <Button Grid.Column="3" Content="{Binding AppList.SelectAllText}" Command="{Binding AppList.ToggleSelectAllCommand}" ToolTip.Tip="{Binding AppList.SelectAllHint}"/>
         </Grid>
       </StackPanel>
-      <Border Grid.Row="2" Classes="soft" Padding="14,10" Margin="0,0,0,12" IsVisible="{Binding ShowStorefrontStatus}">
-        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+      <Border Grid.Row="2" Classes="card" Padding="14,10" Margin="0,0,0,12" IsVisible="{Binding ShowStorefrontStatus}">
+        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
           <ProgressBar Width="36" Height="4" IsIndeterminate="True" IsVisible="{Binding Apps.IsStorefrontScanning}" VerticalAlignment="Center"/>
           <TextBlock Grid.Column="1" Text="{Binding Apps.StorefrontStatus}" Classes="caption" VerticalAlignment="Center"/>
-          <Button Grid.Column="2" Classes="link" Content="{Binding Apps.UnavailableFilterText}" Command="{Binding Apps.ToggleUnavailableFilterCommand}" IsVisible="{Binding Apps.HasUnavailableApps}"/>
+          <Button Grid.Column="2" Classes="link" Content="{Binding Apps.UnavailableFilterText}" Command="{Binding Apps.ToggleUnavailableFilterCommand}" IsVisible="{Binding Apps.HasUnavailableApps}" VerticalAlignment="Center"/>
         </Grid>
       </Border>
-      <Border Grid.Row="3" Classes="card" Padding="8" IsVisible="{Binding AppList.ShowList}">
+      <Border Grid.Row="3" Classes="card" Padding="0,4" IsVisible="{Binding AppList.ShowList}">
         <Grid RowDefinitions="Auto,Auto">
           <ListBox x:Name="AppListBox" ItemsSource="{Binding AppList.Visible}" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <ListBox.ItemTemplate>
@@ -56,18 +56,18 @@
                   <TextBlock Text="{Binding SectionHeader}" Classes="eyebrow" Margin="12,16,12,6" IsVisible="{Binding ShowSectionHeader}"/>
                   <primitives:ToggleButton x:Name="AppToggle" Classes="app-row" IsChecked="{Binding IsSelected, Mode=TwoWay}" IsEnabled="{Binding IsSelectable}" AutomationProperties.Name="{Binding Name}">
                     <Grid ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="13">
-                      <Border Width="24" Height="24" CornerRadius="12" BorderThickness="1.5" BorderBrush="{DynamicResource AccentBrush}" VerticalAlignment="Center">
+                      <Border Width="24" Height="24" CornerRadius="12" BorderThickness="1.5" BorderBrush="{DynamicResource TertiaryTextBrush}" VerticalAlignment="Center">
                         <Border CornerRadius="12" Background="{DynamicResource AccentBrush}" IsVisible="{Binding IsChecked, ElementName=AppToggle}">
                           <PathIcon Width="14" Height="14" Data="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17Z" Foreground="#FFFFFF"/>
                         </Border>
                       </Border>
                       <Border Grid.Column="1" Classes="app-icon" Width="44" Height="44" VerticalAlignment="Center">
                         <Grid>
-                          <TextBlock Text="{Binding Initial}" FontSize="18" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="{Binding ShowInitial}"/>
+                          <TextBlock Text="{Binding Initial}" FontSize="17" FontWeight="SemiBold" Foreground="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="{Binding ShowInitial}"/>
                           <Image Source="{Binding Icon, Converter={StaticResource Png}}" Stretch="UniformToFill" IsVisible="{Binding HasIcon}"/>
                         </Grid>
                       </Border>
-                      <StackPanel Grid.Column="2" VerticalAlignment="Center" Spacing="3">
+                      <StackPanel Grid.Column="2" VerticalAlignment="Center" Spacing="1">
                         <TextBlock Text="{Binding Name}" Classes="title"/>
                         <TextBlock Text="{Binding Detail}" Classes="caption"/>
                         <TextBlock Text="{Binding Caption}" Classes="caption" Foreground="{DynamicResource AccentTextBrush}" IsVisible="{Binding HasCaption}"/>
@@ -81,26 +81,30 @@
               </DataTemplate>
             </ListBox.ItemTemplate>
           </ListBox>
-          <TextBlock Grid.Row="1" Text="{s:Text Apps_NoMatches}" Classes="body muted" Margin="20,26" HorizontalAlignment="Center" IsVisible="{Binding AppList.ShowNoMatches}"/>
+          <TextBlock Grid.Row="1" Text="{s:Text Apps_NoMatches}" Classes="body muted" Margin="20,28" HorizontalAlignment="Center" IsVisible="{Binding AppList.ShowNoMatches}"/>
         </Grid>
       </Border>
-      <StackPanel Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="16" IsVisible="{Binding AppList.IsLoading}">
+      <StackPanel Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="14" IsVisible="{Binding AppList.IsLoading}">
         <ProgressBar Width="80" Height="4" IsIndeterminate="True"/>
         <TextBlock Text="{Binding AppList.LoadingText}" Classes="body muted"/>
       </StackPanel>
-      <StackPanel Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="14" MaxWidth="500" IsVisible="{Binding AppList.HasError}">
+      <StackPanel Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="14" MaxWidth="440" IsVisible="{Binding AppList.HasError}">
+        <PathIcon Width="32" Height="32" HorizontalAlignment="Center" Foreground="{DynamicResource WarningBrush}"
+                  Data="M12 2 1 21h22L12 2Zm-1 7h2v6h-2V9Zm0 8h2v2h-2v-2Z"/>
         <TextBlock Text="{Binding AppList.Error}" Classes="body" TextAlignment="Center"/>
-        <Button Content="{s:Text Apps_TryAgain}" Command="{Binding RetryAppsCommand}"/>
+        <Button Content="{s:Text Apps_TryAgain}" Command="{Binding RetryAppsCommand}" HorizontalAlignment="Center"/>
       </StackPanel>
-      <StackPanel Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="500" IsVisible="{Binding AppList.ShowEmpty}">
+      <StackPanel Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="10" MaxWidth="440" IsVisible="{Binding AppList.ShowEmpty}">
+        <PathIcon Width="32" Height="32" HorizontalAlignment="Center" Foreground="{DynamicResource TertiaryTextBrush}"
+                  Data="M4 3h6l2 3h8a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm0 5v11h16V8H4Z"/>
         <TextBlock Text="{Binding AppList.EmptyText}" Classes="body muted" TextAlignment="Center"/>
       </StackPanel>
-      <TextBlock Grid.Row="4" Text="{Binding AppList.Footnote}" Classes="caption" Margin="8,12,8,0" HorizontalAlignment="Center" TextAlignment="Center" IsVisible="{Binding AppList.HasFootnote}" ToolTip.Tip="{Binding AppList.FootnoteDetail}"/>
+      <TextBlock Grid.Row="4" Text="{Binding AppList.Footnote}" Classes="caption" Margin="16,10,16,0" HorizontalAlignment="Center" TextAlignment="Center" IsVisible="{Binding AppList.HasFootnote}" ToolTip.Tip="{Binding AppList.FootnoteDetail}"/>
     </Grid>
     <ScrollViewer IsVisible="{Binding ShowRestoreSignIn}">
-      <StackPanel MaxWidth="520" HorizontalAlignment="Center" Margin="0,24">
-        <TextBlock Text="{s:Text Restore_SignInTitle}" Classes="h2"/>
-        <TextBlock Text="{s:Text Restore_SignInSubtitle}" Classes="body muted" Margin="0,10,0,22"/>
+      <StackPanel MaxWidth="560" HorizontalAlignment="Center" Margin="24,24,24,32">
+        <TextBlock Text="{s:Text Restore_SignInTitle}" Classes="h1" TextAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock Text="{s:Text Restore_SignInSubtitle}" Classes="body muted" TextAlignment="Center" HorizontalAlignment="Center" Margin="0,8,0,24"/>
         <views:SignInPanel DataContext="{Binding Account}"/>
       </StackPanel>
     </ScrollViewer>

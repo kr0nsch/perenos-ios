@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Automation;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Shapes = Avalonia.Controls.Shapes;
 using Avalonia.Headless;
 using Avalonia.Headless.XUnit;
 using Avalonia.Interactivity;
@@ -116,32 +117,63 @@ public sealed class AppBuilderTests : IDisposable
     }
 
     [AvaloniaFact]
-    public void CompactNavigationHasAccessibleName()
+    public void TitleBarKeepsAccountAndSettingsAtCompactWidth()
     {
         var window = Track(CreateWindow("en-US", 820));
         window.UpdateLayout();
 
-        Assert.False(window.FindControl<Border>("Sidebar")!.IsVisible);
-        var navigation = window.FindControl<Button>("MobileNavigation")!;
-        Assert.True(navigation.IsVisible);
-        Assert.Equal(Loc.Get("Nav_Workspace"), AutomationProperties.GetName(navigation));
+        var titleBar = window.FindControl<Grid>("TitleBar")!;
+        Assert.True(titleBar.IsVisible);
+        var account = window.FindControl<Button>("AccountButton")!;
+        Assert.True(account.IsVisible);
+        var settings = window.GetVisualDescendants().OfType<Button>()
+            .Single(button => AutomationProperties.GetName(button) == Loc.Get("Settings_Button"));
+        Assert.True(settings.IsVisible);
+        AssertVisibleTextWithinWindow(window);
         window.Close();
     }
 
     [AvaloniaFact]
-    public void SidebarKeepsBrandConciseWithoutTheLongTagline()
+    public void TitleBarBrandFitsWithoutTheLongTagline()
     {
         var window = Track(CreateWindow("ru-RU"));
         window.UpdateLayout();
-        var sidebar = window.FindControl<Border>("Sidebar")!;
-        Assert.True(sidebar.IsVisible);
-        Assert.DoesNotContain(sidebar.GetVisualDescendants().OfType<TextBlock>(), text => text.Text == Loc.Get("Shell_Tagline"));
-        var brand = sidebar.GetVisualDescendants().OfType<TextBlock>()
+        var titleBar = window.FindControl<Grid>("TitleBar")!;
+        Assert.True(titleBar.IsVisible);
+        Assert.DoesNotContain(titleBar.GetVisualDescendants().OfType<TextBlock>(), text => text.Text == Loc.Get("Shell_Tagline"));
+        var brand = titleBar.GetVisualDescendants().OfType<TextBlock>()
             .Single(text => text.Text == Loc.Get("App_Name"));
-        var right = brand.TranslatePoint(new Point(brand.Bounds.Width, 0), sidebar);
+        var right = brand.TranslatePoint(new Point(brand.Bounds.Width, 0), titleBar);
         Assert.NotNull(right);
-        Assert.True(right.Value.X <= sidebar.Bounds.Width - sidebar.Padding.Right);
+        Assert.True(right.Value.X <= titleBar.Bounds.Width - titleBar.Margin.Right);
         window.Close();
+    }
+
+    [AvaloniaFact]
+    public void CheckedRadioButtonShowsAccentRingInBothThemes()
+    {
+        foreach (var theme in new[] { ThemeVariant.Light, ThemeVariant.Dark })
+        {
+            var window = new Window { Width = 300, Height = 200, RequestedThemeVariant = theme };
+            try
+            {
+                var radio = new RadioButton { IsChecked = true, Content = "Latest" };
+                window.Content = radio;
+                window.Show();
+                window.UpdateLayout();
+
+                var ring = radio.GetVisualDescendants().OfType<Shapes.Ellipse>().Single(e => e.Name == "CheckOuterEllipse");
+                Assert.Equal(1, ring.Opacity);
+                var fill = Assert.IsType<SolidColorBrush>(ring.Fill);
+                Assert.True(fill.Color.A > 0, $"Checked radio ring is transparent in {theme}.");
+                var glyph = radio.GetVisualDescendants().OfType<Shapes.Ellipse>().Single(e => e.Name == "CheckGlyph");
+                Assert.Equal(1, glyph.Opacity);
+            }
+            finally
+            {
+                window.Close();
+            }
+        }
     }
 
     [AvaloniaFact]

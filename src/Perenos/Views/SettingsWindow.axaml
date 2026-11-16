@@ -6,9 +6,8 @@
         Width="600" Height="760" MinWidth="480" MinHeight="600"
         WindowStartupLocation="CenterOwner"
         Icon="avares://Perenos/Assets/Perenos.ico"
-        TransparencyLevelHint="AcrylicBlur, Blur"
         Title="{s:Text Settings_Title}">
-  <Grid RowDefinitions="*,Auto" Background="{DynamicResource CanvasBrush}">
+  <Grid RowDefinitions="*,Auto" Background="{DynamicResource BackgroundBrush}">
     <ScrollViewer Padding="28">
       <StackPanel>
         <TextBlock Text="{s:Text Settings_Title}" Classes="h1"/>
@@ -52,8 +51,8 @@
         <TextBlock Text="{s:Text Settings_Disclaimer}" Classes="caption" Margin="0,18,0,0"/>
       </StackPanel>
     </ScrollViewer>
-    <Border Grid.Row="1" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Padding="20">
-      <Button Content="{s:Text Settings_Dialog.CloseButtonText}" HorizontalAlignment="Right" MinWidth="110" Click="CloseWindow"/>
+    <Border Grid.Row="1" BorderBrush="{DynamicResource SeparatorBrush}" BorderThickness="0,1,0,0" Padding="20">
+      <Button Classes="secondary" Content="{s:Text Settings_Dialog.CloseButtonText}" HorizontalAlignment="Right" MinWidth="110" Click="CloseWindow"/>
     </Border>
   </Grid>
 </Window>

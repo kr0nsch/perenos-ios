@@ -37,6 +37,8 @@ public static class PerenosDemoCapture {
   [DllImport("user32.dll")] public static extern bool GetWindowRect(IntPtr hWnd, out RECT rect);
   [DllImport("user32.dll")] public static extern bool PrintWindow(IntPtr hWnd, IntPtr hdc, uint flags);
   [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
+  [DllImport("user32.dll")] public static extern bool GetCursorPos(out RECT pt);
+  [DllImport("user32.dll")] public static extern bool SetCursorPos(int x, int y);
 }
 '@
 $script:demo = $null
@@ -237,6 +239,14 @@ try {
     $env:PERENOS_LANGUAGE = $Language
     $env:PERENOS_THEME = $Theme
     $script:ownsDemo = $ProcessId -eq 0
+    # The window composites the mouse cursor into its surface; park it outside the window
+    # so captures stay cursor-free, and restore the user's pointer afterwards.
+    $script:cursorSaved = $false
+    $script:cursorPoint = New-Object PerenosDemoCapture+RECT
+    if ($script:ownsDemo -and [PerenosDemoCapture]::GetCursorPos([ref]$script:cursorPoint)) {
+        $script:cursorSaved = $true
+        [PerenosDemoCapture]::SetCursorPos(0, 0) | Out-Null
+    }
     if ($script:ownsDemo) {
         $script:demo = Start-Process -FilePath $exe -ArgumentList '--demo' -PassThru
     } else {
@@ -289,7 +299,7 @@ try {
         Capture "install-$Language-$Theme"
         FinishInstall
 
-        ClickNavigation (T 'Nav_Restore')
+        ClickButton (T 'Start_Restore.Title')
         ClickButton (T 'Footer_Continue')
         WaitText (T 'Restore_AppsTitle')
         Start-Sleep -Seconds 2
@@ -313,7 +323,7 @@ try {
         Capture "restore-done-$Language-$Theme"
         FinishInstall
 
-        ClickNavigation (T 'Nav_Library')
+        ClickButton (T 'Start_Later.Title')
         Capture "library-$Language-$Theme"
         ClickButton (T 'Later_Save.Title')
         ClickButton (T 'Footer_Continue')
@@ -365,6 +375,9 @@ try {
     $script:completed = $true
 }
 finally {
+    if ($script:cursorSaved) {
+        [PerenosDemoCapture]::SetCursorPos($script:cursorPoint.Left, $script:cursorPoint.Top) | Out-Null
+    }
     if ($script:ownsDemo -and $script:demo -and -not $script:demo.HasExited) {
         $script:demo.CloseMainWindow() | Out-Null
         if (-not $script:demo.WaitForExit(3000)) { Stop-Process -Id $script:demo.Id -Force }

@@ -304,4 +304,7 @@
   <data name="Service_MacTitle" xml:space="preserve"><value>Не удаётся подключиться к iPhone</value></data>
   <data name="Service_MacBody" xml:space="preserve"><value>Разблокируйте iPhone, подключите его напрямую по USB и разрешите доступ этому Mac в Finder. Нажмите «Доверять» на iPhone и подключите его снова.</value></data>
   <data name="Service_MacHelp" xml:space="preserve"><value>• Если macOS запросит доступ к аксессуарам, разрешите его и держите iPhone разблокированным.</value></data>
+  <data name="Window_Minimize" xml:space="preserve"><value>Свернуть</value></data>
+  <data name="Window_Maximize" xml:space="preserve"><value>Развернуть</value></data>
+  <data name="Window_Close" xml:space="preserve"><value>Закрыть</value></data>
 </root>

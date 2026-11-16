@@ -3,29 +3,41 @@
              xmlns:vm="using:Perenos.ViewModels"
              xmlns:s="using:Perenos.Services"
              x:Class="Perenos.Views.SignInPanel" x:DataType="vm:AccountViewModel">
-  <StackPanel>
-    <Border Classes="card" Padding="18">
-      <StackPanel Spacing="14">
-        <TextBlock Text="{s:Text SignIn_EmailLabel}" Classes="title"/>
-        <TextBox PlaceholderText="{s:Text SignIn_Email}" Text="{Binding InputEmail}" IsEnabled="{Binding IsIdle}" KeyDown="SubmitOnEnter" AutomationProperties.Name="{s:Text SignIn_EmailLabel}"/>
-        <TextBlock Text="{s:Text SignIn_PasswordLabel}" Classes="title"/>
-        <TextBox PlaceholderText="{s:Text SignIn_Password}" PasswordChar="●" Text="{Binding InputPassword}" IsEnabled="{Binding IsIdle}" KeyDown="SubmitOnEnter" AutomationProperties.Name="{s:Text SignIn_PasswordLabel}"/>
-        <StackPanel Spacing="10" IsVisible="{Binding IsCodeRequired}">
-          <TextBlock Text="{s:Text SignIn_CodeLabel}" Classes="title"/>
-          <TextBox PlaceholderText="{s:Text SignIn_Code}" Text="{Binding InputCode}" MaxLength="8" IsEnabled="{Binding IsIdle}" KeyDown="SubmitOnEnter" AutomationProperties.Name="{s:Text SignIn_CodeLabel}"/>
-          <TextBlock Text="{s:Text SignIn_CodeHint}" Classes="caption"/>
+  <StackPanel MaxWidth="460" HorizontalAlignment="Stretch">
+    <Border Classes="card" Padding="16,2">
+      <StackPanel>
+        <Grid ColumnDefinitions="110,*" ColumnSpacing="12">
+          <TextBlock Text="{s:Text SignIn_EmailLabel}" Classes="body" VerticalAlignment="Center"/>
+          <TextBox Grid.Column="1" Classes="form" PlaceholderText="{s:Text SignIn_Email}" Text="{Binding InputEmail}" IsEnabled="{Binding IsIdle}" KeyDown="SubmitOnEnter" AutomationProperties.Name="{s:Text SignIn_EmailLabel}"/>
+        </Grid>
+        <Border Classes="separator" Margin="0,0,-16,0"/>
+        <Grid ColumnDefinitions="110,*" ColumnSpacing="12">
+          <TextBlock Text="{s:Text SignIn_PasswordLabel}" Classes="body" VerticalAlignment="Center"/>
+          <TextBox Grid.Column="1" Classes="form" PlaceholderText="{s:Text SignIn_Password}" PasswordChar="●" Text="{Binding InputPassword}" IsEnabled="{Binding IsIdle}" KeyDown="SubmitOnEnter" AutomationProperties.Name="{s:Text SignIn_PasswordLabel}"/>
+        </Grid>
+        <StackPanel Spacing="0" IsVisible="{Binding IsCodeRequired}">
+          <Border Classes="separator" Margin="0,0,-16,0"/>
+          <Grid ColumnDefinitions="110,*" ColumnSpacing="12">
+            <TextBlock Text="{s:Text SignIn_CodeLabel}" Classes="body" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Classes="form" PlaceholderText="{s:Text SignIn_Code}" Text="{Binding InputCode}" MaxLength="8" IsEnabled="{Binding IsIdle}" KeyDown="SubmitOnEnter" AutomationProperties.Name="{s:Text SignIn_CodeLabel}"/>
+          </Grid>
         </StackPanel>
       </StackPanel>
     </Border>
-    <TextBlock Text="{Binding Error}" Classes="caption" Foreground="{DynamicResource DangerBrush}" Margin="4,10" IsVisible="{Binding HasError}"/>
-    <Button Classes="primary" HorizontalAlignment="Stretch" Margin="0,12,0,0" Command="{Binding SignInCommand}">
+    <TextBlock Text="{s:Text SignIn_CodeHint}" Classes="caption" Margin="16,8,16,0" IsVisible="{Binding IsCodeRequired}"/>
+    <TextBlock Text="{Binding Error}" Classes="caption" Foreground="{DynamicResource DangerBrush}" Margin="16,8,16,0" IsVisible="{Binding HasError}"/>
+    <Button Classes="primary" HorizontalAlignment="Center" Margin="0,22,0,0" Command="{Binding SignInCommand}" AutomationProperties.Name="{Binding SignInButtonText}">
       <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
         <ProgressBar Width="36" Height="4" IsIndeterminate="True" IsVisible="{Binding IsBusy}"/>
         <TextBlock Text="{Binding SignInButtonText}"/>
       </StackPanel>
     </Button>
-    <Button Classes="link" Content="{s:Text SignIn_UseAnother}" Command="{Binding CancelCodeCommand}" HorizontalAlignment="Center" IsVisible="{Binding IsCodeRequired}"/>
-    <TextBlock Text="{s:Text SignIn_FirstTime}" Classes="caption" TextAlignment="Center" Margin="0,8" IsVisible="{Binding IsBusy}"/>
-    <TextBlock Text="{s:Text SignIn_Privacy}" Classes="caption" Margin="0,14,0,0"/>
+    <Button Classes="link" Content="{s:Text SignIn_UseAnother}" Command="{Binding CancelCodeCommand}" HorizontalAlignment="Center" Margin="0,6,0,0" IsVisible="{Binding IsCodeRequired}"/>
+    <TextBlock Text="{s:Text SignIn_FirstTime}" Classes="caption" TextAlignment="Center" Margin="16,10,16,0" IsVisible="{Binding IsBusy}"/>
+    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10" Margin="16,22,16,0">
+      <PathIcon Width="14" Height="14" Foreground="{DynamicResource SecondaryTextBrush}" VerticalAlignment="Top" Margin="0,2,0,0"
+                Data="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5Zm-3 8V7a3 3 0 1 1 6 0v3H9Z"/>
+      <TextBlock Grid.Column="1" Text="{s:Text SignIn_Privacy}" Classes="caption"/>
+    </Grid>
   </StackPanel>
 </UserControl>

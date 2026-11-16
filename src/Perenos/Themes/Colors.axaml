@@ -1,105 +1,184 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--
+    Perenos 1.6.0 design system: Apple-inspired palette (iOS system colors), opaque grouped
+    cards with hairline strokes, flat canvas with a soft radial glow. Primary buttons use the
+    darker iOS accent variants so white label text keeps a 4.5:1 contrast ratio.
+  -->
   <ResourceDictionary.ThemeDictionaries>
     <ResourceDictionary x:Key="Light">
-      <Color x:Key="AccentColor">#1677D2</Color>
-      <Color x:Key="CanvasStartColor">#E3F0FA</Color>
-      <Color x:Key="CanvasEndColor">#F5F7FA</Color>
-      <SolidColorBrush x:Key="AccentBrush" Color="#1677D2"/>
-      <LinearGradientBrush x:Key="CanvasBrush" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="{DynamicResource CanvasStartColor}" Offset="0"/>
-        <GradientStop Color="{DynamicResource CanvasEndColor}" Offset="1"/>
-      </LinearGradientBrush>
-      <SolidColorBrush x:Key="AccentTextBrush" Color="#005CB9"/>
+      <Color x:Key="AccentColor">#007AFF</Color>
+      <SolidColorBrush x:Key="AccentBrush" Color="#007AFF"/>
+      <SolidColorBrush x:Key="AccentTextBrush" Color="#007AFF"/>
       <SolidColorBrush x:Key="OnAccentBrush" Color="#FFFFFF"/>
-      <SolidColorBrush x:Key="AccentHoverBrush" Color="#0069D8"/>
-      <SolidColorBrush x:Key="ToggleSwitchFillOn" Color="#1677D2"/>
-      <SolidColorBrush x:Key="ToggleSwitchStrokeOn" Color="#1677D2"/>
-      <SolidColorBrush x:Key="ToggleSwitchFillOnPointerOver" Color="#0069D8"/>
-      <SolidColorBrush x:Key="ToggleSwitchStrokeOnPointerOver" Color="#0069D8"/>
-      <SolidColorBrush x:Key="ToggleSwitchFillOnPressed" Color="#0069D8"/>
-      <SolidColorBrush x:Key="ToggleSwitchStrokeOnPressed" Color="#0069D8"/>
-      <SolidColorBrush x:Key="ToggleSwitchStrokeOff" Color="{DynamicResource InputBorderBrush.Color}"/>
-      <SolidColorBrush x:Key="ToggleSwitchKnobFillOn" Color="#FFFFFF"/>
-      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFill" Color="{DynamicResource AccentBrush.Color}"/>
-      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStroke" Color="{DynamicResource AccentBrush.Color}"/>
-      <SolidColorBrush x:Key="RadioButtonCheckGlyphFill" Color="{DynamicResource OnAccentBrush.Color}"/>
-      <SolidColorBrush x:Key="RadioButtonCheckGlyphStroke" Color="{DynamicResource OnAccentBrush.Color}"/>
-      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFillPointerOver" Color="{DynamicResource AccentHoverBrush.Color}"/>
-      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokePointerOver" Color="{DynamicResource AccentHoverBrush.Color}"/>
-      <SolidColorBrush x:Key="RadioButtonCheckGlyphFillPointerOver" Color="{DynamicResource OnAccentBrush.Color}"/>
-      <SolidColorBrush x:Key="RadioButtonCheckGlyphStrokePointerOver" Color="{DynamicResource OnAccentBrush.Color}"/>
-      <SolidColorBrush x:Key="RadioButtonCheckGlyphFillDisabled" Color="{DynamicResource SecondaryTextBrush.Color}"/>
-      <SolidColorBrush x:Key="AccentSoftBrush" Color="#DDEBFF"/>
-      <SolidColorBrush x:Key="BackgroundBrush" Color="#EAF1F8"/>
-      <SolidColorBrush x:Key="SidebarBrush" Color="#F4F7FB"/>
-      <SolidColorBrush x:Key="CardBrush" Color="#F2FCFDFE"/>
-      <SolidColorBrush x:Key="CardHoverBrush" Color="#E8F1FA"/>
-      <SolidColorBrush x:Key="GlassBrush" Color="#B8FFFFFF"/>
-      <SolidColorBrush x:Key="GlassStrongBrush" Color="#DBFFFFFF"/>
-      <SolidColorBrush x:Key="GlassBorderBrush" Color="#70FFFFFF"/>
-      <SolidColorBrush x:Key="TextBrush" Color="#162337"/>
-      <SolidColorBrush x:Key="SecondaryTextBrush" Color="#53657A"/>
-      <SolidColorBrush x:Key="BorderBrush" Color="#D2DFEC"/>
-      <SolidColorBrush x:Key="InputBorderBrush" Color="#758CA6"/>
-      <SolidColorBrush x:Key="SubtleBrush" Color="#99E7EEF7"/>
-      <SolidColorBrush x:Key="SuccessBrush" Color="#167A61"/>
-      <SolidColorBrush x:Key="SuccessSoftBrush" Color="#DDF2E9"/>
-      <SolidColorBrush x:Key="WarningBrush" Color="#986114"/>
-      <SolidColorBrush x:Key="WarningSoftBrush" Color="#FFF1D7"/>
-      <SolidColorBrush x:Key="DangerBrush" Color="#C33E54"/>
-      <SolidColorBrush x:Key="IconBrush" Color="#60758D"/>
+      <SolidColorBrush x:Key="AccentHoverBrush" Color="#0066DB"/>
+      <SolidColorBrush x:Key="AccentButtonBrush" Color="#0066DB"/>
+      <SolidColorBrush x:Key="AccentButtonHoverBrush" Color="#0052B0"/>
+      <SolidColorBrush x:Key="AccentSoftBrush" Color="#14007AFF"/>
+      <SolidColorBrush x:Key="BackgroundBrush" Color="#F5F5F7"/>
+      <SolidColorBrush x:Key="CanvasBrush" Color="#F5F5F7"/>
+      <SolidColorBrush x:Key="CardBrush" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="CardHoverBrush" Color="#1F767680"/>
+      <SolidColorBrush x:Key="GlassBrush" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="GlassStrongBrush" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="GlassBorderBrush" Color="#12000000"/>
+      <SolidColorBrush x:Key="TextBrush" Color="#1D1D1F"/>
+      <SolidColorBrush x:Key="SecondaryTextBrush" Color="#6E6E73"/>
+      <SolidColorBrush x:Key="TertiaryTextBrush" Color="#AEAEB2"/>
+      <SolidColorBrush x:Key="DisabledTextBrush" Color="#56565A"/>
+      <SolidColorBrush x:Key="DisabledBrush" Color="#E9E9EB"/>
+      <SolidColorBrush x:Key="BorderBrush" Color="#12000000"/>
+      <SolidColorBrush x:Key="SeparatorBrush" Color="#243C3C43"/>
+      <SolidColorBrush x:Key="InputBorderBrush" Color="#D1D1D6"/>
+      <SolidColorBrush x:Key="SubtleBrush" Color="#1F767680"/>
+      <SolidColorBrush x:Key="SuccessBrush" Color="#34C759"/>
+      <SolidColorBrush x:Key="SuccessSoftBrush" Color="#1A34C759"/>
+      <SolidColorBrush x:Key="WarningBrush" Color="#FF9500"/>
+      <SolidColorBrush x:Key="WarningSoftBrush" Color="#1AFF9500"/>
+      <SolidColorBrush x:Key="DangerBrush" Color="#FF3B30"/>
+      <SolidColorBrush x:Key="IconBrush" Color="#6E6E73"/>
+      <SolidColorBrush x:Key="IconPlaceholderBrush" Color="#E5E5EA"/>
       <SolidColorBrush x:Key="OverlayBrush" Color="#190B1526"/>
+      <SolidColorBrush x:Key="ToggleSwitchFillOn" Color="#34C759"/>
+      <SolidColorBrush x:Key="ToggleSwitchStrokeOn" Color="#34C759"/>
+      <SolidColorBrush x:Key="ToggleSwitchFillOnPointerOver" Color="#30B852"/>
+      <SolidColorBrush x:Key="ToggleSwitchStrokeOnPointerOver" Color="#30B852"/>
+      <SolidColorBrush x:Key="ToggleSwitchFillOnPressed" Color="#2AA64A"/>
+      <SolidColorBrush x:Key="ToggleSwitchStrokeOnPressed" Color="#2AA64A"/>
+      <SolidColorBrush x:Key="ToggleSwitchStrokeOff" Color="#D1D1D6"/>
+      <SolidColorBrush x:Key="ToggleSwitchKnobFillOn" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFill" Color="#007AFF"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStroke" Color="#007AFF"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphFill" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphStroke" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFillPointerOver" Color="#0066DB"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokePointerOver" Color="#0066DB"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFillPressed" Color="#0052B0"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokePressed" Color="#0052B0"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFillDisabled" Color="#E9E9EB"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokeDisabled" Color="#E9E9EB"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphFillPointerOver" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphStrokePointerOver" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphFillPressed" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphStrokePressed" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphFillDisabled" Color="#56565A"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphStrokeDisabled" Color="#56565A"/>
+      <LinearGradientBrush x:Key="DeviceIconBrush" StartPoint="15%,0%" EndPoint="85%,100%">
+        <GradientStop Color="#0096DC" Offset="0"/>
+        <GradientStop Color="#3C46E6" Offset="1"/>
+      </LinearGradientBrush>
+      <LinearGradientBrush x:Key="HeroBlueBrush" StartPoint="15%,0%" EndPoint="85%,100%">
+        <GradientStop Color="#0096DC" Offset="0"/>
+        <GradientStop Color="#3C46E6" Offset="1"/>
+      </LinearGradientBrush>
+      <LinearGradientBrush x:Key="HeroTealBrush" StartPoint="15%,0%" EndPoint="85%,100%">
+        <GradientStop Color="#30C4C8" Offset="0"/>
+        <GradientStop Color="#007AFF" Offset="1"/>
+      </LinearGradientBrush>
+      <LinearGradientBrush x:Key="HeroIndigoBrush" StartPoint="15%,0%" EndPoint="85%,100%">
+        <GradientStop Color="#786EFF" Offset="0"/>
+        <GradientStop Color="#583CD6" Offset="1"/>
+      </LinearGradientBrush>
+      <LinearGradientBrush x:Key="HeroGreenBrush" StartPoint="15%,0%" EndPoint="85%,100%">
+        <GradientStop Color="#48D678" Offset="0"/>
+        <GradientStop Color="#14A06E" Offset="1"/>
+      </LinearGradientBrush>
+      <LinearGradientBrush x:Key="HeroOrangeBrush" StartPoint="15%,0%" EndPoint="85%,100%">
+        <GradientStop Color="#FFB340" Offset="0"/>
+        <GradientStop Color="#FF7028" Offset="1"/>
+      </LinearGradientBrush>
+      <RadialGradientBrush x:Key="BackgroundGlowBrush" Center="50%,0%" GradientOrigin="50%,0%" RadiusX="0.75" RadiusY="0.6">
+        <GradientStop Color="#1A007AFF" Offset="0"/>
+        <GradientStop Color="#08007AFF" Offset="0.6"/>
+        <GradientStop Color="#00007AFF" Offset="1"/>
+      </RadialGradientBrush>
     </ResourceDictionary>
     <ResourceDictionary x:Key="Dark">
-      <Color x:Key="AccentColor">#1677D2</Color>
-      <Color x:Key="CanvasStartColor">#0D1828</Color>
-      <Color x:Key="CanvasEndColor">#172538</Color>
-      <SolidColorBrush x:Key="AccentBrush" Color="#1677D2"/>
-      <LinearGradientBrush x:Key="CanvasBrush" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="{DynamicResource CanvasStartColor}" Offset="0"/>
-        <GradientStop Color="{DynamicResource CanvasEndColor}" Offset="1"/>
-      </LinearGradientBrush>
-      <SolidColorBrush x:Key="AccentTextBrush" Color="#64D2FF"/>
+      <Color x:Key="AccentColor">#0A84FF</Color>
+      <SolidColorBrush x:Key="AccentBrush" Color="#0A84FF"/>
+      <SolidColorBrush x:Key="AccentTextBrush" Color="#0A84FF"/>
       <SolidColorBrush x:Key="OnAccentBrush" Color="#FFFFFF"/>
-      <SolidColorBrush x:Key="AccentHoverBrush" Color="#0069D8"/>
-      <SolidColorBrush x:Key="ToggleSwitchFillOn" Color="#1677D2"/>
-      <SolidColorBrush x:Key="ToggleSwitchStrokeOn" Color="#1677D2"/>
-      <SolidColorBrush x:Key="ToggleSwitchFillOnPointerOver" Color="#0069D8"/>
-      <SolidColorBrush x:Key="ToggleSwitchStrokeOnPointerOver" Color="#0069D8"/>
-      <SolidColorBrush x:Key="ToggleSwitchFillOnPressed" Color="#0069D8"/>
-      <SolidColorBrush x:Key="ToggleSwitchStrokeOnPressed" Color="#0069D8"/>
-      <SolidColorBrush x:Key="ToggleSwitchStrokeOff" Color="{DynamicResource InputBorderBrush.Color}"/>
-      <SolidColorBrush x:Key="ToggleSwitchKnobFillOn" Color="#FFFFFF"/>
-      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFill" Color="{DynamicResource AccentBrush.Color}"/>
-      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStroke" Color="{DynamicResource AccentBrush.Color}"/>
-      <SolidColorBrush x:Key="RadioButtonCheckGlyphFill" Color="{DynamicResource OnAccentBrush.Color}"/>
-      <SolidColorBrush x:Key="RadioButtonCheckGlyphStroke" Color="{DynamicResource OnAccentBrush.Color}"/>
-      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFillPointerOver" Color="{DynamicResource AccentHoverBrush.Color}"/>
-      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokePointerOver" Color="{DynamicResource AccentHoverBrush.Color}"/>
-      <SolidColorBrush x:Key="RadioButtonCheckGlyphFillPointerOver" Color="{DynamicResource OnAccentBrush.Color}"/>
-      <SolidColorBrush x:Key="RadioButtonCheckGlyphStrokePointerOver" Color="{DynamicResource OnAccentBrush.Color}"/>
-      <SolidColorBrush x:Key="RadioButtonCheckGlyphFillDisabled" Color="{DynamicResource SecondaryTextBrush.Color}"/>
-      <SolidColorBrush x:Key="AccentSoftBrush" Color="#253D59"/>
-      <SolidColorBrush x:Key="BackgroundBrush" Color="#101923"/>
-      <SolidColorBrush x:Key="SidebarBrush" Color="#152334"/>
-      <SolidColorBrush x:Key="CardBrush" Color="#E6172634"/>
-      <SolidColorBrush x:Key="CardHoverBrush" Color="#233B52"/>
-      <SolidColorBrush x:Key="GlassBrush" Color="#331D2B3F"/>
-      <SolidColorBrush x:Key="GlassStrongBrush" Color="#8C1C2A3D"/>
-      <SolidColorBrush x:Key="GlassBorderBrush" Color="#33FFFFFF"/>
-      <SolidColorBrush x:Key="TextBrush" Color="#EEF5FA"/>
-      <SolidColorBrush x:Key="SecondaryTextBrush" Color="#AABACB"/>
-      <SolidColorBrush x:Key="BorderBrush" Color="#34485D"/>
-      <SolidColorBrush x:Key="InputBorderBrush" Color="#5B718C"/>
-      <SolidColorBrush x:Key="SubtleBrush" Color="#80203347"/>
-      <SolidColorBrush x:Key="SuccessBrush" Color="#64DAB0"/>
-      <SolidColorBrush x:Key="SuccessSoftBrush" Color="#193D33"/>
-      <SolidColorBrush x:Key="WarningBrush" Color="#FFC570"/>
-      <SolidColorBrush x:Key="WarningSoftBrush" Color="#3D301D"/>
-      <SolidColorBrush x:Key="DangerBrush" Color="#FF9CAF"/>
-      <SolidColorBrush x:Key="IconBrush" Color="#AABACB"/>
+      <SolidColorBrush x:Key="AccentHoverBrush" Color="#0070DB"/>
+      <SolidColorBrush x:Key="AccentButtonBrush" Color="#0070DB"/>
+      <SolidColorBrush x:Key="AccentButtonHoverBrush" Color="#005CB3"/>
+      <SolidColorBrush x:Key="AccentSoftBrush" Color="#260A84FF"/>
+      <SolidColorBrush x:Key="BackgroundBrush" Color="#0B0B0C"/>
+      <SolidColorBrush x:Key="CanvasBrush" Color="#0B0B0C"/>
+      <SolidColorBrush x:Key="CardBrush" Color="#1C1C1E"/>
+      <SolidColorBrush x:Key="CardHoverBrush" Color="#3D767680"/>
+      <SolidColorBrush x:Key="GlassBrush" Color="#1C1C1E"/>
+      <SolidColorBrush x:Key="GlassStrongBrush" Color="#1C1C1E"/>
+      <SolidColorBrush x:Key="GlassBorderBrush" Color="#14FFFFFF"/>
+      <SolidColorBrush x:Key="TextBrush" Color="#F5F5F7"/>
+      <SolidColorBrush x:Key="SecondaryTextBrush" Color="#98989D"/>
+      <SolidColorBrush x:Key="TertiaryTextBrush" Color="#636366"/>
+      <SolidColorBrush x:Key="DisabledTextBrush" Color="#98989D"/>
+      <SolidColorBrush x:Key="DisabledBrush" Color="#2C2C2E"/>
+      <SolidColorBrush x:Key="BorderBrush" Color="#14FFFFFF"/>
+      <SolidColorBrush x:Key="SeparatorBrush" Color="#33FFFFFF"/>
+      <SolidColorBrush x:Key="InputBorderBrush" Color="#3A3A3C"/>
+      <SolidColorBrush x:Key="SubtleBrush" Color="#3D767680"/>
+      <SolidColorBrush x:Key="SuccessBrush" Color="#30D158"/>
+      <SolidColorBrush x:Key="SuccessSoftBrush" Color="#2630D158"/>
+      <SolidColorBrush x:Key="WarningBrush" Color="#FF9F0A"/>
+      <SolidColorBrush x:Key="WarningSoftBrush" Color="#26FF9F0A"/>
+      <SolidColorBrush x:Key="DangerBrush" Color="#FF453A"/>
+      <SolidColorBrush x:Key="IconBrush" Color="#98989D"/>
+      <SolidColorBrush x:Key="IconPlaceholderBrush" Color="#3A3A3C"/>
       <SolidColorBrush x:Key="OverlayBrush" Color="#66000000"/>
+      <SolidColorBrush x:Key="ToggleSwitchFillOn" Color="#30D158"/>
+      <SolidColorBrush x:Key="ToggleSwitchStrokeOn" Color="#30D158"/>
+      <SolidColorBrush x:Key="ToggleSwitchFillOnPointerOver" Color="#3ADB62"/>
+      <SolidColorBrush x:Key="ToggleSwitchStrokeOnPointerOver" Color="#3ADB62"/>
+      <SolidColorBrush x:Key="ToggleSwitchFillOnPressed" Color="#28B84B"/>
+      <SolidColorBrush x:Key="ToggleSwitchStrokeOnPressed" Color="#28B84B"/>
+      <SolidColorBrush x:Key="ToggleSwitchStrokeOff" Color="#3A3A3C"/>
+      <SolidColorBrush x:Key="ToggleSwitchKnobFillOn" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFill" Color="#0A84FF"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStroke" Color="#0A84FF"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphFill" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphStroke" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFillPointerOver" Color="#0070DB"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokePointerOver" Color="#0070DB"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFillPressed" Color="#005CB3"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokePressed" Color="#005CB3"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFillDisabled" Color="#2C2C2E"/>
+      <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokeDisabled" Color="#2C2C2E"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphFillPointerOver" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphStrokePointerOver" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphFillPressed" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphStrokePressed" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphFillDisabled" Color="#98989D"/>
+      <SolidColorBrush x:Key="RadioButtonCheckGlyphStrokeDisabled" Color="#98989D"/>
+      <LinearGradientBrush x:Key="DeviceIconBrush" StartPoint="15%,0%" EndPoint="85%,100%">
+        <GradientStop Color="#0096DC" Offset="0"/>
+        <GradientStop Color="#3C46E6" Offset="1"/>
+      </LinearGradientBrush>
+      <LinearGradientBrush x:Key="HeroBlueBrush" StartPoint="15%,0%" EndPoint="85%,100%">
+        <GradientStop Color="#0096DC" Offset="0"/>
+        <GradientStop Color="#3C46E6" Offset="1"/>
+      </LinearGradientBrush>
+      <LinearGradientBrush x:Key="HeroTealBrush" StartPoint="15%,0%" EndPoint="85%,100%">
+        <GradientStop Color="#30C4C8" Offset="0"/>
+        <GradientStop Color="#007AFF" Offset="1"/>
+      </LinearGradientBrush>
+      <LinearGradientBrush x:Key="HeroIndigoBrush" StartPoint="15%,0%" EndPoint="85%,100%">
+        <GradientStop Color="#786EFF" Offset="0"/>
+        <GradientStop Color="#583CD6" Offset="1"/>
+      </LinearGradientBrush>
+      <LinearGradientBrush x:Key="HeroGreenBrush" StartPoint="15%,0%" EndPoint="85%,100%">
+        <GradientStop Color="#48D678" Offset="0"/>
+        <GradientStop Color="#14A06E" Offset="1"/>
+      </LinearGradientBrush>
+      <LinearGradientBrush x:Key="HeroOrangeBrush" StartPoint="15%,0%" EndPoint="85%,100%">
+        <GradientStop Color="#FFB340" Offset="0"/>
+        <GradientStop Color="#FF7028" Offset="1"/>
+      </LinearGradientBrush>
+      <RadialGradientBrush x:Key="BackgroundGlowBrush" Center="50%,0%" GradientOrigin="50%,0%" RadiusX="0.75" RadiusY="0.6">
+        <GradientStop Color="#2E0A84FF" Offset="0"/>
+        <GradientStop Color="#0D5C40E0" Offset="0.6"/>
+        <GradientStop Color="#000A84FF" Offset="1"/>
+      </RadialGradientBrush>
     </ResourceDictionary>
   </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

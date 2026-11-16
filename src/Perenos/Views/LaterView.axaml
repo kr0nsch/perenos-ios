@@ -4,46 +4,57 @@
              xmlns:s="using:Perenos.Services"
              x:Class="Perenos.Views.LaterView" x:DataType="vm:MainViewModel">
   <ScrollViewer VerticalScrollBarVisibility="Auto">
-    <StackPanel MaxWidth="760" Margin="44,42,44,32" HorizontalAlignment="Center">
-      <TextBlock Text="{s:Text Nav_Library}" Classes="eyebrow"/>
-      <TextBlock Text="{s:Text Later_Title}" Classes="h1" Margin="0,12,0,0"/>
-      <TextBlock Text="{s:Text Later_Subtitle}" Classes="body muted" Margin="0,12,0,0"/>
-      <StackPanel Margin="0,32,0,0" Spacing="14">
-        <Button Classes="choice" Command="{Binding SaveAppsCommand}" IsEnabled="{Binding CanDownload}">
-          <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="18">
-            <Border Classes="hero-icon" Width="48" Height="48" CornerRadius="14">
-              <PathIcon Classes="accent" Width="23" Height="23" Data="M11 3h2v10.17l3.59-3.58L18 11l-6 6-6-6 1.41-1.41L11 13.17V3ZM5 15v5h14v-5h2v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5h2Z"/>
-            </Border>
-            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="5">
-              <TextBlock Text="{s:Text Later_Save.Title}" Classes="title" FontSize="16"/>
-              <TextBlock Text="{Binding SaveSubtitle}" Classes="caption" FontSize="13"/>
-            </StackPanel>
-            <PathIcon Grid.Column="2" Width="20" Height="20" Data="m9 18 6-6-6-6-1.4 1.4 4.6 4.6-4.6 4.6L9 18Z" VerticalAlignment="Center"/>
-          </Grid>
-        </Button>
-        <Button Classes="choice" Command="{Binding InstallSavedAppsCommand}" IsEnabled="{Binding CanInstallSaved}">
-          <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="18">
-            <Border Classes="hero-icon" Width="48" Height="48" CornerRadius="14">
-              <PathIcon Classes="accent" Width="23" Height="23" Data="m13 3 6 6-6 6v-4H7a3 3 0 0 0-3 3v7H2v-7a5 5 0 0 1 5-5h6V3Zm-3-2v2H6a3 3 0 0 0-3 3v3H1V6a5 5 0 0 1 5-5h4Z"/>
-            </Border>
-            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="5">
-              <TextBlock Text="{s:Text Later_Install.Title}" Classes="title" FontSize="16"/>
-              <TextBlock Text="{Binding InstallSavedSubtitle}" Classes="caption" FontSize="13"/>
-            </StackPanel>
-            <PathIcon Grid.Column="2" Width="20" Height="20" Data="m9 18 6-6-6-6-1.4 1.4 4.6 4.6-4.6 4.6L9 18Z" VerticalAlignment="Center"/>
-          </Grid>
-        </Button>
-      </StackPanel>
-      <Border Classes="soft" Margin="0,20,0,0" Padding="14,10">
-        <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="8">
-          <TextBlock Text="{s:Text Later_Folder}" Classes="caption" VerticalAlignment="Center"/>
-          <Button Grid.Column="1" Classes="link" HorizontalContentAlignment="Left" Command="{Binding OpenFolderCommand}" ToolTip.Tip="{Binding Library.Folder}">
-            <TextBlock Text="{Binding FolderDisplay}" Classes="caption" TextTrimming="CharacterEllipsis"/>
+    <StackPanel MaxWidth="560" Margin="24,24,24,32" HorizontalAlignment="Center" VerticalAlignment="Center">
+      <Grid Width="112" Height="112" HorizontalAlignment="Center" Margin="0,0,0,10">
+        <Border Classes="hero-tile indigo">
+          <PathIcon Width="34" Height="34" Foreground="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Data="M4 3h6l2 3h8a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm0 5v11h16V8H4Z"/>
+        </Border>
+      </Grid>
+      <TextBlock Text="{s:Text Later_Title}" Classes="h1" TextAlignment="Center" HorizontalAlignment="Center"/>
+      <TextBlock Text="{s:Text Later_Subtitle}" Classes="body muted" TextAlignment="Center" HorizontalAlignment="Center" MaxWidth="560" Margin="0,8,0,0"/>
+
+      <Border Classes="card" Margin="0,30,0,0" Padding="4">
+        <StackPanel>
+          <Button Classes="choice" Command="{Binding SaveAppsCommand}" IsEnabled="{Binding CanDownload}" AutomationProperties.Name="{s:Text Later_Save.Title}">
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+              <Border Classes="choice-tile indigo">
+                <PathIcon Width="20" Height="20" Foreground="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center"
+                          Data="M11 3h2v10.17l3.59-3.58L18 11l-6 6-6-6 1.41-1.41L11 13.17V3ZM5 15v5h14v-5h2v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5h2Z"/>
+              </Border>
+              <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
+                <TextBlock Text="{s:Text Later_Save.Title}" Classes="title" FontSize="15"/>
+                <TextBlock Text="{Binding SaveSubtitle}" Classes="caption" FontSize="13" TextWrapping="Wrap"/>
+              </StackPanel>
+              <PathIcon Grid.Column="2" Width="12" Height="12" Foreground="{DynamicResource TertiaryTextBrush}" VerticalAlignment="Center"
+                        Data="m9 18 6-6-6-6-1.4 1.4 4.6 4.6-4.6 4.6L9 18Z"/>
+            </Grid>
           </Button>
-          <Button Grid.Column="2" Classes="link" Content="{s:Text Settings_Open}" Command="{Binding OpenFolderCommand}"/>
-          <Button Grid.Column="3" Classes="link" Content="{s:Text Later_ChangeFolder}" Command="{Binding ChangeFolderCommand}"/>
-        </Grid>
+          <Border Classes="separator" Margin="68,0,0,0"/>
+          <Button Classes="choice" Command="{Binding InstallSavedAppsCommand}" IsEnabled="{Binding CanInstallSaved}" AutomationProperties.Name="{s:Text Later_Install.Title}">
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+              <Border Classes="choice-tile teal">
+                <PathIcon Width="20" Height="20" Foreground="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center"
+                          Data="M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm1 3v14h8V5H8Z"/>
+              </Border>
+              <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
+                <TextBlock Text="{s:Text Later_Install.Title}" Classes="title" FontSize="15"/>
+                <TextBlock Text="{Binding InstallSavedSubtitle}" Classes="caption" FontSize="13" TextWrapping="Wrap"/>
+              </StackPanel>
+              <PathIcon Grid.Column="2" Width="12" Height="12" Foreground="{DynamicResource TertiaryTextBrush}" VerticalAlignment="Center"
+                        Data="m9 18 6-6-6-6-1.4 1.4 4.6 4.6-4.6 4.6L9 18Z"/>
+            </Grid>
+          </Button>
+        </StackPanel>
       </Border>
+
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,12,0,0">
+        <TextBlock Text="{s:Text Later_Folder}" Classes="caption" VerticalAlignment="Center"/>
+        <Button Classes="link" Padding="5,2" FontSize="12" VerticalAlignment="Center" Command="{Binding OpenFolderCommand}" ToolTip.Tip="{Binding Library.Folder}">
+          <TextBlock Text="{Binding FolderDisplay}" Classes="caption" MaxWidth="320" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
+        </Button>
+        <Button Classes="link" Padding="5,2" FontSize="12" VerticalAlignment="Center" Content="{s:Text Later_ChangeFolder}" Command="{Binding ChangeFolderCommand}"/>
+      </StackPanel>
     </StackPanel>
   </ScrollViewer>
 </UserControl>

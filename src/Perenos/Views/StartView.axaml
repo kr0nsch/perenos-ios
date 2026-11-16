@@ -2,51 +2,72 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:Perenos.ViewModels"
              xmlns:s="using:Perenos.Services"
+             xmlns:c="using:Perenos.Converters"
              x:Class="Perenos.Views.StartView" x:DataType="vm:MainViewModel">
+  <UserControl.Resources><c:InverseBoolConverter x:Key="Not"/></UserControl.Resources>
   <ScrollViewer VerticalScrollBarVisibility="Auto">
-    <StackPanel MaxWidth="960" Margin="36,32,36,28" HorizontalAlignment="Stretch">
-      <TextBlock Text="{s:Text Shell_Eyebrow}" Classes="kicker"/>
-      <TextBlock Text="{s:Text Start_Title}" Classes="h1" Margin="0,10,0,0"/>
-      <TextBlock Text="{s:Text Start_Subtitle}" Classes="body muted" Margin="0,12,0,0" MaxWidth="680"/>
-      <StackPanel Margin="0,28,0,0" Spacing="12">
-        <Button Classes="choice" Command="{Binding TransferNowCommand}" IsEnabled="{Binding CanDownload}">
-          <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="18">
-            <Border Classes="hero-icon" Width="48" Height="48" CornerRadius="14">
-              <PathIcon Classes="accent" Width="23" Height="23" Data="M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm1 3v14h8V5H8Z"/>
-            </Border>
-            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="5">
-              <TextBlock Text="{s:Text Start_Now.Title}" Classes="title" FontSize="16"/>
-              <TextBlock Text="{Binding NowSubtitle, Mode=OneWay}" Classes="caption" FontSize="13"/>
-            </StackPanel>
-            <PathIcon Grid.Column="2" Width="20" Height="20" Data="m9 18 6-6-6-6-1.4 1.4 4.6 4.6-4.6 4.6L9 18Z" VerticalAlignment="Center"/>
-          </Grid>
-        </Button>
-        <Button Classes="choice" Command="{Binding RestoreAppsCommand}" IsEnabled="{Binding CanDownload}">
-          <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="18">
-            <Border Classes="hero-icon" Width="48" Height="48" CornerRadius="14">
-              <PathIcon Classes="accent" Width="24" Height="24" Data="M12 3a9 9 0 1 0 8.49 6H18.4A7 7 0 1 1 12 5c1.93 0 3.68.78 4.95 2.05L14 10h7V3l-2.35 2.35A8.96 8.96 0 0 0 12 3Z"/>
-            </Border>
-            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="5">
-              <TextBlock Text="{s:Text Start_Restore.Title}" Classes="title" FontSize="16"/>
-              <TextBlock Text="{Binding RestoreSubtitle, Mode=OneWay}" Classes="caption" FontSize="13"/>
-            </StackPanel>
-            <PathIcon Grid.Column="2" Width="20" Height="20" Data="m9 18 6-6-6-6-1.4 1.4 4.6 4.6-4.6 4.6L9 18Z" VerticalAlignment="Center"/>
-          </Grid>
-        </Button>
-        <Button Classes="choice" Command="{Binding TransferLaterCommand}">
-          <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="18">
-            <Border Classes="hero-icon" Width="48" Height="48" CornerRadius="14">
-              <PathIcon Classes="accent" Width="24" Height="24" Data="M4 3h6l2 3h8a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm0 5v11h16V8H4Z"/>
-            </Border>
-            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="5">
-              <TextBlock Text="{s:Text Start_Later.Title}" Classes="title" FontSize="16"/>
-              <TextBlock Text="{Binding LaterSubtitle, Mode=OneWay}" Classes="caption" FontSize="13"/>
-            </StackPanel>
-            <PathIcon Grid.Column="2" Width="20" Height="20" Data="m9 18 6-6-6-6-1.4 1.4 4.6 4.6-4.6 4.6L9 18Z" VerticalAlignment="Center"/>
-          </Grid>
-        </Button>
-      </StackPanel>
-      <TextBlock Text="{s:Text Shell_Requirements}" Classes="caption" Margin="0,22,0,0"/>
+    <StackPanel MaxWidth="560" Margin="24,24,24,32" HorizontalAlignment="Center" VerticalAlignment="Center">
+      <Grid Width="112" Height="112" HorizontalAlignment="Center" Margin="0,0,0,10">
+        <Border Classes="hero-tile blue">
+          <PathIcon Width="34" Height="34" Foreground="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Data="M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm1 3v14h8V5H8Z"/>
+        </Border>
+      </Grid>
+      <TextBlock Text="{s:Text Start_Title}" Classes="h1" TextAlignment="Center" HorizontalAlignment="Center"/>
+      <TextBlock Text="{s:Text Start_Subtitle}" Classes="body muted" TextAlignment="Center" HorizontalAlignment="Center" MaxWidth="560" Margin="0,8,0,0"/>
+
+      <Border Classes="card" Margin="0,30,0,0" Padding="4">
+        <StackPanel>
+          <Button Classes="choice" Command="{Binding TransferNowCommand}" IsEnabled="{Binding CanDownload}" AutomationProperties.Name="{s:Text Start_Now.Title}">
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+              <Border Classes="choice-tile blue">
+                <PathIcon Width="20" Height="20" Foreground="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center"
+                          Data="M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm1 3v14h8V5H8Z"/>
+              </Border>
+              <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
+                <TextBlock Text="{s:Text Start_Now.Title}" Classes="title" FontSize="15"/>
+                <TextBlock Text="{Binding NowSubtitle, Mode=OneWay}" Classes="caption" FontSize="13" TextWrapping="Wrap"/>
+              </StackPanel>
+              <PathIcon Grid.Column="2" Width="12" Height="12" Foreground="{DynamicResource TertiaryTextBrush}" VerticalAlignment="Center"
+                        Data="m9 18 6-6-6-6-1.4 1.4 4.6 4.6-4.6 4.6L9 18Z"/>
+            </Grid>
+          </Button>
+          <Border Classes="separator" Margin="68,0,0,0"/>
+          <Button Classes="choice" Command="{Binding RestoreAppsCommand}" IsEnabled="{Binding CanDownload}" AutomationProperties.Name="{s:Text Start_Restore.Title}">
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+              <Border Classes="choice-tile blue">
+                <PathIcon Width="20" Height="20" Foreground="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center"
+                          Data="M12 3a9 9 0 1 0 8.49 6H18.4A7 7 0 1 1 12 5c1.93 0 3.68.78 4.95 2.05L14 10h7V3l-2.35 2.35A8.96 8.96 0 0 0 12 3Z"/>
+              </Border>
+              <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
+                <TextBlock Text="{s:Text Start_Restore.Title}" Classes="title" FontSize="15"/>
+                <TextBlock Text="{Binding RestoreSubtitle, Mode=OneWay}" Classes="caption" FontSize="13" TextWrapping="Wrap"/>
+              </StackPanel>
+              <PathIcon Grid.Column="2" Width="12" Height="12" Foreground="{DynamicResource TertiaryTextBrush}" VerticalAlignment="Center"
+                        Data="m9 18 6-6-6-6-1.4 1.4 4.6 4.6-4.6 4.6L9 18Z"/>
+            </Grid>
+          </Button>
+          <Border Classes="separator" Margin="68,0,0,0"/>
+          <Button Classes="choice" Command="{Binding TransferLaterCommand}" AutomationProperties.Name="{s:Text Start_Later.Title}">
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+              <Border Classes="choice-tile indigo">
+                <PathIcon Width="20" Height="20" Foreground="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center"
+                          Data="M4 3h6l2 3h8a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm0 5v11h16V8H4Z"/>
+              </Border>
+              <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
+                <TextBlock Text="{s:Text Start_Later.Title}" Classes="title" FontSize="15"/>
+                <TextBlock Text="{Binding LaterSubtitle, Mode=OneWay}" Classes="caption" FontSize="13" TextWrapping="Wrap"
+                           IsVisible="{Binding LaterSubtitleIsAccent, Converter={StaticResource Not}}"/>
+                <TextBlock Text="{Binding LaterSubtitle, Mode=OneWay}" Classes="caption" FontSize="13" TextWrapping="Wrap"
+                           Foreground="{DynamicResource AccentTextBrush}" IsVisible="{Binding LaterSubtitleIsAccent}"/>
+              </StackPanel>
+              <PathIcon Grid.Column="2" Width="12" Height="12" Foreground="{DynamicResource TertiaryTextBrush}" VerticalAlignment="Center"
+                        Data="m9 18 6-6-6-6-1.4 1.4 4.6 4.6-4.6 4.6L9 18Z"/>
+            </Grid>
+          </Button>
+        </StackPanel>
+      </Border>
+      <TextBlock Text="{s:Text Shell_Requirements}" Classes="caption" TextAlignment="Center" Margin="0,14,0,0"/>
     </StackPanel>
   </ScrollViewer>
 </UserControl>

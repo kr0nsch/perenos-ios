@@ -1,4 +1,6 @@
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Platform.Storage;
@@ -22,20 +24,42 @@ public sealed partial class MainWindow : Window
         };
         DataContext = ViewModel;
         InitializeComponent();
-        UpdateNavigation();
-        SizeChanged += (_, _) => UpdateNavigation();
+        // Windows draws its own caption buttons in the title bar row; macOS keeps the native
+        // title bar with traffic lights, so the custom brand and captions stay hidden there.
+        if (OperatingSystem.IsMacOS())
+        {
+            ExtendClientAreaToDecorationsHint = false;
+            BrandPanel.IsVisible = false;
+            CaptionButtons.IsVisible = false;
+        }
+        PropertyChanged += (_, e) =>
+        {
+            if (e.Property == WindowStateProperty)
+            {
+                MaximizeGlyph.IsVisible = WindowState != WindowState.Maximized;
+                RestoreGlyph.IsVisible = WindowState == WindowState.Maximized;
+            }
+        };
         Closing += OnClosing;
     }
 
     public MainViewModel ViewModel { get; } = null!;
 
-    private void UpdateNavigation()
+    private void TitleBarPressed(object? sender, PointerPressedEventArgs e)
     {
-        var compact = Bounds.Width < 1000;
-        Sidebar.IsVisible = !compact;
-        MobileNavigation.IsVisible = compact;
-        ((Grid)Content!).ColumnDefinitions[0].Width = new GridLength(compact ? 0 : 232);
+        if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+            BeginMoveDrag(e);
     }
+
+    private void TitleBarDoubleTapped(object? sender, TappedEventArgs e) =>
+        WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+
+    private void MinimizeWindow(object? sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+
+    private void ToggleMaximize(object? sender, RoutedEventArgs e) =>
+        WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+
+    private void CloseWindow(object? sender, RoutedEventArgs e) => Close();
 
     private async void ShowSignIn(object? sender, RoutedEventArgs e) =>
         await new SignInWindow(ViewModel.Account).ShowDialog(this);

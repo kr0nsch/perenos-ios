@@ -16,6 +16,7 @@ public sealed partial class AppsViewModel(
 {
     private CancellationTokenSource? _loading;
     private CancellationTokenSource? _storefront;
+    private (string Key, int Count)? _storefrontMessage;
     private int _notFromStore;
 
     public string? LoadedFromUdid { get; private set; }
@@ -125,6 +126,7 @@ public sealed partial class AppsViewModel(
         ShowUnavailableOnly = false;
         HasUnavailableApps = false;
         StorefrontStatus = Loc.Get("Storefront_Checking");
+        _storefrontMessage = ("Storefront_Checking", 0);
         IsStorefrontScanning = true;
         var scan = new CancellationTokenSource();
         _storefront = scan;
@@ -154,10 +156,12 @@ public sealed partial class AppsViewModel(
             if (result.RequiresSignIn)
             {
                 StorefrontStatus = Loc.Get("Storefront_SignIn");
+                _storefrontMessage = ("Storefront_SignIn", 0);
             }
             else if (result.OwnedCount == 0)
             {
                 StorefrontStatus = Loc.Get("Storefront_NoOwned");
+                _storefrontMessage = ("Storefront_NoOwned", 0);
             }
             else
             {
@@ -167,6 +171,9 @@ public sealed partial class AppsViewModel(
                 StorefrontStatus = HasUnavailableApps
                     ? Loc.Plural("Storefront_UnavailableCount", result.UnavailableAppIds.Count)
                     : Loc.Get("Storefront_AllAvailable");
+                _storefrontMessage = HasUnavailableApps
+                    ? ("Storefront_UnavailableCount", result.UnavailableAppIds.Count)
+                    : ("Storefront_AllAvailable", 0);
                 ApplyFilter();
                 OnPropertyChanged(nameof(SelectAllText));
             }
@@ -178,6 +185,7 @@ public sealed partial class AppsViewModel(
         {
             AppLog.Warn($"Could not check the Russian App Store: {ex.Message}");
             StorefrontStatus = Loc.Get("Storefront_CheckFailed");
+            _storefrontMessage = ("Storefront_CheckFailed", 0);
         }
         finally
         {
@@ -190,12 +198,20 @@ public sealed partial class AppsViewModel(
     {
         _storefront?.Cancel();
         _storefront = null;
+        _storefrontMessage = null;
         foreach (var item in All)
             item.IsUnavailableInRussia = false;
         ShowUnavailableOnly = false;
         HasUnavailableApps = false;
         IsStorefrontScanning = false;
         StorefrontStatus = "";
+    }
+
+    public override void RefreshLocalization()
+    {
+        base.RefreshLocalization();
+        if (_storefrontMessage is { } message)
+            StorefrontStatus = message.Count > 0 ? Loc.Plural(message.Key, message.Count) : Loc.Get(message.Key);
     }
 
     private void UpdateFootnote() => Footnote = _notFromStore > 0 ? Loc.Plural("Apps_NotFromStore", _notFromStore) : "";

@@ -103,7 +103,7 @@ public abstract partial class AppListViewModel : ObservableObject
         }
     }
 
-    public void RefreshLocalization()
+    public virtual void RefreshLocalization()
     {
         OnPropertyChanged((string?)null);
         foreach (var item in _all)

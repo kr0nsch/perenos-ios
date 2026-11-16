@@ -208,7 +208,7 @@
   <data name="Apps_SubtitleSave" xml:space="preserve"><value>Приложения из App Store на «{0}». Отметьте, что сохранить.</value></data>
   <data name="Apps_AlreadySaved" xml:space="preserve"><value>Уже сохранено</value></data>
   <data name="Storefront_Checking" xml:space="preserve"><value>Проверяем доступность приложений текущего Apple Account в российском App Store…</value></data>
-  <data name="Storefront_SignIn" xml:space="preserve"><value>Войдите в Apple Account в верхней панели, чтобы найти приложения, недоступные в российском App Store.</value></data>
+  <data name="Storefront_SignIn" xml:space="preserve"><value>Войдите в Apple Account, чтобы найти приложения, недоступные в российском App Store.</value></data>
   <data name="Storefront_NoOwned" xml:space="preserve"><value>На iPhone не найдено приложений, полученных с текущим Apple Account.</value></data>
   <data name="Storefront_AllAvailable" xml:space="preserve"><value>Все приложения текущего Apple Account доступны в российском App Store.</value></data>
   <data name="Storefront_CheckFailed" xml:space="preserve"><value>Не удалось проверить доступность в российском App Store.</value></data>

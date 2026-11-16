@@ -213,7 +213,9 @@ namespace Perenos.Media {
 '@
 
 if (-not ('Perenos.Media.DemoWindowRecorder' -as [type])) {
-    Add-Type -ReferencedAssemblies System.Drawing -TypeDefinition $recorderSource
+    # PowerShell 7 splits System.Drawing into Primitives/Common; reference the real assemblies
+    # so the recorder compiles in both pwsh 7 and Windows PowerShell 5.1.
+    Add-Type -ReferencedAssemblies @([System.Drawing.Rectangle].Assembly.Location, [System.Drawing.Bitmap].Assembly.Location) -TypeDefinition $recorderSource
 }
 [IO.Directory]::CreateDirectory($outputPath) | Out-Null
 Assert-NoReparsePoint $outputPath

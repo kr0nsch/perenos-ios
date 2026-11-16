@@ -208,7 +208,7 @@ Details were saved to the diagnostic log.</value></data>
   <data name="Apps_SubtitleSave" xml:space="preserve"><value>Apps from the App Store on {0}. Select the ones to save.</value></data>
   <data name="Apps_AlreadySaved" xml:space="preserve"><value>Already saved</value></data>
   <data name="Storefront_Checking" xml:space="preserve"><value>Checking the current Apple Account’s apps in the Russian App Store…</value></data>
-  <data name="Storefront_SignIn" xml:space="preserve"><value>Sign in to your Apple Account in the title bar to find apps unavailable in the Russian App Store.</value></data>
+  <data name="Storefront_SignIn" xml:space="preserve"><value>Sign in to your Apple Account to find apps unavailable in the Russian App Store.</value></data>
   <data name="Storefront_NoOwned" xml:space="preserve"><value>No apps obtained with the current Apple Account were found on this iPhone.</value></data>
   <data name="Storefront_AllAvailable" xml:space="preserve"><value>All apps from the current Apple Account are available in the Russian App Store.</value></data>
   <data name="Storefront_CheckFailed" xml:space="preserve"><value>Couldn’t check availability in the Russian App Store.</value></data>

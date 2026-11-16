@@ -2,19 +2,18 @@ using System.ComponentModel;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
 using Perenos.ViewModels;
 
 namespace Perenos.Views;
 
 public sealed partial class SignInWindow : Window
 {
-    public SignInWindow() => AvaloniaXamlLoader.Load(this);
+    public SignInWindow() => InitializeComponent();
 
     public SignInWindow(AccountViewModel account)
     {
         DataContext = account;
-        AvaloniaXamlLoader.Load(this);
+        InitializeComponent();
         if (OperatingSystem.IsMacOS())
         {
             ExtendClientAreaToDecorationsHint = false;

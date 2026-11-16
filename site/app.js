@@ -63,6 +63,7 @@
 
   function updateMotion() {
     const animate = motionTouched ? motionEnabled : !motionPreference.matches;
+    root.dataset.motion = animate ? 'on' : 'off';
     const scenario = scenarios[selected];
     demoAnimation.hidden = !animate;
     demoPicture.hidden = animate;
@@ -93,6 +94,7 @@
     demoImage.dataset.asset = scenario.image;
     demoImage.alt = scenario.alt;
     document.querySelector('#demo-caption').textContent = scenario.caption;
+    try { history.replaceState(null, '', `?scenario=${selected}`); } catch { /* Deep-linking is optional. */ }
     applyTheme();
     updateMotion();
     if (moveFocus) tab.focus();
@@ -175,8 +177,8 @@
         }
       }
       document.querySelector('#release-label').textContent = english
-        ? `Version ${release.tag_name.slice(1)} · Windows and macOS`
-        : `Версия ${release.tag_name.slice(1)} · Windows и macOS`;
+        ? `Version ${release.tag_name.slice(1)}, Windows and macOS`
+        : `Версия ${release.tag_name.slice(1)}, Windows и macOS`;
     } catch { /* Static links and explicit Mac test labels remain available. */ }
     finally { clearTimeout(timeout); }
   }
@@ -185,6 +187,9 @@
   themeButton.hidden = false;
   motionToggle.hidden = false;
   root.classList.add('enhanced');
+  const initialScenario = new URLSearchParams(location.search).get('scenario');
+  const initialTab = tabs.find(tab => tab.dataset.scenario === initialScenario);
+  if (initialTab) selectScenario(initialTab);
   updateMotion();
   updateDownloads();
 })();

@@ -39,7 +39,8 @@
   ]}
   </script>
   <link rel="icon" type="image/png" href="assets/logo.png">
-  <link rel="preload" href="assets/fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/unbounded-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/golos-text-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <script>
     try {
       const savedTheme = localStorage.getItem('perenos-site-theme');
@@ -67,7 +68,7 @@
   <a class="skip-link" href="#main">Перейти к содержимому</a>
   <header class="site-header">
     <div class="container navigation">
-      <a class="brand" href="#main" aria-label="Перенос — на главную"><img src="assets/logo.png" width="34" height="34" alt=""><span>перенос</span></a>
+      <a class="brand" href="#main" aria-label="Перенос — на главную"><img src="assets/logo.png" width="34" height="34" alt=""><span translate="no">перенос</span></a>
       <nav aria-label="Основная навигация"><a href="#scenarios">Возможности</a><a href="#restore">Восстановление</a><a href="#privacy">Приватность</a><a href="#questions">Вопросы</a></nav>
       <details class="mobile-menu"><summary aria-label="Открыть меню"><svg aria-hidden="true"><use href="#menu"/></svg></summary><nav aria-label="Мобильная навигация"><a href="#scenarios">Возможности</a><a href="#restore">Восстановление</a><a href="#privacy">Приватность</a><a href="#questions">Вопросы</a></nav></details>
       <div class="navigation-actions">
@@ -81,14 +82,13 @@
   <main id="main" tabindex="-1">
     <section class="hero container" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="hero-kicker">Приложения между iPhone</p>
         <h1 id="hero-title">Привычные приложения.<br>На новом iPhone.</h1>
         <p class="hero-description">Перенесите приложения через компьютер или верните свои покупки App Store, недоступные в РФ. Оригинальные IPA от Apple, по USB и без джейлбрейка.</p>
         <div class="hero-actions"><a class="button button-primary" href="#download">Скачать для Windows <svg aria-hidden="true"><use href="#down"/></svg></a><a class="text-link" href="#demo">Посмотреть демо <svg aria-hidden="true"><use href="#arrow"/></svg></a></div>
         <ul class="hero-proof"><li><svg aria-hidden="true"><use href="#check"/></svg>Бесплатно и с открытым кодом</li><li><svg aria-hidden="true"><use href="#lock"/></svg>Без своего сервера</li></ul>
       </div>
       <div class="hero-demo" id="demo">
-        <div class="transfer-route" aria-hidden="true"><span>Старый iPhone</span><span class="route-line"><i></i></span><span>Новый iPhone</span></div>
+        <div class="transfer-route" aria-hidden="true"><span>Старый iPhone</span><span class="route-line"><i></i><i></i><i></i></span><span>Новый iPhone</span></div>
         <div class="demo-shell">
           <div class="demo-toolbar">
             <div class="scenario-tabs" role="tablist" aria-label="Сценарий демонстрации">
@@ -137,7 +137,7 @@
     <section class="section" id="library" aria-labelledby="library-title"><div class="container feature-row reverse"><div class="feature-visual"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/saved-dark.png"><img class="theme-image" data-asset="saved" src="assets/saved-light.png" width="940" height="780" loading="lazy" alt="Сохранение IPA в библиотеку Переноса"></picture><p class="feature-caption">Ваши приложения — на вашем компьютере</p></div><div class="feature-copy"><h2 id="library-title">Сохраните сейчас.<br>Установите потом.</h2><p>Соберите собственную библиотеку оригинальных приложений на компьютере. Без файлообменников и сомнительных сборок.</p><ul class="feature-list"><li><svg aria-hidden="true"><use href="#check"/></svg>Иконки, версии и размер каждого приложения</li><li><svg aria-hidden="true"><use href="#check"/></svg>Проверка требований к iOS перед установкой</li><li><svg aria-hidden="true"><use href="#check"/></svg>Свои IPA с действующей лицензией и подписью</li></ul><p class="feature-note"><b>Лицензия остаётся с покупателем.</b> Установка IPA не снимает FairPlay и не гарантирует запуск без Apple Account на устройстве.</p></div></div></section>
 
     <section class="section container" id="real" aria-labelledby="real-title">
-      <div class="section-heading"><h2 id="real-title">Живые скриншоты</h2><p>Интерфейс в стиле 1.6.0 на реальном iPhone: настоящие приложения, иконки и размеры с подключённого устройства. Имя устройства скрыто, приложения и данные не изменялись.</p></div>
+      <div class="section-heading"><h2 id="real-title">Живые скриншоты</h2><p>Интерфейс Переноса на реальном iPhone: настоящие приложения, иконки и размеры с подключённого устройства. Имя устройства скрыто, приложения и данные не изменялись.</p></div>
       <figure class="feature-visual real-visual"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/real-apps-dark.png"><img class="theme-image" data-asset="real-apps" src="assets/real-apps-light.png" width="940" height="731" loading="lazy" alt="Реальные приложения iPhone в списке переноса Переноса"></picture><figcaption class="feature-caption">Список приложений с подключённого iPhone · светлая и тёмная темы</figcaption></figure>
     </section>
 
@@ -151,7 +151,7 @@
       <details><summary>Переносятся ли переписка и настройки?<span>+</span></summary><p>Нет, переносятся только приложения. Данные восстанавливайте через iCloud, резервную копию или синхронизацию внутри приложения.</p></details>
     </div></section>
 
-    <section class="container download-wrap" id="download" aria-labelledby="download-title"><div class="download-section"><div class="download-heading"><h2 id="download-title">Пусть на новом iPhone<br>всё будет знакомо.</h2><p>Скачайте «Перенос» с официальной страницы релизов на GitHub.</p><span class="release-pill" id="release-label">Версия 1.7.2 · Windows и macOS</span></div><div class="download-options">
+    <section class="container download-wrap" id="download" aria-labelledby="download-title"><div class="download-section"><div class="download-heading"><h2 id="download-title">Пусть на новом iPhone<br>всё будет знакомо.</h2><p>Скачайте «Перенос» с официальной страницы релизов на GitHub.</p><span class="release-pill" id="release-label">Версия 1.7.2, Windows и macOS</span></div><div class="download-options">
       <a class="download-card" data-download="installer" href="https://github.com/kr0nsch/perenos-ios/releases/latest"><span class="platform-icon"><svg aria-hidden="true"><use href="#computer"/></svg></span><span><b>Windows · установщик</b><small>Windows 10 / 11 · x64 · .exe</small></span><svg class="download-arrow" aria-hidden="true"><use href="#down"/></svg></a>
       <a class="download-card" data-download="portable" href="https://github.com/kr0nsch/perenos-ios/releases/latest"><span class="platform-icon"><svg aria-hidden="true"><use href="#folder"/></svg></span><span><b>Windows · portable</b><small>Без установки · x64 · .zip</small></span><svg class="download-arrow" aria-hidden="true"><use href="#down"/></svg></a>
       <a class="download-card" data-download="macos-arm64" href="https://github.com/kr0nsch/perenos-ios/releases/latest"><span class="platform-icon"><svg aria-hidden="true"><use href="#computer"/></svg></span><span><b>macOS · Apple Silicon</b><small data-status>Тестовая DMG · без нотаризации</small></span><svg class="download-arrow" aria-hidden="true"><use href="#down"/></svg></a>
@@ -159,6 +159,6 @@
     </div><p class="download-note"><b>Для macOS сейчас доступны тестовые DMG.</b> Они имеют ad-hoc подпись, без Developer ID и нотаризации Apple. Gatekeeper может предупредить о неизвестном разработчике. Запуск на физическом Mac и работа с реальным iPhone ещё не проверялись.</p><div class="download-footer"><span>macOS 15+ · тестовые DMG, не стабильный релиз</span><a href="https://github.com/kr0nsch/perenos-ios/releases">Все релизы и контрольные суммы <svg aria-hidden="true"><use href="#arrow"/></svg></a></div></div></section>
   </main>
 
-  <footer class="container site-footer"><div class="footer-top"><a class="brand" href="#main"><img src="assets/logo.png" width="30" height="30" alt=""><span>перенос</span></a><div><a href="https://github.com/kr0nsch/perenos-ios">GitHub</a><a href="https://github.com/kr0nsch/perenos-ios/blob/main/LICENSE">Лицензия MIT</a><a href="https://github.com/kr0nsch/perenos-ios/blob/main/CHANGELOG.md">Изменения</a><a href="en/" lang="en">English</a></div></div><p>Независимый проект, не связанный с Apple Inc. iPhone и App Store — товарные знаки Apple Inc. Используйте программу только с приложениями, на которые у вас есть право.</p></footer>
+  <footer class="container site-footer"><div class="footer-top"><a class="brand" href="#main"><img src="assets/logo.png" width="30" height="30" alt=""><span translate="no">перенос</span></a><div><a href="https://github.com/kr0nsch/perenos-ios">GitHub</a><a href="https://github.com/kr0nsch/perenos-ios/blob/main/LICENSE">Лицензия MIT</a><a href="https://github.com/kr0nsch/perenos-ios/blob/main/CHANGELOG.md">Изменения</a><a href="en/" lang="en">English</a></div></div><p>Независимый проект, не связанный с Apple Inc. iPhone и App Store — товарные знаки Apple Inc. Используйте программу только с приложениями, на которые у вас есть право.</p></footer>
 </body>
 </html>

@@ -240,7 +240,7 @@ try {
     await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark'
       && document.querySelector('#demo-animation')?.getAttribute('src')?.endsWith('demo-dark.gif'));
     const browserColor = await page.locator('meta[name="theme-color"][media="(prefers-color-scheme: dark)"]').getAttribute('content');
-    assert.equal(browserColor, '#101923');
+    assert.equal(browserColor, '#0b0b0c');
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.waitForFunction(() => document.querySelector('#motion-toggle').getAttribute('aria-pressed') === 'false'
       && !document.querySelector('#demo-picture').hidden);

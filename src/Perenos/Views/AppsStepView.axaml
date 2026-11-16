@@ -48,7 +48,7 @@
         </Grid>
       </Border>
       <Border Grid.Row="3" Classes="card" Padding="0,4" IsVisible="{Binding AppList.ShowList}">
-        <Grid RowDefinitions="Auto,Auto">
+        <Grid RowDefinitions="*,Auto">
           <ListBox x:Name="AppListBox" ItemsSource="{Binding AppList.Visible}" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <ListBox.ItemTemplate>
               <DataTemplate DataType="vm:AppItemViewModel">

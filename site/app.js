@@ -45,7 +45,7 @@
     const theme = activeTheme();
     root.dataset.theme = theme;
     document.querySelectorAll('meta[name="theme-color"]').forEach(meta => {
-      meta.content = theme === 'dark' ? '#101923' : '#eaf1f8';
+      meta.content = theme === 'dark' ? '#0b0b0c' : '#f5f5f7';
     });
     document.querySelectorAll('.theme-image').forEach(img => {
       const src = `${assetPrefix}assets/${img.dataset.asset}${english ? '-en' : ''}-${theme}.png`;

@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="asset-prefix" content="../">
   <meta name="color-scheme" content="light dark">
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#eaf1f8">
-  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101923">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f5f5f7">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b0b0c">
   <title>Perenos — iPhone app transfer and App Store restoration</title>
   <meta name="description" content="Transfer apps from iPhone to iPhone via your computer and restore your App Store purchases unavailable in Russia: VK Music, Avito and more. Install IPA files without jailbreak, free and open source.">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
@@ -95,8 +95,8 @@
             <button class="motion-toggle" id="motion-toggle" type="button" aria-pressed="false" hidden><svg aria-hidden="true"><use id="motion-icon" href="#play"/></svg><span>Enable animation</span></button>
           </div>
           <div class="demo-stage" tabindex="0" role="region" aria-label="Scrollable app demonstration">
-            <picture id="demo-picture"><source media="(prefers-color-scheme: dark)" srcset="../assets/apps-en-dark.png"><img id="demo-image" class="theme-image" data-asset="apps" src="../assets/apps-en-light.png" width="1196" height="839" fetchpriority="high" alt="Choosing apps in Perenos"></picture>
-            <img id="demo-animation" data-src="../assets/demo-en.gif" width="960" height="676" alt="Animated app selection and installation in Perenos" hidden>
+            <picture id="demo-picture"><source media="(prefers-color-scheme: dark)" srcset="../assets/apps-en-dark.png"><img id="demo-image" class="theme-image" data-asset="apps" src="../assets/apps-en-light.png" width="940" height="780" fetchpriority="high" alt="Choosing apps in Perenos"></picture>
+            <img id="demo-animation" data-src="../assets/demo-en.gif" width="960" height="796" alt="Animated app selection and installation in Perenos" hidden>
           </div>
           <div class="demo-caption-row"><span id="demo-caption">Choosing apps</span><span class="demo-tag">Demo 1.7.2</span></div>
           <div id="panel-now" class="scenario-panel" tabindex="0" role="tabpanel" aria-labelledby="tab-now"><h3>You choose. We transfer.</h3><p>Select only the apps you need, with search and sorting. Every step is visible, including failures and an easy way to retry.</p></div>
@@ -109,7 +109,7 @@
     </section>
 
     <ul class="trust-strip container" aria-label="What you can verify">
-      <li><svg aria-hidden="true"><use href="#check"/></svg><span><b>168 automated tests</b><small>in Windows and macOS CI</small></span></li>
+      <li><svg aria-hidden="true"><use href="#check"/></svg><span><b>170 automated tests</b><small>in Windows and macOS CI</small></span></li>
       <li><svg aria-hidden="true"><use href="#check"/></svg><span><b>MIT open source</b><small>inspect the code yourself</small></span></li>
       <li><svg aria-hidden="true"><use href="#check"/></svg><span><b>SHA-256 and Sigstore</b><small>verifiable package provenance</small></span></li>
       <li><svg aria-hidden="true"><use href="#lock"/></svg><span><b>Local by design</b><small>no ads or hidden telemetry</small></span></li>
@@ -127,10 +127,15 @@
 
     <section class="section container feature-row" id="restore" aria-labelledby="restore-title">
       <div class="feature-copy"><h2 id="restore-title">Get back<br>what was yours.</h2><p>If an app was acquired with your Apple Account, it may still be available for download after disappearing from the Russian App Store.</p><ol class="feature-list"><li><svg aria-hidden="true"><use href="#check"/></svg>Connect your iPhone over USB and tap Trust.</li><li><svg aria-hidden="true"><use href="#check"/></svg>Sign in to the purchaser's account only on the computer.</li><li><svg aria-hidden="true"><use href="#check"/></svg>Select the app and install it.</li></ol><p class="feature-note">Apple verifies the license and decides whether to serve the package. We do not promise to restore every app or download unknown copies.</p></div>
-      <div class="feature-visual"><picture><source media="(prefers-color-scheme: dark)" srcset="../assets/restore-en-dark.png"><img class="theme-image" data-asset="restore" src="../assets/restore-en-light.png" width="1196" height="839" loading="lazy" alt="Restoring App Store purchases in Perenos"></picture><p class="feature-caption">Original packages from Apple's servers</p></div>
+      <div class="feature-visual"><picture><source media="(prefers-color-scheme: dark)" srcset="../assets/restore-en-dark.png"><img class="theme-image" data-asset="restore" src="../assets/restore-en-light.png" width="940" height="780" loading="lazy" alt="Restoring App Store purchases in Perenos"></picture><p class="feature-caption">Original packages from Apple's servers</p></div>
     </section>
 
-    <section class="section" id="library" aria-labelledby="library-title"><div class="container feature-row reverse"><div class="feature-visual"><picture><source media="(prefers-color-scheme: dark)" srcset="../assets/saved-en-dark.png"><img class="theme-image" data-asset="saved" src="../assets/saved-en-light.png" width="1196" height="839" loading="lazy" alt="Saving IPAs in the Perenos library"></picture><p class="feature-caption">Your apps, on your computer</p></div><div class="feature-copy"><h2 id="library-title">Save now.<br>Install later.</h2><p>Build your own library of original apps on your computer. No file-sharing sites or untrusted packages.</p><ul class="feature-list"><li><svg aria-hidden="true"><use href="#check"/></svg>Icons, versions and size for each app</li><li><svg aria-hidden="true"><use href="#check"/></svg>iOS requirements checked before installation</li><li><svg aria-hidden="true"><use href="#check"/></svg>Your own IPAs with valid licenses and signatures</li></ul><p class="feature-note"><b>The license stays with the purchaser.</b> Installing an IPA does not bypass FairPlay or guarantee launching without an Apple Account on the device.</p></div></div></section>
+    <section class="section" id="library" aria-labelledby="library-title"><div class="container feature-row reverse"><div class="feature-visual"><picture><source media="(prefers-color-scheme: dark)" srcset="../assets/saved-en-dark.png"><img class="theme-image" data-asset="saved" src="../assets/saved-en-light.png" width="940" height="780" loading="lazy" alt="Saving IPAs in the Perenos library"></picture><p class="feature-caption">Your apps, on your computer</p></div><div class="feature-copy"><h2 id="library-title">Save now.<br>Install later.</h2><p>Build your own library of original apps on your computer. No file-sharing sites or untrusted packages.</p><ul class="feature-list"><li><svg aria-hidden="true"><use href="#check"/></svg>Icons, versions and size for each app</li><li><svg aria-hidden="true"><use href="#check"/></svg>iOS requirements checked before installation</li><li><svg aria-hidden="true"><use href="#check"/></svg>Your own IPAs with valid licenses and signatures</li></ul><p class="feature-note"><b>The license stays with the purchaser.</b> Installing an IPA does not bypass FairPlay or guarantee launching without an Apple Account on the device.</p></div></div></section>
+
+    <section class="section container" id="real" aria-labelledby="real-title">
+      <div class="section-heading"><h2 id="real-title">Live screenshots</h2><p>The 1.6.0-style interface on a real iPhone: actual apps, icons and sizes from the connected device. The device name is hidden; apps and data were not modified.</p></div>
+      <figure class="feature-visual real-visual"><picture><source media="(prefers-color-scheme: dark)" srcset="../assets/real-apps-en-dark.png"><img class="theme-image" data-asset="real-apps" src="../assets/real-apps-en-light.png" width="940" height="751" loading="lazy" alt="Real iPhone apps in the Perenos transfer list"></picture><figcaption class="feature-caption">App list from a connected iPhone · light and dark themes</figcaption></figure>
+    </section>
 
     <section class="section privacy-section" id="privacy" aria-labelledby="privacy-title"><div class="container privacy-grid"><div class="privacy-intro"><h2 id="privacy-title">Your data.<br>Yours alone.</h2><p>Perenos has no server of its own, no ads and no hidden analytics. Apps and purchases are downloaded directly from Apple, and your files stay on your computer.</p><a href="https://github.com/kr0nsch/perenos-ios/blob/main/SECURITY.md">How security works <svg aria-hidden="true"><use href="#arrow"/></svg></a></div><ul class="privacy-facts"><li><svg aria-hidden="true"><use href="#lock"/></svg><div><h3>Protected session</h3><p>The session key is protected by Windows DPAPI or macOS Keychain. Your password is not stored.</p></div></li><li><svg aria-hidden="true"><use href="#check"/></svg><div><h3>Open implementation</h3><p>Both the app and ipatool source code are available for inspection.</p></div></li><li><svg aria-hidden="true"><use href="#check"/></svg><div><h3>Verifiable builds</h3><p>SHA-256 and Sigstore for releases. They do not replace Apple or Windows publisher signatures.</p></div></li><li><svg aria-hidden="true"><use href="#folder"/></svg><div><h3>Local library</h3><p>IPAs stay with you. They may contain the purchaser's email, so do not publish them.</p></div></li></ul></div></section>
 

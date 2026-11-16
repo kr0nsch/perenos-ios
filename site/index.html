@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="asset-prefix" content="">
   <meta name="color-scheme" content="light dark">
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#eaf1f8">
-  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101923">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f5f5f7">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b0b0c">
   <title>Перенос приложений с iPhone на iPhone и восстановление App Store — Перенос</title>
   <meta name="description" content="Переносите приложения с iPhone на iPhone через компьютер и восстанавливайте свои покупки App Store, недоступные в РФ: VK Музыку, Авито и другие. Установка IPA без джейлбрейка, бесплатно и с открытым кодом.">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
@@ -99,8 +99,8 @@
             <button class="motion-toggle" id="motion-toggle" type="button" aria-pressed="false" hidden><svg aria-hidden="true"><use id="motion-icon" href="#play"/></svg><span>Включить анимацию</span></button>
           </div>
           <div class="demo-stage" tabindex="0" role="region" aria-label="Демонстрация приложения с горизонтальной прокруткой">
-            <picture id="demo-picture"><source media="(prefers-color-scheme: dark)" srcset="assets/apps-dark.png"><img id="demo-image" class="theme-image" data-asset="apps" src="assets/apps-light.png" width="1196" height="839" fetchpriority="high" alt="Выбор приложений в Переносе"></picture>
-            <img id="demo-animation" data-src="assets/demo.gif" width="960" height="676" alt="Анимация выбора и установки приложений в Переносе" hidden>
+            <picture id="demo-picture"><source media="(prefers-color-scheme: dark)" srcset="assets/apps-dark.png"><img id="demo-image" class="theme-image" data-asset="apps" src="assets/apps-light.png" width="940" height="780" fetchpriority="high" alt="Выбор приложений в Переносе"></picture>
+            <img id="demo-animation" data-src="assets/demo.gif" width="960" height="796" alt="Анимация выбора и установки приложений в Переносе" hidden>
           </div>
           <div class="demo-caption-row"><span id="demo-caption">Выбор приложений</span><span class="demo-tag">Демо 1.7.2</span></div>
           <div id="panel-now" class="scenario-panel" tabindex="0" role="tabpanel" aria-labelledby="tab-now"><h3>Вы выбираете. Мы переносим.</h3><p>Только нужные приложения, поиск и сортировка. Каждый шаг понятен, включая ошибку и повторную попытку.</p></div>
@@ -113,7 +113,7 @@
     </section>
 
     <ul class="trust-strip container" aria-label="Что можно проверить">
-      <li><svg aria-hidden="true"><use href="#check"/></svg><span><b>168 автотестов</b><small>в Windows и macOS CI</small></span></li>
+      <li><svg aria-hidden="true"><use href="#check"/></svg><span><b>170 автотестов</b><small>в Windows и macOS CI</small></span></li>
       <li><svg aria-hidden="true"><use href="#check"/></svg><span><b>Открытый код по MIT</b><small>можно изучить и проверить</small></span></li>
       <li><svg aria-hidden="true"><use href="#check"/></svg><span><b>SHA-256 и Sigstore</b><small>для проверки происхождения пакетов</small></span></li>
       <li><svg aria-hidden="true"><use href="#lock"/></svg><span><b>Локальная работа</b><small>без рекламы и скрытой телеметрии</small></span></li>
@@ -131,10 +131,15 @@
 
     <section class="section container feature-row" id="restore" aria-labelledby="restore-title">
       <div class="feature-copy"><h2 id="restore-title">Верните то,<br>что было вашим.</h2><p>Если приложение было получено через ваш Apple Account, оно может остаться доступным для скачивания даже после исчезновения из российского App Store.</p><ol class="feature-list"><li><svg aria-hidden="true"><use href="#check"/></svg>Подключите iPhone по USB и подтвердите доверие.</li><li><svg aria-hidden="true"><use href="#check"/></svg>Войдите в аккаунт покупателя только на компьютере.</li><li><svg aria-hidden="true"><use href="#check"/></svg>Выберите нужное приложение и установите его.</li></ol><p class="feature-note">Apple проверяет лицензию и решает, выдавать ли пакет. Мы не обещаем восстановление любой программы и не скачиваем неизвестные копии.</p></div>
-      <div class="feature-visual"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/restore-dark.png"><img class="theme-image" data-asset="restore" src="assets/restore-light.png" width="1196" height="839" loading="lazy" alt="Восстановление собственных покупок App Store в Переносе"></picture><p class="feature-caption">Оригинальные пакеты с серверов Apple</p></div>
+      <div class="feature-visual"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/restore-dark.png"><img class="theme-image" data-asset="restore" src="assets/restore-light.png" width="940" height="780" loading="lazy" alt="Восстановление собственных покупок App Store в Переносе"></picture><p class="feature-caption">Оригинальные пакеты с серверов Apple</p></div>
     </section>
 
-    <section class="section" id="library" aria-labelledby="library-title"><div class="container feature-row reverse"><div class="feature-visual"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/saved-dark.png"><img class="theme-image" data-asset="saved" src="assets/saved-light.png" width="1196" height="839" loading="lazy" alt="Сохранение IPA в библиотеку Переноса"></picture><p class="feature-caption">Ваши приложения — на вашем компьютере</p></div><div class="feature-copy"><h2 id="library-title">Сохраните сейчас.<br>Установите потом.</h2><p>Соберите собственную библиотеку оригинальных приложений на компьютере. Без файлообменников и сомнительных сборок.</p><ul class="feature-list"><li><svg aria-hidden="true"><use href="#check"/></svg>Иконки, версии и размер каждого приложения</li><li><svg aria-hidden="true"><use href="#check"/></svg>Проверка требований к iOS перед установкой</li><li><svg aria-hidden="true"><use href="#check"/></svg>Свои IPA с действующей лицензией и подписью</li></ul><p class="feature-note"><b>Лицензия остаётся с покупателем.</b> Установка IPA не снимает FairPlay и не гарантирует запуск без Apple Account на устройстве.</p></div></div></section>
+    <section class="section" id="library" aria-labelledby="library-title"><div class="container feature-row reverse"><div class="feature-visual"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/saved-dark.png"><img class="theme-image" data-asset="saved" src="assets/saved-light.png" width="940" height="780" loading="lazy" alt="Сохранение IPA в библиотеку Переноса"></picture><p class="feature-caption">Ваши приложения — на вашем компьютере</p></div><div class="feature-copy"><h2 id="library-title">Сохраните сейчас.<br>Установите потом.</h2><p>Соберите собственную библиотеку оригинальных приложений на компьютере. Без файлообменников и сомнительных сборок.</p><ul class="feature-list"><li><svg aria-hidden="true"><use href="#check"/></svg>Иконки, версии и размер каждого приложения</li><li><svg aria-hidden="true"><use href="#check"/></svg>Проверка требований к iOS перед установкой</li><li><svg aria-hidden="true"><use href="#check"/></svg>Свои IPA с действующей лицензией и подписью</li></ul><p class="feature-note"><b>Лицензия остаётся с покупателем.</b> Установка IPA не снимает FairPlay и не гарантирует запуск без Apple Account на устройстве.</p></div></div></section>
+
+    <section class="section container" id="real" aria-labelledby="real-title">
+      <div class="section-heading"><h2 id="real-title">Живые скриншоты</h2><p>Интерфейс в стиле 1.6.0 на реальном iPhone: настоящие приложения, иконки и размеры с подключённого устройства. Имя устройства скрыто, приложения и данные не изменялись.</p></div>
+      <figure class="feature-visual real-visual"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/real-apps-dark.png"><img class="theme-image" data-asset="real-apps" src="assets/real-apps-light.png" width="940" height="731" loading="lazy" alt="Реальные приложения iPhone в списке переноса Переноса"></picture><figcaption class="feature-caption">Список приложений с подключённого iPhone · светлая и тёмная темы</figcaption></figure>
+    </section>
 
     <section class="section privacy-section" id="privacy" aria-labelledby="privacy-title"><div class="container privacy-grid"><div class="privacy-intro"><h2 id="privacy-title">Ваши данные.<br>Только ваши.</h2><p>У «Переноса» нет своего сервера, рекламы или скрытой аналитики. Приложения и покупки скачиваются у Apple напрямую, а файлы остаются на вашем компьютере.</p><a href="https://github.com/kr0nsch/perenos-ios/blob/main/SECURITY.md">Как устроена безопасность <svg aria-hidden="true"><use href="#arrow"/></svg></a></div><ul class="privacy-facts"><li><svg aria-hidden="true"><use href="#lock"/></svg><div><h3>Защищённая сессия</h3><p>Ключ защищён Windows DPAPI или macOS Keychain. Пароль не сохраняется.</p></div></li><li><svg aria-hidden="true"><use href="#check"/></svg><div><h3>Открытая реализация</h3><p>Исходный код приложения и ipatool доступен для проверки.</p></div></li><li><svg aria-hidden="true"><use href="#check"/></svg><div><h3>Проверяемые пакеты</h3><p>SHA-256 и Sigstore для релизов. Это не заменяет подпись Apple или Windows.</p></div></li><li><svg aria-hidden="true"><use href="#folder"/></svg><div><h3>Локальная библиотека</h3><p>IPA остаются у вас. Не публикуйте их: в файле может быть почта покупателя.</p></div></li></ul></div></section>
 

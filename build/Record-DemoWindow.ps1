@@ -110,10 +110,12 @@ namespace Perenos.Media {
         private static extern uint GetWindowThreadProcessId(IntPtr hwnd, out uint pid);
         [DllImport("user32.dll", SetLastError = true)]
         private static extern IntPtr SetThreadDpiAwarenessContext(IntPtr context);
+        [DllImport("kernel32.dll")]
+        private static extern void Sleep(int milliseconds);
 
         private static Rectangle Bounds(IntPtr hwnd, out RECT window, out RECT frame) {
             if (!GetWindowRect(hwnd, out window)) {
-                throw new Win32Exception(Marshal.GetLastWin32Error(), "Cannot read target window bounds.");
+                throw new InvalidOperationException("Cannot read target window bounds.");
             }
             int hr = DwmGetWindowAttribute(hwnd, 9, out frame, Marshal.SizeOf(typeof(RECT)));
             if (hr != 0) { Marshal.ThrowExceptionForHR(hr); }
@@ -133,7 +135,7 @@ namespace Perenos.Media {
             // Physical-pixel coordinates keep GetWindowRect and DWM frame bounds aligned.
             IntPtr previousDpi = SetThreadDpiAwarenessContext(new IntPtr(-4));
             if (previousDpi == IntPtr.Zero) {
-                throw new Win32Exception(Marshal.GetLastWin32Error(), "Cannot set capture thread DPI awareness.");
+                throw new InvalidOperationException("Cannot set capture thread DPI awareness.");
             }
             try {
                 using (var process = Process.GetProcessById(pid)) {
@@ -144,22 +146,21 @@ namespace Perenos.Media {
                     IntPtr hwnd = process.MainWindowHandle;
                     while (hwnd == IntPtr.Zero && startup.ElapsedMilliseconds < 10000) {
                         if (process.HasExited) { throw new InvalidOperationException("The demo exited before opening its window."); }
-                        Thread.Sleep(100);
+                        Sleep(100);
                         process.Refresh();
                         hwnd = process.MainWindowHandle;
                     }
                     if (hwnd == IntPtr.Zero) { throw new InvalidOperationException("The demo has no main window."); }
                     RECT initialWindow, initialFrame;
                     Rectangle initialCrop = Bounds(hwnd, out initialWindow, out initialFrame);
-                    var utf8 = new UTF8Encoding(false);
-                    using (var windowFile = new StreamWriter(new FileStream(Path.Combine(dir, "window.txt"), FileMode.CreateNew), utf8)) {
+                    using (var windowFile = new StreamWriter(new FileStream(Path.Combine(dir, "window.txt"), FileMode.CreateNew))) {
                         windowFile.WriteLine(string.Format(CultureInfo.InvariantCulture, "{0},{1},{2},{3}",
                             initialFrame.Left, initialFrame.Top, initialCrop.Width, initialCrop.Height));
                     }
                     var result = new CaptureResult { Width = initialCrop.Width, Height = initialCrop.Height };
                     string stop = Path.Combine(dir, "stop");
                     var elapsed = Stopwatch.StartNew();
-                    using (var log = new StreamWriter(new FileStream(Path.Combine(dir, "frames.csv"), FileMode.CreateNew, FileAccess.Write, FileShare.Read), utf8)) {
+                    using (var log = new StreamWriter(new FileStream(Path.Combine(dir, "frames.csv"), FileMode.CreateNew, FileAccess.Write, FileShare.Read))) {
                         log.AutoFlush = true;
                         while (!File.Exists(stop) && elapsed.Elapsed.TotalSeconds < maxSeconds) {
                             uint owner;
@@ -184,7 +185,7 @@ namespace Perenos.Media {
                                     try {
                                         // PW_RENDERFULLCONTENT captures the window, not the desktop cursor.
                                         if (!PrintWindow(hwnd, hdc, 2)) {
-                                            throw new Win32Exception(Marshal.GetLastWin32Error(), "PrintWindow failed.");
+                                            throw new InvalidOperationException("PrintWindow failed.");
                                         }
                                     } finally { graphics.ReleaseHdc(hdc); }
                                 }
@@ -198,7 +199,7 @@ namespace Perenos.Media {
                             log.WriteLine(string.Format(CultureInfo.InvariantCulture, "{0},{1}", result.Frames, timestamp));
                             result.Frames++;
                             long remaining = intervalMs - (elapsed.ElapsedMilliseconds - frameStarted);
-                            if (remaining > 0) { Thread.Sleep((int)remaining); }
+                            if (remaining > 0) { Sleep((int)remaining); }
                         }
                     }
                     result.DurationMs = elapsed.ElapsedMilliseconds;
@@ -213,9 +214,23 @@ namespace Perenos.Media {
 '@
 
 if (-not ('Perenos.Media.DemoWindowRecorder' -as [type])) {
-    # PowerShell 7 splits System.Drawing into Primitives/Common; reference the real assemblies
-    # so the recorder compiles in both pwsh 7 and Windows PowerShell 5.1.
-    Add-Type -ReferencedAssemblies @([System.Drawing.Rectangle].Assembly.Location, [System.Drawing.Bitmap].Assembly.Location) -TypeDefinition $recorderSource
+    # PowerShell 7 on modern .NET splits System.Drawing and Process across several assemblies
+    # (including private Windows ones); reference them transitively so the recorder compiles
+    # in pwsh 7 and Windows PowerShell 5.1 alike.
+    $recorderRoots = @(
+        [System.Drawing.Rectangle].Assembly,
+        [System.Drawing.Bitmap].Assembly,
+        [System.Diagnostics.Process].Assembly,
+        [System.ComponentModel.Component].Assembly
+    )
+    $recorderAll = @($recorderRoots)
+    foreach ($assembly in $recorderRoots) {
+        foreach ($name in $assembly.GetReferencedAssemblies()) {
+            try { $recorderAll += [System.Reflection.Assembly]::Load($name) } catch { }
+        }
+    }
+    $recorderRefs = $recorderAll | Where-Object { $_.Location } | Select-Object -ExpandProperty Location -Unique
+    Add-Type -ReferencedAssemblies $recorderRefs -TypeDefinition $recorderSource
 }
 [IO.Directory]::CreateDirectory($outputPath) | Out-Null
 Assert-NoReparsePoint $outputPath

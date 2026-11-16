@@ -238,6 +238,13 @@ public sealed class AppBuilderTests : IDisposable
         window.UpdateLayout();
         Assert.NotEmpty(vm.AppList.Visible);
         AssertVisibleTextWithinWindow(window);
+        var list = window.GetVisualDescendants().OfType<ListBox>()
+            .Single(box => ReferenceEquals(box.ItemsSource, vm.AppList.Visible));
+        var footnote = window.GetVisualDescendants().OfType<TextBlock>()
+            .Single(text => text.Text == vm.AppList.Footnote);
+        var listBottom = list.TranslatePoint(new Point(0, list.Bounds.Height), window)!.Value.Y;
+        var footnoteTop = footnote.TranslatePoint(new Point(0, 0), window)!.Value.Y;
+        Assert.True(footnoteTop >= listBottom - 1, "App list overflows its card into the footnote.");
         window.Close();
     }
 

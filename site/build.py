@@ -59,6 +59,12 @@ def build(output: Path) -> None:
                 if not source.is_file():
                     raise FileNotFoundError(f"Missing current Avalonia screenshot: {source}")
                 shutil.copy2(source, assets / f"{name}{suffix}-{theme}.png")
+    for language, suffix in (("ru-RU", ""), ("en-US", "-en")):
+        for theme in ("light", "dark"):
+            source = ROOT / "docs" / "screenshots" / "real" / f"real-apps-{language}-{theme.capitalize()}.png"
+            if not source.is_file():
+                raise FileNotFoundError(f"Missing real-device screenshot: {source}")
+            shutil.copy2(source, assets / f"real-apps{suffix}-{theme}.png")
     for flow in ("demo", "restore", "save"):
         for theme in ("light", "dark"):
             for language, suffix in (("ru-RU", ""), ("en-US", "-en")):

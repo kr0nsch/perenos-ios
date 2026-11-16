@@ -17,7 +17,18 @@
 </p>
 
 <p align="center"><img src="docs/media/demo-ru-light.gif" alt="Реальная демонстрация выбора и установки приложений в Переносе" width="960"></p>
-<p align="center"><sub>Не презентация, а запись приложения версии 1.7.2. Устройства, аккаунт и приложения вымышленные. <a href="docs/media/full-ru-light.mp4">Полное видео без остановки</a>.</sub></p>
+<p align="center"><sub>Не презентация, а запись приложения версии 1.7.2 в интерфейсе стиля 1.6.0. Устройства, аккаунт и приложения вымышленные. <a href="docs/media/full-ru-light.mp4">Полное видео без остановки</a>.</sub></p>
+
+## Живые скриншоты
+
+Интерфейс в стиле 1.6.0 на реальном iPhone: настоящие приложения, иконки и размеры с подключённого устройства. Имя устройства скрыто, приложения и данные не изменялись.
+
+<p align="center">
+  <img src="docs/screenshots/real/real-apps-ru-RU-Light.png" alt="Реальные приложения iPhone в списке переноса, светлая тема" width="720">
+</p>
+<p align="center">
+  <img src="docs/screenshots/real/real-apps-ru-RU-Dark.png" alt="Реальные приложения iPhone в списке переноса, тёмная тема" width="720">
+</p>
 
 > [!IMPORTANT]
 > «Перенос» скачивает **оригинальные приложения с серверов Apple**, а не копии с файлообменников. Нужны приложения, которые уже принадлежат вашему Apple Account. Программа не обходит FairPlay, не открывает чужие или платные покупки и не меняет регион или аккаунт на iPhone.
@@ -87,7 +98,7 @@
 | Что можно проверить | Где посмотреть |
 |---|---|
 | Исходный код и лицензия | [Репозиторий](https://github.com/kr0nsch/perenos-ios) и [MIT](LICENSE) |
-| Автотесты и сборка | [168 тестов и упаковка для Windows и macOS в CI](https://github.com/kr0nsch/perenos-ios/actions/workflows/ci.yml) |
+| Автотесты и сборка | [170 тестов и упаковка для Windows и macOS в CI](https://github.com/kr0nsch/perenos-ios/actions/workflows/ci.yml) |
 | Происхождение установщиков | `SHA256SUMS.txt` и Sigstore-аттестации в [релизах](https://github.com/kr0nsch/perenos-ios/releases) |
 | Подлинность демонстраций | [Записи реального окна и проверяемые исходные кадры](docs/MEDIA.md), а не отредактированные изображения |
 

@@ -26,14 +26,16 @@ jobs:
         with:
           global-json-file: global.json
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v7
         with:
           go-version: "1.26.5"
           cache: false
 
       - name: Build ipatool (checksum-verified source)
         shell: pwsh
-        run: ./build/Get-Ipatool.ps1 -RuntimeIdentifier win-x64
+        run: |
+          ./build/Get-Ipatool.ps1 -RuntimeIdentifier win-x64
+          ./build/Get-Ipatool.ps1 -RuntimeIdentifier win-arm64
 
       - name: Test
         run: dotnet test tests/Perenos.Core.Tests/Perenos.Core.Tests.csproj -c Release --logger "console;verbosity=normal"
@@ -62,11 +64,9 @@ jobs:
         run: npm run test:site
 
   macos:
-    runs-on: macos-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        rid: [osx-arm64, osx-x64]
+    # Use the Intel macOS runner to avoid GitHub's macOS arm64 queue starvation
+    # while cross-compiling and packaging both osx-arm64 and osx-x64 in one job.
+    runs-on: macos-15-intel
     env:
       DOTNET_NOLOGO: "1"
       DOTNET_CLI_TELEMETRY_OPTOUT: "1"
@@ -77,10 +77,16 @@ jobs:
         with:
           global-json-file: global.json
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v7
         with:
           go-version: "1.26.5"
           cache: false
+
+      - name: Build ipatool (checksum-verified source)
+        shell: pwsh
+        run: |
+          ./build/Get-Ipatool.ps1 -RuntimeIdentifier osx-arm64
+          ./build/Get-Ipatool.ps1 -RuntimeIdentifier osx-x64
 
       - name: Test cross-platform core
         run: dotnet test tests/Perenos.Core.Tests/Perenos.Core.Tests.csproj -c Release --logger "console;verbosity=normal"
@@ -91,15 +97,15 @@ jobs:
       - name: Test Avalonia UI
         run: dotnet test tests/Perenos.Ui.Tests/Perenos.Ui.Tests.csproj -c Release --logger "console;verbosity=normal"
 
-      - name: Build and package macOS app (${{ matrix.rid }})
+      - name: Build and package macOS app (osx-arm64 and osx-x64)
         run: |
           command -v pwsh >/dev/null || brew install --cask powershell
-          bash build/build-macos.sh 0.0.0 ${{ matrix.rid }}
+          bash build/build-macos.sh 0.0.0 osx-arm64 osx-x64
 
-      - name: Upload development package for manual device checks
+      - name: Upload development packages for manual device checks
         if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v7
         with:
-          name: Perenos-ci-${{ matrix.rid }}
+          name: Perenos-ci-macos
           path: artifacts/release/*.dmg
           retention-days: 3

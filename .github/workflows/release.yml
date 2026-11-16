@@ -28,7 +28,7 @@ jobs:
       - uses: actions/setup-dotnet@v6
         with:
           global-json-file: global.json
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v7
         with:
           go-version: "1.26.5"
           cache: false
@@ -78,7 +78,8 @@ jobs:
   release-macos:
     # Development DMGs are explicitly named -test.dmg. Only configured Developer ID
     # credentials produce the regular signed and notarized release filenames.
-    runs-on: macos-latest
+    # Use the Intel macOS runner to avoid GitHub's macOS arm64 queue starvation.
+    runs-on: macos-15-intel
     strategy:
       fail-fast: false
       matrix:
@@ -88,7 +89,7 @@ jobs:
       - uses: actions/setup-dotnet@v6
         with:
           global-json-file: global.json
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v7
         with:
           go-version: "1.26.5"
           cache: false

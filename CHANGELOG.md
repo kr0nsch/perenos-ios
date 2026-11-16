@@ -6,6 +6,34 @@ All notable changes to Perenos are listed here. The format follows
 
 ## [Unreleased]
 
+## [1.8.0] - 2026-11-16
+
+### Изменено
+- Восстановлена дизайн-система 1.6.0 на общей базе Avalonia: чистая светлая и тёмная палитра iOS, непрозрачные группированные карточки, тонкие разделители, единое оформление кастомного заголовка во всех окнах, плавные переходы шагов и центрированный вход в Apple Account на старте и в библиотеке.
+- Строки устройств растянуты на всю ширину с галочкой у правого края; в подписи устройства отображается реальное доступное место (`AmountDataAvailable`) с поясняющей подсказкой о разнице с Настройками iOS.
+- Сайт полностью переработан в айдентике «маршрута переноса» (шрифты `Unbounded` и `Golos Text`, кабельная рейка, глубокие ссылки `?scenario=`, живые скриншоты с реального iPhone без имени устройства, анимированные демонстрации и видео текущего интерфейса); README обновлены с живыми скриншотами и актуальным интерфейсом.
+
+### Исправлено
+- Перетаскивание и двойной клик по кастомному заголовку окна больше не перехватывают клики по кнопкам настроек, сворачивания, разворачивания и закрытия во всех окнах; добавлен регрессионный живой клик-тест (`build/Live-ClickTest.ps1`) и имена автоматизации для списков и поля поиска.
+- Исправлены переполнение списка приложений за пределы карточки на шаге выбора, падение окна входа на macOS при отсутствии кастомной шапки, локализация статуса витрины при смене языка, а также доступность, контраст мелких кнопок и форматирование на сайте.
+- Стабилизированы CI и релизный workflow (перевод macOS-сборок на `macos-15-intel`, обновление `actions/setup-go` до `v7`, устранена гонка в UI-тесте `RussianDeviceAndAppListsFitCompactWindow`).
+
+### Ограничения проверки
+- macOS по-прежнему распространяется как тестовые `-test.dmg` с ad-hoc подписью, без Developer ID и нотаризации. Первый запуск на физическом Mac и установка IPA на реальный iPhone в обновлённом интерфейсе не проверялись.
+
+### Changed
+- Restored the 1.6.0 design system on the shared Avalonia codebase: clean light and dark iOS palette, opaque grouped cards, hairline borders, unified custom window chrome across all dialogs, smooth step transitions and centered Apple Account entry on the start and library screens.
+- Stretched device rows full-width with the selection checkmark at the right edge, and switched device free space to `AmountDataAvailable` with a tooltip explaining the difference from iOS Settings.
+- Redesigned the website with the transfer-route identity (`Unbounded` and `Golos Text` fonts, cable rail, deep-linked `?scenario=` tabs, real iPhone live screenshots with device names removed, and regenerated demo media for the current UI); updated Russian and English READMEs.
+
+### Fixed
+- Custom title bar dragging and double-click maximize no longer swallow clicks on settings, caption or close buttons across all windows; added a live mouse-click regression test (`build/Live-ClickTest.ps1`) and automation names for combo boxes and the app search box.
+- Fixed app list card overflow on the selection step, the macOS sign-in window crash when the custom title bar is hidden, storefront hint re-localization on language change, and website accessibility, contrast and formatting issues.
+- Stabilized CI and release workflows (switched macOS builds to `macos-15-intel`, upgraded `actions/setup-go` to `v7`, and fixed a timing race in `RussianDeviceAndAppListsFitCompactWindow`).
+
+### Verification limits
+- macOS is still distributed as ad-hoc signed `-test.dmg` packages without Developer ID or notarization. First launch on a physical Mac and IPA installation on a real iPhone with the updated UI have not been verified.
+
 ## [1.7.2] - 2026-11-11
 
 ### Изменено
@@ -178,6 +206,7 @@ All notable changes to Perenos are listed here. The format follows
 - On an iPhone 17 running iOS 27.2, retrieved 206 account purchases and installed Avito, VK, VK Video, Mail.ru Mail and Gazprombank's Digital Safe. Sber was already current. The latest queue installed 95 updates, found 18 apps current and encountered one device-response timeout.
 - Installation is confirmed, but first launch and operation without any Apple Account on the device have not been verified. Compatibility with every iPhone, iOS version and app is not guaranteed.
 
+[1.8.0]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.8.0
 [1.7.2]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.7.2
 [1.7.1]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.7.1
 [1.7.0]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.7.0

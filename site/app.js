@@ -170,10 +170,13 @@
         if (kind.startsWith('macos-')) {
           const testPackage = asset.name.endsWith('-test.dmg');
           const size = Number(asset.size);
-          const sizeText = Number.isFinite(size) && size > 0 ? ` · ${Math.round(size / 1048576)} MB` : '';
+          const megabytes = Math.round(size / 1048576);
+          const sizeText = Number.isFinite(size) && size > 0
+            ? `, ${new Intl.NumberFormat(english ? 'en-US' : 'ru-RU').format(megabytes)}\u00A0MB`
+            : '';
           link.querySelector('[data-status]').textContent = testPackage
-            ? (english ? `Test DMG · not notarized${sizeText}` : `Тестовая DMG · без нотаризации${sizeText}`)
-            : `macOS 15+ · DMG${sizeText}`;
+            ? (english ? `Test DMG, not notarized${sizeText}` : `Тестовая DMG, без нотаризации${sizeText}`)
+            : `macOS 15+, DMG${sizeText}`;
         }
       }
       document.querySelector('#release-label').textContent = english

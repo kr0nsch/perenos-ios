@@ -5,6 +5,7 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Platform.Storage;
 using Avalonia.Styling;
+using Avalonia.VisualTree;
 using Perenos.Services;
 using Perenos.ViewModels;
 using Perenos.Views;
@@ -96,12 +97,21 @@ public sealed partial class MainWindow : Window
 
     private void TitleBarPressed(object? sender, PointerPressedEventArgs e)
     {
-        if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
-            BeginMoveDrag(e);
+        if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed || IsInteractiveSource(e.Source))
+            return;
+        BeginMoveDrag(e);
     }
 
-    private void TitleBarDoubleTapped(object? sender, TappedEventArgs e) =>
+    private void TitleBarDoubleTapped(object? sender, TappedEventArgs e)
+    {
+        if (IsInteractiveSource(e.Source))
+            return;
         WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+    }
+
+    private static bool IsInteractiveSource(object? source) =>
+        source is Avalonia.Interactivity.Interactive interactive &&
+        interactive.FindAncestorOfType<Button>(includeSelf: true) is not null;
 
     private void MinimizeWindow(object? sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
 

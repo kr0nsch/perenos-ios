@@ -27,11 +27,11 @@
           <StackPanel Spacing="18">
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="20">
               <TextBlock Text="{s:Text Settings_Language}" Classes="body" VerticalAlignment="Center"/>
-              <ComboBox x:Name="LanguageBox" Grid.Column="1" MinWidth="180" SelectionChanged="LanguageChanged"/>
+              <ComboBox x:Name="LanguageBox" Grid.Column="1" MinWidth="180" SelectionChanged="LanguageChanged" AutomationProperties.Name="{s:Text Settings_Language}"/>
             </Grid>
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="20">
               <TextBlock Text="{s:Text Settings_Appearance}" Classes="body" VerticalAlignment="Center"/>
-              <ComboBox x:Name="ThemeBox" Grid.Column="1" MinWidth="180" SelectionChanged="ThemeChanged"/>
+              <ComboBox x:Name="ThemeBox" Grid.Column="1" MinWidth="180" SelectionChanged="ThemeChanged" AutomationProperties.Name="{s:Text Settings_Appearance}"/>
             </Grid>
           </StackPanel>
         </Border>

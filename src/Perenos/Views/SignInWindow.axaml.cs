@@ -2,6 +2,7 @@ using System.ComponentModel;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.VisualTree;
 using Perenos.ViewModels;
 
 namespace Perenos.Views;
@@ -25,8 +26,12 @@ public sealed partial class SignInWindow : Window
 
     private void DragTitleBar(object? sender, PointerPressedEventArgs e)
     {
-        if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
-            BeginMoveDrag(e);
+        if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+            return;
+        if (e.Source is Avalonia.Interactivity.Interactive interactive &&
+            interactive.FindAncestorOfType<Button>(includeSelf: true) is not null)
+            return;
+        BeginMoveDrag(e);
     }
 
     private void CloseWindow(object? sender, RoutedEventArgs e) => Close();

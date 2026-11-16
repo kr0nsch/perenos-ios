@@ -2,6 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.VisualTree;
 using Perenos.Core;
 using Perenos.Services;
 using Perenos.ViewModels;
@@ -34,8 +35,12 @@ public sealed partial class SettingsWindow : Window
 
     private void DragTitleBar(object? sender, PointerPressedEventArgs e)
     {
-        if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
-            BeginMoveDrag(e);
+        if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+            return;
+        if (e.Source is Avalonia.Interactivity.Interactive interactive &&
+            interactive.FindAncestorOfType<Button>(includeSelf: true) is not null)
+            return;
+        BeginMoveDrag(e);
     }
 
     private void LanguageChanged(object? sender, SelectionChangedEventArgs e)

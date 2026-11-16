@@ -17,6 +17,7 @@
   --signal-deep: #0066db;
   --signal-press: #0052b0;
   --link: #0066db;
+  --link-strong: #0052b0;
   --signal-wash: rgb(0 122 255 / 8%);
   --leaf: #248a3d;
   --card: #ffffff;
@@ -42,6 +43,7 @@
     --signal-deep: #0070db;
     --signal-press: #005cb3;
     --link: #0a84ff;
+    --link-strong: #6cb8ff;
     --signal-wash: rgb(10 132 255 / 15%);
     --leaf: #30d158;
     --card: #1c1c1e;
@@ -65,6 +67,7 @@
   --signal-deep: #0070db;
   --signal-press: #005cb3;
   --link: #0a84ff;
+  --link-strong: #6cb8ff;
   --signal-wash: rgb(10 132 255 / 15%);
   --leaf: #30d158;
   --card: #1c1c1e;
@@ -131,7 +134,7 @@ ul, ol { margin: 0; padding: 0; }
 .button svg { width: 18px; height: 18px; }
 .button-primary { background: var(--signal-deep); color: #fff; }
 .button-primary:hover { background: var(--signal-press); }
-.button-small { min-height: 40px; padding: 9px 16px; background: var(--fill); color: var(--link); font-size: 13px; }
+.button-small { min-height: 40px; padding: 9px 16px; background: var(--fill); color: var(--link-strong); font-size: 13px; }
 .button-small:hover { background: var(--signal-wash); }
 .text-link { display: inline-flex; align-items: center; gap: 8px; color: var(--link); font-size: 15px; font-weight: 600; text-decoration: none; }
 .text-link svg { width: 18px; height: 18px; }

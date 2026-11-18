@@ -3211,8 +3211,8 @@
       "family": "ДомКлик",
       "alias": "ДКлик",
       "category": "Банки",
-      "ecosystem": "other",
-      "origin": "unclear",
+      "ecosystem": "sber",
+      "origin": "russian",
       "developer": null,
       "storefronts": {
         "ru": false,
@@ -3230,8 +3230,8 @@
       "family": "ДомКлик",
       "alias": "Power Place",
       "category": "Банки",
-      "ecosystem": "other",
-      "origin": "unclear",
+      "ecosystem": "sber",
+      "origin": "russian",
       "developer": null,
       "storefronts": {
         "ru": false,
@@ -3249,8 +3249,8 @@
       "family": "ДомКлик",
       "alias": "Путь до дома",
       "category": "Банки",
-      "ecosystem": "other",
-      "origin": "unclear",
+      "ecosystem": "sber",
+      "origin": "russian",
       "developer": null,
       "storefronts": {
         "ru": false,
@@ -3268,8 +3268,8 @@
       "family": "ДомКлик",
       "alias": "Дом Лака",
       "category": "Банки",
-      "ecosystem": "other",
-      "origin": "unclear",
+      "ecosystem": "sber",
+      "origin": "russian",
       "developer": null,
       "storefronts": {
         "ru": false,
@@ -3287,8 +3287,8 @@
       "family": "ДомКлик",
       "alias": "Дом счастья",
       "category": "Банки",
-      "ecosystem": "other",
-      "origin": "unclear",
+      "ecosystem": "sber",
+      "origin": "russian",
       "developer": null,
       "storefronts": {
         "ru": false,
@@ -3306,8 +3306,8 @@
       "family": "ДомКлик",
       "alias": "Дом Гид",
       "category": "Банки",
-      "ecosystem": "other",
-      "origin": "unclear",
+      "ecosystem": "sber",
+      "origin": "russian",
       "developer": null,
       "storefronts": {
         "ru": false,
@@ -3325,8 +3325,8 @@
       "family": "ДомКлик",
       "alias": "Дом семьи",
       "category": "Банки",
-      "ecosystem": "other",
-      "origin": "unclear",
+      "ecosystem": "sber",
+      "origin": "russian",
       "developer": null,
       "storefronts": {
         "ru": false,
@@ -8527,7 +8527,7 @@
     },
     {
       "appId": 472951966,
-      "bundleId": null,
+      "bundleId": "ru.vtb24.mobilebanking.iphone",
       "name": "ВТБ Онлайн",
       "family": "ВТБ Онлайн",
       "alias": null,
@@ -8539,10 +8539,48 @@
         "ru": false,
         "us": false
       },
-      "version": null,
-      "minimumOSVersion": null,
+      "version": "16.4.0",
+      "minimumOSVersion": "12.0",
       "appStoreUrl": "https://apps.apple.com/app/id472951966",
       "evidence": "back-to-iphone"
+    },
+    {
+      "appId": 1621707689,
+      "bundleId": "ru.unicom.balance.2022.vip",
+      "name": "ВТБ Онлайн (Прайм баланс Юником)",
+      "family": "ВТБ Онлайн",
+      "alias": "Прайм баланс Юником",
+      "category": "Банки",
+      "ecosystem": "vtb",
+      "origin": "russian",
+      "developer": null,
+      "storefronts": {
+        "ru": false,
+        "us": false
+      },
+      "version": "16.5.1",
+      "minimumOSVersion": "12.0",
+      "appStoreUrl": "https://apps.apple.com/app/id1621707689",
+      "evidence": "IPA_Downloader+verified-restore"
+    },
+    {
+      "appId": 1673509494,
+      "bundleId": "com.bscmsc.vsepoluchitsy",
+      "name": "ВТБ Онлайн (Всё просто)",
+      "family": "ВТБ Онлайн",
+      "alias": "Всё просто",
+      "category": "Банки",
+      "ecosystem": "vtb",
+      "origin": "russian",
+      "developer": null,
+      "storefronts": {
+        "ru": false,
+        "us": false
+      },
+      "version": "17.3.6",
+      "minimumOSVersion": "12.0",
+      "appStoreUrl": "https://apps.apple.com/app/id1673509494",
+      "evidence": "IPA_Downloader+verified-restore"
     },
     {
       "appId": 1665892408,
@@ -8581,6 +8619,25 @@
       "minimumOSVersion": null,
       "appStoreUrl": "https://apps.apple.com/app/id6749962031",
       "evidence": "back-to-iphone+IPA_Downloader"
+    },
+    {
+      "appId": 6755773033,
+      "bundleId": null,
+      "name": "ВТБ Онлайн (Алтай)",
+      "family": "ВТБ Онлайн",
+      "alias": "Алтай",
+      "category": "Банки",
+      "ecosystem": "vtb",
+      "origin": "russian",
+      "developer": null,
+      "storefronts": {
+        "ru": false,
+        "us": false
+      },
+      "version": null,
+      "minimumOSVersion": null,
+      "appStoreUrl": "https://apps.apple.com/app/id6755773033",
+      "evidence": "IPA_Downloader"
     },
     {
       "appId": 1124487701,

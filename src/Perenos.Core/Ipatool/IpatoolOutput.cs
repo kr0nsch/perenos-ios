@@ -23,12 +23,30 @@ internal sealed partial class IpatoolOutput
     public bool TryAdd(string segment)
     {
         var text = segment.Trim();
-        if (text.Length < 2 || text[0] != '{')
+        if (text.Length < 2)
             return false;
 
+        if (text[0] == '{')
+            return TryParseObject(text.AsMemory());
+
+        // Interactive progress bars write CR-free prefixes right before zerolog JSON events on errors.
+        if (!text.EndsWith('}'))
+            return false;
+
+        for (var index = text.IndexOf('{'); index >= 0; index = text.IndexOf('{', index + 1))
+        {
+            if (TryParseObject(text.AsMemory(index)))
+                return true;
+        }
+
+        return false;
+    }
+
+    private bool TryParseObject(ReadOnlyMemory<char> json)
+    {
         try
         {
-            using var doc = JsonDocument.Parse(text);
+            using var doc = JsonDocument.Parse(json);
             if (doc.RootElement.ValueKind != JsonValueKind.Object)
                 return false;
             _events.Add(doc.RootElement.Clone());
@@ -116,7 +134,8 @@ internal sealed partial class IpatoolOutput
             return IpatoolErrorKind.TemporarilyUnavailable;
         if (e.Contains("app not found") || e.Contains("item not found") || e.Contains("not available in your country"))
             return IpatoolErrorKind.AppNotFound;
-        if (e.Contains("request failed") || e.Contains("no such host") || e.Contains("connection") || e.Contains("timeout"))
+        if (e.Contains("request failed") || e.Contains("no such host") || e.Contains("connection") || e.Contains("timeout")
+            || e.Contains("unexpected response"))
             return IpatoolErrorKind.Network;
         return IpatoolErrorKind.Unknown;
     }

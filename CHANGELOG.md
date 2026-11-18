@@ -6,6 +6,28 @@ All notable changes to Perenos are listed here. The format follows
 
 ## [Unreleased]
 
+## [1.8.1] - 2026-11-18
+
+### Исправлено
+- Обновлён встроенный `ipatool` с коммита `e0e2908` до `3b02b4c` (`2.8.0+3b02b4c`, Go `1.26.5`, проверенный SHA-256 архива): исправлено определение витрины через scoped bags и восстановление удалённых из App Store приложений через `ent/download` вместо сбоев `available storefronts request failed` и `HTTP 403`.
+- Исправлен разбор вывода `ipatool` в [IpatoolOutput.cs](src/Perenos.Core/Ipatool/IpatoolOutput.cs): JSON-события ошибок, записанные после префикса интерактивного прогресс-бара без переноса строки, больше не отбрасываются с общим сообщением `Unknown - The download did not finish.`; ответы `unexpected response` классифицируются как сетевые ошибки с возможностью повтора.
+- Обновлён каталог российских сервисов (`catalog/russian-app-catalog.json`): в выборку «Российские сервисы» включены **MAX** (`6739530834`, алиас «МАКС», `ru.oneme.app`), оригинальный **Домклик** (`1143031400`, алиас «Дом Клик», `ru.domclick.mortgage`) и **АЗС Лукойл** (`959900548`, алиас `Lukoil`, `eae.potemka.LUKOIL`).
+
+### Проверено
+- Полный прогон трёх наборов .NET-тестов и браузерных проверок сайта `test-site.mjs`.
+- На реальном iPhone (`iOS 27.2.1`) проверено скачивание и установка удалённых из витрины приложений: **MAX**, **Одноклассники**, **ВКонтакте**, **Почта Mail.ru**, **Домклик**, **ВТБ Онлайн** и **АЗС Лукойл**.
+- Для macOS по-прежнему выпускаются тестовые `-test.dmg` с ad-hoc подписью без Developer ID, нотаризации и проверки на физическом Mac.
+
+### Fixed
+- Upgraded bundled `ipatool` from commit `e0e2908` to `3b02b4c` (`2.8.0+3b02b4c`, Go `1.26.5`, verified source SHA-256), fixing scoped storefront bag discovery and `ent/download` fallback for delisted App Store apps instead of `available storefronts request failed` and `HTTP 403` errors.
+- Fixed `IpatoolOutput` event parsing so JSON error payloads written right after an interactive progress-bar prefix without a line break are preserved instead of falling back to `Unknown - The download did not finish.`, and classified `unexpected response` failures as retryable network errors.
+- Updated the Russian service catalog (`catalog/russian-app-catalog.json`) to include **MAX** (`6739530834`, alias `МАКС`, `ru.oneme.app`), original **Domclick** (`1143031400`, alias `Дом Клик`, `ru.domclick.mortgage`) and **AZS Lukoil** (`959900548`, alias `Lukoil`, `eae.potemka.LUKOIL`).
+
+### Verified
+- All three .NET test suites and `test-site.mjs` browser checks pass.
+- Verified real-device download and installation on iPhone (`iOS 27.2.1`) for **MAX**, **Odnoklassniki**, **VK**, **Mail.ru Mail**, **Domclick**, **VTB Online** and **AZS Lukoil**.
+- macOS remains distributed as ad-hoc signed `-test.dmg` builds without Developer ID, notarization or physical Mac hardware testing.
+
 ## [1.8.0] - 2026-11-16
 
 ### Изменено
@@ -206,6 +228,7 @@ All notable changes to Perenos are listed here. The format follows
 - On an iPhone 17 running iOS 27.2, retrieved 206 account purchases and installed Avito, VK, VK Video, Mail.ru Mail and Gazprombank's Digital Safe. Sber was already current. The latest queue installed 95 updates, found 18 apps current and encountered one device-response timeout.
 - Installation is confirmed, but first launch and operation without any Apple Account on the device have not been verified. Compatibility with every iPhone, iOS version and app is not guaranteed.
 
+[1.8.1]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.8.1
 [1.8.0]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.8.0
 [1.7.2]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.7.2
 [1.7.1]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.7.1

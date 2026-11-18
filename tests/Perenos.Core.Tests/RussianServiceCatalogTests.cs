@@ -9,7 +9,7 @@ public sealed class RussianServiceCatalogTests
     {
         var apps = RussianServiceCatalog.LoadDefault();
 
-        Assert.Equal(243, apps.Count);
+        Assert.Equal(246, apps.Count);
         Assert.Equal(apps.Count, apps.Select(app => app.AppId).Distinct().Count());
         Assert.All(apps, app =>
         {
@@ -22,5 +22,20 @@ public sealed class RussianServiceCatalogTests
         Assert.Equal("VK Музыка", vkMusic.Alias);
         Assert.Equal("com.music.vk", vkMusic.BundleId);
         Assert.Equal("887160241", vkMusic.ExternalVersionId);
+
+        var max = Assert.Single(apps, app => app.AppId == 6739530834);
+        Assert.Equal("MAX", max.Family);
+        Assert.Equal("МАКС", max.Alias);
+        Assert.Equal("ru.oneme.app", max.BundleId);
+
+        var domclick = Assert.Single(apps, app => app.AppId == 1143031400);
+        Assert.Equal("ДомКлик", domclick.Family);
+        Assert.Equal("Дом Клик", domclick.Alias);
+        Assert.Equal("ru.domclick.mortgage", domclick.BundleId);
+
+        var lukoil = Assert.Single(apps, app => app.AppId == 959900548);
+        Assert.Equal("АЗС Лукойл", lukoil.Family);
+        Assert.Equal("Lukoil", lukoil.Alias);
+        Assert.Equal("eae.potemka.LUKOIL", lukoil.BundleId);
     }
 }

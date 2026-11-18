@@ -17,7 +17,7 @@
 </p>
 
 <p align="center"><img src="docs/media/demo-ru-light.gif" alt="Реальная демонстрация выбора и установки приложений в Переносе" width="960"></p>
-<p align="center"><sub>Не презентация, а запись приложения версии 1.8.0 в интерфейсе стиля 1.6.0. Устройства, аккаунт и приложения вымышленные. <a href="docs/media/full-ru-light.mp4">Полное видео без остановки</a>.</sub></p>
+<p align="center"><sub>Не презентация, а запись приложения версии 1.8.1 в интерфейсе стиля 1.6.0. Устройства, аккаунт и приложения вымышленные. <a href="docs/media/full-ru-light.mp4">Полное видео без остановки</a>.</sub></p>
 
 ## Живые скриншоты
 
@@ -63,7 +63,7 @@
 Для скачивания или обновления приложений войдите в Apple Account покупателя **на компьютере**. Менять аккаунт на iPhone не нужно.
 
 <p align="center"><img src="docs/media/restore-ru-light.gif" alt="Восстановление покупок App Store в Переносе" width="960"></p>
-<p align="center"><sub>Реальная запись восстановления в приложении версии 1.8.0. Аккаунт, устройства и приложения вымышленные.</sub></p>
+<p align="center"><sub>Реальная запись восстановления в приложении версии 1.8.1. Аккаунт, устройства и приложения вымышленные.</sub></p>
 
 ## Как восстановить VK Музыку, Авито и другие покупки
 
@@ -140,7 +140,7 @@ brew install dotnet go
 brew install --cask powershell
 pwsh build/Get-Ipatool.ps1 -RuntimeIdentifier osx-arm64
 dotnet run --project src/Perenos -- --demo
-bash build/build-macos.sh 1.8.0 osx-arm64
+bash build/build-macos.sh 1.8.1 osx-arm64
 ```
 
 Для Intel замените `osx-arm64` на `osx-x64`. Без `MACOS_SIGN_IDENTITY` создаётся ad-hoc пакет для разработки. Для публичного распространения задайте Developer ID и `MACOS_NOTARY_PROFILE`, чтобы включить нотаризацию.

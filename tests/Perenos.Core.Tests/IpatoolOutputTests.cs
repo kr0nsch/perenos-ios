@@ -35,6 +35,18 @@ public class IpatoolOutputTests
     }
 
     [Fact]
+    public void ParsesErrorEventAfterProgressBarPrefix()
+    {
+        var output = new IpatoolOutput();
+        var segment = """downloading   0% |                                                 | ( 0/ 1 B) {"level":"error","error":"failed to send redownload request: send Store commerce request: unexpected response from Apple (HTTP 403): empty or non-plist body","success":false}""";
+
+        Assert.True(output.TryAdd(segment));
+        Assert.False(output.Succeeded);
+        Assert.Contains("HTTP 403", output.Error);
+        Assert.Equal(IpatoolErrorKind.Network, IpatoolOutput.Classify(output.Error));
+    }
+
+    [Fact]
     public void CollectsMessagesForTwoFactorPrompt()
     {
         var output = new IpatoolOutput();
@@ -73,6 +85,8 @@ public class IpatoolOutputTests
     [InlineData("received error: item is temporarily unavailable", IpatoolErrorKind.TemporarilyUnavailable)]
     [InlineData("app not found", IpatoolErrorKind.AppNotFound)]
     [InlineData("request failed: dial tcp: lookup p25-buy.itunes.apple.com: no such host", IpatoolErrorKind.Network)]
+    [InlineData("failed to resolve latest iOS version for redownload: failed to resolve the country code: available storefronts request failed", IpatoolErrorKind.Network)]
+    [InlineData("failed to send redownload request: send Store commerce request: unexpected response from Apple (HTTP 403): empty or non-plist body", IpatoolErrorKind.Network)]
     [InlineData("keychain passphrase is required when not running in interactive mode", IpatoolErrorKind.NotSignedIn)]
     [InlineData("subscription required", IpatoolErrorKind.SubscriptionRequired)]
     [InlineData("something unexpected", IpatoolErrorKind.Unknown)]

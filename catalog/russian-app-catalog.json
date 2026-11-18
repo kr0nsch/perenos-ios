@@ -2161,20 +2161,20 @@
     },
     {
       "appId": 6739530834,
-      "bundleId": null,
+      "bundleId": "ru.oneme.app",
       "name": "MAX",
       "family": "MAX",
-      "alias": null,
+      "alias": "МАКС",
       "category": "Соцсети и мессенджеры",
-      "ecosystem": "other",
-      "origin": "unclear",
+      "ecosystem": "vk",
+      "origin": "russian",
       "developer": null,
       "storefronts": {
         "ru": false,
         "us": false
       },
-      "version": null,
-      "minimumOSVersion": null,
+      "version": "26.17.3",
+      "minimumOSVersion": "15.5",
       "appStoreUrl": "https://apps.apple.com/app/id6739530834",
       "evidence": "back-to-iphone+IPA_Downloader"
     },
@@ -2560,20 +2560,20 @@
     },
     {
       "appId": 959900548,
-      "bundleId": null,
+      "bundleId": "eae.potemka.LUKOIL",
       "name": "АЗС Лукойл",
       "family": "АЗС Лукойл",
-      "alias": null,
+      "alias": "Lukoil",
       "category": "Транспорт и АЗС",
       "ecosystem": "other",
-      "origin": "unclear",
+      "origin": "russian",
       "developer": null,
       "storefronts": {
         "ru": false,
         "us": false
       },
-      "version": null,
-      "minimumOSVersion": null,
+      "version": "4.11.0",
+      "minimumOSVersion": "14.0",
       "appStoreUrl": "https://apps.apple.com/app/id959900548",
       "evidence": "back-to-iphone+IPA_Downloader"
     },
@@ -3184,6 +3184,25 @@
       "minimumOSVersion": null,
       "appStoreUrl": "https://apps.apple.com/app/id1237660125",
       "evidence": "back-to-iphone+IPA_Downloader"
+    },
+    {
+      "appId": 1143031400,
+      "bundleId": "ru.domclick.mortgage",
+      "name": "Домклик",
+      "family": "ДомКлик",
+      "alias": "Дом Клик",
+      "category": "Банки",
+      "ecosystem": "sber",
+      "origin": "russian",
+      "developer": "Центр недвижимости от Сбербанка",
+      "storefronts": {
+        "ru": false,
+        "us": false
+      },
+      "version": "8.48.1",
+      "minimumOSVersion": "13.0",
+      "appStoreUrl": "https://apps.apple.com/app/id1143031400",
+      "evidence": "verified-restore"
     },
     {
       "appId": 1660762523,

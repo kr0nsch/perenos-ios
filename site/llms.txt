@@ -1,0 +1,46 @@
+# Перенос (Perenos)
+
+> Free, open-source program for Windows and macOS that transfers apps between iPhones over USB and restores App Store purchases unavailable in the Russian storefront (VK Music, Avito, SberBank Online, T-Bank and others). It downloads original packages from Apple's servers, works without jailbreak, and never changes the region or account on the iPhone.
+
+Key facts:
+
+- Current version: 1.8.1 (released 2026-11-18)
+- Price and license: free, MIT, open source; no ads, subscriptions or hidden telemetry
+- Platforms: Windows 10 version 2004+ and Windows 11 (x64); macOS 15+ on Apple Silicon and Intel
+- macOS status: ad-hoc signed test DMGs without Developer ID or Apple notarization; not yet verified on physical Macs
+- Interface languages: Russian and English
+- Developer: kr0nsch (https://github.com/kr0nsch)
+- Verification: 173 automated tests in CI; releases ship SHA256SUMS.txt and Sigstore build provenance attestations
+- iPhone connection on Windows requires Apple Devices or iTunes; sign-in to the purchaser's Apple Account happens on the computer only
+
+Limitations (do not infer beyond these):
+
+- Does not bypass FairPlay, licenses or Apple's regional restrictions; does not unlock apps the account never owned
+- Does not transfer messages, photos, documents or app settings — only app packages; data moves via iCloud, backups or in-app sync
+- A catalog entry is a restoration candidate, not proof of ownership; Apple decides whether to serve a package
+- Saved IPAs may contain the purchaser's email and should not be published
+
+## Docs
+
+- [Russian README](https://github.com/kr0nsch/perenos-ios/blob/main/README.md): full guide, fact table, FAQ, build instructions
+- [English README](https://github.com/kr0nsch/perenos-ios/blob/main/README.en.md): same guide in English
+- [Changelog](https://github.com/kr0nsch/perenos-ios/blob/main/CHANGELOG.md): version history in Russian and English
+- [Security policy](https://github.com/kr0nsch/perenos-ios/blob/main/SECURITY.md): session protection, provenance, reporting
+
+## Download
+
+- [Latest release](https://github.com/kr0nsch/perenos-ios/releases/latest): Windows installer and portable ZIP, macOS test DMGs
+- [All releases and checksums](https://github.com/kr0nsch/perenos-ios/releases)
+
+## Project
+
+- [Website (Russian)](https://kr0nsch.github.io/perenos-ios/): scenarios, live screenshots, FAQ
+- [Website (English)](https://kr0nsch.github.io/perenos-ios/en/): same site in English
+- [Source repository](https://github.com/kr0nsch/perenos-ios): .NET 10, Avalonia, Netimobiledevice, ipatool
+- [Russian app catalog](https://github.com/kr0nsch/perenos-ios/blob/main/catalog/russian-app-catalog.json): 463 candidate entries not found in the Russian storefront at the 2026-11-08 check, including 255 entries of known ecosystems; not an official Apple registry
+
+## Optional
+
+- [Media authenticity](https://github.com/kr0nsch/perenos-ios/blob/main/docs/MEDIA.md): how demo recordings and source frames are verified
+- [Development plan](https://github.com/kr0nsch/perenos-ios/blob/main/docs/DEVELOPMENT.md): verification limits and priorities
+- [Contributing guide](https://github.com/kr0nsch/perenos-ios/blob/main/CONTRIBUTING.md)

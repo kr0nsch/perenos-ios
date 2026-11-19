@@ -88,6 +88,7 @@ def build(output: Path) -> None:
     shutil.copy2(SITE / "social-card.png", assets / "social.png")
     (output / ".nojekyll").write_text("", encoding="utf-8")
     (output / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {CANONICAL}sitemap.xml\n", encoding="utf-8")
+    shutil.copy2(SITE / "llms.txt", output / "llms.txt")
     (output / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'

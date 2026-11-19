@@ -10,7 +10,7 @@ namespace Perenos.ViewModel.Tests;
 public sealed class AppsViewModelTests
 {
     [Fact]
-    public async Task MarksUnavailableAppsAndFiltersList()
+    public async Task MarksUnavailableAppsWithoutFilteringTheList()
     {
         var store = new FakeStore { Account = new IpatoolAccount("owner@example.com", "Owner") };
         var catalog = new FakeCatalog { Available = new HashSet<long> { 10 } };
@@ -21,17 +21,9 @@ public sealed class AppsViewModelTests
         Assert.Equal("Storefront_UnavailableCount: 1", vm.StorefrontStatus);
         Assert.True(vm.HasUnavailableApps);
         Assert.False(vm.IsStorefrontScanning);
+        Assert.Equal(3, vm.Visible.Count);
         Assert.True(vm.Visible.Single(a => a.Name == "Beta").IsUnavailableInRussia);
         Assert.False(vm.Visible.Single(a => a.Name == "Other Account").IsUnavailableInRussia);
-
-        vm.ToggleUnavailableFilterCommand.Execute(null);
-
-        Assert.Equal("Beta", Assert.Single(vm.Visible).Name);
-        Assert.Equal("Storefront_ShowAll", vm.UnavailableFilterText);
-
-        vm.ToggleUnavailableFilterCommand.Execute(null);
-
-        Assert.Equal(3, vm.Visible.Count);
     }
 
     [Fact]

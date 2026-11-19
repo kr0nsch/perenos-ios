@@ -8,14 +8,7 @@ using Perenos.Services;
 
 namespace Perenos.ViewModels;
 
-public enum RestoreListFilter
-{
-    Purchases,
-    Unavailable,
-    RussianServices,
-}
-
-/// <summary>All owned apps, with optional filters for unavailable apps and Russian services.</summary>
+/// <summary>All owned apps and catalog candidates in one searchable list, without filters.</summary>
 public sealed partial class RestoreAppsViewModel(
     IDeviceService devices,
     RestorableAppScanner scanner,
@@ -28,50 +21,11 @@ public sealed partial class RestoreAppsViewModel(
 
     public bool NeedsSignIn { get; private set; }
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(FilterText), nameof(IsPurchasesFilter), nameof(IsUnavailableFilter), nameof(IsRussianServicesFilter))]
-    public partial RestoreListFilter Filter { get; set; }
-
-    public string FilterText => Loc.Format("Restore_FilterLabel", Filter switch
-    {
-        RestoreListFilter.Purchases => Loc.Get("Restore_FilterAll"),
-        RestoreListFilter.Unavailable => Loc.Get("Restore_FilterUnavailable"),
-        _ => Loc.Get("Restore_FilterRussian"),
-    });
-
-    public string FilterAllText => Loc.Get("Restore_FilterAll");
-
-    public string FilterUnavailableText => Loc.Get("Restore_FilterUnavailable");
-
-    public string FilterRussianText => Loc.Get("Restore_FilterRussian");
-
-    public bool IsPurchasesFilter => Filter == RestoreListFilter.Purchases;
-
-    public bool IsUnavailableFilter => Filter == RestoreListFilter.Unavailable;
-
-    public bool IsRussianServicesFilter => Filter == RestoreListFilter.RussianServices;
-
     public override string LoadingText => Loc.Get("Restore_Loading");
 
     public override string EmptyText => Loc.Get("Restore_Empty");
 
     public IReadOnlyList<InstalledApp> SelectedApps => All.Where(app => app.IsSelected).Select(app => app.App).ToList();
-
-    [RelayCommand]
-    private void SetFilter(string filter) => Filter = Enum.Parse<RestoreListFilter>(filter);
-
-    partial void OnFilterChanged(RestoreListFilter value)
-    {
-        ApplyFilter();
-        OnPropertyChanged(nameof(SelectAllText));
-    }
-
-    protected override bool IncludeInFilter(AppItemViewModel item) => Filter switch
-    {
-        RestoreListFilter.Purchases => item.Restore?.InPurchaseHistory != false,
-        RestoreListFilter.Unavailable => item.Restore?.InPurchaseHistory == true && item.IsUnavailableInRussia,
-        _ => item.Restore?.ServiceFamily is not null,
-    };
 
     public async Task LoadAsync(DeviceItemViewModel target)
     {
@@ -144,7 +98,6 @@ public sealed partial class RestoreAppsViewModel(
         NeedsSignIn = false;
         IsLoading = false;
         Error = null;
-        Filter = RestoreListFilter.Purchases;
         Clear();
     }
 

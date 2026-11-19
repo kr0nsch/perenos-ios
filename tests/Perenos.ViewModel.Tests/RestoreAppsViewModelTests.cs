@@ -70,7 +70,7 @@ public sealed class RestoreAppsViewModelTests
     }
 
     [Fact]
-    public async Task FiltersUnavailableAndRussianServicesWithoutSelectingThem()
+    public async Task ShowsPurchasesAndCatalogCandidatesInOneListWithoutFilters()
     {
         var store = new FakeStore
         {
@@ -91,23 +91,15 @@ public sealed class RestoreAppsViewModelTests
         await vm.LoadAsync(Target());
 
         Assert.Equal(4, vm.TotalCount);
+        Assert.Equal(4, vm.Visible.Count);
         Assert.Equal(0, vm.SelectedCount);
-        Assert.DoesNotContain(vm.Visible, item => item.App.AppStoreId == 1054372220);
-
-        vm.SetFilterCommand.Execute("Unavailable");
-        Assert.Equal(RestoreListFilter.Unavailable, vm.Filter);
-        Assert.True(vm.IsUnavailableFilter);
-        Assert.Equal(2, vm.Visible.Count);
-
-        vm.SetFilterCommand.Execute("RussianServices");
-        Assert.Equal(RestoreListFilter.RussianServices, vm.Filter);
-        Assert.True(vm.IsRussianServicesFilter);
-        Assert.Equal(2, vm.Visible.Count);
         var candidate = vm.Visible.Single(item => item.App.AppStoreId == 1054372220);
         Assert.Equal("Restore_CatalogCandidate", candidate.Caption);
+        Assert.True(candidate.IsUnavailableInRussia);
+
         vm.ToggleSelectAllCommand.Execute(null);
-        Assert.Equal(2, vm.SelectedCount);
-        Assert.Equal(new long[] { 3, 1054372220 }, vm.SelectedApps.Select(app => app.AppStoreId.GetValueOrDefault()).Order().ToArray());
+        Assert.Equal(4, vm.SelectedCount);
+        Assert.Equal(new long[] { 1, 2, 3, 1054372220 }, vm.SelectedApps.Select(app => app.AppStoreId.GetValueOrDefault()).Order().ToArray());
 
         vm.ClearSelection();
         vm.SearchText = "VK";

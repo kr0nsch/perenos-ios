@@ -1,44 +1,44 @@
 {
   "schema_version": 2,
-  "version": "1.3.0",
+  "version": "1.8.1",
   "source": {
     "recording": "en-light/save",
     "format": "lossless PNG",
     "capture_method": "PrintWindow(PW_RENDERFULLCONTENT)",
     "cursor_captured": false,
-    "width": 926,
-    "height": 773,
-    "frames": 311,
-    "first_timestamp_ms": 1793966615585,
-    "last_timestamp_ms": 1793966644582,
-    "capture_json_sha256": "689bcc149c242736f24f2fcc0cf9bcdb71c0193b322d18ee34aef44108b86772",
-    "frames_csv_sha256": "469ae18f1458064bb13e082cd148233c78dc8218aa93891fe836692f284701c9",
-    "window_txt_sha256": "b34237fb3ecaf6ba1737d5fa4ac2c386f6b41e7f2661c186b4a31b2f7b7cd962",
-    "timeline_sha256": "829a87d3c69706fe0bb55ca94c13da4c721e7367c27cf32cbf5c559f0f8f36e1",
-    "raw_frames_sha256": "fdd34916e1dafda6b4c8581844ce43a73b5a05a57844ff5fb8e0ed0b510166ce",
+    "width": 942,
+    "height": 782,
+    "frames": 417,
+    "first_timestamp_ms": 1795115038365,
+    "last_timestamp_ms": 1795115077171,
+    "capture_json_sha256": "80f3bfa8a87d2d954174de376a2be45d87f492425b23f922dc37ba18977cffec",
+    "frames_csv_sha256": "7bb2c1bb85bdac2730cb0ed4d15af501e0ddc4b89a67073f94dc555f567ad67b",
+    "window_txt_sha256": "e1d68f2224dd31f65ef37932a38662cf70bb6846febb4e4faa6ea5a5604534bf",
+    "timeline_sha256": "f8cd0faad88c4306fe16efdc22983ea7182de4e54d051fe3723ee9a01dacd7fc",
+    "raw_frames_sha256": "1049a0fac9bd1974c75395615d22d722770e7326414db065f0ac4efe6bc63cfa",
     "raw_frames_hash_format": "SHA-256 of UTF-8 index,timestamp_ms,png_sha256\\n entries in frame order"
   },
   "stills": [
     {
       "file": "en-light/save-1-apps.png",
-      "requested_timestamp_ms": 1793966634259,
-      "source_frame": "f00200.png",
-      "source_timestamp_ms": 1793966634259,
-      "sha256": "bf1c4c166c9d88c78afb8008961d892ff5813d3c212a7e33bb5923d129db0422"
+      "requested_timestamp_ms": 1795115069355,
+      "source_frame": "f00331.png",
+      "source_timestamp_ms": 1795115069297,
+      "sha256": "f9a2fe8a9f1280b40c89ee471b59c19892b5b5afd84a67206a54dbc653d87c5f"
     },
     {
       "file": "en-light/save-2-ready.png",
-      "requested_timestamp_ms": 1793966635298,
-      "source_frame": "f00211.png",
-      "source_timestamp_ms": 1793966635298,
-      "sha256": "92bae1c9a93d0e8c3cf8d3184acf7a796bef3c8b0d71ec2bd7c9a27775b10c9b"
+      "requested_timestamp_ms": 1795115069827,
+      "source_frame": "f00336.png",
+      "source_timestamp_ms": 1795115069757,
+      "sha256": "88bff99b5f0522aa7f9e3468151c6791c9015b79601307596743bf871faa96c3"
     },
     {
       "file": "en-light/save-3-done.png",
-      "requested_timestamp_ms": 1793966644209,
-      "source_frame": "f00306.png",
-      "source_timestamp_ms": 1793966644209,
-      "sha256": "8acb42afc93357f34cc10bc61737d1680aef16101eea0b76bd58c918f8b2f643"
+      "requested_timestamp_ms": 1795115073316,
+      "source_frame": "f00374.png",
+      "source_timestamp_ms": 1795115073283,
+      "sha256": "d9b1a9aa4b7d941f4c1c31a0ede9d6cf749c206294bc60a8e76fb04009faed92"
     }
   ]
 }

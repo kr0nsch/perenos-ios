@@ -67,6 +67,22 @@ public sealed class RestorableAppScannerTests
     }
 
     [Fact]
+    public async Task ListedCatalogCandidateIsNotMarkedUnavailable()
+    {
+        var services = new[]
+        {
+            new Perenos.Core.Catalog.RussianServiceApp(481627348, "ru.2gis.ios", "2ГИС", "2ГИС", null, "Сервисы", null, null, ListedInRussia: true),
+        };
+
+        var result = await new RestorableAppScanner(new FakeStore(), new FakeCatalog(), services).ScanAsync([]);
+
+        var candidate = Assert.Single(result);
+        Assert.False(candidate.InPurchaseHistory);
+        Assert.False(candidate.IsUnavailableInRussia);
+        Assert.Equal("2ГИС", candidate.ServiceFamily);
+    }
+
+    [Fact]
     public async Task EmptyHistoryStillListsCandidatesWithoutQueryingStorefront()
     {
         var catalog = new FakeCatalog();

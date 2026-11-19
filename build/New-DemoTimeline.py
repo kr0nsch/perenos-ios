@@ -53,7 +53,7 @@ def timeline(flow: str, version: str, language: str, theme: str,
         start, end = shots["restore-all"] - 1000, shots["restore-done"]
         stills = {
             "restore-1-apps.png": shots["restore-all"],
-            "restore-2-filter.png": shots["restore-russian"],
+            "restore-2-sorted.png": shots["restore-sorted"],
             "restore-3-selected.png": shots["restore"],
             "restore-4-install.png": shots["restore-install"],
             "restore-5-done.png": shots["restore-done"],

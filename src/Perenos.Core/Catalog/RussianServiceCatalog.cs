@@ -11,7 +11,8 @@ public sealed record RussianServiceApp(
     string? Alias,
     string Category,
     string? Developer,
-    string? ExternalVersionId = null);
+    string? ExternalVersionId = null,
+    bool ListedInRussia = false);
 
 public static class RussianServiceCatalog
 {
@@ -21,7 +22,6 @@ public static class RussianServiceCatalog
             ?? throw new InvalidDataException("The Russian service catalog is missing.");
         using var document = JsonDocument.Parse(stream);
         return document.RootElement.GetProperty("apps").EnumerateArray()
-            .Where(item => item.GetProperty("origin").GetString() == "russian")
             .Select(item => new RussianServiceApp(
                 item.GetProperty("appId").GetInt64(),
                 GetString(item, "bundleId") ?? "",
@@ -30,7 +30,10 @@ public static class RussianServiceCatalog
                 GetString(item, "alias"),
                 GetString(item, "category") ?? "other",
                 GetString(item, "developer"),
-                GetString(item, "externalVersionId")))
+                GetString(item, "externalVersionId"),
+                item.TryGetProperty("storefronts", out var storefronts)
+                    && storefronts.TryGetProperty("ru", out var ru)
+                    && ru.ValueKind == JsonValueKind.True))
             .ToArray();
     }
 

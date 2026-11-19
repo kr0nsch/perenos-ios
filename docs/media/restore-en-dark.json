@@ -1,14 +1,14 @@
 {
   "schema_version": 2,
-  "version": "1.7.2",
+  "version": "1.8.1",
   "file": "restore-en-dark.gif",
   "width": 942,
   "height": 782,
   "frames": 48,
   "fps": 8,
   "duration_ms": 6010,
-  "bytes": 169054,
-  "sha256": "6881177957666d8f221553c18c7a31ffa34a8dcdc1d7d2b593914c9308f4bacd",
+  "bytes": 156725,
+  "sha256": "9ba7702d4e5db5517a140cfa5c98e6ab38fe9dadd9335a107df18ddb2bc27f8b",
   "cursor": "none",
   "encoding": {
     "scaling": "lanczos",
@@ -23,59 +23,59 @@
     "cursor_captured": false,
     "width": 942,
     "height": 782,
-    "frames": 398,
-    "first_timestamp_ms": 1794847364637,
-    "last_timestamp_ms": 1794847401920,
-    "capture_json_sha256": "2fff212f6a70f994521f87e45baf40d0810819bc5f8a24739e49bcfcf54edc87",
-    "frames_csv_sha256": "a13309a77a818533494727264d66afa1867f12ee56f4d733c336c7fd3096d33b",
-    "window_txt_sha256": "7a8644bb7c7b5a6f525667cc6c10678193bcea2c65cca723af160095028688b8",
-    "timeline_sha256": "169c425b85c21ba8456e9b2b27eb606b9b7ccb9d3de8bc637bcd29b3882b0b79",
-    "raw_frames_sha256": "7c93a255802c1e82d4419985153049ba8c2f0550ecd2dbbbb31c0a601923590e",
+    "frames": 414,
+    "first_timestamp_ms": 1795115079532,
+    "last_timestamp_ms": 1795115117997,
+    "capture_json_sha256": "e5be8c8521cc48f26ffc3416815b41884f985b53d6db0c8a1e1241d20e0388ab",
+    "frames_csv_sha256": "2e1e968af39d5a953ed4151b6b662a792d5adad607722fccaa5f63a8890a64e7",
+    "window_txt_sha256": "e1d68f2224dd31f65ef37932a38662cf70bb6846febb4e4faa6ea5a5604534bf",
+    "timeline_sha256": "4e01cb9320dcdca9ef91d4900eb8c8a0e420034c49b4a4f1cbbe919bb7a6b6e2",
+    "raw_frames_sha256": "223f1c4e7c74b69b9dfa922360379573b66e5f53e75037d60e38a55450f101d5",
     "raw_frames_hash_format": "SHA-256 of UTF-8 index,timestamp_ms,png_sha256\\n entries in frame order"
   },
   "segments": [
     {
-      "start_ms": 1794847386900,
-      "end_ms": 1794847392864,
-      "output_duration_ms": 5964
+      "start_ms": 1795115102750,
+      "end_ms": 1795115108670,
+      "output_duration_ms": 5920
     }
   ],
-  "sampled_frames_sha256": "73487ade27389d93b036e4382306fb289408b4f1f093542ec7bc197aca0cd5f4",
+  "sampled_frames_sha256": "65f7ff4b76590e5a85f81a5f2cec2ac94c217913e90f85e6372e0f2959166342",
   "stills": [
     {
       "file": "en-dark/restore-1-apps.png",
-      "requested_timestamp_ms": 1794847387900,
-      "source_frame": "f00247.png",
-      "source_timestamp_ms": 1794847387872,
-      "sha256": "1e126f6c5651a3b5c4278d493d204ce0e0c2c9326e0562885ac60ea7cfa691f9"
+      "requested_timestamp_ms": 1795115103750,
+      "source_frame": "f00259.png",
+      "source_timestamp_ms": 1795115103716,
+      "sha256": "b8a12644765abe383eb79746f51dabcefd4c445ced54afcc045499e001c35739"
     },
     {
-      "file": "en-dark/restore-2-filter.png",
-      "requested_timestamp_ms": 1794847388649,
-      "source_frame": "f00255.png",
-      "source_timestamp_ms": 1794847388623,
-      "sha256": "cb229fee13492499c706bcaee3d51b4b88b620140da30656676270fc9e3e83cf"
+      "file": "en-dark/restore-2-sorted.png",
+      "requested_timestamp_ms": 1795115104420,
+      "source_frame": "f00266.png",
+      "source_timestamp_ms": 1795115104364,
+      "sha256": "36f35b31b95c0442716d00ae8dd2cd76ce61d456d8efadc9853050db92bb0e54"
     },
     {
       "file": "en-dark/restore-3-selected.png",
-      "requested_timestamp_ms": 1794847389739,
-      "source_frame": "f00266.png",
-      "source_timestamp_ms": 1794847389649,
-      "sha256": "f6a4ab269fc8eaae8cec93a8fd4702ef7466e72c1859dd310a9eb73a518813a1"
+      "requested_timestamp_ms": 1795115105457,
+      "source_frame": "f00277.png",
+      "source_timestamp_ms": 1795115105382,
+      "sha256": "b8e0caa4dbc8614d1995e7fdffb080d9716878b1684db9a5863d5e9b2c6573a9"
     },
     {
       "file": "en-dark/restore-4-install.png",
-      "requested_timestamp_ms": 1794847390235,
-      "source_frame": "f00272.png",
-      "source_timestamp_ms": 1794847390211,
-      "sha256": "1bc0723ba611060e425af6060a25781602552cbccd6c33a2ba188849fb2f6124"
+      "requested_timestamp_ms": 1795115105933,
+      "source_frame": "f00282.png",
+      "source_timestamp_ms": 1795115105846,
+      "sha256": "3f05bb97d3cbedb6e1776042f03de6bb1ae668b93febb64d27682ddb2c2c68cf"
     },
     {
       "file": "en-dark/restore-5-done.png",
-      "requested_timestamp_ms": 1794847392864,
-      "source_frame": "f00300.png",
-      "source_timestamp_ms": 1794847392836,
-      "sha256": "56311e792bd95fab525f823f58dae2f7793f070cbea76aa47513f64970b9d1aa"
+      "requested_timestamp_ms": 1795115108670,
+      "source_frame": "f00312.png",
+      "source_timestamp_ms": 1795115108623,
+      "sha256": "7b1206cfc2d293cbf1839864032a6bbe840f7f16c55a5636024eb605494e4e58"
     }
   ]
 }

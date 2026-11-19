@@ -39,12 +39,6 @@ public sealed partial class AppsViewModel(
     [ObservableProperty]
     public partial bool HasUnavailableApps { get; set; }
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(UnavailableFilterText))]
-    public partial bool ShowUnavailableOnly { get; set; }
-
-    public string UnavailableFilterText => Loc.Get(ShowUnavailableOnly ? "Storefront_ShowAll" : "Storefront_ShowUnavailable");
-
     public async Task LoadAsync(DeviceItemViewModel source)
     {
         if (LoadedFromUdid == source.Udid && Error is null)
@@ -123,7 +117,6 @@ public sealed partial class AppsViewModel(
         _storefront?.Cancel();
         foreach (var item in All)
             item.IsUnavailableInRussia = false;
-        ShowUnavailableOnly = false;
         HasUnavailableApps = false;
         StorefrontStatus = Loc.Get("Storefront_Checking");
         _storefrontMessage = ("Storefront_Checking", 0);
@@ -132,17 +125,6 @@ public sealed partial class AppsViewModel(
         _storefront = scan;
         _ = ScanStorefrontAsync(All.Select(a => a.App).ToList(), scan);
     }
-
-    [RelayCommand]
-    private void ToggleUnavailableFilter() => ShowUnavailableOnly = !ShowUnavailableOnly;
-
-    partial void OnShowUnavailableOnlyChanged(bool value)
-    {
-        ApplyFilter();
-        OnPropertyChanged(nameof(SelectAllText));
-    }
-
-    protected override bool IncludeInFilter(AppItemViewModel item) => !ShowUnavailableOnly || item.IsUnavailableInRussia;
 
     private async Task ScanStorefrontAsync(IReadOnlyList<InstalledApp> apps, CancellationTokenSource scan)
     {
@@ -174,8 +156,6 @@ public sealed partial class AppsViewModel(
                 _storefrontMessage = HasUnavailableApps
                     ? ("Storefront_UnavailableCount", result.UnavailableAppIds.Count)
                     : ("Storefront_AllAvailable", 0);
-                ApplyFilter();
-                OnPropertyChanged(nameof(SelectAllText));
             }
         }
         catch (OperationCanceledException) when (scan.Token.IsCancellationRequested)
@@ -201,7 +181,6 @@ public sealed partial class AppsViewModel(
         _storefrontMessage = null;
         foreach (var item in All)
             item.IsUnavailableInRussia = false;
-        ShowUnavailableOnly = false;
         HasUnavailableApps = false;
         IsStorefrontScanning = false;
         StorefrontStatus = "";

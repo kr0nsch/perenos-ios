@@ -114,8 +114,8 @@ public abstract partial class AppListViewModel : ObservableObject
 
     protected long SelectedBytes => _all.Where(a => a.IsSelected).Sum(a => a.App.SizeBytes ?? 0);
 
-    /// <summary>Select All applies only to apps matching the active search and filter that can be installed.</summary>
-    private List<AppItemViewModel> SelectionScope => (string.IsNullOrWhiteSpace(SearchText) ? _all.Where(a => IncludeInFilter(a)) : Visible.AsEnumerable()).Where(a => a.IsSelectable).ToList();
+    /// <summary>Select All applies only to apps matching the active search that can be installed.</summary>
+    private List<AppItemViewModel> SelectionScope => (string.IsNullOrWhiteSpace(SearchText) ? _all.AsEnumerable() : Visible.AsEnumerable()).Where(a => a.IsSelectable).ToList();
 
     public void ClearSelection()
     {
@@ -163,11 +163,9 @@ public abstract partial class AppListViewModel : ObservableObject
         FootnoteDetail = null;
     }
 
-    protected virtual bool IncludeInFilter(AppItemViewModel item) => true;
-
     protected void ApplyFilter()
     {
-        var matches = _all.Where(a => IncludeInFilter(a) && a.Matches(SearchText.Trim()));
+        var matches = _all.Where(a => a.Matches(SearchText.Trim()));
         // Keep incompatible saved apps in their own group at the bottom, whatever the sort mode.
         var ordered = matches.OrderByDescending(a => a.IsSelectable);
         var sorted = SortMode == AppSortMode.SizeDescending

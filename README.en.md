@@ -16,7 +16,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/MIT-open%20source-27765e" alt="MIT open-source license"></a>
 </p>
 
-<p align="center"><img src="docs/media/demo-en-light.gif" alt="Perenos: selecting and installing apps on a new iPhone, real app window recording" width="960"></p>
+<p align="center"><img src="docs/media/demo-en-light.gif" alt="Perenos: selecting and installing apps on a new iPhone, real app window recording" width="942"></p>
 <p align="center"><sub>A recording of Perenos 1.8.1, not a mock-up. Devices, account and apps are fictional. <a href="docs/media/full-en-light.mp4">Watch the full video</a>.</sub></p>
 
 ## What is Perenos
@@ -77,19 +77,19 @@ Connect the phone over USB, unlock it and tap **Trust**. You can connect the old
 
 To download or update apps, sign in to the purchaser's Apple Account **on the computer**. You do not need to change the account on the iPhone.
 
-<p align="center"><img src="docs/media/restore-en-light.gif" alt="Restoring App Store purchases unavailable in Russia with Perenos" width="960"></p>
+<p align="center"><img src="docs/media/restore-en-light.gif" alt="Restoring App Store purchases unavailable in Russia with Perenos" width="942"></p>
 <p align="center"><sub>A real restoration workflow recorded in Perenos 1.8.1. Accounts, devices and apps are fictional.</sub></p>
 
 ## Restore VK Music, Avito and other App Store purchases
 
 1. Open **Restore apps** and sign in to the purchaser's Apple Account on the computer.
 2. Wait for the purchase history. Nothing is selected automatically.
-3. Search by name. Filters show **all purchases**, apps **unavailable in Russia** and **Russian services**.
+3. Search by name: purchases and catalog candidates share one list, without filters.
 4. Select the apps and click **Continue → Install**.
 
-If an app is missing from history, check Russian services. A **catalog** badge marks a candidate, not proof of ownership: Apple checks the license when downloading. History may be incomplete after a region change, and Apple may stop serving an app or a specific version.
+A **catalog** badge marks a candidate, not proof of ownership: Apple checks the license when downloading. History may be incomplete after a region change, and Apple may stop serving an app or a specific version.
 
-The [`russian-app-catalog.json`](catalog/russian-app-catalog.json) catalog lists 463 entries not found in the Russian storefront at the recorded check date (8 November 2026), including 255 entries of known ecosystems — Sber, Alfa-Bank, VTB, VK, T-Bank and others. It is not an official Apple registry or a guarantee of restoration.
+The [`russian-app-catalog.json`](catalog/russian-app-catalog.json) catalog lists 726 entries, including clones and republished versions of Russian services — Sber, Alfa-Bank, VTB, VK, T-Bank and others; 464 of them were not found in the Russian storefront at the recorded check date (19 November 2026). It is not an official Apple registry or a guarantee of restoration.
 
 ## IPA library: save apps and install them later
 
@@ -147,7 +147,7 @@ Perenos is a free, open-source program focused on transferring apps between iPho
 | What to verify | Where to look |
 |---|---|
 | Source code and license | [Repository](https://github.com/kr0nsch/perenos-ios) and [MIT](LICENSE) |
-| Tests and builds | [173 tests and Windows/macOS packages in CI](https://github.com/kr0nsch/perenos-ios/actions/workflows/ci.yml) |
+| Tests and builds | [174 tests and Windows/macOS packages in CI](https://github.com/kr0nsch/perenos-ios/actions/workflows/ci.yml) |
 | Package provenance | `SHA256SUMS.txt` and Sigstore attestations in [releases](https://github.com/kr0nsch/perenos-ios/releases) |
 | Demo authenticity | [Real window captures and verifiable source frames](docs/MEDIA.md), not edited mock-ups |
 

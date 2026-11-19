@@ -304,13 +304,9 @@ try {
         WaitText (T 'Restore_AppsTitle')
         Start-Sleep -Seconds 2
         Capture "restore-all-$Language-$Theme"
-        ClickButton ([string]::Format((T 'Restore_FilterLabel'), (T 'Restore_FilterAll')))
-        ClickMenuItem (T 'Restore_FilterRussian')
         ClickButton (T 'Apps_SortByName')
         ClickMenuItem (T 'Apps_SortBySize')
-        Capture "restore-russian-$Language-$Theme"
-        ClickButton ([string]::Format((T 'Restore_FilterLabel'), (T 'Restore_FilterRussian')))
-        ClickMenuItem (T 'Restore_FilterAll')
+        Capture "restore-sorted-$Language-$Theme"
         ClickButton (T 'Apps_SortBySize')
         ClickMenuItem (T 'Apps_SortByName')
         SetField 0 'Cloudy'

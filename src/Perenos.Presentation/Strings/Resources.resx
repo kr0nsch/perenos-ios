@@ -216,8 +216,6 @@ Details were saved to the diagnostic log.</value></data>
   <data name="Storefront_UnavailableCount_One" xml:space="preserve"><value>{0} app is currently unavailable in the Russian App Store</value></data>
   <data name="Storefront_UnavailableCount_Few" xml:space="preserve"><value>{0} apps are currently unavailable in the Russian App Store</value></data>
   <data name="Storefront_UnavailableCount_Many" xml:space="preserve"><value>{0} apps are currently unavailable in the Russian App Store</value></data>
-  <data name="Storefront_ShowUnavailable" xml:space="preserve"><value>Unavailable only</value></data>
-  <data name="Storefront_ShowAll" xml:space="preserve"><value>Show all</value></data>
   <data name="Saved_Subtitle" xml:space="preserve"><value>Saved on this PC. Select the ones to install on {0}.</value></data>
   <data name="Saved_Loading" xml:space="preserve"><value>Checking what's already on your iPhone…</value></data>
   <data name="Saved_Empty" xml:space="preserve"><value>There are no saved apps in “{0}”.</value></data>
@@ -277,10 +275,6 @@ Details were saved to the diagnostic log.</value></data>
   <data name="Restore_Reinstall" xml:space="preserve"><value>Not on this iPhone — reinstall from purchases</value></data>
   <data name="Restore_InstallFootnote" xml:space="preserve"><value>Only your own purchases are downloaded from Apple, at the latest versions available to your account. No new apps are purchased.</value></data>
   <data name="Summary_Purchases" xml:space="preserve"><value>Your Apple Account purchases</value></data>
-  <data name="Restore_FilterRussian" xml:space="preserve"><value>Russian services</value></data>
-  <data name="Restore_FilterAll" xml:space="preserve"><value>All purchases</value></data>
-  <data name="Restore_FilterUnavailable" xml:space="preserve"><value>Unavailable in Russia</value></data>
-  <data name="Restore_FilterLabel" xml:space="preserve"><value>Filter: {0}</value></data>
   <data name="Restore_CatalogCandidate" xml:space="preserve"><value>From the catalog — license is checked during installation</value></data>
   <data name="Settings_Button" xml:space="preserve"><value>Settings</value></data>
   <data name="Steps_Progress" xml:space="preserve"><value>Step {0} of {1} · {2}</value></data>

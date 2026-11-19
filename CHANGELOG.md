@@ -6,6 +6,16 @@ All notable changes to Perenos are listed here. The format follows
 
 ## [Unreleased]
 
+### Изменено
+- Каталог восстановимых приложений расширен до 726 записей, включая клоны и повторно изданные версии (Сбер, Альфа-Банк, ВТБ, VK, Т-Банк и другие): полная перепроверка витрин ru/us через Apple lookup от 19 ноября 2026. В список восстановления загружаются все записи каталога, а не только сервисы российского происхождения; доступные сейчас в витрине приложения больше не помечаются как недоступные в РФ.
+- Список восстановления стал единым: покупки Apple Account и кандидаты каталога в одном списке с поиском и сортировкой. Фильтры «Все покупки / Недоступные в РФ / Российские сервисы» и переключатель «Только недоступные» в потоке переноса удалены, чтобы пользователь сразу находил нужное приложение. Кандидаты по-прежнему помечаются «Из каталога», недоступность в РФ — предупреждением в строке приложения.
+- Демо-GIF, полные видео и скриншоты Avalonia перегенерированы из текущего интерфейса с единым списком; устаревшие кадры фильтра «Российские сервисы» заменены кадрами сортировки.
+
+### Changed
+- The restorable app catalog grew to 726 entries, including clones and republished versions (Sber, Alfa-Bank, VTB, VK, T-Bank and others), with a full ru/us storefront recheck via Apple lookup on 19 November 2026. The restore list now loads every catalog entry, not only Russian-origin services; currently listed apps are no longer marked unavailable in Russia.
+- The restore list is now unified: Apple Account purchases and catalog candidates in one searchable, sortable list. The "All purchases / Unavailable in Russia / Russian services" filters and the "Unavailable only" toggle in the transfer flow were removed so users find apps immediately. Candidates keep the "From catalog" badge and unavailable apps keep a per-row warning.
+- Demo GIFs, full videos and Avalonia screenshots were regenerated from the current unified-list interface; obsolete "Russian services" filter frames were replaced with sorting frames.
+
 ## [1.8.1] - 2026-11-18
 
 ### Исправлено

@@ -52,7 +52,7 @@ dotnet build src/Perenos/Perenos.csproj -c Release
 Файлы попадают в `artifacts/avalonia-review` (или выбранный `-OutDir` внутри `artifacts`;
 путь может быть относительным или абсолютным). Для сайта нужны `apps`, `restore`, `saved` на обоих
 языках и в обеих темах. Полный сценарий также сохраняет контрольные кадры `devices`, `target`,
-`apps-all`, `install-sign-in`, `install-options`, `installing`, `restore-all`, `restore-russian`,
+`apps-all`, `install-sign-in`, `install-options`, `installing`, `restore-all`, `restore-sorted`,
 `restore-install`, `restore-done`, `save-apps`, `save-ready` и `library`: они нужны для проверки
 компоновки и точных временных меток. После визуальной проверки обновите существующие снимки
 в `docs/screenshots/avalonia`:

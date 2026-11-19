@@ -1,14 +1,14 @@
 {
   "schema_version": 2,
-  "version": "1.7.2",
+  "version": "1.8.1",
   "file": "restore-ru-light.gif",
   "width": 942,
   "height": 782,
-  "frames": 51,
+  "frames": 48,
   "fps": 8,
-  "duration_ms": 6380,
-  "bytes": 190941,
-  "sha256": "1d2229d3534ca2bc9283c6fe557f86b9c9d64943199256f12470c6a376731dbe",
+  "duration_ms": 6010,
+  "bytes": 183378,
+  "sha256": "b7a32ec480c16cb203410b6e596bad8c858a7db6a410997f7767b8a12bc2b371",
   "cursor": "none",
   "encoding": {
     "scaling": "lanczos",
@@ -23,59 +23,59 @@
     "cursor_captured": false,
     "width": 942,
     "height": 782,
-    "frames": 417,
-    "first_timestamp_ms": 1794847246845,
-    "last_timestamp_ms": 1794847285954,
-    "capture_json_sha256": "696b5ac271c7bd9a729015908117fec1e95771d546c02ed13bc63095c27da39d",
-    "frames_csv_sha256": "eba8ec9c940488bb715e6bedd83c2dd14a0774edd3c8c6badbee4ee2aa9ddf85",
-    "window_txt_sha256": "7a8644bb7c7b5a6f525667cc6c10678193bcea2c65cca723af160095028688b8",
-    "timeline_sha256": "81856b99584622df0330e9679ce467d500261a7345ec97a28a49af801c497601",
-    "raw_frames_sha256": "bb761794aaa213f20b71cddaee23275e7bd05405837d4ffdf073756f1f9e3984",
+    "frames": 416,
+    "first_timestamp_ms": 1795114945270,
+    "last_timestamp_ms": 1795114984016,
+    "capture_json_sha256": "b1476fde25ce3797caea7bc963cce7f8d955cdf5d218cc1212bfdbdeac907b1d",
+    "frames_csv_sha256": "25a05e939de29c131643e37f21a45be1d89e47e22051db1e4c6d64537abe45f4",
+    "window_txt_sha256": "e1d68f2224dd31f65ef37932a38662cf70bb6846febb4e4faa6ea5a5604534bf",
+    "timeline_sha256": "54f111f6ccfa834f15242dd12e35caa9b815066bd069f6e0114922cfc6ddc258",
+    "raw_frames_sha256": "873c18aba275b4eb3130275ca476053d1ab6496dccd25857326591fbab1bdd14",
     "raw_frames_hash_format": "SHA-256 of UTF-8 index,timestamp_ms,png_sha256\\n entries in frame order"
   },
   "segments": [
     {
-      "start_ms": 1794847270294,
-      "end_ms": 1794847276604,
-      "output_duration_ms": 6310
+      "start_ms": 1795114968660,
+      "end_ms": 1795114974596,
+      "output_duration_ms": 5936
     }
   ],
-  "sampled_frames_sha256": "ab4233deb1976b50935c87f7e66a19ad5e6daa8832993d0d23ca0790febea0b2",
+  "sampled_frames_sha256": "b85a6c6ae796e3ca3778db595d9520245faf438bec3d15aebff0b069d4d18739",
   "stills": [
     {
       "file": "ru-light/restore-1-apps.png",
-      "requested_timestamp_ms": 1794847271294,
-      "source_frame": "f00259.png",
-      "source_timestamp_ms": 1794847271239,
-      "sha256": "330d8f93f0566d9953275a470f1ebfa02b836d84a965a9776ca2a06338b843d6"
+      "requested_timestamp_ms": 1795114969660,
+      "source_frame": "f00260.png",
+      "source_timestamp_ms": 1795114969616,
+      "sha256": "ea5ac97e2e7f88d1262a9ca2035d11e487527090165eb627787108aa5bff024a"
     },
     {
-      "file": "ru-light/restore-2-filter.png",
-      "requested_timestamp_ms": 1794847272226,
-      "source_frame": "f00269.png",
-      "source_timestamp_ms": 1794847272174,
-      "sha256": "6090ca03a12e84abbbdf6b3479a12e8fd647865ee70977c7e243d0f774100371"
+      "file": "ru-light/restore-2-sorted.png",
+      "requested_timestamp_ms": 1795114970336,
+      "source_frame": "f00267.png",
+      "source_timestamp_ms": 1795114970265,
+      "sha256": "243f40ad10a395123d3d2b2d5999000fd4edb01a0be33e1d7f51bfdd6dc56d61"
     },
     {
       "file": "ru-light/restore-3-selected.png",
-      "requested_timestamp_ms": 1794847273409,
-      "source_frame": "f00282.png",
-      "source_timestamp_ms": 1794847273397,
-      "sha256": "725feed190b1414c103d3a9f9445b22545e480730550b817b2ca60ca1fff76ff"
+      "requested_timestamp_ms": 1795114971372,
+      "source_frame": "f00278.png",
+      "source_timestamp_ms": 1795114971287,
+      "sha256": "3131325e00e6f10be0337b63019c09e15b42d638321c003faa143ff082d5ce1e"
     },
     {
       "file": "ru-light/restore-4-install.png",
-      "requested_timestamp_ms": 1794847273892,
-      "source_frame": "f00287.png",
-      "source_timestamp_ms": 1794847273867,
-      "sha256": "0a967b2f6966c4714053cc3104dadd688d6fd0dce4505fe71184dda589583ed5"
+      "requested_timestamp_ms": 1795114971855,
+      "source_frame": "f00284.png",
+      "source_timestamp_ms": 1795114971847,
+      "sha256": "df1466a0ded304afb9efff7ecaed896e14706c2f3997d92450d10f8cae7c0fbb"
     },
     {
       "file": "ru-light/restore-5-done.png",
-      "requested_timestamp_ms": 1794847276604,
-      "source_frame": "f00316.png",
-      "source_timestamp_ms": 1794847276593,
-      "sha256": "c66c54cad52679705da6e919fbd7347cea95b5dc3634566c0beff10a73af298e"
+      "requested_timestamp_ms": 1795114974596,
+      "source_frame": "f00313.png",
+      "source_timestamp_ms": 1795114974534,
+      "sha256": "5dab4b66e3323d2cbf4fcab48251a9ba973162c2544f7f7c9bd3f6e48311bac2"
     }
   ]
 }

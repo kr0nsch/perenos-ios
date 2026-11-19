@@ -5,11 +5,11 @@ namespace Perenos.Core.Tests;
 public sealed class RussianServiceCatalogTests
 {
     [Fact]
-    public void EmbeddedCatalogHasUniqueKnownRussianServices()
+    public void EmbeddedCatalogHasUniqueServicesIncludingClones()
     {
         var apps = RussianServiceCatalog.LoadDefault();
 
-        Assert.Equal(256, apps.Count);
+        Assert.Equal(726, apps.Count);
         Assert.Equal(apps.Count, apps.Select(app => app.AppId).Distinct().Count());
         Assert.All(apps, app =>
         {
@@ -17,11 +17,13 @@ public sealed class RussianServiceCatalogTests
             Assert.False(string.IsNullOrWhiteSpace(app.Family));
             Assert.False(string.IsNullOrWhiteSpace(app.Category));
         });
+        Assert.Contains(apps, app => app.ListedInRussia);
         var vkMusic = Assert.Single(apps, app => app.AppId == 1054372220);
         Assert.Equal("ВК Музыка", vkMusic.Family);
         Assert.Equal("VK Музыка", vkMusic.Alias);
         Assert.Equal("com.music.vk", vkMusic.BundleId);
         Assert.Equal("887160241", vkMusic.ExternalVersionId);
+        Assert.False(vkMusic.ListedInRussia);
 
         var max = Assert.Single(apps, app => app.AppId == 6739530834);
         Assert.Equal("MAX", max.Family);

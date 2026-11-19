@@ -58,7 +58,7 @@ public sealed class RestorableAppScanner(
         result.AddRange(services.Values.Where(service => !ownedIds.Contains(service.AppId)).Select(service => new RestorableApp(
             new OwnedApp(service.AppId, service.BundleId, service.Name, "", null, service.ExternalVersionId),
             installedById.TryGetValue(service.AppId, out var installed) ? installed : installedByBundle.GetValueOrDefault(service.BundleId),
-            IsUnavailableInRussia: true,
+            IsUnavailableInRussia: !service.ListedInRussia,
             InPurchaseHistory: false,
             ServiceFamily: service.Family,
             ServiceAlias: service.Alias)));

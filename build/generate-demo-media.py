@@ -45,7 +45,7 @@ STILLS = {
     ),
     "save": ("save-1-apps.png", "save-2-ready.png", "save-3-done.png"),
     "restore": (
-        "restore-1-apps.png", "restore-2-filter.png", "restore-3-selected.png",
+        "restore-1-apps.png", "restore-2-sorted.png", "restore-3-selected.png",
         "restore-4-install.png", "restore-5-done.png",
     ),
 }

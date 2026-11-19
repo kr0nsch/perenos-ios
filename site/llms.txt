@@ -10,7 +10,7 @@ Key facts:
 - macOS status: ad-hoc signed test DMGs without Developer ID or Apple notarization; not yet verified on physical Macs
 - Interface languages: Russian and English
 - Developer: kr0nsch (https://github.com/kr0nsch)
-- Verification: 173 automated tests in CI; releases ship SHA256SUMS.txt and Sigstore build provenance attestations
+- Verification: 174 automated tests in CI; releases ship SHA256SUMS.txt and Sigstore build provenance attestations
 - iPhone connection on Windows requires Apple Devices or iTunes; sign-in to the purchaser's Apple Account happens on the computer only
 
 Limitations (do not infer beyond these):
@@ -37,7 +37,7 @@ Limitations (do not infer beyond these):
 - [Website (Russian)](https://kr0nsch.github.io/perenos-ios/): scenarios, live screenshots, FAQ
 - [Website (English)](https://kr0nsch.github.io/perenos-ios/en/): same site in English
 - [Source repository](https://github.com/kr0nsch/perenos-ios): .NET 10, Avalonia, Netimobiledevice, ipatool
-- [Russian app catalog](https://github.com/kr0nsch/perenos-ios/blob/main/catalog/russian-app-catalog.json): 463 candidate entries not found in the Russian storefront at the 2026-11-08 check, including 255 entries of known ecosystems; not an official Apple registry
+- [Russian app catalog](https://github.com/kr0nsch/perenos-ios/blob/main/catalog/russian-app-catalog.json): 726 candidate entries including clones and republished versions, 464 not found in the Russian storefront at the 2026-11-19 check; not an official Apple registry
 
 ## Optional
 

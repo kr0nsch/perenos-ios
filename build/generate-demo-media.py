@@ -43,10 +43,6 @@ STILLS = {
         "1-connect.png", "2-choose-apps.png", "3-target.png", "4-sign-in.png",
         "5-ready.png", "6-installing.png", "7-done.png",
     ),
-    "later": (
-        "later-1-start.png", "later-2-hub.png", "later-3-new-iphone.png",
-        "later-4-saved.png", "later-5-ready.png", "later-6-done.png",
-    ),
     "save": ("save-1-apps.png", "save-2-ready.png", "save-3-done.png"),
     "restore": (
         "restore-1-apps.png", "restore-2-filter.png", "restore-3-selected.png",
@@ -375,7 +371,7 @@ def arguments() -> argparse.Namespace:
     parser.add_argument("--output-dir", type=Path, default=ROOT / "docs" / "media")
     parser.add_argument("--languages", nargs="+", choices=LANGUAGES, default=list(LANGUAGES))
     parser.add_argument("--themes", nargs="+", choices=THEMES, default=list(THEMES))
-    parser.add_argument("--flows", nargs="+", choices=tuple(STILLS), default=["demo", "later"])
+    parser.add_argument("--flows", nargs="+", choices=tuple(STILLS), default=["demo"])
     parser.add_argument("--width", type=int, default=900, help="Maximum GIF width; never upscale (default: 900).")
     parser.add_argument("--fps", type=int, default=12)
     parser.add_argument("--ffmpeg", default="ffmpeg", help="FFmpeg executable name or path.")

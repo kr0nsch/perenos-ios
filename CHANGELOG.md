@@ -6,6 +6,8 @@ All notable changes to Perenos are listed here. The format follows
 
 ## [Unreleased]
 
+## [1.9.0] - 2026-11-19
+
 ### Изменено
 - Каталог восстановимых приложений расширен до 726 записей, включая клоны и повторно изданные версии (Сбер, Альфа-Банк, ВТБ, VK, Т-Банк и другие): полная перепроверка витрин ru/us через Apple lookup от 19 ноября 2026. В список восстановления загружаются все записи каталога, а не только сервисы российского происхождения; доступные сейчас в витрине приложения больше не помечаются как недоступные в РФ.
 - Список восстановления стал единым: покупки Apple Account и кандидаты каталога в одном списке с поиском и сортировкой. Фильтры «Все покупки / Недоступные в РФ / Российские сервисы» и переключатель «Только недоступные» в потоке переноса удалены, чтобы пользователь сразу находил нужное приложение. Кандидаты по-прежнему помечаются «Из каталога», недоступность в РФ — предупреждением в строке приложения.
@@ -238,6 +240,7 @@ All notable changes to Perenos are listed here. The format follows
 - On an iPhone 17 running iOS 27.2, retrieved 206 account purchases and installed Avito, VK, VK Video, Mail.ru Mail and Gazprombank's Digital Safe. Sber was already current. The latest queue installed 95 updates, found 18 apps current and encountered one device-response timeout.
 - Installation is confirmed, but first launch and operation without any Apple Account on the device have not been verified. Compatibility with every iPhone, iOS version and app is not guaranteed.
 
+[1.9.0]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.9.0
 [1.8.1]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.8.1
 [1.8.0]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.8.0
 [1.7.2]: https://github.com/kr0nsch/perenos-ios/releases/tag/v1.7.2

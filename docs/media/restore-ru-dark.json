@@ -1,14 +1,14 @@
 {
   "schema_version": 2,
-  "version": "1.8.1",
+  "version": "1.9.0",
   "file": "restore-ru-dark.gif",
   "width": 942,
   "height": 782,
   "frames": 48,
   "fps": 8,
   "duration_ms": 6010,
-  "bytes": 179384,
-  "sha256": "f8f5ebb9cf44eecd9f202e5f3fd9f4106962d2a191e50738a43a75d23eb0475f",
+  "bytes": 190386,
+  "sha256": "7184fcc829e1c41ceb9ee47f60a8b6afc6ecbb5e8878c6f67bc6b52649523500",
   "cursor": "none",
   "encoding": {
     "scaling": "lanczos",
@@ -23,58 +23,58 @@
     "cursor_captured": false,
     "width": 942,
     "height": 782,
-    "frames": 414,
-    "first_timestamp_ms": 1795114997454,
-    "last_timestamp_ms": 1795115035959,
-    "capture_json_sha256": "fade3210ecc9a95e28b45484105facd29632535286f7092b7eb6c63ad0bbe614",
-    "frames_csv_sha256": "77dc9645a2c4fa5dd3cbff23058197a3a3fb7e9ef21cf210033565e40125f612",
+    "frames": 418,
+    "first_timestamp_ms": 1795116468606,
+    "last_timestamp_ms": 1795116507302,
+    "capture_json_sha256": "ade635fdfbfcb851db3f88b34f45e55c1c74ab46ba94a642d7f7d999ed371f36",
+    "frames_csv_sha256": "2316ce80b08b37536da5b13e7a602b90635e959943dcaa9f008912c951669385",
     "window_txt_sha256": "e1d68f2224dd31f65ef37932a38662cf70bb6846febb4e4faa6ea5a5604534bf",
-    "timeline_sha256": "eafbfed05dbc1b01f9ec70cec0f69ef8729d090d77aa04a2e198ad4353e8a19d",
-    "raw_frames_sha256": "0fa75e5ab0e413570196560d2edd1d326a368b3f451bb66335ca3b6ab05e4459",
+    "timeline_sha256": "6db3e5090692b84f8c36a7f17233589e03acce1cc086b14d56d168b028acef26",
+    "raw_frames_sha256": "0063f110227665a7a75b38ae388c6bc17a014cb15d02c0d8a6b7176edd978e1c",
     "raw_frames_hash_format": "SHA-256 of UTF-8 index,timestamp_ms,png_sha256\\n entries in frame order"
   },
   "segments": [
     {
-      "start_ms": 1795115020694,
-      "end_ms": 1795115026642,
-      "output_duration_ms": 5948
+      "start_ms": 1795116491968,
+      "end_ms": 1795116497958,
+      "output_duration_ms": 5990
     }
   ],
-  "sampled_frames_sha256": "1380358a3b077e0b1d6b3aa04f607fae30c6a77cce5380442a72977a2bce9f01",
+  "sampled_frames_sha256": "d6aa5f322de190a2d406355974e2812ee03bc038aa1dd57cf3e578cd0cdfb665",
   "stills": [
     {
       "file": "ru-dark/restore-1-apps.png",
-      "requested_timestamp_ms": 1795115021694,
-      "source_frame": "f00259.png",
-      "source_timestamp_ms": 1795115021647,
+      "requested_timestamp_ms": 1795116492968,
+      "source_frame": "f00261.png",
+      "source_timestamp_ms": 1795116492904,
       "sha256": "6cce3748d7e7ec88df01bde1efe0bf7c8385880d59b449e251300a0701d2c2ac"
     },
     {
       "file": "ru-dark/restore-2-sorted.png",
-      "requested_timestamp_ms": 1795115022369,
-      "source_frame": "f00266.png",
-      "source_timestamp_ms": 1795115022297,
+      "requested_timestamp_ms": 1795116493676,
+      "source_frame": "f00269.png",
+      "source_timestamp_ms": 1795116493643,
       "sha256": "5cf6ccf3c8b3cf4acd48c09fcba809762adf94cc96b7f1f93c013aa4fd0cd9e0"
     },
     {
       "file": "ru-dark/restore-3-selected.png",
-      "requested_timestamp_ms": 1795115023423,
-      "source_frame": "f00278.png",
-      "source_timestamp_ms": 1795115023414,
+      "requested_timestamp_ms": 1795116494728,
+      "source_frame": "f00280.png",
+      "source_timestamp_ms": 1795116494658,
       "sha256": "edbd64aa35add7c2f57769e057d35b63ab4ba53974e9ce090212280df6efdd68"
     },
     {
       "file": "ru-dark/restore-4-install.png",
-      "requested_timestamp_ms": 1795115023909,
-      "source_frame": "f00283.png",
-      "source_timestamp_ms": 1795115023879,
+      "requested_timestamp_ms": 1795116495224,
+      "source_frame": "f00286.png",
+      "source_timestamp_ms": 1795116495211,
       "sha256": "58b7f10506929769189e39709418fcfcd0a03465d793113e8b145f3e95b6b632"
     },
     {
       "file": "ru-dark/restore-5-done.png",
-      "requested_timestamp_ms": 1795115026642,
-      "source_frame": "f00312.png",
-      "source_timestamp_ms": 1795115026571,
+      "requested_timestamp_ms": 1795116497958,
+      "source_frame": "f00315.png",
+      "source_timestamp_ms": 1795116497888,
       "sha256": "6905e75a2f5837ef852213f701aaa92cb5dfb1a0cf16b53f07d7f655e80d4b85"
     }
   ]

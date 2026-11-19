@@ -1,14 +1,14 @@
 {
   "schema_version": 2,
-  "version": "1.8.1",
+  "version": "1.9.0",
   "file": "restore-en-light.gif",
   "width": 942,
   "height": 782,
-  "frames": 48,
+  "frames": 49,
   "fps": 8,
-  "duration_ms": 6010,
-  "bytes": 179579,
-  "sha256": "5eead8c94a030df9bdf70d9ef12fd2510212c5d2172fcac3601fec1d6538d1d2",
+  "duration_ms": 6130,
+  "bytes": 168836,
+  "sha256": "d23927af4f70da904c1f46a8325c2589f7d40e0cfbf4d58c37f1291b112a2fdf",
   "cursor": "none",
   "encoding": {
     "scaling": "lanczos",
@@ -24,57 +24,57 @@
     "width": 942,
     "height": 782,
     "frames": 417,
-    "first_timestamp_ms": 1795115038365,
-    "last_timestamp_ms": 1795115077171,
-    "capture_json_sha256": "80f3bfa8a87d2d954174de376a2be45d87f492425b23f922dc37ba18977cffec",
-    "frames_csv_sha256": "7bb2c1bb85bdac2730cb0ed4d15af501e0ddc4b89a67073f94dc555f567ad67b",
+    "first_timestamp_ms": 1795116509692,
+    "last_timestamp_ms": 1795116548298,
+    "capture_json_sha256": "a5929bd87a00040d1c51d70ab4b00bb817d44188b47e8ebf0435b9a7821f2833",
+    "frames_csv_sha256": "bfe9652beaa0bbcb90629df1ff274795aac38f6fe297f83ff693b38f1e68cd00",
     "window_txt_sha256": "e1d68f2224dd31f65ef37932a38662cf70bb6846febb4e4faa6ea5a5604534bf",
-    "timeline_sha256": "552f1f387095dcdd8c50865f49c218933a0494d4e22624078a98bf010406b066",
-    "raw_frames_sha256": "1049a0fac9bd1974c75395615d22d722770e7326414db065f0ac4efe6bc63cfa",
+    "timeline_sha256": "895389f31688ec9e756d86e4fd1649b80328c90dc2e75bba9aff9e18a5077ade",
+    "raw_frames_sha256": "1cc57b050e987d9a585839d7b185eccbe4577903be00f819c528fdf1b1642da3",
     "raw_frames_hash_format": "SHA-256 of UTF-8 index,timestamp_ms,png_sha256\\n entries in frame order"
   },
   "segments": [
     {
-      "start_ms": 1795115061813,
-      "end_ms": 1795115067813,
-      "output_duration_ms": 6000
+      "start_ms": 1795116532738,
+      "end_ms": 1795116538792,
+      "output_duration_ms": 6054
     }
   ],
-  "sampled_frames_sha256": "9a44759132b5b24e8e8c59e4292457d4fe0ecda5e5f83b1ed6b1609396b624d3",
+  "sampled_frames_sha256": "605fe3f07ac9d21ba8c0e5470ce905f54aa31386632cc7c6e38bc85a83711e1c",
   "stills": [
     {
       "file": "en-light/restore-1-apps.png",
-      "requested_timestamp_ms": 1795115062813,
-      "source_frame": "f00260.png",
-      "source_timestamp_ms": 1795115062732,
+      "requested_timestamp_ms": 1795116533738,
+      "source_frame": "f00258.png",
+      "source_timestamp_ms": 1795116533676,
       "sha256": "3943db0b4309edaca576263af41113f211382a2e4e3cfb3176179da48b61573f"
     },
     {
       "file": "en-light/restore-2-sorted.png",
-      "requested_timestamp_ms": 1795115063506,
-      "source_frame": "f00268.png",
-      "source_timestamp_ms": 1795115063471,
+      "requested_timestamp_ms": 1795116534433,
+      "source_frame": "f00266.png",
+      "source_timestamp_ms": 1795116534418,
       "sha256": "e01cc9b04273e97799dbf58e76bc93939a5fd4a288183c4f60912aedee1acd7d"
     },
     {
       "file": "en-light/restore-3-selected.png",
-      "requested_timestamp_ms": 1795115064560,
-      "source_frame": "f00279.png",
-      "source_timestamp_ms": 1795115064490,
+      "requested_timestamp_ms": 1795116535543,
+      "source_frame": "f00278.png",
+      "source_timestamp_ms": 1795116535529,
       "sha256": "649d81ad236801a911a810082c896bc9fe742bfb7c5e83895cb49f2e064026d6"
     },
     {
       "file": "en-light/restore-4-install.png",
-      "requested_timestamp_ms": 1795115065052,
-      "source_frame": "f00285.png",
-      "source_timestamp_ms": 1795115065045,
+      "requested_timestamp_ms": 1795116536030,
+      "source_frame": "f00283.png",
+      "source_timestamp_ms": 1795116535990,
       "sha256": "a9b59dc4dbd7651eed5921301672e6a65a80d9b186cc045b3c3a6f3238b5e023"
     },
     {
       "file": "en-light/restore-5-done.png",
-      "requested_timestamp_ms": 1795115067813,
-      "source_frame": "f00314.png",
-      "source_timestamp_ms": 1795115067728,
+      "requested_timestamp_ms": 1795116538792,
+      "source_frame": "f00313.png",
+      "source_timestamp_ms": 1795116538763,
       "sha256": "f93994b58c45fb98e132289997afc25a1999502daed88459dfcc43c2aec3eff7"
     }
   ]

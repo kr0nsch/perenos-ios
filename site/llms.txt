@@ -4,7 +4,7 @@
 
 Key facts:
 
-- Current version: 1.8.1 (released 2026-11-18)
+- Current version: 1.9.0 (released 2026-11-19)
 - Price and license: free, MIT, open source; no ads, subscriptions or hidden telemetry
 - Platforms: Windows 10 version 2004+ and Windows 11 (x64); macOS 15+ on Apple Silicon and Intel
 - macOS status: ad-hoc signed test DMGs without Developer ID or Apple notarization; not yet verified on physical Macs

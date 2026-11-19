@@ -17,7 +17,7 @@
 </p>
 
 <p align="center"><img src="docs/media/demo-en-light.gif" alt="Perenos: selecting and installing apps on a new iPhone, real app window recording" width="942"></p>
-<p align="center"><sub>A recording of Perenos 1.8.1, not a mock-up. Devices, account and apps are fictional. <a href="docs/media/full-en-light.mp4">Watch the full video</a>.</sub></p>
+<p align="center"><sub>A recording of Perenos 1.9.0, not a mock-up. Devices, account and apps are fictional. <a href="docs/media/full-en-light.mp4">Watch the full video</a>.</sub></p>
 
 ## What is Perenos
 
@@ -30,7 +30,7 @@ Perenos (Russian: «Перенос», “transfer”) is a free, open-source pro
 | Price | Free, no ads or subscriptions |
 | License | [MIT](LICENSE), open source |
 | Interface languages | Russian and English |
-| Current version | 1.8.1 (18 November 2026) — [changelog](CHANGELOG.md) |
+| Current version | 1.9.0 (19 November 2026) — [changelog](CHANGELOG.md) |
 | Developer | [kr0nsch](https://github.com/kr0nsch) |
 | Website | [kr0nsch.github.io/perenos-ios](https://kr0nsch.github.io/perenos-ios/en/) |
 
@@ -78,7 +78,7 @@ Connect the phone over USB, unlock it and tap **Trust**. You can connect the old
 To download or update apps, sign in to the purchaser's Apple Account **on the computer**. You do not need to change the account on the iPhone.
 
 <p align="center"><img src="docs/media/restore-en-light.gif" alt="Restoring App Store purchases unavailable in Russia with Perenos" width="942"></p>
-<p align="center"><sub>A real restoration workflow recorded in Perenos 1.8.1. Accounts, devices and apps are fictional.</sub></p>
+<p align="center"><sub>A real restoration workflow recorded in Perenos 1.9.0. Accounts, devices and apps are fictional.</sub></p>
 
 ## Restore VK Music, Avito and other App Store purchases
 
@@ -189,7 +189,7 @@ brew install dotnet go
 brew install --cask powershell
 pwsh build/Get-Ipatool.ps1 -RuntimeIdentifier osx-arm64
 dotnet run --project src/Perenos -- --demo
-bash build/build-macos.sh 1.8.1 osx-arm64
+bash build/build-macos.sh 1.9.0 osx-arm64
 ```
 
 For Intel, replace `osx-arm64` with `osx-x64`. Without `MACOS_SIGN_IDENTITY`, the package is ad-hoc signed for development. Set a Developer ID and `MACOS_NOTARY_PROFILE` to enable notarization for public distribution.

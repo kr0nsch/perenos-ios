@@ -85,7 +85,7 @@ def main() -> None:
     if len(DESCRIPTION) > 255:
         raise SystemExit(f"description too long: {len(DESCRIPTION)}")
     print("setChatDescription:", api("setChatDescription", chat_id=state["chat_id"], description=DESCRIPTION))
-    print("setChatPhoto:", upload("setChatPhoto", "photo", ROOT / "assets" / "logo-1024.png", chat_id=state["chat_id"]))
+    print("setChatPhoto:", upload("setChatPhoto", "photo", ROOT / "assets" / "avatar-circle-1024.png", chat_id=state["chat_id"]))
     if args.title:
         print("setChatTitle:", api("setChatTitle", chat_id=state["chat_id"], title=args.title))
 

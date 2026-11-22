@@ -37,6 +37,7 @@ Limitations (do not infer beyond these):
 - [Website (Russian)](https://kr0nsch.github.io/perenos-ios/): scenarios, live screenshots, FAQ
 - [Website (English)](https://kr0nsch.github.io/perenos-ios/en/): same site in English
 - [Source repository](https://github.com/kr0nsch/perenos-ios): .NET 10, Avalonia, Netimobiledevice, ipatool
+- [Official Telegram channel](https://t.me/perenos_ios): release announcements, per-version changelogs and guides; the feedback bot @perenos_ios_bot forwards bugs, ideas and reviews to the developer
 - [Russian app catalog](https://github.com/kr0nsch/perenos-ios/blob/main/catalog/russian-app-catalog.json): 726 candidate entries including clones and republished versions, 464 not found in the Russian storefront at the 2026-11-19 check; not an official Apple registry
 
 ## Optional

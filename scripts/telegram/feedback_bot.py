@@ -239,6 +239,11 @@ def process_update(state: dict, upd: dict) -> None:
                        menu_keyboard(), fresh=True)
             else:
                 screen(state, chat_id, "⛔ Владелец уже подключён с другого аккаунта.", fresh=True)
+        elif chat_id == state.get("owner"):
+            screen(state, chat_id,
+                   "👑 <b>Вы — разработчик «Переноса».</b>\n\nСюда приходят баги, идеи и отзывы. "
+                   "Под сообщением пользователя — кнопки «Ответить» и «Принято».",
+                   menu_keyboard(), fresh=True)
         else:
             show_menu(state, chat_id, fresh=True)
         return
@@ -274,6 +279,9 @@ def main() -> None:
         selftest()
         return
     state = load_state()
+    if state.get("owner") and state.get("pending"):
+        flush_pending(state, state["owner"])
+        log(f"pending flushed to owner {state['owner']} on startup")
     save_state(state)
     log("polling started")
     if state.get("owner") is None:

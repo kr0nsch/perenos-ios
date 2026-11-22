@@ -6,6 +6,7 @@
 <p align="center">
   <a href="https://github.com/kr0nsch/perenos-ios/releases/latest"><b>Скачать для Windows</b></a> ·
   <a href="https://kr0nsch.github.io/perenos-ios/"><b>Сайт проекта</b></a> ·
+  <a href="https://t.me/perenos_ios"><b>Telegram-канал</b></a> ·
   <a href="README.en.md">English</a>
 </p>
 
@@ -14,6 +15,7 @@
   <a href="https://github.com/kr0nsch/perenos-ios/actions/workflows/ci.yml"><img src="https://github.com/kr0nsch/perenos-ios/actions/workflows/ci.yml/badge.svg" alt="Сборка и тесты"></a>
   <img src="https://img.shields.io/badge/Windows%2010%2B%20%C2%B7%20macOS%2015%2B-Avalonia-7053d9" alt="Windows 10+, macOS 15+, Avalonia">
   <a href="LICENSE"><img src="https://img.shields.io/badge/MIT-open%20source-27765e" alt="Открытый код по лицензии MIT"></a>
+  <a href="https://t.me/perenos_ios"><img src="https://img.shields.io/badge/Telegram-%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB-2CA5E0?logo=telegram&amp;logoColor=white" alt="Официальный Telegram-канал «Перенос»"></a>
 </p>
 
 <p align="center"><img src="docs/media/demo-ru-light.gif" alt="«Перенос»: выбор и установка приложений на новый iPhone, запись окна программы" width="942"></p>
@@ -33,6 +35,7 @@
 | Актуальная версия | 1.9.0 от 19 ноября 2026 ([история изменений](CHANGELOG.md)) |
 | Разработчик | [kr0nsch](https://github.com/kr0nsch) |
 | Сайт | [kr0nsch.github.io/perenos-ios](https://kr0nsch.github.io/perenos-ios/) |
+| Telegram | [Официальный канал @perenos_ios](https://t.me/perenos_ios) — релизы, changelog и обратная связь |
 
 ## Живые скриншоты
 
@@ -212,7 +215,7 @@ npm run test:site
 
 ## Помощь и участие
 
-[Сообщить об ошибке](https://github.com/kr0nsch/perenos-ios/issues/new?template=bug_report.yml) · [Проверить совместимость](https://github.com/kr0nsch/perenos-ios/issues/new?template=compatibility_report.yml) · [Руководство участника](CONTRIBUTING.md) · [История изменений](CHANGELOG.md) · [English](README.en.md)
+[Telegram-канал](https://t.me/perenos_ios) · [Бот обратной связи](https://t.me/perenos_ios_bot) · [Сообщить об ошибке](https://github.com/kr0nsch/perenos-ios/issues/new?template=bug_report.yml) · [Проверить совместимость](https://github.com/kr0nsch/perenos-ios/issues/new?template=compatibility_report.yml) · [Руководство участника](CONTRIBUTING.md) · [История изменений](CHANGELOG.md) · [English](README.en.md)
 
 Разработчик — [kr0nsch](https://github.com/kr0nsch). Основа: [.NET 10](https://dotnet.microsoft.com/), [Avalonia](https://avaloniaui.net/), [Netimobiledevice](https://github.com/artehe/Netimobiledevice), [ipatool](https://github.com/majd/ipatool). Лицензии: [MIT](LICENSE) и [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt).
 

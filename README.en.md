@@ -6,6 +6,7 @@
 <p align="center">
   <a href="https://github.com/kr0nsch/perenos-ios/releases/latest"><b>Download for Windows</b></a> ·
   <a href="https://kr0nsch.github.io/perenos-ios/en/"><b>Project website</b></a> ·
+  <a href="https://t.me/perenos_ios"><b>Telegram channel</b></a> ·
   <a href="README.md">Русский</a>
 </p>
 
@@ -14,6 +15,7 @@
   <a href="https://github.com/kr0nsch/perenos-ios/actions/workflows/ci.yml"><img src="https://github.com/kr0nsch/perenos-ios/actions/workflows/ci.yml/badge.svg" alt="Build and tests"></a>
   <img src="https://img.shields.io/badge/Windows%2010%2B%20%C2%B7%20macOS%2015%2B-Avalonia-7053d9" alt="Windows 10+, macOS 15+, Avalonia">
   <a href="LICENSE"><img src="https://img.shields.io/badge/MIT-open%20source-27765e" alt="MIT open-source license"></a>
+  <a href="https://t.me/perenos_ios"><img src="https://img.shields.io/badge/Telegram-channel-2CA5E0?logo=telegram&amp;logoColor=white" alt="Official Perenos Telegram channel"></a>
 </p>
 
 <p align="center"><img src="docs/media/demo-en-light.gif" alt="Perenos: selecting and installing apps on a new iPhone, real app window recording" width="942"></p>
@@ -33,6 +35,7 @@ Perenos (Russian: «Перенос», “transfer”) is a free, open-source pro
 | Current version | 1.9.0 (19 November 2026) — [changelog](CHANGELOG.md) |
 | Developer | [kr0nsch](https://github.com/kr0nsch) |
 | Website | [kr0nsch.github.io/perenos-ios](https://kr0nsch.github.io/perenos-ios/en/) |
+| Telegram | [Official channel @perenos_ios](https://t.me/perenos_ios) — releases, changelogs and feedback |
 
 ## Live screenshots
 
@@ -212,7 +215,7 @@ The solution is split into `Perenos.Core` (USB, Apple and IPA), `Perenos.Present
 
 ## Help and contribute
 
-[Report a bug](https://github.com/kr0nsch/perenos-ios/issues/new?template=bug_report.yml) · [Report compatibility](https://github.com/kr0nsch/perenos-ios/issues/new?template=compatibility_report.yml) · [Contributing guide](CONTRIBUTING.md) · [Changelog](CHANGELOG.md) · [Русский](README.md)
+[Telegram channel](https://t.me/perenos_ios) · [Feedback bot](https://t.me/perenos_ios_bot) · [Report a bug](https://github.com/kr0nsch/perenos-ios/issues/new?template=bug_report.yml) · [Report compatibility](https://github.com/kr0nsch/perenos-ios/issues/new?template=compatibility_report.yml) · [Contributing guide](CONTRIBUTING.md) · [Changelog](CHANGELOG.md) · [Русский](README.md)
 
 Developed by [kr0nsch](https://github.com/kr0nsch). Built with [.NET 10](https://dotnet.microsoft.com/), [Avalonia](https://avaloniaui.net/), [Netimobiledevice](https://github.com/artehe/Netimobiledevice) and [ipatool](https://github.com/majd/ipatool). Licenses: [MIT](LICENSE) and [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt).
 

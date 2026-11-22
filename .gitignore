@@ -29,3 +29,8 @@ reports/
 # App packages
 *.ipa
 *.ipa.tmp
+
+# Telegram: локальный токен бота и служебное состояние скриптов (не публиковать)
+Текстовый документ.txt
+scripts/telegram/*state*.json
+scripts/telegram/*.log

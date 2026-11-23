@@ -213,6 +213,35 @@ npm run test:site
 
 </details>
 
+## Статистика
+
+Скачивания пакетов каждого релиза по данным GitHub — бейджи обновляются автоматически:
+
+| Релиз | Дата | Скачивания |
+|---|---|---|
+| [v1.9.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.9.0) | 19.11.2026 | ![Скачивания v1.9.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.9.0/total?label=) |
+| [v1.8.1](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.8.1) | 18.11.2026 | ![Скачивания v1.8.1](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.8.1/total?label=) |
+| [v1.8.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.8.0) | 16.11.2026 | ![Скачивания v1.8.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.8.0/total?label=) |
+| [v1.7.2](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.7.2) | 11.11.2026 | ![Скачивания v1.7.2](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.7.2/total?label=) |
+| [v1.7.1](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.7.1) | 11.11.2026 | ![Скачивания v1.7.1](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.7.1/total?label=) |
+| [v1.7.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.7.0) | 11.11.2026 | ![Скачивания v1.7.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.7.0/total?label=) |
+| [v1.6.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.6.0) | 10.11.2026 | ![Скачивания v1.6.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.6.0/total?label=) |
+| [v1.5.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.5.0) | 08.11.2026 | ![Скачивания v1.5.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.5.0/total?label=) |
+| [v1.4.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.4.0) | 08.11.2026 | ![Скачивания v1.4.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.4.0/total?label=) |
+| [v1.3.1](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.3.1) | 08.11.2026 | ![Скачивания v1.3.1](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.3.1/total?label=) |
+| [v1.3.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.3.0) | 06.11.2026 | ![Скачивания v1.3.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.3.0/total?label=) |
+| [v1.2.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.2.0) | 03.11.2026 | ![Скачивания v1.2.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.2.0/total?label=) |
+| [v1.1.1](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.1.1) | 01.11.2026 | ![Скачивания v1.1.1](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.1.1/total?label=) |
+| [v1.1.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.1.0) | 27.10.2026 | ![Скачивания v1.1.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.1.0/total?label=) |
+| [v1.0.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.0.0) | 26.10.2026 | ![Скачивания v1.0.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.0.0/total?label=) |
+| **Все релизы** | — | ![Всего скачиваний](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/total?label=) |
+
+### Звёзды репозитория
+
+[![Звёзды репозитория](https://img.shields.io/github/stars/kr0nsch/perenos-ios?style=social)](https://github.com/kr0nsch/perenos-ios/stargazers)
+
+[![График звёзд репозитория](https://api.star-history.com/svg?repos=kr0nsch/perenos-ios&type=Date)](https://star-history.com/#kr0nsch/perenos-ios&Date)
+
 ## Помощь и участие
 
 [Telegram-канал](https://t.me/perenos_ios) · [Бот обратной связи](https://t.me/perenos_ios_bot) · [Сообщить об ошибке](https://github.com/kr0nsch/perenos-ios/issues/new?template=bug_report.yml) · [Проверить совместимость](https://github.com/kr0nsch/perenos-ios/issues/new?template=compatibility_report.yml) · [Руководство участника](CONTRIBUTING.md) · [История изменений](CHANGELOG.md) · [English](README.en.md)

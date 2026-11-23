@@ -213,6 +213,35 @@ The solution is split into `Perenos.Core` (USB, Apple and IPA), `Perenos.Present
 
 </details>
 
+## Statistics
+
+Downloads of each release's packages according to GitHub — the badges update automatically:
+
+| Release | Date | Downloads |
+|---|---|---|
+| [v1.9.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.9.0) | 2026-11-19 | ![Downloads v1.9.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.9.0/total?label=) |
+| [v1.8.1](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.8.1) | 2026-11-18 | ![Downloads v1.8.1](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.8.1/total?label=) |
+| [v1.8.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.8.0) | 2026-11-16 | ![Downloads v1.8.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.8.0/total?label=) |
+| [v1.7.2](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.7.2) | 2026-11-11 | ![Downloads v1.7.2](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.7.2/total?label=) |
+| [v1.7.1](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.7.1) | 2026-11-11 | ![Downloads v1.7.1](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.7.1/total?label=) |
+| [v1.7.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.7.0) | 2026-11-11 | ![Downloads v1.7.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.7.0/total?label=) |
+| [v1.6.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.6.0) | 2026-11-10 | ![Downloads v1.6.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.6.0/total?label=) |
+| [v1.5.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.5.0) | 2026-11-08 | ![Downloads v1.5.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.5.0/total?label=) |
+| [v1.4.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.4.0) | 2026-11-08 | ![Downloads v1.4.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.4.0/total?label=) |
+| [v1.3.1](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.3.1) | 2026-11-08 | ![Downloads v1.3.1](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.3.1/total?label=) |
+| [v1.3.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.3.0) | 2026-11-06 | ![Downloads v1.3.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.3.0/total?label=) |
+| [v1.2.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.2.0) | 2026-11-03 | ![Downloads v1.2.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.2.0/total?label=) |
+| [v1.1.1](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.1.1) | 2026-11-01 | ![Downloads v1.1.1](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.1.1/total?label=) |
+| [v1.1.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.1.0) | 2026-10-27 | ![Downloads v1.1.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.1.0/total?label=) |
+| [v1.0.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.0.0) | 2026-10-26 | ![Downloads v1.0.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.0.0/total?label=) |
+| **All releases** | — | ![Total downloads](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/total?label=) |
+
+### Repository stars
+
+[![Repository stars](https://img.shields.io/github/stars/kr0nsch/perenos-ios?style=social)](https://github.com/kr0nsch/perenos-ios/stargazers)
+
+[![Star history chart](https://api.star-history.com/svg?repos=kr0nsch/perenos-ios&type=Date)](https://star-history.com/#kr0nsch/perenos-ios&Date)
+
 ## Help and contribute
 
 [Telegram channel](https://t.me/perenos_ios) · [Feedback bot](https://t.me/perenos_ios_bot) · [Report a bug](https://github.com/kr0nsch/perenos-ios/issues/new?template=bug_report.yml) · [Report compatibility](https://github.com/kr0nsch/perenos-ios/issues/new?template=compatibility_report.yml) · [Contributing guide](CONTRIBUTING.md) · [Changelog](CHANGELOG.md) · [Русский](README.md)

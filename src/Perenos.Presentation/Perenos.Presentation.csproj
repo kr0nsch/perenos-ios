@@ -11,4 +11,9 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- Real app icons (owner-consented) so demo media shows genuine Russian apps. -->
+    <EmbeddedResource Include="Demo\demo-icons\*.png" LogicalName="demoicons.%(Filename)%(Extension)" />
+  </ItemGroup>
+
 </Project>

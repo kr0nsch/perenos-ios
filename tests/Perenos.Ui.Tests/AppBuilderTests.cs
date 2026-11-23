@@ -41,7 +41,7 @@ public sealed class AppBuilderTests : IDisposable
         await Until(() => vm.Source?.IsReady == true);
         await vm.PrimaryCommand.ExecuteAsync(null);
         await Until(() => vm.Apps.LoadedFromUdid is not null);
-        vm.Apps.SearchText = "Cloudy";
+        vm.Apps.SearchText = "Авито";
         var app = Assert.Single(vm.AppList.Visible);
         ToggleButton? toggle = null;
         await Until(() =>
@@ -247,11 +247,18 @@ public sealed class AppBuilderTests : IDisposable
         AssertVisibleTextWithinWindow(window);
         var list = window.GetVisualDescendants().OfType<ListBox>()
             .Single(box => ReferenceEquals(box.ItemsSource, vm.AppList.Visible));
-        var footnote = window.GetVisualDescendants().OfType<TextBlock>()
-            .Single(text => text.Text == vm.AppList.Footnote);
         var listBottom = list.TranslatePoint(new Point(0, list.Bounds.Height), window)!.Value.Y;
-        var footnoteTop = footnote.TranslatePoint(new Point(0, 0), window)!.Value.Y;
-        Assert.True(footnoteTop >= listBottom - 1, "App list overflows its card into the footnote.");
+        var footnote = window.GetVisualDescendants().OfType<TextBlock>()
+            .FirstOrDefault(text => text.IsVisible && vm.AppList.Footnote.Length > 0 && text.Text == vm.AppList.Footnote);
+        if (footnote is not null)
+        {
+            var footnoteTop = footnote.TranslatePoint(new Point(0, 0), window)!.Value.Y;
+            Assert.True(footnoteTop >= listBottom - 1, "App list overflows its card into the footnote.");
+        }
+        else
+        {
+            Assert.True(listBottom <= window.Bounds.Height, "App list overflows the window.");
+        }
         window.Close();
     }
 

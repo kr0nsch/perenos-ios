@@ -9,30 +9,35 @@ namespace Perenos.Demo;
 
 /// <summary>
 /// Simulated iPhones and App Store, enabled with <c>--demo</c>. Used to develop the UI and to
-/// take screenshots without hardware or an Apple Account. All names here are fictional.
+/// take screenshots without hardware or an Apple Account. Devices and account are fictional;
+/// the app list uses real Russian App Store titles (with real icons where available) so the
+/// demos show the services people actually restore.
 /// </summary>
 internal sealed class DemoBackend : IAppStoreClient, IStorefrontCatalog, IDeviceService, IDeviceWatcher
 {
     private const string SourceUdid = "00008110-DEMO0000000000A1";
     private const string TargetUdid = "00008140-DEMO0000000000B2";
 
-    private static readonly (string Name, string Developer, string Bundle, long Size, bool Paid)[] Catalog =
+    private static readonly (string Name, string Developer, string Bundle, long Size, bool Paid, long Id)[] Catalog =
     [
-        ("Bloom Journal", "Petal Labs", "demo.bloom.journal", 182_000_000, false),
-        ("Cloudy", "Northwind Apps", "demo.cloudy.weather", 96_400_000, false),
-        ("Daily Planner", "Tidy Tools", "demo.daily.planner", 64_900_000, false),
-        ("Echo Podcasts", "Riverbank Audio", "demo.echo.podcasts", 121_300_000, false),
-        ("Fresh Recipes", "Kitchen Table", "demo.fresh.recipes", 210_700_000, false),
-        ("Grand Chess", "Pawnstar Games", "demo.grand.chess", 402_100_000, true),
-        ("Harbor Maps", "Compass & Co", "demo.harbor.maps", 318_500_000, false),
-        ("Lingo Coach", "Wordsmith", "demo.lingo.coach", 254_000_000, false),
-        ("Mindful", "Calm Waters", "demo.mindful.app", 143_800_000, false),
-        ("Pocket Budget", "Ledgerly", "demo.pocket.budget", 58_200_000, false),
-        ("Run Tracker", "Stride", "demo.run.tracker", 97_600_000, false),
-        ("Sky Atlas", "Stargazer", "demo.sky.atlas", 512_900_000, false),
-        ("Snapshot Studio", "Lumen", "demo.snapshot.studio", 288_300_000, false),
-        ("Voice Notes", "Quill", "demo.voice.notes", 41_700_000, false),
+        ("СберБанк Онлайн", "ПАО Сбербанк", "ru.sberbank.online", 245_000_000, false, 492224193),
+        ("Авито", "Авито", "ru.avito.app", 182_000_000, false, 417281773),
+        ("ВКонтакте", "VK", "com.vk.vkclient", 210_700_000, false, 564177498),
+        ("Альфа-Банк", "АО Альфа-Банк", "ru.alphabank.mobile", 196_400_000, false, 353127685),
+        ("ВТБ Онлайн", "Банк ВТБ (ПАО)", "ru.vtb24.mobilebanking.iphone", 173_800_000, false, 472951966),
+        ("Т-Банк", "АО ТБанк", "ru.tinkoff.banking", 164_900_000, false, 455652438),
+        ("MAX", "VK", "ru.oneme.app", 96_400_000, false, 6739530834),
+        ("Домклик", "Центр недвижимости от Сбербанка", "ru.domclick.mortgage", 121_300_000, false, 1143031400),
+        ("АЗС Лукойл", "ПАО ЛУКОЙЛ", "eae.potemka.LUKOIL", 88_200_000, false, 959900548),
+        ("Одноклассники", "VK", "ru.odnoklassniki.ios", 143_800_000, false, 398465290),
+        ("Почта Mail.ru", "VK", "ru.mail.mail", 131_500_000, false, 511310430),
+        ("VK Музыка", "VK", "com.music.vk", 118_600_000, false, 1054372220),
+        ("VK Видео", "VK", "com.vk.vkvideo.prod", 104_300_000, false, 6447614666),
+        ("СберБизнес", "ПАО Сбербанк", "ru.sberbank.sbbol", 152_900_000, false, 899985834),
     ];
+
+    // Delisted from the Russian storefront in the demo, mirroring the real catalog.
+    private static readonly long[] Delisted = [492224193, 353127685, 472951966, 455652438];
 
     private readonly DateTime _started = DateTime.UtcNow;
     private readonly Timer _timer;
@@ -93,7 +98,8 @@ internal sealed class DemoBackend : IAppStoreClient, IStorefrontCatalog, IDevice
         {
             await Task.Delay(40, cancellationToken);
             var index = Array.FindIndex(Catalog, a => a.Bundle == id);
-            onIcon(id, DemoIcons.Create(Math.Max(0, index)));
+            var app = Catalog[Math.Max(0, index)];
+            onIcon(id, DemoIcons.Create(app.Id, Math.Max(0, index)));
         }
     }
 
@@ -138,13 +144,11 @@ internal sealed class DemoBackend : IAppStoreClient, IStorefrontCatalog, IDevice
         apps = udid == TargetUdid
             ?
             [
-                new InstalledApp(Catalog[1].Bundle, Catalog[1].Name, VersionOf(1), Catalog[1].Developer, 1_400_000_001, null, "anna@example.com", "16.0", Catalog[1].Size),
-                new InstalledApp(Catalog[8].Bundle, Catalog[8].Name, "1.0.0", Catalog[8].Developer, 1_400_000_008, null, "anna@example.com", "16.0", Catalog[8].Size),
+                new InstalledApp(Catalog[1].Bundle, Catalog[1].Name, VersionOf(1), Catalog[1].Developer, Catalog[1].Id, null, "anna@example.com", "16.0", Catalog[1].Size),
+                new InstalledApp(Catalog[6].Bundle, Catalog[6].Name, "1.0.0", Catalog[6].Developer, Catalog[6].Id, null, "anna@example.com", "16.0", Catalog[6].Size),
             ]
             : Catalog.Select((a, i) => new InstalledApp(
-                a.Bundle, a.Name, VersionOf(i), a.Developer, 1_400_000_000 + i, $"8{i:000}000", "anna@example.com", "16.0", a.Size)).ToList();
-        if (udid != TargetUdid)
-            apps.Add(new InstalledApp("demo.testflight.beta", "Beta Build", "0.9", null, null, null, null, "17.0", 30_000_000));
+                a.Bundle, a.Name, VersionOf(i), a.Developer, a.Id, $"8{i:000}000", "anna@example.com", "16.0", a.Size)).ToList();
         _installed[udid] = apps;
         return apps;
     }
@@ -155,14 +159,13 @@ internal sealed class DemoBackend : IAppStoreClient, IStorefrontCatalog, IDevice
 
     public Task<IReadOnlyList<OwnedApp>> GetOwnedAppsAsync(CancellationToken cancellationToken = default) =>
         Task.FromResult<IReadOnlyList<OwnedApp>>(Catalog.Select((app, index) => new OwnedApp(
-            1_400_000_000 + index, app.Bundle, app.Name, VersionOf(index), DateTimeOffset.UtcNow.AddDays(-index))).ToList());
+            app.Id, app.Bundle, app.Name, VersionOf(index), DateTimeOffset.UtcNow.AddDays(-index))).ToList());
 
     public async Task<IReadOnlySet<long>> GetAvailableAppIdsAsync(
         IEnumerable<long> appIds, string storefront, CancellationToken cancellationToken = default)
     {
         await Task.Delay(900, cancellationToken);
-        // Two fictional apps are deliberately absent from the demo Russian storefront.
-        return appIds.Where(id => id is not (1_400_000_006 or 1_400_000_009)).ToHashSet();
+        return appIds.Where(id => !Delisted.Contains(id)).ToHashSet();
     }
 
     public async Task<LoginResult> LoginAsync(string email, string password, string? authCode, CancellationToken cancellationToken = default)
@@ -213,7 +216,7 @@ internal sealed class DemoBackend : IAppStoreClient, IStorefrontCatalog, IDevice
             Directory.CreateDirectory(folder);
             if (!withSavedApps)
                 return;
-            foreach (var index in new[] { 0, 1, 3, 4, 6, 7, 8, 9, 10, 11, 12 })
+            foreach (var index in new[] { 0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11 })
                 WriteFakeIpa(Path.Combine(folder, $"{Catalog[index].Name} {VersionOf(index)}.ipa"), Catalog[index].Bundle);
         }
         catch (IOException)
@@ -237,7 +240,7 @@ internal sealed class DemoBackend : IAppStoreClient, IStorefrontCatalog, IDevice
             <key>CFBundleIdentifier</key><string>{bundleId}</string>
             <key>CFBundleDisplayName</key><string>{app.Name}</string>
             <key>CFBundleShortVersionString</key><string>{VersionOf(index)}</string>
-            <key>MinimumOSVersion</key><string>{(index == 11 ? "27.0" : "16.0")}</string>
+            <key>MinimumOSVersion</key><string>16.0</string>
             </dict></plist>
             """);
         WriteText(zip, "iTunesMetadata.plist", $"""
@@ -245,16 +248,16 @@ internal sealed class DemoBackend : IAppStoreClient, IStorefrontCatalog, IDevice
             <plist version="1.0"><dict>
             <key>itemName</key><string>{app.Name}</string>
             <key>artistName</key><string>{app.Developer.Replace("&", "&amp;")}</string>
-            <key>itemId</key><integer>{1_400_000_000 + index}</integer>
+            <key>itemId</key><integer>{app.Id}</integer>
             <key>apple-id</key><string>anna@example.com</string>
             </dict></plist>
             """);
         WriteText(zip, "Payload/Demo.app/SC_Info/Demo.sinf", "demo");
         using var icon = zip.CreateEntry("Payload/Demo.app/AppIcon60x60@2x.png").Open();
-        icon.Write(DemoIcons.Create(index));
+        icon.Write(DemoIcons.Create(app.Id, index));
     }
 
-    /// <summary>Demo files are tiny; show the sizes the fictional apps would really have.</summary>
+    /// <summary>Demo files are tiny; show the sizes the apps would really have.</summary>
     public static LibraryScan WithRealisticSizes(LibraryScan scan)
     {
         static SavedApp Resize(SavedApp a) => Array.FindIndex(Catalog, c => c.Bundle == a.BundleId) is var i and >= 0

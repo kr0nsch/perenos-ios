@@ -17,6 +17,20 @@ internal static class DemoIcons
         (0xF472B6, 0x9333EA), (0xFCD34D, 0xF59E0B),
     ];
 
+    /// <summary>Real app icon bundled for demo media, falling back to a drawn placeholder.</summary>
+    public static byte[] Create(long appId, int index)
+    {
+        using var stream = typeof(DemoIcons).Assembly.GetManifestResourceStream($"demoicons.{appId}.png");
+        if (stream is not null)
+        {
+            using var memory = new MemoryStream();
+            stream.CopyTo(memory);
+            return memory.ToArray();
+        }
+
+        return Create(index);
+    }
+
     public static byte[] Create(int index)
     {
         var (top, bottom) = Palettes[index % Palettes.Length];

@@ -276,8 +276,8 @@ try {
         WaitText (T 'Apps_Title')
         Start-Sleep -Seconds 2
         Capture "apps-all-$Language-$Theme"
-        SetField 0 'Cloudy'
-        SelectApp 'Cloudy'
+        SetField 0 'Авито'
+        SelectApp 'Авито'
         Capture "apps-$Language-$Theme"
         ClickButton (T 'Footer_Continue')
         WaitText (T 'Target_Title')
@@ -309,8 +309,8 @@ try {
         Capture "restore-sorted-$Language-$Theme"
         ClickButton (T 'Apps_SortBySize')
         ClickMenuItem (T 'Apps_SortByName')
-        SetField 0 'Cloudy'
-        SelectApp 'Cloudy'
+        SetField 0 'Авито'
+        SelectApp 'Авито'
         Capture "restore-$Language-$Theme"
         ClickButton (T 'Footer_Continue')
         Capture "restore-install-$Language-$Theme"
@@ -324,8 +324,8 @@ try {
         ClickButton (T 'Later_Save.Title')
         ClickButton (T 'Footer_Continue')
         WaitText (T 'Apps_Title')
-        SetField 0 'Bloom'
-        SelectApp 'Bloom Journal'
+        SetField 0 'СберБанк'
+        SelectApp 'СберБанк Онлайн'
         Capture "save-apps-$Language-$Theme"
         ClickButton (T 'Footer_Continue')
         Capture "save-ready-$Language-$Theme"
@@ -335,7 +335,7 @@ try {
         FinishInstall
         ClickButton (T 'Later_Install.Title')
         ClickButton (T 'Footer_Continue')
-        WaitText 'Bloom Journal'
+        WaitText 'СберБанк Онлайн'
         ClickButton (T 'Footer_Continue')
         ClickButton (T 'Footer_Install')
         FinishInstall
@@ -344,8 +344,8 @@ try {
         ClickButton (T 'Start_Now.Title')
         ClickButton (T 'Footer_Continue')
         WaitText (T 'Apps_Title')
-        SetField 0 'Cloudy'
-        SelectApp 'Cloudy'
+        SetField 0 'Авито'
+        SelectApp 'Авито'
         Capture "apps-$Language-$Theme"
     }
     if ($Mode -eq 'Settings') {

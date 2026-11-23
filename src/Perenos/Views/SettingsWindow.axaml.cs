@@ -78,5 +78,61 @@ public sealed partial class SettingsWindow : Window
 
     private void OpenLogs(object? sender, RoutedEventArgs e) => Shell.Open(_viewModel.Services.Paths.LogsDirectory);
 
+    private string? _updateUrl;
+
+    private async void CheckUpdates(object? sender, RoutedEventArgs e)
+    {
+        UpdateStatus.Text = Loc.Get("Settings_Checking");
+        UpdateLink.IsVisible = false;
+        try
+        {
+            var checker = new UpdateChecker(new HttpClient());
+            var app = await checker.CheckAppAsync(_viewModel.Services.AppVersion);
+            var ipatool = await checker.CheckIpatoolAsync(ReadIpatoolCommit());
+            if (app is null && ipatool is null)
+            {
+                UpdateStatus.Text = Loc.Get("Settings_UpToDate");
+                _updateUrl = null;
+                return;
+            }
+
+            var parts = new List<string>();
+            if (app is not null)
+                parts.Add(Loc.Format("Settings_UpdateAvailable", app.Component, app.Latest));
+            if (ipatool is not null)
+                parts.Add(Loc.Format("Settings_UpdateAvailable", ipatool.Component, ipatool.Latest));
+            UpdateStatus.Text = string.Join("; ", parts);
+            _updateUrl = app?.Url ?? ipatool?.Url;
+            UpdateLink.IsVisible = _updateUrl is not null;
+        }
+        catch (Exception ex)
+        {
+            AppLog.Warn($"Update check failed: {ex.Message}");
+            UpdateStatus.Text = Loc.Get("Settings_UpdateFailed");
+        }
+    }
+
+    private string ReadIpatoolCommit()
+    {
+        try
+        {
+            var path = Path.Combine(_viewModel.Services.Paths.AppDirectory, "ipatool.json");
+            if (!File.Exists(path))
+                return "";
+            using var document = System.Text.Json.JsonDocument.Parse(File.ReadAllText(path));
+            return document.RootElement.TryGetProperty("commit", out var commit) ? commit.GetString() ?? "" : "";
+        }
+        catch (Exception ex) when (ex is IOException or System.Text.Json.JsonException)
+        {
+            return "";
+        }
+    }
+
+    private void OpenUpdate(object? sender, RoutedEventArgs e)
+    {
+        if (_updateUrl is not null)
+            Shell.Open(_updateUrl);
+    }
+
     private void CloseWindow(object? sender, RoutedEventArgs e) => Close();
 }

@@ -287,6 +287,13 @@
   <data name="Restore_VersionsLoading" xml:space="preserve"><value>Читаем список версий…</value></data>
   <data name="Restore_VersionsEmpty" xml:space="preserve"><value>Нет доступных версий</value></data>
   <data name="Restore_VersionButton" xml:space="preserve"><value>Версия</value></data>
+  <data name="Settings_CheckUpdates" xml:space="preserve"><value>Проверить обновления</value></data>
+  <data name="Settings_CheckUpdatesHint" xml:space="preserve"><value>Проверяем GitHub на новую версию приложения и ipatool.</value></data>
+  <data name="Settings_Checking" xml:space="preserve"><value>Проверяем обновления…</value></data>
+  <data name="Settings_UpToDate" xml:space="preserve"><value>Всё актуально.</value></data>
+  <data name="Settings_UpdateAvailable" xml:space="preserve"><value>{0}: доступна {1}</value></data>
+  <data name="Settings_UpdateFailed" xml:space="preserve"><value>Не удалось проверить обновления.</value></data>
+  <data name="Settings_OpenUpdate" xml:space="preserve"><value>Открыть</value></data>
   <data name="Settings_Button" xml:space="preserve"><value>Настройки</value></data>
   <data name="Steps_Progress" xml:space="preserve"><value>Шаг {0} из {1} · {2}</value></data>
   <data name="Step_OldIPhone" xml:space="preserve"><value>Старый iPhone</value></data>

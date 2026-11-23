@@ -1,6 +1,9 @@
 using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.VisualTree;
+using Perenos.ViewModels;
 
 namespace Perenos.Views;
 
@@ -10,6 +13,30 @@ public sealed partial class AppsStepView : UserControl
     {
         AvaloniaXamlLoader.Load(this);
         SizeChanged += (_, _) => UpdateListHeight();
+        AddHandler(KeyDownEvent, OnKeyDown, RoutingStrategies.Tunnel);
+    }
+
+    /// <summary>Ctrl+F search, F5 rescan, Enter continue — mirrors the on-screen buttons.</summary>
+    private void OnKeyDown(object? sender, KeyEventArgs e)
+    {
+        if (DataContext is not MainViewModel vm)
+            return;
+
+        if (e.Key == Key.F && e.KeyModifiers.HasFlag(KeyModifiers.Control))
+        {
+            SearchBox.Focus();
+            e.Handled = true;
+        }
+        else if (e.Key == Key.F5)
+        {
+            vm.RetryAppsCommand.Execute(null);
+            e.Handled = true;
+        }
+        else if (e.Key == Key.Enter && e.Source is not TextBox && vm.PrimaryCommand.CanExecute(null))
+        {
+            vm.PrimaryCommand.Execute(null);
+            e.Handled = true;
+        }
     }
 
     private void UpdateListHeight()

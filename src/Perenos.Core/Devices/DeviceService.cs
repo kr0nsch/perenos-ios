@@ -227,9 +227,27 @@ public sealed class DeviceService(string pairRecordsDirectory) : IDeviceService
             udid,
             label: ClientLabel,
             autopair: false,
-            connectionType: UsbmuxdConnectionType.Usb,
+            connectionType: ResolveConnectionType(udid),
             pairingRecordsCacheDir: pairRecordsDirectory,
             logger: _logger);
+    }
+
+    /// <summary>USB by default; a Wi-Fi-synced iPhone is reached over the network instead.</summary>
+    private static UsbmuxdConnectionType ResolveConnectionType(string udid)
+    {
+        try
+        {
+            foreach (var device in Usbmux.GetDeviceList())
+            {
+                if (device.Serial == udid)
+                    return device.ConnectionType;
+            }
+        }
+        catch (Exception ex) when (ex is UsbmuxConnectionException or UsbmuxException or IOException or SocketException)
+        {
+        }
+
+        return UsbmuxdConnectionType.Usb;
     }
 
     private UsbmuxLockdownClient ConnectTrusted(string udid)

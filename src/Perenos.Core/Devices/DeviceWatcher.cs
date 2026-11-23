@@ -64,7 +64,10 @@ public sealed class DeviceWatcher : IDeviceWatcher
         {
             foreach (var device in Usbmux.GetDeviceList())
             {
-                if (device.ConnectionType != UsbmuxdConnectionType.Usb || string.IsNullOrEmpty(device.Serial))
+                if (string.IsNullOrEmpty(device.Serial))
+                    continue;
+                // Wi-Fi-synced iPhones appear over the network; USB remains the primary path.
+                if (device.ConnectionType != UsbmuxdConnectionType.Usb && device.ConnectionType != UsbmuxdConnectionType.Network)
                     continue;
                 if (found.All(d => d.Udid != device.Serial))
                     found.Add(new ConnectedDevice(device.Serial, device.DeviceId));

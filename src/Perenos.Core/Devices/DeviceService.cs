@@ -21,7 +21,7 @@ public sealed class DeviceService(string pairRecordsDirectory) : IDeviceService
     private static readonly string[] AppAttributes =
     [
         "CFBundleIdentifier", "CFBundleDisplayName", "CFBundleName", "CFBundleShortVersionString",
-        "CFBundleVersion", "MinimumOSVersion", "StaticDiskUsage", "iTunesMetadata",
+        "CFBundleVersion", "MinimumOSVersion", "StaticDiskUsage", "iTunesMetadata", "Path",
     ];
 
     private readonly ILogger _logger = AppLog.CreateLibraryLogger("Netimobiledevice");
@@ -209,7 +209,11 @@ public sealed class DeviceService(string pairRecordsDirectory) : IDeviceService
             externalVersion is > 0 ? externalVersion.Value.ToString(CultureInfo.InvariantCulture) : null,
             GetString(accountInfo, "AppleID") ?? GetString(metadata, "apple-id"),
             GetString(app, "MinimumOSVersion"),
-            GetLong(app, "StaticDiskUsage"));
+            GetLong(app, "StaticDiskUsage"))
+        {
+            // Offloaded placeholders keep the bundle id but have no installed binary path.
+            IsOffloaded = GetString(app, "Path") is null,
+        };
     }
 
     internal static bool TryParseVersion(string text, out Version version)

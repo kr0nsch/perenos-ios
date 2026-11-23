@@ -40,6 +40,9 @@ public sealed record InstalledApp(
     /// <summary>Only App Store apps carry the store identifiers needed to download them again.</summary>
     public bool IsFromAppStore => AppStoreId is > 0;
 
+    /// <summary>Offloaded apps keep their icon and data but the binary was removed; they need a reinstall.</summary>
+    public bool IsOffloaded { get; init; }
+
     public string PackageKey => AppStoreId is > 0 ? $"id:{AppStoreId.Value}" : $"bundle:{BundleId}";
 }
 

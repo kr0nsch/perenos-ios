@@ -59,7 +59,9 @@ public sealed partial class RestoreAppsViewModel(
                     OsWarning = OsCompatibility.RequiresNewerOs(installed.MinimumOsVersion, target.OsVersion)
                         ? Loc.Format("Restore_MinOs", installed.MinimumOsVersion)
                         : null,
-                    Caption = Loc.Get(!app.InPurchaseHistory ? "Restore_CatalogCandidate" : app.Installed is null ? "Restore_Reinstall" : "Restore_Update"),
+                    Caption = Loc.Get(app.Installed?.IsOffloaded == true ? "Restore_Offloaded"
+                        : !app.InPurchaseHistory ? "Restore_CatalogCandidate"
+                        : app.Installed is null ? "Restore_Reinstall" : "Restore_Update"),
                 };
             }).ToList();
             SetItems(items);

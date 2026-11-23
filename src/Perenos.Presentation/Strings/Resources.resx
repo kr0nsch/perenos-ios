@@ -283,6 +283,10 @@ Details were saved to the diagnostic log.</value></data>
   <data name="Restore_VersionPicker" xml:space="preserve"><value>Choose a version</value></data>
   <data name="Restore_VersionLatest" xml:space="preserve"><value>Latest available</value></data>
   <data name="Restore_ReleaseDate" xml:space="preserve"><value>from {0}</value></data>
+  <data name="Restore_VersionPinned" xml:space="preserve"><value>Version {0} selected</value></data>
+  <data name="Restore_VersionsLoading" xml:space="preserve"><value>Reading available versions…</value></data>
+  <data name="Restore_VersionsEmpty" xml:space="preserve"><value>No available versions</value></data>
+  <data name="Restore_VersionButton" xml:space="preserve"><value>Version</value></data>
   <data name="Settings_Button" xml:space="preserve"><value>Settings</value></data>
   <data name="Steps_Progress" xml:space="preserve"><value>Step {0} of {1} · {2}</value></data>
   <data name="Step_OldIPhone" xml:space="preserve"><value>Old iPhone</value></data>

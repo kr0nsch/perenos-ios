@@ -160,6 +160,30 @@ public sealed class RestoreAppsViewModelTests
         Assert.False(vm.Visible.Single().HasOsWarning);
     }
 
+    [Fact]
+    public async Task VersionPickerListsBuildsNewestFirstAndPinsSelection()
+    {
+        var store = new FakeStore
+        {
+            Owned = [new OwnedApp(1, "app.one", "One", "1.0", null)],
+            Versions = ["111", "222"],
+        };
+        var vm = new RestoreAppsViewModel(new FakeDevices(), new RestorableAppScanner(store, new FakeCatalog { Available = new HashSet<long> { 1 } }), new IconCache(), new TestDispatcher());
+        await vm.LoadAsync(Target());
+        var item = vm.Visible.Single();
+
+        await vm.LoadVersionsCommand.ExecuteAsync(item);
+
+        Assert.Equal(2, item.Versions.Count);
+        Assert.Equal("222", item.Versions[0].ExternalVersionId);
+        Assert.Equal("9.9", item.Versions[0].DisplayVersion);
+
+        item.PinVersionCommand.Execute(item.Versions[0]);
+
+        Assert.Equal("222", item.App.LatestExternalVersionId);
+        Assert.True(item.HasPinned);
+    }
+
     private static DeviceItemViewModel Target() => new("target", _ => Task.CompletedTask);
 
     private static InstalledApp App(long id, string name, string version) =>
@@ -183,6 +207,13 @@ public sealed class RestoreAppsViewModelTests
         public Task SignOutAsync(CancellationToken cancellationToken = default) => throw new NotSupportedException();
 
         public Task<string> DownloadAsync(DownloadRequest request, IProgress<DownloadProgress>? progress, CancellationToken cancellationToken = default) => throw new NotSupportedException();
+
+        public IReadOnlyList<string> Versions { get; set; } = [];
+
+        public Task<IReadOnlyList<string>> GetVersionsAsync(long appId, CancellationToken cancellationToken = default) => Task.FromResult(Versions);
+
+        public Task<AppVersionInfo> GetVersionMetadataAsync(long appId, string externalVersionId, CancellationToken cancellationToken = default) =>
+            Task.FromResult(new AppVersionInfo(externalVersionId, "9.9", null, "15.0"));
     }
 
     private sealed class FakeDevices : IDeviceService

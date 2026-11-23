@@ -26,6 +26,14 @@ public sealed class RestorableAppScanner(
     IStorefrontCatalog catalog,
     IReadOnlyList<RussianServiceApp>? russianServices = null)
 {
+    /// <summary>All downloadable builds of an app, oldest first (delegates to the App Store client).</summary>
+    public Task<IReadOnlyList<string>> GetVersionsAsync(long appId, CancellationToken cancellationToken = default) =>
+        appStore.GetVersionsAsync(appId, cancellationToken);
+
+    /// <summary>Display version, release date and minimum iOS of one build without downloading it.</summary>
+    public Task<AppVersionInfo> GetVersionMetadataAsync(long appId, string externalVersionId, CancellationToken cancellationToken = default) =>
+        appStore.GetVersionMetadataAsync(appId, externalVersionId, cancellationToken);
+
     public async Task<IReadOnlyList<RestorableApp>> ScanAsync(
         IReadOnlyList<InstalledApp> installedApps, string storefront = "ru", CancellationToken cancellationToken = default)
     {

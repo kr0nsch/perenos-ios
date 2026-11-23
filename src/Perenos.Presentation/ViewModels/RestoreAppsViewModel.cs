@@ -108,6 +108,43 @@ public sealed partial class RestoreAppsViewModel(
         Clear();
     }
 
+    /// <summary>Fills the version picker for one row: every build with its display version, date and minimum iOS.</summary>
+    [RelayCommand]
+    private async Task LoadVersionsAsync(AppItemViewModel item)
+    {
+        if (item.IsLoadingVersions || item.App.AppStoreId is not > 0)
+            return;
+        item.IsLoadingVersions = true;
+        try
+        {
+            var appId = item.App.AppStoreId!.Value;
+            var ids = await scanner.GetVersionsAsync(appId);
+            item.Versions.Clear();
+            // Newest first in the picker; cap the list so the flyout stays usable.
+            foreach (var id in ids.Reverse().Take(30))
+            {
+                AppVersionInfo info;
+                try
+                {
+                    info = await scanner.GetVersionMetadataAsync(appId, id);
+                }
+                catch (IpatoolException)
+                {
+                    info = new AppVersionInfo(id);
+                }
+                item.Versions.Add(info);
+            }
+        }
+        catch (IpatoolException ex)
+        {
+            AppLog.Warn($"Could not list versions for {item.App.BundleId}: {ex.Message}");
+        }
+        finally
+        {
+            item.IsLoadingVersions = false;
+        }
+    }
+
     private async Task LoadIconsAsync(string udid, IReadOnlyList<string> installedIds, CancellationToken token)
     {
         try

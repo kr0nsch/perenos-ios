@@ -1,6 +1,8 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:Perenos.ViewModels"
+             xmlns:i="using:Perenos.Core.Ipatool"
+             xmlns:ac="using:Avalonia.Data.Converters"
              xmlns:s="using:Perenos.Services"
              xmlns:c="using:Perenos.Converters"
              xmlns:views="using:Perenos.Views"
@@ -62,6 +64,34 @@
                         <TextBlock Text="{Binding Caption}" Classes="caption" Foreground="{DynamicResource AccentTextBrush}" IsVisible="{Binding HasCaption}"/>
                         <TextBlock Text="{Binding AvailabilityText}" Classes="caption" Foreground="{DynamicResource WarningBrush}" IsVisible="{Binding HasAvailability}"/>
                         <TextBlock Text="{Binding OsWarning}" Classes="caption" Foreground="{DynamicResource WarningBrush}" IsVisible="{Binding HasOsWarning}"/>
+                        <TextBlock Text="{Binding PinnedText}" Classes="caption" Foreground="{DynamicResource AccentTextBrush}" IsVisible="{Binding HasPinned}"/>
+                        <Button Classes="link" Content="{s:Text Restore_VersionButton}" HorizontalAlignment="Left"
+                                Command="{Binding DataContext.Restore.LoadVersionsCommand, ElementName=AppListBox}" CommandParameter="{Binding}"
+                                IsVisible="{Binding IsSelectable}">
+                          <Button.Flyout>
+                            <Flyout Placement="Bottom">
+                              <StackPanel MinWidth="240" Spacing="6">
+                                <TextBlock Text="{s:Text Restore_VersionsLoading}" Classes="caption" IsVisible="{Binding IsLoadingVersions}"/>
+                                <ScrollViewer MaxHeight="280" VerticalScrollBarVisibility="Auto">
+                                  <ItemsControl ItemsSource="{Binding Versions}">
+                                    <ItemsControl.ItemTemplate>
+                                      <DataTemplate DataType="i:AppVersionInfo">
+                                        <Button Classes="link" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                                                Command="{Binding $parent[ItemsControl].DataContext.PinVersionCommand}" CommandParameter="{Binding}">
+                                          <StackPanel Spacing="1">
+                                            <TextBlock Text="{Binding DisplayVersion}" Classes="body"/>
+                                            <TextBlock Text="{Binding ExternalVersionId}" Classes="caption"/>
+                                            <TextBlock Text="{Binding MinimumOsVersion}" Classes="caption" IsVisible="{Binding MinimumOsVersion, Converter={x:Static ac:StringConverters.IsNotNullOrEmpty}}"/>
+                                          </StackPanel>
+                                        </Button>
+                                      </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                  </ItemsControl>
+                                </ScrollViewer>
+                              </StackPanel>
+                            </Flyout>
+                          </Button.Flyout>
+                        </Button>
                       </StackPanel>
                       <TextBlock Grid.Column="3" Text="{Binding SizeText}" Classes="caption" VerticalAlignment="Center" Margin="8,0"/>
                     </Grid>

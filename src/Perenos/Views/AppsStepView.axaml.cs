@@ -14,6 +14,21 @@ public sealed partial class AppsStepView : UserControl
         AvaloniaXamlLoader.Load(this);
         SizeChanged += (_, _) => UpdateListHeight();
         AddHandler(KeyDownEvent, OnKeyDown, RoutingStrategies.Tunnel);
+        AddHandler(DoubleTappedEvent, OnDoubleTapped, RoutingStrategies.Bubble);
+    }
+
+    /// <summary>Double-click a row to install just that app, without ticking checkboxes.</summary>
+    private void OnDoubleTapped(object? sender, TappedEventArgs e)
+    {
+        if (DataContext is not MainViewModel vm || (e.Source as Control)?.DataContext is not AppItemViewModel item || !item.IsSelectable)
+            return;
+        vm.AppList.ClearSelection();
+        item.IsSelected = true;
+        if (vm.PrimaryCommand.CanExecute(null))
+        {
+            vm.PrimaryCommand.Execute(null);
+            e.Handled = true;
+        }
     }
 
     /// <summary>Ctrl+F search, F5 rescan, Enter continue — mirrors the on-screen buttons.</summary>

@@ -283,6 +283,10 @@
   <data name="Restore_VersionPicker" xml:space="preserve"><value>Выбор версии</value></data>
   <data name="Restore_VersionLatest" xml:space="preserve"><value>Последняя доступная</value></data>
   <data name="Restore_ReleaseDate" xml:space="preserve"><value>от {0}</value></data>
+  <data name="Restore_VersionPinned" xml:space="preserve"><value>Выбрана версия {0}</value></data>
+  <data name="Restore_VersionsLoading" xml:space="preserve"><value>Читаем список версий…</value></data>
+  <data name="Restore_VersionsEmpty" xml:space="preserve"><value>Нет доступных версий</value></data>
+  <data name="Restore_VersionButton" xml:space="preserve"><value>Версия</value></data>
   <data name="Settings_Button" xml:space="preserve"><value>Настройки</value></data>
   <data name="Steps_Progress" xml:space="preserve"><value>Шаг {0} из {1} · {2}</value></data>
   <data name="Step_OldIPhone" xml:space="preserve"><value>Старый iPhone</value></data>

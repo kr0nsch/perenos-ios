@@ -1,5 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Perenos.Core.Devices;
+using Perenos.Core.Ipatool;
 using Perenos.Core.Library;
 using Perenos.Core.Storefront;
 using Perenos.Services;
@@ -8,7 +10,30 @@ namespace Perenos.ViewModels;
 
 public sealed partial class AppItemViewModel(InstalledApp app, SavedApp? saved = null) : ObservableObject
 {
-    public InstalledApp App { get; } = app;
+    public InstalledApp App { get; private set; } = app;
+
+    /// <summary>Available builds, loaded on demand for the version picker.</summary>
+    public System.Collections.ObjectModel.ObservableCollection<AppVersionInfo> Versions { get; } = [];
+
+    [ObservableProperty]
+    public partial bool IsLoadingVersions { get; set; }
+
+    /// <summary>The build the user pinned in the version picker, if any.</summary>
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(PinnedText), nameof(HasPinned))]
+    public partial string? PinnedVersionId { get; set; }
+
+    public string PinnedText => PinnedVersionId is null ? "" : Loc.Format("Restore_VersionPinned", PinnedVersionId);
+
+    public bool HasPinned => PinnedVersionId is not null;
+
+    [RelayCommand]
+    private void PinVersion(AppVersionInfo info)
+    {
+        App = App with { LatestExternalVersionId = info.ExternalVersionId };
+        PinnedVersionId = info.DisplayVersion ?? info.ExternalVersionId;
+        OnPropertyChanged((string?)null);
+    }
 
     /// <summary>The file to install from, for apps saved on this PC.</summary>
     public SavedApp? Saved { get; } = saved;

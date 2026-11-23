@@ -1,0 +1,41 @@
+name: Feedback bot
+
+# Бот обратной связи живёт на GitHub Actions: cron запускает окно опроса
+# Telegram каждые ~5 минут. Состояние (offset, экраны, очередь) сохраняется
+# в кэше Actions между запусками; начальный сид — секрет FEEDBACK_STATE_SEED.
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: feedback-bot
+  cancel-in-progress: false
+
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/cache/restore@v4
+        with:
+          path: scripts/telegram/feedback_state.json
+          key: feedback-state-${{ github.run_id }}
+          restore-keys: feedback-state-
+
+      - name: Poll Telegram updates
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          FEEDBACK_STATE_SEED: ${{ secrets.FEEDBACK_STATE_SEED }}
+        run: python3 scripts/telegram/feedback_bot.py --window 270
+
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: scripts/telegram/feedback_state.json
+          key: feedback-state-${{ github.run_id }}

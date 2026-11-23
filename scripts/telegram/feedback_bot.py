@@ -1,6 +1,9 @@
 """Бот обратной связи @perenos_ios_bot для официального канала «Перенос».
 
 Запуск: python feedback_bot.py          (long polling, работает постоянно)
+На GitHub Actions бот живёт окнами опроса: python feedback_bot.py --window 270
+(workflow bot.yml, cron */5); состояние между запусками хранится в кэше Actions,
+начальное состояние передаётся секретом FEEDBACK_STATE_SEED.
 Проверка логики без сети: python feedback_bot.py --selftest
 
 Как устроено:
@@ -12,10 +15,13 @@
 • Состояние — в feedback_state.json (не публикуется). Сброс владельца: удалить файл.
 """
 
+import argparse
 import html
 import json
+import os
 import re
 import secrets
+import signal
 import sys
 import time
 from datetime import datetime
@@ -275,23 +281,51 @@ def process_update(state: dict, upd: dict) -> None:
 
 
 def main() -> None:
-    if "--selftest" in sys.argv:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--window", type=int, default=0,
+                        help="окно опроса в секундах (0 = бесконечно, локальный режим)")
+    parser.add_argument("--selftest", action="store_true")
+    args = parser.parse_args()
+    if args.selftest:
         selftest()
         return
+    if not STATE.exists() and os.environ.get("FEEDBACK_STATE_SEED"):
+        STATE.write_text(os.environ["FEEDBACK_STATE_SEED"], encoding="utf-8")
     state = load_state()
+    state.setdefault("seen", [])
     if state.get("owner") and state.get("pending"):
         flush_pending(state, state["owner"])
         log(f"pending flushed to owner {state['owner']} on startup")
     save_state(state)
     log("polling started")
-    if state.get("owner") is None:
+    if state.get("owner") is None and not args.window:
         log(f"owner link: {BOT_URL}?start=owner_{state['owner_code']}")
+
+    def shutdown(signum, frame):
+        save_state(state)
+        log("terminated; state saved")
+        sys.exit(0)
+
+    signal.signal(signal.SIGTERM, shutdown)
+    deadline = time.monotonic() + args.window if args.window else None
     while True:
+        if deadline and time.monotonic() >= deadline:
+            save_state(state)
+            log("polling window finished; state saved")
+            return
         try:
-            updates = api("getUpdates", offset=state["offset"] or None, timeout=30,
+            remaining = int(deadline - time.monotonic()) if deadline else 30
+            updates = api("getUpdates", offset=state["offset"] or None,
+                          timeout=max(1, min(30, remaining)),
                           allowed_updates=["message", "callback_query"])
             for upd in updates:
-                state["offset"] = upd["update_id"] + 1
+                uid = upd["update_id"]
+                state["offset"] = uid + 1
+                if uid in state["seen"]:
+                    save_state(state)
+                    continue
+                state["seen"].append(uid)
+                state["seen"] = state["seen"][-500:]
                 try:
                     process_update(state, upd)
                 except Exception as exc:
@@ -301,6 +335,13 @@ def main() -> None:
             save_state(state)
             log("stopped")
             return
+        except RuntimeError as exc:
+            if "409" in str(exc):
+                save_state(state)
+                log("another poller is active; exiting")
+                return
+            log(f"poll error: {exc}")
+            time.sleep(5)
         except Exception as exc:
             log(f"poll error: {exc}")
             time.sleep(5)

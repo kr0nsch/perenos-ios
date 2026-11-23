@@ -4,6 +4,13 @@ public sealed record IpatoolAccount(string Email, string Name);
 
 public sealed record OwnedApp(long AppId, string BundleId, string Name, string Version, DateTimeOffset? PurchaseDate, string? LatestExternalVersionId = null);
 
+/// <summary>One downloadable build of an app, as reported by ipatool get-version-metadata.</summary>
+public sealed record AppVersionInfo(
+    string ExternalVersionId,
+    string? DisplayVersion = null,
+    DateTimeOffset? ReleaseDate = null,
+    string? MinimumOsVersion = null);
+
 internal sealed record OwnedAppsPage(int Page, int TotalCount, IReadOnlyList<OwnedApp> Apps);
 
 public enum LoginStatus

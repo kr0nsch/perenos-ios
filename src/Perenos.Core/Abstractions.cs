@@ -17,6 +17,14 @@ public interface IAppStoreClient
     Task SignOutAsync(CancellationToken cancellationToken = default);
 
     Task<string> DownloadAsync(DownloadRequest request, IProgress<DownloadProgress>? progress, CancellationToken cancellationToken = default);
+
+    /// <summary>All downloadable builds of an app, oldest first. Optional; defaults to unsupported.</summary>
+    Task<IReadOnlyList<string>> GetVersionsAsync(long appId, CancellationToken cancellationToken = default) =>
+        throw new NotSupportedException("This App Store client does not list versions.");
+
+    /// <summary>Display version, release date and minimum iOS of one build without downloading it.</summary>
+    Task<AppVersionInfo> GetVersionMetadataAsync(long appId, string externalVersionId, CancellationToken cancellationToken = default) =>
+        throw new NotSupportedException("This App Store client does not read version metadata.");
 }
 
 /// <summary>Public App Store catalog lookups for a particular country storefront.</summary>

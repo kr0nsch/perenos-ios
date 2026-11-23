@@ -139,6 +139,34 @@ public sealed class IpatoolClient : IAppStoreClient
         throw new IpatoolException(IpatoolOutput.Classify(error), error);
     }
 
+    /// <summary>All downloadable builds of an app, oldest first (ipatool list-versions).</summary>
+    public async Task<IReadOnlyList<string>> GetVersionsAsync(long appId, CancellationToken cancellationToken = default)
+    {
+        var output = await RunAsync(
+            ["list-versions", "--app-id", appId.ToString(CultureInfo.InvariantCulture), "--platform", "iphone"],
+            interactive: false, onSegment: null, TimeSpan.FromMinutes(5), cancellationToken).ConfigureAwait(false);
+        var ids = output.Events.Select(IpatoolOutput.ReadVersionIds).LastOrDefault(list => list is not null);
+        if (ids is not null)
+            return ids;
+
+        var error = output.Error ?? "ipatool returned no version identifiers.";
+        throw new IpatoolException(IpatoolOutput.Classify(error), error);
+    }
+
+    /// <summary>Display version, release date and minimum iOS of one build, without downloading it.</summary>
+    public async Task<AppVersionInfo> GetVersionMetadataAsync(long appId, string externalVersionId, CancellationToken cancellationToken = default)
+    {
+        var output = await RunAsync(
+            ["get-version-metadata", "--app-id", appId.ToString(CultureInfo.InvariantCulture), "--external-version-id", externalVersionId, "--platform", "iphone"],
+            interactive: false, onSegment: null, TimeSpan.FromMinutes(5), cancellationToken).ConfigureAwait(false);
+        var metadata = output.Events.Select(IpatoolOutput.ReadVersionMetadata).LastOrDefault(info => info is not null);
+        if (metadata is not null)
+            return metadata;
+
+        var error = output.Error ?? "ipatool returned no version metadata.";
+        throw new IpatoolException(IpatoolOutput.Classify(error), error);
+    }
+
     /// <summary>Downloads an IPA and returns the path of the finished file.</summary>
     public async Task<string> DownloadAsync(DownloadRequest request, IProgress<DownloadProgress>? progress, CancellationToken cancellationToken = default)
     {

@@ -81,6 +81,41 @@ internal sealed partial class IpatoolOutput
         return latest;
     }
 
+    /// <summary>All external version identifiers, oldest first, as returned by list-versions.</summary>
+    internal static IReadOnlyList<string>? ReadVersionIds(JsonElement e)
+    {
+        if (e.ValueKind != JsonValueKind.Object || !e.TryGetProperty("externalVersionIdentifiers", out var versions) || versions.ValueKind != JsonValueKind.Array)
+            return null;
+
+        var ids = new List<string>();
+        foreach (var version in versions.EnumerateArray())
+        {
+            var id = version.ValueKind == JsonValueKind.String ? version.GetString()
+                : version.ValueKind == JsonValueKind.Number ? version.ToString()
+                : null;
+            if (!string.IsNullOrWhiteSpace(id))
+                ids.Add(id);
+        }
+
+        return ids;
+    }
+
+    /// <summary>Display version, release date and (when available) minimum iOS for one build.</summary>
+    internal static AppVersionInfo? ReadVersionMetadata(JsonElement e)
+    {
+        if (e.ValueKind != JsonValueKind.Object)
+            return null;
+        var id = GetString(e, "externalVersionID") ?? GetString(e, "externalVersionId");
+        if (string.IsNullOrWhiteSpace(id))
+            return null;
+
+        DateTimeOffset? released = null;
+        if (DateTimeOffset.TryParse(GetString(e, "releaseDate"), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out var date))
+            released = date;
+
+        return new AppVersionInfo(id, GetString(e, "displayVersion"), released, GetString(e, "minimumOSVersion"));
+    }
+
     internal static OwnedAppsPage? ReadOwnedAppsPage(JsonElement e)
     {
         if (e.ValueKind != JsonValueKind.Object

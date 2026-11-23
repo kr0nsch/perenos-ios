@@ -24,6 +24,63 @@ public class IpatoolOutputTests
     }
 
     [Fact]
+    public void ReadsAllVersionIdsOldestFirst()
+    {
+        using var document = System.Text.Json.JsonDocument.Parse("""{"externalVersionIdentifiers":["814162087","816141148","887160241"]}""");
+
+        Assert.Equal(new[] { "814162087", "816141148", "887160241" }, IpatoolOutput.ReadVersionIds(document.RootElement));
+    }
+
+    [Fact]
+    public void ReadsVersionIdsFromNumbers()
+    {
+        using var document = System.Text.Json.JsonDocument.Parse("""{"externalVersionIdentifiers":[814162087,887160241]}""");
+
+        Assert.Equal(new[] { "814162087", "887160241" }, IpatoolOutput.ReadVersionIds(document.RootElement));
+    }
+
+    [Fact]
+    public void ReturnsNullVersionIdsWhenAbsent()
+    {
+        using var document = System.Text.Json.JsonDocument.Parse("""{"success":true}""");
+
+        Assert.Null(IpatoolOutput.ReadVersionIds(document.RootElement));
+    }
+
+    [Fact]
+    public void ReadsVersionMetadata()
+    {
+        using var document = System.Text.Json.JsonDocument.Parse(
+            """{"externalVersionID":"887160241","displayVersion":"12.1","releaseDate":"2026-11-19T00:00:00Z","minimumOSVersion":"15.0","success":true}""");
+
+        var info = IpatoolOutput.ReadVersionMetadata(document.RootElement);
+        Assert.NotNull(info);
+        Assert.Equal("887160241", info!.ExternalVersionId);
+        Assert.Equal("12.1", info.DisplayVersion);
+        Assert.Equal("15.0", info.MinimumOsVersion);
+        Assert.Equal(new DateTimeOffset(2026, 11, 19, 0, 0, 0, TimeSpan.Zero), info.ReleaseDate);
+    }
+
+    [Fact]
+    public void ReadsVersionMetadataWithoutMinimumOs()
+    {
+        using var document = System.Text.Json.JsonDocument.Parse("""{"externalVersionID":"887160241","displayVersion":"12.1"}""");
+
+        var info = IpatoolOutput.ReadVersionMetadata(document.RootElement);
+        Assert.NotNull(info);
+        Assert.Null(info!.MinimumOsVersion);
+        Assert.Null(info.ReleaseDate);
+    }
+
+    [Fact]
+    public void ReturnsNullVersionMetadataWhenNoId()
+    {
+        using var document = System.Text.Json.JsonDocument.Parse("""{"displayVersion":"12.1"}""");
+
+        Assert.Null(IpatoolOutput.ReadVersionMetadata(document.RootElement));
+    }
+
+    [Fact]
     public void ParsesErrorEvent()
     {
         var output = new IpatoolOutput();

@@ -60,6 +60,8 @@
               </StackPanel>
             </Grid>
             <Border Classes="separator"/>
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12"><TextBlock Text="{s:Text Settings_Accounts}" Classes="body" VerticalAlignment="Center"/><ComboBox x:Name="AccountBox" Grid.Column="1" MinWidth="200" SelectionChanged="AccountChanged" AutomationProperties.Name="{s:Text Settings_Accounts}"/></Grid>
+            <Border Classes="separator"/>
             <Grid ColumnDefinitions="*,Auto"><TextBlock Text="{s:Text Settings_Source}" Classes="body"/><Button Grid.Column="1" Classes="link" Content="GitHub" Click="OpenGitHub"/></Grid>
             <Border Classes="separator"/>
             <Grid ColumnDefinitions="*,Auto"><TextBlock Text="{s:Text Settings_Licenses}" Classes="body"/><Button Grid.Column="1" Classes="link" Content="{s:Text Settings_View}" Click="OpenLicenses"/></Grid>

@@ -25,6 +25,9 @@ public sealed partial class SettingsWindow : Window
         LanguageBox.SelectedIndex = viewModel.Services.Settings.Current.Language switch { "en-US" => 1, "ru-RU" => 2, _ => 0 };
         ThemeBox.ItemsSource = new[] { Loc.Get("Settings_ThemeSystem"), Loc.Get("Settings_ThemeLight"), Loc.Get("Settings_ThemeDark") };
         ThemeBox.SelectedIndex = (int)viewModel.Services.Settings.Current.Theme;
+        AccountBox.ItemsSource = viewModel.Account.KnownAccounts;
+        AccountBox.SelectedItem = viewModel.Services.Settings.Current.KnownAccounts
+            .FirstOrDefault(a => string.Equals(a, viewModel.Services.Settings.Current.ActiveAccount, StringComparison.OrdinalIgnoreCase));
         _loading = false;
         if (OperatingSystem.IsMacOS())
         {
@@ -64,6 +67,14 @@ public sealed partial class SettingsWindow : Window
         _viewModel.Services.Settings.Current.Theme = theme;
         _viewModel.Services.Settings.Save();
         App.Instance?.ApplyTheme(theme);
+    }
+
+    private void AccountChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (_loading || AccountBox.SelectedItem is not string email)
+            return;
+        _viewModel.Account.SwitchAccountCommand.Execute(email);
+        _viewModel.NotifyAccountSwitched();
     }
 
     private void OpenFolder(object? sender, RoutedEventArgs e) => Shell.Open(_viewModel.Services.DownloadDirectory);

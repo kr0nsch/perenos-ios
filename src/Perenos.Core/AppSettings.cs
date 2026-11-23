@@ -35,6 +35,12 @@ public sealed class AppSettings
 
     /// <summary>Empty for the system display language, otherwise a BCP-47 tag such as "ru-RU".</summary>
     public string Language { get; set; } = "";
+
+    /// <summary>Email of the secondary Apple Account currently in use; empty means the primary home.</summary>
+    public string ActiveAccount { get; set; } = "";
+
+    /// <summary>Apple Accounts signed in on this copy, for quick switching.</summary>
+    public List<string> KnownAccounts { get; set; } = [];
 }
 
 [JsonSourceGenerationOptions(WriteIndented = true, UseStringEnumConverter = true)]

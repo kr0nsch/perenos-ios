@@ -18,8 +18,31 @@ public enum AccountState
 /// App Store sign-in. The password is handed to ipatool for this one request and then cleared;
 /// Perenos never writes it anywhere.
 /// </summary>
-public sealed partial class AccountViewModel(IAppStoreClient ipatool) : ObservableObject
+public sealed partial class AccountViewModel(IAppStoreClient ipatool, AppServices? services = null) : ObservableObject
 {
+    /// <summary>Apple Accounts signed in on this copy, for quick switching.</summary>
+    public System.Collections.ObjectModel.ObservableCollection<string> KnownAccounts { get; } = [];
+
+    public bool HasKnownAccounts => KnownAccounts.Count > 0;
+
+    private void RefreshKnown()
+    {
+        KnownAccounts.Clear();
+        if (services is not null)
+            foreach (var account in services.Settings.Current.KnownAccounts)
+                KnownAccounts.Add(account);
+        OnPropertyChanged(nameof(HasKnownAccounts));
+    }
+
+    [RelayCommand]
+    private async Task SwitchAccountAsync(string email)
+    {
+        if (services is null || string.IsNullOrWhiteSpace(email))
+            return;
+        services.SwitchAccount(email);
+        await RefreshAsync();
+        RefreshKnown();
+    }
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsSignedIn), nameof(IsSignedOut), nameof(IsChecking), nameof(TitleBarText), nameof(IsUnavailable), nameof(HasSignOutError))]
     [NotifyCanExecuteChangedFor(nameof(SignInCommand), nameof(SignOutCommand))]
@@ -100,6 +123,7 @@ public sealed partial class AccountViewModel(IAppStoreClient ipatool) : Observab
             Email = account.Email;
             Name = account.Name;
             State = AccountState.SignedIn;
+            RefreshKnown();
         }
         catch (Exception ex)
         {
@@ -128,6 +152,8 @@ public sealed partial class AccountViewModel(IAppStoreClient ipatool) : Observab
                     Email = result.Account?.Email ?? InputEmail.Trim();
                     Name = result.Account?.Name ?? "";
                     State = AccountState.SignedIn;
+                    services?.RememberAccount(Email);
+                    RefreshKnown();
                     ResetForm();
                     break;
                 case LoginStatus.CodeRequired when IsCodeRequired:

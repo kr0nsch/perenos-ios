@@ -34,7 +34,10 @@ public sealed class AppServices : IDisposable
         }
         else
         {
-            AppStore = new IpatoolClient(paths.IpatoolExecutable, paths.IpatoolHome);
+            var home = string.IsNullOrWhiteSpace(settings.Current.ActiveAccount)
+                ? paths.IpatoolHome
+                : paths.AccountHome(settings.Current.ActiveAccount);
+            AppStore = new IpatoolClient(paths.IpatoolExecutable, home);
             Devices = new DeviceService(paths.PairRecordsDirectory);
             Watcher = new DeviceWatcher();
             storefront = new StorefrontCatalog();
@@ -94,6 +97,27 @@ public sealed class AppServices : IDisposable
                 settings.Current.Language = language;
         }
         return new AppServices(paths, settings, demo);
+    }
+
+    /// <summary>Switches the App Store client to another Apple Account's private home.</summary>
+    public void SwitchAccount(string email)
+    {
+        if (AppStore is not IpatoolClient client || string.IsNullOrWhiteSpace(email))
+            return;
+        client.UseHome(Paths.AccountHome(email));
+        Settings.Current.ActiveAccount = email;
+        RememberAccount(email);
+    }
+
+    /// <summary>Records a signed-in account for quick switching and makes it active.</summary>
+    public void RememberAccount(string email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+            return;
+        if (!Settings.Current.KnownAccounts.Contains(email, StringComparer.OrdinalIgnoreCase))
+            Settings.Current.KnownAccounts.Add(email);
+        Settings.Current.ActiveAccount = email;
+        Settings.Save();
     }
 
     public void Dispose() => Watcher.Dispose();

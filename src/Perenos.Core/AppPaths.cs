@@ -45,6 +45,13 @@ public sealed class AppPaths
 
     public string IpatoolHome => Path.Combine(DataDirectory, "ipatool");
 
+    /// <summary>Private ipatool home for a secondary Apple Account, isolated from the primary one.</summary>
+    public string AccountHome(string email)
+    {
+        var safe = string.Concat(email.Trim().Select(c => char.IsAsciiLetterOrDigit(c) || c is '.' or '-' or '_' or '@' ? c : '_'));
+        return Path.Combine(DataDirectory, "accounts", safe.Length > 0 ? safe : "account");
+    }
+
     public string PairRecordsDirectory => Path.Combine(DataDirectory, "PairRecords");
 
     public string SettingsFile => Path.Combine(DataDirectory, "settings.json");

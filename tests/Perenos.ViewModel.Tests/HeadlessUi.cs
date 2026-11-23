@@ -38,6 +38,15 @@ namespace Perenos.Services
         public SettingsStore Settings { get; } = new(Path.Combine(downloadDirectory, "settings.json"));
 
         public TransferRunner Transfers { get; } = transfers;
+
+        public void SwitchAccount(string email) => RememberAccount(email);
+
+        public void RememberAccount(string email)
+        {
+            if (!Settings.Current.KnownAccounts.Contains(email, StringComparer.OrdinalIgnoreCase))
+                Settings.Current.KnownAccounts.Add(email);
+            Settings.Current.ActiveAccount = email;
+        }
     }
 
     public static class KeepAwake

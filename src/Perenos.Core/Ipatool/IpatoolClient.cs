@@ -18,7 +18,7 @@ public sealed class IpatoolClient : IAppStoreClient
     private static readonly TimeSpan CommandTimeout = TimeSpan.FromMinutes(5);
 
     private readonly string _executable;
-    private readonly string _home;
+    private string _home;
     private readonly Func<string> _passphraseFactory;
     private string? _passphrase;
     private readonly SemaphoreSlim _gate = new(1, 1);
@@ -36,6 +36,13 @@ public sealed class IpatoolClient : IAppStoreClient
     }
 
     public bool IsAvailable => File.Exists(_executable);
+
+    /// <summary>Points the client at another Apple Account's private home (multi-account switching).</summary>
+    public void UseHome(string home)
+    {
+        _home = home;
+        _passphrase = null;
+    }
 
     /// <summary>Returns the signed-in account, or null when nobody is signed in.</summary>
     public async Task<IpatoolAccount?> GetAccountAsync(CancellationToken cancellationToken = default)

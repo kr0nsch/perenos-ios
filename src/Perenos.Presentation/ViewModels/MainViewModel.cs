@@ -64,7 +64,7 @@ public sealed partial class MainViewModel : ObservableObject
         Restore = new RestoreAppsViewModel(services.Devices, services.RestorableAppScanner, Icons, dispatcher);
         Saved = new SavedAppsViewModel(services.Devices, Icons);
         Library = new LibraryViewModel(services);
-        Account = new AccountViewModel(services.AppStore);
+        Account = new AccountViewModel(services.AppStore, services);
         Install = new InstallViewModel(services, Icons, dispatcher);
 
         Devices.StateChanged += (_, _) => OnDevicesChanged();
@@ -675,6 +675,14 @@ public sealed partial class MainViewModel : ObservableObject
     public bool HasPendingDownloads => PendingDownloadCount > 0;
 
     private void RefreshPending() => PendingDownloadCount = TransferRunner.ScanPending(Services.DownloadDirectory).Count;
+
+    /// <summary>Clears per-account lists after switching Apple Account so they reload for the new session.</summary>
+    public void NotifyAccountSwitched()
+    {
+        Restore.Reset();
+        Saved.Reset();
+        RefreshAll();
+    }
 
     [RelayCommand]
     private void ResumePending()

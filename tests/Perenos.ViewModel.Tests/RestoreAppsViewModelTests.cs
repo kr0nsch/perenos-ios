@@ -130,6 +130,36 @@ public sealed class RestoreAppsViewModelTests
         Assert.Equal(1, vm.TotalCount);
     }
 
+    [Fact]
+    public async Task WarnsWhenDeviceIosIsOlderThanAppRequires()
+    {
+        var store = new FakeStore { Owned = [new OwnedApp(2, "app.2", "Installed", "1.0", null)] };
+        var devices = new FakeDevices { Installed = [new InstalledApp("app.2", "Installed", "2.0", null, 2, null, null, "16.0", 100)] };
+        var vm = new RestoreAppsViewModel(devices, new RestorableAppScanner(store, new FakeCatalog { Available = new HashSet<long> { 2 } }), new IconCache(), new TestDispatcher());
+        var target = Target();
+        target.OsVersion = "15.0";
+
+        await vm.LoadAsync(target);
+
+        var item = vm.Visible.Single();
+        Assert.True(item.HasOsWarning);
+        Assert.Contains("16.0", item.OsWarning);
+    }
+
+    [Fact]
+    public async Task NoOsWarningWhenDeviceIsNewEnough()
+    {
+        var store = new FakeStore { Owned = [new OwnedApp(2, "app.2", "Installed", "1.0", null)] };
+        var devices = new FakeDevices { Installed = [new InstalledApp("app.2", "Installed", "2.0", null, 2, null, null, "16.0", 100)] };
+        var vm = new RestoreAppsViewModel(devices, new RestorableAppScanner(store, new FakeCatalog { Available = new HashSet<long> { 2 } }), new IconCache(), new TestDispatcher());
+        var target = Target();
+        target.OsVersion = "17.0";
+
+        await vm.LoadAsync(target);
+
+        Assert.False(vm.Visible.Single().HasOsWarning);
+    }
+
     private static DeviceItemViewModel Target() => new("target", _ => Task.CompletedTask);
 
     private static InstalledApp App(long id, string name, string version) =>

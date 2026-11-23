@@ -49,11 +49,18 @@ public sealed partial class RestoreAppsViewModel(
             if (!ReferenceEquals(_loading, loading))
                 return;
 
-            var items = apps.Select(app => new AppItemViewModel(app.ToInstalledApp())
+            var items = apps.Select(app =>
             {
-                Restore = app,
-                IsUnavailableInRussia = app.IsUnavailableInRussia,
-                Caption = Loc.Get(!app.InPurchaseHistory ? "Restore_CatalogCandidate" : app.Installed is null ? "Restore_Reinstall" : "Restore_Update"),
+                var installed = app.ToInstalledApp();
+                return new AppItemViewModel(installed)
+                {
+                    Restore = app,
+                    IsUnavailableInRussia = app.IsUnavailableInRussia,
+                    OsWarning = OsCompatibility.RequiresNewerOs(installed.MinimumOsVersion, target.OsVersion)
+                        ? Loc.Format("Restore_MinOs", installed.MinimumOsVersion)
+                        : null,
+                    Caption = Loc.Get(!app.InPurchaseHistory ? "Restore_CatalogCandidate" : app.Installed is null ? "Restore_Reinstall" : "Restore_Update"),
+                };
             }).ToList();
             SetItems(items);
             LoadedFromUdid = target.Udid;

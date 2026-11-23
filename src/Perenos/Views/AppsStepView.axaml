@@ -61,6 +61,7 @@
                         <TextBlock Text="{Binding Detail}" Classes="caption"/>
                         <TextBlock Text="{Binding Caption}" Classes="caption" Foreground="{DynamicResource AccentTextBrush}" IsVisible="{Binding HasCaption}"/>
                         <TextBlock Text="{Binding AvailabilityText}" Classes="caption" Foreground="{DynamicResource WarningBrush}" IsVisible="{Binding HasAvailability}"/>
+                        <TextBlock Text="{Binding OsWarning}" Classes="caption" Foreground="{DynamicResource WarningBrush}" IsVisible="{Binding HasOsWarning}"/>
                       </StackPanel>
                       <TextBlock Grid.Column="3" Text="{Binding SizeText}" Classes="caption" VerticalAlignment="Center" Margin="8,0"/>
                     </Grid>

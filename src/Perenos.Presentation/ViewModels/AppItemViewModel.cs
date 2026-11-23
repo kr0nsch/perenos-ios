@@ -47,6 +47,13 @@ public sealed partial class AppItemViewModel(InstalledApp app, SavedApp? saved =
 
     public bool HasAvailability => IsUnavailableInRussia;
 
+    /// <summary>Warning when the connected iPhone runs an iOS older than the app requires.</summary>
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasOsWarning))]
+    public partial string? OsWarning { get; set; }
+
+    public bool HasOsWarning => !string.IsNullOrEmpty(OsWarning);
+
     [ObservableProperty]
     public partial bool IsSelected { get; set; }
 
@@ -89,5 +96,18 @@ public sealed partial class AppItemViewModel(InstalledApp app, SavedApp? saved =
         || (App.PurchaserAppleId?.Contains(query, StringComparison.OrdinalIgnoreCase) ?? false)
         || (Restore?.ServiceFamily?.Contains(query, StringComparison.CurrentCultureIgnoreCase) ?? false)
         || (Restore?.ServiceAlias?.Contains(query, StringComparison.CurrentCultureIgnoreCase) ?? false)
-        || (Restore is not null && Restore.Owned.Name.Contains(query, StringComparison.CurrentCultureIgnoreCase));
+        || (Restore is not null && Restore.Owned.Name.Contains(query, StringComparison.CurrentCultureIgnoreCase))
+        || (ParseAppStoreId(query) is { } appId && App.AppStoreId == appId);
+
+    /// <summary>Accepts a numeric App Store ID or an apps.apple.com link, so users can paste either.</summary>
+    internal static long? ParseAppStoreId(string query)
+    {
+        var text = query.Trim();
+        if (long.TryParse(text, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out var direct) && direct > 0)
+            return direct;
+        if (!text.Contains("apple.com", StringComparison.OrdinalIgnoreCase) && !text.StartsWith("id", StringComparison.OrdinalIgnoreCase))
+            return null;
+        var match = System.Text.RegularExpressions.Regex.Match(text, @"id(\d+)", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+        return match.Success && long.TryParse(match.Groups[1].Value, out var fromUrl) && fromUrl > 0 ? fromUrl : null;
+    }
 }

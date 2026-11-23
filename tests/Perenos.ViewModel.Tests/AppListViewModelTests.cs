@@ -64,6 +64,27 @@ public sealed class AppListViewModelTests
         Assert.False(vm.AllItems.Single(a => a.App.BundleId == "b").IsSelected);
     }
 
+    [Fact]
+    public void SearchMatchesPastedAppStoreLinkAndNumericId()
+    {
+        var item = new AppItemViewModel(new InstalledApp("com.example.x", "X", "1.0", null, 123456, null, null, null, 1));
+
+        Assert.True(item.Matches("https://apps.apple.com/ru/app/x/id123456"));
+        Assert.True(item.Matches("123456"));
+        Assert.True(item.Matches("com.example.x"));
+        Assert.False(item.Matches("999999"));
+        Assert.False(item.Matches("https://apps.apple.com/ru/app/x/id999999"));
+    }
+
+    [Theory]
+    [InlineData("123456", 123456L)]
+    [InlineData("https://apps.apple.com/ru/app/x/id123456", 123456L)]
+    [InlineData("apps.apple.com/app/id42", 42L)]
+    [InlineData("weather", null)]
+    [InlineData("", null)]
+    public void ParsesAppStoreIdFromQuery(string query, long? expected) =>
+        Assert.Equal(expected, AppItemViewModel.ParseAppStoreId(query));
+
     private static AppItemViewModel Item(string id, string name, long size, string? account = null, bool selectable = true) =>
         new(new InstalledApp(id, name, "1.0", "Developer", 42, null, account, null, size))
         {

@@ -113,6 +113,10 @@ public sealed partial class InstallViewModel : ObservableObject
     /// <summary>Transfer Later, part one: download into the saved-apps folder.</summary>
     public Task StartSaveAsync(IReadOnlyList<InstalledApp> apps) => BeginAsync(Flow.Save, apps, null);
 
+    /// <summary>Resumes interrupted downloads from a previous run; ipatool continues the partial files.</summary>
+    public Task StartResumeAsync(IReadOnlyList<PendingDownload> pending) =>
+        BeginAsync(Flow.Save, pending.Select(p => new InstalledApp(p.BundleId, p.Name, p.Version, null, p.AppId, p.ExternalVersionId, null, null, null)).ToList(), null);
+
     /// <summary>Transfer Later, part two: install saved files on <paramref name="target"/>; no sign-in needed.</summary>
     public Task StartInstallSavedAsync(IReadOnlyList<SavedApp> apps, DeviceItemViewModel target)
     {

@@ -2,6 +2,7 @@ using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Perenos.Core.Library;
+using Perenos.Core.Transfer;
 using Perenos.Services;
 
 namespace Perenos.ViewModels;
@@ -75,6 +76,7 @@ public sealed partial class MainViewModel : ObservableObject
         Install.PropertyChanged += OnChildChanged;
         Install.Items.CollectionChanged += (_, _) => RefreshAll();
         _ = Library.RefreshAsync();
+        RefreshPending();
     }
 
     public AppServices Services { get; }
@@ -662,6 +664,25 @@ public sealed partial class MainViewModel : ObservableObject
         Saved.Reset();
         Step = Flow is Flow.Now or Flow.Restore ? WizardStep.Start : WizardStep.Later;
         _ = Library.RefreshAsync();
+        RefreshPending();
+    }
+
+    /// <summary>Interrupted downloads from a previous run, resumable after restart.</summary>
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasPendingDownloads))]
+    public partial int PendingDownloadCount { get; set; }
+
+    public bool HasPendingDownloads => PendingDownloadCount > 0;
+
+    private void RefreshPending() => PendingDownloadCount = TransferRunner.ScanPending(Services.DownloadDirectory).Count;
+
+    [RelayCommand]
+    private void ResumePending()
+    {
+        var pending = TransferRunner.ScanPending(Services.DownloadDirectory);
+        PendingDownloadCount = pending.Count;
+        if (pending.Count > 0)
+            _ = Install.StartResumeAsync(pending);
     }
 
     private async Task LoadSavedAsync()

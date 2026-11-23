@@ -229,6 +229,7 @@ public sealed class TransferRunner(IAppStoreClient ipatool, IDeviceService devic
 
         var request = new DownloadRequest(app.AppStoreId ?? 0, app.BundleId, target, externalVersion, options.AcquireFreeLicenses);
         AppLog.Info($"{app.PackageKey}: downloading{(externalVersion is null ? "" : $" version {externalVersion}")}.");
+        DownloadJournal.Record(options.DownloadDirectory, new PendingDownload(app.AppStoreId ?? 0, app.BundleId, app.Name, app.Version, externalVersion, target));
         var path = await ipatool.DownloadAsync(request, progress, token).ConfigureAwait(false);
 
         if (!IsValidPackage(path, app))
@@ -237,9 +238,13 @@ public sealed class TransferRunner(IAppStoreClient ipatool, IDeviceService devic
             throw new IpatoolException(IpatoolErrorKind.Unknown, "The downloaded package is not the expected app.");
         }
 
+        DownloadJournal.Complete(options.DownloadDirectory, path);
         _downloaded[cacheKey] = path;
         return path;
     }
+
+    /// <summary>Interrupted downloads from a previous run that can be resumed.</summary>
+    public static IReadOnlyList<PendingDownload> ScanPending(string downloadDirectory) => DownloadJournal.Pending(downloadDirectory);
 
     private static string Staging(string downloadDirectory) => Path.Combine(downloadDirectory, StagingFolderName);
 
@@ -252,6 +257,14 @@ public sealed class TransferRunner(IAppStoreClient ipatool, IDeviceService devic
         if (!Directory.Exists(staging))
             return;
         var keep = new HashSet<string>(_downloaded.Values.Select(Path.GetFullPath), StringComparer.OrdinalIgnoreCase);
+        // Keep interrupted downloads (and their .tmp) so a restart can resume them.
+        var directory = Path.GetDirectoryName(staging)!;
+        foreach (var pending in DownloadJournal.Load(directory))
+        {
+            keep.Add(Path.GetFullPath(pending.TargetPath));
+            keep.Add(Path.GetFullPath(pending.TargetPath + ".tmp"));
+        }
+
         foreach (var file in Directory.EnumerateFiles(staging))
         {
             if (keep.Contains(Path.GetFullPath(file)))

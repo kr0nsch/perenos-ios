@@ -50,6 +50,10 @@
         </StackPanel>
       </Border>
 
+      <Button Classes="secondary" Content="{s:Text Later_Resume}" Command="{Binding ResumePendingCommand}"
+              IsVisible="{Binding HasPendingDownloads}" HorizontalAlignment="Center" Margin="0,14,0,0"
+              AutomationProperties.Name="{s:Text Later_Resume}"/>
+
       <StackPanel Margin="0,18,0,0" HorizontalAlignment="Center" Spacing="10">
         <Button Classes="secondary" Content="{s:Text Account_SignInButton}" Click="ShowSignIn"
                 IsEnabled="{Binding Account.IsIdle}" HorizontalAlignment="Center"

@@ -1,6 +1,11 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Perenos.Core.Transfer;
+
+[JsonSourceGenerationOptions(WriteIndented = true)]
+[JsonSerializable(typeof(List<PendingDownload>))]
+internal sealed partial class DownloadJournalJsonContext : JsonSerializerContext;
 
 /// <summary>An interrupted download that can be resumed after the app restarts.</summary>
 public sealed record PendingDownload(
@@ -27,7 +32,7 @@ public static class DownloadJournal
             var path = JournalPath(downloadDirectory);
             if (!File.Exists(path))
                 return [];
-            return JsonSerializer.Deserialize<List<PendingDownload>>(File.ReadAllText(path)) ?? [];
+            return JsonSerializer.Deserialize(File.ReadAllText(path), DownloadJournalJsonContext.Default.ListPendingDownload) ?? [];
         }
         catch (Exception ex) when (ex is IOException or JsonException or UnauthorizedAccessException)
         {
@@ -59,7 +64,7 @@ public static class DownloadJournal
         try
         {
             Directory.CreateDirectory(downloadDirectory);
-            File.WriteAllText(JournalPath(downloadDirectory), JsonSerializer.Serialize(list));
+            File.WriteAllText(JournalPath(downloadDirectory), JsonSerializer.Serialize(list, DownloadJournalJsonContext.Default.ListPendingDownload));
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {

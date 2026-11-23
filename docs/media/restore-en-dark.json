@@ -1,14 +1,14 @@
 {
   "schema_version": 2,
-  "version": "1.9.0",
+  "version": "1.10.0",
   "file": "restore-en-dark.gif",
   "width": 942,
   "height": 782,
-  "frames": 49,
+  "frames": 48,
   "fps": 8,
-  "duration_ms": 6130,
-  "bytes": 147071,
-  "sha256": "ea8760503c4dcf815acf97b3c6b3d1b7b833a44e4c2b176c5be2dfbc42dda39b",
+  "duration_ms": 6010,
+  "bytes": 150354,
+  "sha256": "f6d9eb181e9adb54537b7e58890068aac41759ab5f9c74cb5ac7a77cf16b4d7c",
   "cursor": "none",
   "encoding": {
     "scaling": "lanczos",
@@ -23,59 +23,59 @@
     "cursor_captured": false,
     "width": 942,
     "height": 782,
-    "frames": 418,
-    "first_timestamp_ms": 1795116550810,
-    "last_timestamp_ms": 1795116589623,
-    "capture_json_sha256": "0cdfd494f69ee48f7df2ba09a3193e890bb27657217d0429b9df958582384732",
-    "frames_csv_sha256": "fa6342a7c700384ec3dacdf96c5fd39ec2a074a1b5de0a26a4193d330b2b7f48",
+    "frames": 400,
+    "first_timestamp_ms": 1795470092922,
+    "last_timestamp_ms": 1795470130826,
+    "capture_json_sha256": "246877b7d19743cc43adaf135ccefac853ec198dfe45b02d07c3b224d9b40205",
+    "frames_csv_sha256": "50c14b1bea862f3e98109357d1bff39723539d0bb959a8183d69234d6a4bdb11",
     "window_txt_sha256": "e1d68f2224dd31f65ef37932a38662cf70bb6846febb4e4faa6ea5a5604534bf",
-    "timeline_sha256": "77086dc394b07f282b1115af90cde721567180145912abad575f01c02783ebe8",
-    "raw_frames_sha256": "c6e7e84a353d5785b9ae3544afd0b949ca9299fa73aa503730bcf60de21a301c",
+    "timeline_sha256": "7e0de28097ea14c28f14afec2e61c1ae6964d361a8af03b49d12cec83fb728e8",
+    "raw_frames_sha256": "68f0de61e17dd48bfa70a903c575dd02911c7466dfcdb23125a5fddb0eed2832",
     "raw_frames_hash_format": "SHA-256 of UTF-8 index,timestamp_ms,png_sha256\\n entries in frame order"
   },
   "segments": [
     {
-      "start_ms": 1795116574235,
-      "end_ms": 1795116580257,
-      "output_duration_ms": 6022
+      "start_ms": 1795470115517,
+      "end_ms": 1795470121498,
+      "output_duration_ms": 5981
     }
   ],
-  "sampled_frames_sha256": "36398315aff2765b0c7b6d8abada34a167af222624917681ca45f22c1eea1adb",
+  "sampled_frames_sha256": "1ad325a1401aa3b483040f43be68aa3d92e3ed69c41acffb7e432dc186be1e8f",
   "stills": [
     {
       "file": "en-dark/restore-1-apps.png",
-      "requested_timestamp_ms": 1795116575235,
-      "source_frame": "f00261.png",
-      "source_timestamp_ms": 1795116575206,
-      "sha256": "b8a12644765abe383eb79746f51dabcefd4c445ced54afcc045499e001c35739"
+      "requested_timestamp_ms": 1795470116517,
+      "source_frame": "f00248.png",
+      "source_timestamp_ms": 1795470116506,
+      "sha256": "fcce769f25be1d55a1b14ab3e5750694bcfcc703aa7b6fd5029f4af26c199449"
     },
     {
       "file": "en-dark/restore-2-sorted.png",
-      "requested_timestamp_ms": 1795116575912,
-      "source_frame": "f00268.png",
-      "source_timestamp_ms": 1795116575853,
-      "sha256": "36f35b31b95c0442716d00ae8dd2cd76ce61d456d8efadc9853050db92bb0e54"
+      "requested_timestamp_ms": 1795470117206,
+      "source_frame": "f00255.png",
+      "source_timestamp_ms": 1795470117175,
+      "sha256": "339f21f6a6c78fa767b5d24484675a9da7b39cd67ef77426ce602c452fc69d1a"
     },
     {
       "file": "en-dark/restore-3-selected.png",
-      "requested_timestamp_ms": 1795116577004,
-      "source_frame": "f00280.png",
-      "source_timestamp_ms": 1795116576963,
-      "sha256": "b8e0caa4dbc8614d1995e7fdffb080d9716878b1684db9a5863d5e9b2c6573a9"
+      "requested_timestamp_ms": 1795470118274,
+      "source_frame": "f00266.png",
+      "source_timestamp_ms": 1795470118217,
+      "sha256": "81e4780c476c288a2c9877ed861a438e327072d42c3759d50fe762165afc8723"
     },
     {
       "file": "en-dark/restore-4-install.png",
-      "requested_timestamp_ms": 1795116577489,
-      "source_frame": "f00285.png",
-      "source_timestamp_ms": 1795116577424,
+      "requested_timestamp_ms": 1795470118790,
+      "source_frame": "f00271.png",
+      "source_timestamp_ms": 1795470118695,
       "sha256": "3f05bb97d3cbedb6e1776042f03de6bb1ae668b93febb64d27682ddb2c2c68cf"
     },
     {
       "file": "en-dark/restore-5-done.png",
-      "requested_timestamp_ms": 1795116580257,
-      "source_frame": "f00315.png",
-      "source_timestamp_ms": 1795116580199,
-      "sha256": "7b1206cfc2d293cbf1839864032a6bbe840f7f16c55a5636024eb605494e4e58"
+      "requested_timestamp_ms": 1795470121498,
+      "source_frame": "f00300.png",
+      "source_timestamp_ms": 1795470121442,
+      "sha256": "d824244f93b7dd7bfba6c20734a0ad82ae85a1e7c3cb12c8e1b32ec82da12ddb"
     }
   ]
 }

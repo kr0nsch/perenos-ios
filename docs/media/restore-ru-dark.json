@@ -1,14 +1,14 @@
 {
   "schema_version": 2,
-  "version": "1.9.0",
+  "version": "1.10.0",
   "file": "restore-ru-dark.gif",
   "width": 942,
   "height": 782,
-  "frames": 48,
+  "frames": 49,
   "fps": 8,
-  "duration_ms": 6010,
-  "bytes": 190386,
-  "sha256": "7184fcc829e1c41ceb9ee47f60a8b6afc6ecbb5e8878c6f67bc6b52649523500",
+  "duration_ms": 6130,
+  "bytes": 169640,
+  "sha256": "9ac965a68893f9f7750a2052b6ea07e0233f8e368e169211f7956b66a27d0d57",
   "cursor": "none",
   "encoding": {
     "scaling": "lanczos",
@@ -23,59 +23,59 @@
     "cursor_captured": false,
     "width": 942,
     "height": 782,
-    "frames": 418,
-    "first_timestamp_ms": 1795116468606,
-    "last_timestamp_ms": 1795116507302,
-    "capture_json_sha256": "ade635fdfbfcb851db3f88b34f45e55c1c74ab46ba94a642d7f7d999ed371f36",
-    "frames_csv_sha256": "2316ce80b08b37536da5b13e7a602b90635e959943dcaa9f008912c951669385",
+    "frames": 402,
+    "first_timestamp_ms": 1795470011605,
+    "last_timestamp_ms": 1795470049632,
+    "capture_json_sha256": "604aa35acf4d781695bc4098b26e63b4b0d7211a3413d5f74dc7bad905789128",
+    "frames_csv_sha256": "e7e5080eff5fba0ab62c79f7acd0d497310f3c4e1ba4d062b024bd7711f8d1d9",
     "window_txt_sha256": "e1d68f2224dd31f65ef37932a38662cf70bb6846febb4e4faa6ea5a5604534bf",
-    "timeline_sha256": "6db3e5090692b84f8c36a7f17233589e03acce1cc086b14d56d168b028acef26",
-    "raw_frames_sha256": "0063f110227665a7a75b38ae388c6bc17a014cb15d02c0d8a6b7176edd978e1c",
+    "timeline_sha256": "d3b7cf218f696bba50199587629a72887302c5afd8940d190bfb23667ceec8a0",
+    "raw_frames_sha256": "4d0d6d3968a737128d69dc581b7f7168000ddb1d7a1c99775750e1f4abc07166",
     "raw_frames_hash_format": "SHA-256 of UTF-8 index,timestamp_ms,png_sha256\\n entries in frame order"
   },
   "segments": [
     {
-      "start_ms": 1795116491968,
-      "end_ms": 1795116497958,
-      "output_duration_ms": 5990
+      "start_ms": 1795470034265,
+      "end_ms": 1795470040276,
+      "output_duration_ms": 6011
     }
   ],
-  "sampled_frames_sha256": "d6aa5f322de190a2d406355974e2812ee03bc038aa1dd57cf3e578cd0cdfb665",
+  "sampled_frames_sha256": "51139ba27cf0ebf79b727fd086bbf01cab022539a28ba6f1fa07787c0a3b996e",
   "stills": [
     {
       "file": "ru-dark/restore-1-apps.png",
-      "requested_timestamp_ms": 1795116492968,
-      "source_frame": "f00261.png",
-      "source_timestamp_ms": 1795116492904,
-      "sha256": "6cce3748d7e7ec88df01bde1efe0bf7c8385880d59b449e251300a0701d2c2ac"
+      "requested_timestamp_ms": 1795470035265,
+      "source_frame": "f00249.png",
+      "source_timestamp_ms": 1795470035221,
+      "sha256": "8dee44e742321dfc77c1b3d263cdea254b76ad966650b132d5e9aa2177cc838e"
     },
     {
       "file": "ru-dark/restore-2-sorted.png",
-      "requested_timestamp_ms": 1795116493676,
-      "source_frame": "f00269.png",
-      "source_timestamp_ms": 1795116493643,
-      "sha256": "5cf6ccf3c8b3cf4acd48c09fcba809762adf94cc96b7f1f93c013aa4fd0cd9e0"
+      "requested_timestamp_ms": 1795470035940,
+      "source_frame": "f00256.png",
+      "source_timestamp_ms": 1795470035879,
+      "sha256": "8e3128004ec8338393b08b2026ef23959901b02d515f0bd0134e2f848d400cf5"
     },
     {
       "file": "ru-dark/restore-3-selected.png",
-      "requested_timestamp_ms": 1795116494728,
-      "source_frame": "f00280.png",
-      "source_timestamp_ms": 1795116494658,
-      "sha256": "edbd64aa35add7c2f57769e057d35b63ab4ba53974e9ce090212280df6efdd68"
+      "requested_timestamp_ms": 1795470037048,
+      "source_frame": "f00268.png",
+      "source_timestamp_ms": 1795470037022,
+      "sha256": "71d544d2b486a12220609ce84b6c194fb1830c933bf7d5d36bffd0546bda5df6"
     },
     {
       "file": "ru-dark/restore-4-install.png",
-      "requested_timestamp_ms": 1795116495224,
-      "source_frame": "f00286.png",
-      "source_timestamp_ms": 1795116495211,
+      "requested_timestamp_ms": 1795470037543,
+      "source_frame": "f00273.png",
+      "source_timestamp_ms": 1795470037498,
       "sha256": "58b7f10506929769189e39709418fcfcd0a03465d793113e8b145f3e95b6b632"
     },
     {
       "file": "ru-dark/restore-5-done.png",
-      "requested_timestamp_ms": 1795116497958,
-      "source_frame": "f00315.png",
-      "source_timestamp_ms": 1795116497888,
-      "sha256": "6905e75a2f5837ef852213f701aaa92cb5dfb1a0cf16b53f07d7f655e80d4b85"
+      "requested_timestamp_ms": 1795470040276,
+      "source_frame": "f00302.png",
+      "source_timestamp_ms": 1795470040246,
+      "sha256": "56b26bcf7df1d7cfe35920f809c598602fac7bdccb18eff4a0718e075bd483fb"
     }
   ]
 }

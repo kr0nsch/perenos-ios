@@ -1,4 +1,4 @@
-[CmdletBinding()]
+﻿[CmdletBinding()]
 param(
     [ValidateSet('Start', 'Selection', 'Settings', 'Full')]
     [string] $Mode = 'Start',

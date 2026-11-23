@@ -6,6 +6,36 @@ All notable changes to Perenos are listed here. The format follows
 
 ## [Unreleased]
 
+## [1.10.0] - 2026-11-23
+
+### Добавлено
+- Пикер версий для каждого приложения: все доступные сборки с displayVersion, датой выпуска и минимальной iOS до загрузки; выбранная версия закрепляется и используется при скачивании.
+- Предупреждение «Нужна iOS N» в списке восстановления, когда iOS подключённого iPhone старше минимальной версии приложения.
+- Сгруженные (offloaded) приложения показываются как кандидаты «Сгружено — установить заново».
+- Поиск в списке восстановления по ссылке App Store, числовому ID или bundle-идентификатору.
+- Горячие клавиши: Ctrl+F — поиск, F5 — пересканировать, Enter — продолжить; двойной клик по строке — быстрая установка одного приложения.
+- Докачка прерванных загрузок после перезапуска через журнал загрузок и кнопка «Продолжить прерванные загрузки».
+- Проверка обновлений приложения и ipatool в настройках; загрузка обновлений только после проверки SHA-256.
+- Обнаружение iPhone по Wi-Fi (синхронизация по сети) помимо USB.
+- Несколько Apple Account с изолированными сессиями и быстрым переключением в настройках.
+
+### Изменено
+- Журнал загрузок переведён на source-generated JSON, безопасный при trimming-публикации.
+
+### Changed
+- Per-app version picker: every available build with displayVersion, release date and minimum iOS before downloading; the pinned version is used for the download.
+- "Requires iOS N" warning in the restore list when the connected iPhone runs an older iOS than the app requires.
+- Offloaded apps surface as "Offloaded — reinstall" candidates.
+- Restore list search accepts an App Store link, numeric ID or bundle identifier.
+- Hotkeys: Ctrl+F search, F5 rescan, Enter continue; double-click a row to install just that app.
+- Interrupted downloads resume after restart via a download journal and a "Resume interrupted downloads" button.
+- Update check for the app and ipatool in Settings; update downloads are verified against SHA-256.
+- Wi-Fi-synced iPhones are discovered in addition to USB.
+- Multiple Apple Accounts with isolated sessions and quick switching in Settings.
+
+### Проверено
+- На реальном iPhone 16 Pro (iOS 27.2.1): обнаружение, доверие, список из 121 приложения, история покупок (468), list-versions/get-version-metadata; скачан и установлен оригинальный IPA удалённого из РФ приложения (Happ) через installation_proxy.
+
 ## [1.9.0] - 2026-11-19
 
 ### Изменено

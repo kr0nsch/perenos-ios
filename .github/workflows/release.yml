@@ -253,3 +253,20 @@ jobs:
           [string[]] $mode = if ("${{ github.event_name }}" -eq "workflow_dispatch") { "--draft", "--target", "${{ github.sha }}" } else { , "--verify-tag" }
           gh release create "v$version" $files --title "Перенос $version" --notes-file artifacts/release-notes.md $mode
           if ($LASTEXITCODE -ne 0) { throw "gh release create failed" }
+
+      - name: Update README download statistics
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          git switch -C readme-stats origin/main
+          python3 scripts/update_release_stats.py --version "${{ needs.release-windows.outputs.version }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md README.en.md
+          if git diff --cached --quiet; then
+            echo "README statistics already contain this release"
+          else
+            git commit -m "Add v${{ needs.release-windows.outputs.version }} row to README download statistics"
+            git push origin HEAD:main
+          fi

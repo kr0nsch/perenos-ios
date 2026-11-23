@@ -176,7 +176,7 @@ Sigstore proves build provenance, not a Windows Authenticode or Apple Developer 
 
 ### Build from source
 
-Install **.NET 10 SDK**, **Go 1.26.5** and PowerShell. Inno Setup 6 is also needed for the Windows installer.
+Install **.NET 10 SDK**, **Go 1.26.11** and PowerShell. Inno Setup 6 is also needed for the Windows installer.
 
 ```powershell
 git clone https://github.com/kr0nsch/perenos-ios.git

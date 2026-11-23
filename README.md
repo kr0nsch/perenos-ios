@@ -176,7 +176,7 @@ Sigstore подтверждает происхождение файла, но н
 
 ### Сборка из исходников
 
-Нужны **.NET 10 SDK**, **Go 1.26.5** и PowerShell. Для установщика Windows также нужен Inno Setup 6.
+Нужны **.NET 10 SDK**, **Go 1.26.11** и PowerShell. Для установщика Windows также нужен Inno Setup 6.
 
 ```powershell
 git clone https://github.com/kr0nsch/perenos-ios.git

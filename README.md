@@ -202,7 +202,7 @@ Sigstore подтверждает происхождение файла, но н
 
 ### Сборка из исходников
 
-Нужны **.NET 10 SDK**, **Go 1.26.11** и PowerShell. Для установщика Windows также нужен Inno Setup 6.
+Нужны **.NET 10 SDK**, **Go 1.26.5** и PowerShell. Для установщика Windows также нужен Inno Setup 6.
 
 ```powershell
 git clone https://github.com/kr0nsch/perenos-ios.git
@@ -218,7 +218,7 @@ brew install dotnet go
 brew install --cask powershell
 pwsh build/Get-Ipatool.ps1 -RuntimeIdentifier osx-arm64
 dotnet run --project src/Perenos -- --demo
-bash build/build-macos.sh 1.10.0 osx-arm64
+bash build/build-macos.sh 1.10.1 osx-arm64
 ```
 
 Для Intel замените `osx-arm64` на `osx-x64`. Без `MACOS_SIGN_IDENTITY` создаётся ad-hoc пакет для разработки. Для публичного распространения задайте Developer ID и `MACOS_NOTARY_PROFILE`, чтобы включить нотаризацию.
@@ -245,7 +245,6 @@ npm run test:site
 
 | Релиз | Дата | Скачивания |
 |---|---|---|
-| [v1.10.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.10.0) | 23.11.2026 | ![Скачивания v1.10.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.10.0/total?label=) |
 | [v1.9.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.9.0) | 19.11.2026 | ![Скачивания v1.9.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.9.0/total?label=) |
 | [v1.8.1](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.8.1) | 18.11.2026 | ![Скачивания v1.8.1](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.8.1/total?label=) |
 | [v1.8.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.8.0) | 16.11.2026 | ![Скачивания v1.8.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.8.0/total?label=) |

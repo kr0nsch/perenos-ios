@@ -6,7 +6,7 @@
   ./build/build.ps1 -Version 1.9.0 -RuntimeIdentifier win-x64, win-arm64
 .NOTES
   Outputs go to artifacts\release together with SHA256SUMS.txt.
-  Requires the .NET 10 SDK, Go 1.26.11 and Inno Setup 6 (ISCC.exe) for the installer.
+  Requires the .NET 10 SDK, Go 1.26.5 and Inno Setup 6 (ISCC.exe) for the installer.
 #>
 [CmdletBinding()]
 param(

@@ -202,7 +202,7 @@ Sigstore proves build provenance, not a Windows Authenticode or Apple Developer 
 
 ### Build from source
 
-Install **.NET 10 SDK**, **Go 1.26.11** and PowerShell. Inno Setup 6 is also needed for the Windows installer.
+Install **.NET 10 SDK**, **Go 1.26.5** and PowerShell. Inno Setup 6 is also needed for the Windows installer.
 
 ```powershell
 git clone https://github.com/kr0nsch/perenos-ios.git
@@ -218,7 +218,7 @@ brew install dotnet go
 brew install --cask powershell
 pwsh build/Get-Ipatool.ps1 -RuntimeIdentifier osx-arm64
 dotnet run --project src/Perenos -- --demo
-bash build/build-macos.sh 1.10.0 osx-arm64
+bash build/build-macos.sh 1.10.1 osx-arm64
 ```
 
 For Intel, replace `osx-arm64` with `osx-x64`. Without `MACOS_SIGN_IDENTITY`, the package is ad-hoc signed for development. Set a Developer ID and `MACOS_NOTARY_PROFILE` to enable notarization for public distribution.
@@ -245,7 +245,6 @@ Downloads of each release's packages according to GitHub — the badges update a
 
 | Release | Date | Downloads |
 |---|---|---|
-| [v1.10.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.10.0) | 2026-11-23 | ![Downloads v1.10.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.10.0/total?label=) |
 | [v1.9.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.9.0) | 2026-11-19 | ![Downloads v1.9.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.9.0/total?label=) |
 | [v1.8.1](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.8.1) | 2026-11-18 | ![Downloads v1.8.1](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.8.1/total?label=) |
 | [v1.8.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.8.0) | 2026-11-16 | ![Downloads v1.8.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.8.0/total?label=) |

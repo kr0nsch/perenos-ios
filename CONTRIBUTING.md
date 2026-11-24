@@ -5,7 +5,7 @@ Thanks for helping improve Perenos (Перенос)!
 ## Getting started on Windows
 
 1. Clone `https://github.com/kr0nsch/perenos-ios.git`.
-2. Install the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) and Go 1.26.11.
+2. Install the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) and Go 1.26.5.
 3. Run `./build/Get-Ipatool.ps1` once to build the checksum-verified ipatool snapshot.
 4. Run `dotnet run --project src/Perenos` or `dotnet run --project src/Perenos -- --demo`.
 5. Run all suites: `dotnet test Perenos.sln`, including real Avalonia headless UI tests.
@@ -16,7 +16,7 @@ and `src/Perenos` contains the cross-platform Avalonia UI.
 
 ## Getting started on macOS
 
-Use macOS 15 or newer with Xcode Command Line Tools, .NET 10 SDK, Go 1.26.11 and PowerShell 7:
+Use macOS 15 or newer with Xcode Command Line Tools, .NET 10 SDK, Go 1.26.5 and PowerShell 7:
 
 ```bash
 brew install dotnet go

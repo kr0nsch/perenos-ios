@@ -28,7 +28,7 @@ jobs:
 
       - uses: actions/setup-go@v7
         with:
-          go-version: "1.26.11"
+          go-version: "1.26.5"
           cache: false
 
       - name: Build ipatool (checksum-verified source)
@@ -79,7 +79,7 @@ jobs:
 
       - uses: actions/setup-go@v7
         with:
-          go-version: "1.26.11"
+          go-version: "1.26.5"
           cache: false
 
       - name: Build ipatool (checksum-verified source)

@@ -6,7 +6,19 @@ All notable changes to Perenos are listed here. The format follows
 
 ## [Unreleased]
 
+## [1.10.1] - 2026-11-24
+
+### Исправлено
+- Срочный хотфикс входа в Apple Account: движок ipatool снова собирается с Go 1.26.5, как в 1.9.0. Пересборка движка в 1.10.0 с Go 1.26.11 вызывала «TLS handshake timeout» на этапе Apple Store provisioning при входе; релиз 1.10.0 отозван с GitHub.
+- В global.json возвращён .NET SDK 10.0.100: локальная сборка снова работает с установленными SDK 10.0.x.
+
+### Fixed
+- Urgent Apple Account sign-in hotfix: the ipatool engine is built with Go 1.26.5 again, as in 1.9.0. The 1.10.0 engine rebuild with Go 1.26.11 caused a "TLS handshake timeout" during Apple Store provisioning at sign-in; release 1.10.0 has been withdrawn from GitHub.
+- global.json points at .NET SDK 10.0.100 again so local builds work with installed 10.0.x SDKs.
+
 ## [1.10.0] - 2026-11-23
+
+> Отозван 24.11.2026: ошибка входа в Apple Account (TLS handshake timeout), исправлено в 1.10.1. / Withdrawn on 2026-11-24: Apple Account sign-in failure (TLS handshake timeout), fixed in 1.10.1.
 
 ### Добавлено
 - Пикер версий для каждого приложения: все доступные сборки с displayVersion, датой выпуска и минимальной iOS до загрузки; выбранная версия закрепляется и используется при скачивании.

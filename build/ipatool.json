@@ -1,9 +1,9 @@
 {
-  "version": "2.8.1+3b02b4c",
+  "version": "2.8.0+3b02b4c",
   "source": "https://github.com/majd/ipatool/tree/3b02b4c55576562f2a55284cda9db9a4411d3067",
   "license": "MIT",
   "commit": "3b02b4c55576562f2a55284cda9db9a4411d3067",
-  "go_version": "1.26.11",
+  "go_version": "1.26.5",
   "archive": {
     "file": "ipatool-3b02b4c.tar.gz",
     "url": "https://codeload.github.com/majd/ipatool/tar.gz/3b02b4c55576562f2a55284cda9db9a4411d3067",

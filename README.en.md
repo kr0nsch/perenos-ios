@@ -245,6 +245,7 @@ Downloads of each release's packages according to GitHub — the badges update a
 
 | Release | Date | Downloads |
 |---|---|---|
+| [v1.10.2](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.10.2) | 2026-11-24 | ![Downloads v1.10.2](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.10.2/total?label=) |
 | [v1.10.1](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.10.1) | 2026-11-24 | ![Downloads v1.10.1](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.10.1/total?label=) |
 | [v1.9.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.9.0) | 2026-11-19 | ![Downloads v1.9.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.9.0/total?label=) |
 | [v1.8.1](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.8.1) | 2026-11-18 | ![Downloads v1.8.1](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.8.1/total?label=) |

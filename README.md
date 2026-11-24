@@ -245,6 +245,7 @@ npm run test:site
 
 | Релиз | Дата | Скачивания |
 |---|---|---|
+| [v1.10.2](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.10.2) | 24.11.2026 | ![Скачивания v1.10.2](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.10.2/total?label=) |
 | [v1.10.1](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.10.1) | 24.11.2026 | ![Скачивания v1.10.1](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.10.1/total?label=) |
 | [v1.9.0](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.9.0) | 19.11.2026 | ![Скачивания v1.9.0](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.9.0/total?label=) |
 | [v1.8.1](https://github.com/kr0nsch/perenos-ios/releases/tag/v1.8.1) | 18.11.2026 | ![Скачивания v1.8.1](https://img.shields.io/github/downloads/kr0nsch/perenos-ios/v1.8.1/total?label=) |

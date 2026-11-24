@@ -19,7 +19,7 @@
 </p>
 
 <p align="center"><img src="docs/media/demo-en-light.gif" alt="Perenos: selecting and installing apps on a new iPhone, real app window recording" width="942"></p>
-<p align="center"><sub>A recording of Perenos 1.9.0, not a mock-up. Devices, account and apps are fictional. <a href="docs/media/full-en-light.mp4">Watch the full video</a>.</sub></p>
+<p align="center"><sub>A recording of Perenos 1.10.0, not a mock-up. Devices and account are fictional; the lists show real Russian app titles. <a href="docs/media/full-en-light.mp4">Watch the full video</a>.</sub></p>
 
 ## What is Perenos
 
@@ -32,7 +32,7 @@ Perenos (Russian: «Перенос», “transfer”) is a free, open-source pro
 | Price | Free, no ads or subscriptions |
 | License | [MIT](LICENSE), open source |
 | Interface languages | Russian and English |
-| Current version | 1.9.0 (19 November 2026) — [changelog](CHANGELOG.md) |
+| Current version | 1.10.0 (23 November 2026) — [changelog](CHANGELOG.md) |
 | Developer | [kr0nsch](https://github.com/kr0nsch) |
 | Website | [kr0nsch.github.io/perenos-ios](https://kr0nsch.github.io/perenos-ios/en/) |
 | Telegram | [Official channel @perenos_ios](https://t.me/perenos_ios) — releases, changelogs and feedback |
@@ -81,18 +81,28 @@ Connect the phone over USB, unlock it and tap **Trust**. You can connect the old
 To download or update apps, sign in to the purchaser's Apple Account **on the computer**. You do not need to change the account on the iPhone.
 
 <p align="center"><img src="docs/media/restore-en-light.gif" alt="Restoring App Store purchases unavailable in Russia with Perenos" width="942"></p>
-<p align="center"><sub>A real restoration workflow recorded in Perenos 1.9.0. Accounts, devices and apps are fictional.</sub></p>
+<p align="center"><sub>A real restoration workflow recorded in Perenos 1.10.0. Accounts and devices are fictional; apps are real Russian service titles.</sub></p>
 
 ## Restore VK Music, Avito and other App Store purchases
 
 1. Open **Restore apps** and sign in to the purchaser's Apple Account on the computer.
 2. Wait for the purchase history. Nothing is selected automatically.
-3. Search by name: purchases and catalog candidates share one list, without filters.
+3. Search by name: purchases and catalog candidates share one list, without filters. Search accepts a name, an App Store link, a numeric ID or a bundle identifier.
 4. Select the apps and click **Continue → Install**.
 
 A **catalog** badge marks a candidate, not proof of ownership: Apple checks the license when downloading. History may be incomplete after a region change, and Apple may stop serving an app or a specific version.
 
 The [`russian-app-catalog.json`](catalog/russian-app-catalog.json) catalog lists 726 entries, including clones and republished versions of Russian services — Sber, Alfa-Bank, VTB, VK, T-Bank and others; 464 of them were not found in the Russian storefront at the recorded check date (19 November 2026). It is not an official Apple registry or a guarantee of restoration.
+
+## What's new in 1.10.0
+
+- **Pick a build version.** A "Version" button on each app row opens the available builds with version number, release date and minimum iOS — before downloading. The chosen build is used for the download.
+- **"Requires iOS N".** If the connected iPhone runs an older iOS than the app requires, the row shows a warning.
+- **Offloaded apps.** Apps offloaded by iOS (icon present, package removed) are marked "Offloaded — reinstall".
+- **Resume after restart.** Interrupted downloads continue where they left off; the library shows a "Resume interrupted downloads" button.
+- **Hotkeys and quick click.** Ctrl+F search, F5 rescan, Enter continue; double-click a row to install just that app.
+- **Update check.** Settings check for new Perenos and ipatool versions; an update downloads only after a SHA-256 check.
+- **Wi-Fi and multiple accounts.** A Wi-Fi-synced iPhone is discovered alongside USB; several Apple Accounts are kept in isolated sessions with quick switching in Settings.
 
 ## IPA library: save apps and install them later
 
@@ -106,7 +116,7 @@ Perenos reads package metadata, shows version and size, and checks iOS compatibi
 |---|---|
 | Downloads original Apple packages available to your account | Does not download other people's paid apps or purchases you never owned for free |
 | Transfers and updates apps, installs IPAs | Does not bypass licenses, FairPlay or Apple's regional restrictions |
-| Works locally over USB, without jailbreak | Does not transfer messages, documents or app settings |
+| Works locally over USB or Wi-Fi, without jailbreak | Does not transfer messages, documents or app settings |
 | Checks package versions and compatibility | Does not guarantee that every IPA launches or every purchase can be restored |
 
 Restore app data through iCloud, a backup or the app's own synchronization.
@@ -141,6 +151,22 @@ Yes. Perenos is free under the MIT license, with no ads, subscriptions or hidden
 
 Yes, macOS 15+ on Apple Silicon and Intel is supported. Today the builds are ad-hoc signed test DMGs without Apple notarization; stable packages will follow Developer ID signing and physical Mac checks.
 
+### Can I pick an older app version?
+
+Yes. The "Version" button on an app row lists available builds with version number, release date and minimum iOS; the chosen build downloads instead of the latest. Apple may not serve very old builds or builds incompatible with your iPhone.
+
+### What if a download is interrupted or the computer restarts?
+
+Unfinished downloads are kept in a journal and resume where they left off. The library shows a "Resume interrupted downloads" button; already-downloaded parts are not fetched again.
+
+### Does Perenos work over Wi-Fi without a cable?
+
+An iPhone with Wi-Fi sync enabled is discovered alongside USB connections. Initial trust and unlocking the device are still required; USB is more reliable for large packages.
+
+### Can I use several Apple Accounts?
+
+Yes. Perenos keeps several Apple Accounts in isolated sessions and lets you switch between them quickly in Settings without leaving the app.
+
 ### How is Perenos different from iMazing?
 
 Perenos is a free, open-source program focused on transferring apps between iPhones, restoring App Store purchases and keeping an IPA library. It does not manage files, photos or device backups.
@@ -150,7 +176,7 @@ Perenos is a free, open-source program focused on transferring apps between iPho
 | What to verify | Where to look |
 |---|---|
 | Source code and license | [Repository](https://github.com/kr0nsch/perenos-ios) and [MIT](LICENSE) |
-| Tests and builds | [174 tests and Windows/macOS packages in CI](https://github.com/kr0nsch/perenos-ios/actions/workflows/ci.yml) |
+| Tests and builds | [217 tests and Windows/macOS packages in CI](https://github.com/kr0nsch/perenos-ios/actions/workflows/ci.yml) |
 | Package provenance | `SHA256SUMS.txt` and Sigstore attestations in [releases](https://github.com/kr0nsch/perenos-ios/releases) |
 | Demo authenticity | [Real window captures and verifiable source frames](docs/MEDIA.md), not edited mock-ups |
 
@@ -192,7 +218,7 @@ brew install dotnet go
 brew install --cask powershell
 pwsh build/Get-Ipatool.ps1 -RuntimeIdentifier osx-arm64
 dotnet run --project src/Perenos -- --demo
-bash build/build-macos.sh 1.9.0 osx-arm64
+bash build/build-macos.sh 1.10.0 osx-arm64
 ```
 
 For Intel, replace `osx-arm64` with `osx-x64`. Without `MACOS_SIGN_IDENTITY`, the package is ad-hoc signed for development. Set a Developer ID and `MACOS_NOTARY_PROFILE` to enable notarization for public distribution.

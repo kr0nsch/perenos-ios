@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Perenos.Core;
@@ -16,6 +17,7 @@ public sealed partial class RestoreAppsViewModel(
     IUiDispatcher dispatcher) : AppListViewModel
 {
     private CancellationTokenSource? _loading;
+    private CancellationTokenSource? _versions;
 
     public string? LoadedFromUdid { get; private set; }
 
@@ -103,6 +105,7 @@ public sealed partial class RestoreAppsViewModel(
     public void Reset()
     {
         _loading?.Cancel();
+        _versions?.Cancel();
         LoadedFromUdid = null;
         NeedsSignIn = false;
         IsLoading = false;
@@ -116,11 +119,20 @@ public sealed partial class RestoreAppsViewModel(
     {
         if (item.IsLoadingVersions || item.App.AppStoreId is not > 0)
             return;
+        var versions = new CancellationTokenSource();
+        _versions = versions;
+        var token = versions.Token;
         item.IsLoadingVersions = true;
+        void OnItemChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(AppItemViewModel.IsVersionsOpen) && !item.IsVersionsOpen)
+                versions.Cancel();
+        }
+        item.PropertyChanged += OnItemChanged;
         try
         {
             var appId = item.App.AppStoreId!.Value;
-            var ids = await scanner.GetVersionsAsync(appId);
+            var ids = await scanner.GetVersionsAsync(appId, token);
             item.Versions.Clear();
             // Newest first in the picker; cap the list so the flyout stays usable.
             foreach (var id in ids.Reverse().Take(30))
@@ -128,24 +140,35 @@ public sealed partial class RestoreAppsViewModel(
                 AppVersionInfo info;
                 try
                 {
-                    info = await scanner.GetVersionMetadataAsync(appId, id);
+                    info = await scanner.GetVersionMetadataAsync(appId, id, token);
                 }
-                catch (IpatoolException)
+                catch (IpatoolException) when (!token.IsCancellationRequested)
                 {
                     info = new AppVersionInfo(id);
                 }
                 item.Versions.Add(info);
             }
         }
-        catch (IpatoolException ex)
+        catch (OperationCanceledException) when (token.IsCancellationRequested)
+        {
+        }
+        catch (IpatoolException ex) when (!token.IsCancellationRequested)
         {
             AppLog.Warn($"Could not list versions for {item.App.BundleId}: {ex.Message}");
         }
         finally
         {
+            item.PropertyChanged -= OnItemChanged;
+            if (ReferenceEquals(_versions, versions))
+                _versions = null;
+            versions.Dispose();
             item.IsLoadingVersions = false;
         }
     }
+
+    /// <summary>Stops a running version-list load so the row's version button unblocks at once.</summary>
+    [RelayCommand]
+    private void CancelVersions() => _versions?.Cancel();
 
     private async Task LoadIconsAsync(string udid, IReadOnlyList<string> installedIds, CancellationToken token)
     {

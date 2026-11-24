@@ -6,6 +6,14 @@ All notable changes to Perenos are listed here. The format follows
 
 ## [Unreleased]
 
+## [1.10.2] - 2026-11-24
+
+### Исправлено
+- Загрузку списка версий теперь можно остановить: кнопка «Отмена» в пикере и закрытие пикера отменяют запросы к движку, и кнопка «Версия» в общем списке сразу разблокируется.
+
+### Fixed
+- The version list load can now be stopped: a Cancel button in the picker and closing the picker cancel the engine requests, and the row's Version button in the main list unblocks immediately.
+
 ## [1.10.1] - 2026-11-24
 
 ### Исправлено

@@ -18,6 +18,10 @@ public sealed partial class AppItemViewModel(InstalledApp app, SavedApp? saved =
     [ObservableProperty]
     public partial bool IsLoadingVersions { get; set; }
 
+    /// <summary>Two-way bound to the picker flyout; closing the picker cancels a running load.</summary>
+    [ObservableProperty]
+    public partial bool IsVersionsOpen { get; set; }
+
     /// <summary>The build the user pinned in the version picker, if any.</summary>
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(PinnedText), nameof(HasPinned))]

@@ -396,6 +396,38 @@ public sealed class AppBuilderTests : IDisposable
         window.Close();
     }
 
+    [AvaloniaFact]
+    public async Task VersionFlyoutOpenStateTracksTheRowBothWays()
+    {
+        var window = Track(CreateWindow("en-US"));
+        var vm = window.ViewModel;
+        vm.TransferNowCommand.Execute(null);
+        await Until(() => vm.Source?.IsReady == true);
+        await vm.PrimaryCommand.ExecuteAsync(null);
+        await Until(() => vm.Apps.LoadedFromUdid is not null);
+        var app = vm.AppList.Visible.First();
+        Button? versionButton = null;
+        await Until(() =>
+        {
+            window.UpdateLayout();
+            versionButton = window.GetVisualDescendants().OfType<Button>()
+                .FirstOrDefault(button => ReferenceEquals(button.DataContext, app)
+                    && button.Classes.Contains("link")
+                    && Equals(button.Content, Loc.Get("Restore_VersionButton")));
+            return versionButton is not null;
+        });
+
+        var flyout = Assert.IsType<Flyout>(versionButton!.Flyout);
+        flyout.ShowAt(versionButton);
+        Dispatcher.UIThread.RunJobs();
+        Assert.True(app.IsVersionsOpen);
+
+        flyout.Hide();
+        Dispatcher.UIThread.RunJobs();
+        Assert.False(app.IsVersionsOpen);
+        window.Close();
+    }
+
     private MainWindow Track(MainWindow window)
     {
         _windows.Add(window);

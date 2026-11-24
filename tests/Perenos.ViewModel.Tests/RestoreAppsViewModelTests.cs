@@ -184,6 +184,54 @@ public sealed class RestoreAppsViewModelTests
         Assert.True(item.HasPinned);
     }
 
+    [Fact]
+    public async Task ClosingThePickerCancelsVersionLoadAndUnblocksTheButton()
+    {
+        var store = new FakeStore
+        {
+            Owned = [new OwnedApp(1, "app.one", "One", "1.0", null)],
+            Versions = ["111"],
+            BlockVersions = true,
+        };
+        var vm = new RestoreAppsViewModel(new FakeDevices(), new RestorableAppScanner(store, new FakeCatalog { Available = new HashSet<long> { 1 } }), new IconCache(), new TestDispatcher());
+        await vm.LoadAsync(Target());
+        var item = vm.Visible.Single();
+
+        var load = vm.LoadVersionsCommand.ExecuteAsync(item);
+        Assert.True(item.IsLoadingVersions);
+        Assert.False(vm.LoadVersionsCommand.CanExecute(item));
+
+        item.IsVersionsOpen = true;
+        item.IsVersionsOpen = false;
+        await load;
+
+        Assert.False(item.IsLoadingVersions);
+        Assert.True(vm.LoadVersionsCommand.CanExecute(item));
+    }
+
+    [Fact]
+    public async Task CancelVersionsCommandStopsALongVersionLoad()
+    {
+        var store = new FakeStore
+        {
+            Owned = [new OwnedApp(1, "app.one", "One", "1.0", null)],
+            Versions = ["111"],
+            BlockVersions = true,
+        };
+        var vm = new RestoreAppsViewModel(new FakeDevices(), new RestorableAppScanner(store, new FakeCatalog { Available = new HashSet<long> { 1 } }), new IconCache(), new TestDispatcher());
+        await vm.LoadAsync(Target());
+        var item = vm.Visible.Single();
+
+        var load = vm.LoadVersionsCommand.ExecuteAsync(item);
+        Assert.True(item.IsLoadingVersions);
+
+        vm.CancelVersionsCommand.Execute(null);
+        await load;
+
+        Assert.False(item.IsLoadingVersions);
+        Assert.True(vm.LoadVersionsCommand.CanExecute(item));
+    }
+
     private static DeviceItemViewModel Target() => new("target", _ => Task.CompletedTask);
 
     private static InstalledApp App(long id, string name, string version) =>
@@ -210,7 +258,16 @@ public sealed class RestoreAppsViewModelTests
 
         public IReadOnlyList<string> Versions { get; set; } = [];
 
-        public Task<IReadOnlyList<string>> GetVersionsAsync(long appId, CancellationToken cancellationToken = default) => Task.FromResult(Versions);
+        public bool BlockVersions { get; set; }
+
+        public Task<IReadOnlyList<string>> GetVersionsAsync(long appId, CancellationToken cancellationToken = default)
+        {
+            if (!BlockVersions)
+                return Task.FromResult(Versions);
+            var pending = new TaskCompletionSource<IReadOnlyList<string>>();
+            cancellationToken.Register(() => pending.TrySetCanceled());
+            return pending.Task;
+        }
 
         public Task<AppVersionInfo> GetVersionMetadataAsync(long appId, string externalVersionId, CancellationToken cancellationToken = default) =>
             Task.FromResult(new AppVersionInfo(externalVersionId, "9.9", null, "15.0"));

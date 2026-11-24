@@ -69,9 +69,12 @@
                                 Command="{Binding DataContext.Restore.LoadVersionsCommand, ElementName=AppListBox}" CommandParameter="{Binding}"
                                 IsVisible="{Binding IsSelectable}">
                           <Button.Flyout>
-                            <Flyout Placement="Bottom">
+                            <Flyout Placement="Bottom" IsOpen="{Binding IsVersionsOpen, Mode=TwoWay}">
                               <StackPanel MinWidth="240" Spacing="6">
                                 <TextBlock Text="{s:Text Restore_VersionsLoading}" Classes="caption" IsVisible="{Binding IsLoadingVersions}"/>
+                                <Button Classes="link" Content="{s:Text Common_Cancel}" HorizontalAlignment="Left"
+                                        Command="{Binding DataContext.Restore.CancelVersionsCommand, ElementName=AppListBox}"
+                                        IsVisible="{Binding IsLoadingVersions}"/>
                                 <ScrollViewer MaxHeight="280" VerticalScrollBarVisibility="Auto">
                                   <ItemsControl ItemsSource="{Binding Versions}">
                                     <ItemsControl.ItemTemplate>
